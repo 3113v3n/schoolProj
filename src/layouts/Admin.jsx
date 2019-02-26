@@ -91,6 +91,7 @@ class Dashboard extends React.Component {
   render() {
     const { classes, ...rest } = this.props;
     return (
+
       <div className={classes.wrapper}>
         <Sidebar
           routes={routes}
@@ -102,6 +103,7 @@ class Dashboard extends React.Component {
           color={this.state.color}
           {...rest}
         />
+
         <div className={classes.mainPanel} ref="mainPanel">
           <Navbar
             routes={routes}

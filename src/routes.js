@@ -26,15 +26,8 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
-  },
-  {
-    path: "/user",
-    name: "Admin Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
+    admin:true
   },
   {
     path: "/allocation",
@@ -42,7 +35,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
     component: allocations,
-    layout: "/admin"
+    layout: "/admin",
+    admin:true
   },
   {
     path: "/projects",
@@ -50,7 +44,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: LibraryBooks,
     component: Projects,
-    layout: "/admin"
+    layout: "/admin",
+    invisible:true,
   },
   {
     path: "/superTable",
@@ -58,7 +53,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
     component: superTable,
-    layout: "/admin"
+    layout: "/admin",
+    admin:true
   },
   {
     path: "/adminStudents",
@@ -66,7 +62,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
     component: AdminStudents,
-    layout: "/admin"
+    layout: "/admin",
+    admin:true
   },
   {
     path: "/supervisor",
@@ -74,7 +71,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: Supervisors,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true,
   },
   {
     path: "/students",
@@ -82,7 +80,9 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: Students,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true,
+
   },
   {
     path: "/archives",
@@ -90,7 +90,17 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Unarchive,
     component: Archives,
-    layout: "/admin"
+    layout: "/admin",
+    admin:true
+  },
+  {
+    path: "/user",
+    name: "Admin Profile",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Person,
+    component: UserProfile,
+    layout: "/admin",
+    admin:true
   },
   {
     path: "/studentTable",
@@ -98,7 +108,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
     component: studentTable,
-    layout: "/admin"
+    layout: "/admin",
+    supervisor:true
   },
   {
     path: "/profile",
@@ -106,7 +117,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: Profile,
-    layout: "/admin"
+    layout: "/admin",
+    supervisor:true
   },
   {
     path: "/progress",
@@ -114,7 +126,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: Progress,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true
   }
 ];
 

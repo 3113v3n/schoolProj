@@ -21,12 +21,15 @@ const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
+
   const { classes, color, logo, image, logoText, routes } = props;
-  var links = (
+  let links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        var activePro = " ";
-        var listItemClasses;
+        let activePro = " ";
+        let listItemClasses;
+        if (prop.invisible) return null;
+        //if (!prop.supervisor ) return activeRoute();
         if (prop.path === "/upgrade-to-pro") {
           activePro = classes.activePro + " ";
           listItemClasses = classNames({
@@ -76,7 +79,7 @@ const Sidebar = ({ ...props }) => {
       })}
     </List>
   );
-  var brand = (
+  let brand = (
     <div className={classes.logo}>
       <a
         href="https://www.creative-tim.com"
@@ -85,7 +88,7 @@ const Sidebar = ({ ...props }) => {
         })}
       >
         <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
+          <img src={logo} alt="logo" className={classes.img}/>
         </div>
         {logoText}
       </a>
