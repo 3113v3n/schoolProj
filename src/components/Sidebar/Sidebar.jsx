@@ -160,7 +160,8 @@ const Sidebar = ({ ...props }) => {
 };
 
 Sidebar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  logoText: PropTypes.string
 };
 
 export default withStyles(sidebarStyle)(Sidebar);

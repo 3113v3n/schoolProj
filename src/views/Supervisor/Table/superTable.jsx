@@ -14,6 +14,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
+import PersonAdd from "@material-ui/icons/PersonAdd";
 import Delete from "@material-ui/icons/Delete";
 import { NavLink } from "react-router-dom";
 
@@ -159,9 +160,12 @@ function superTable(props) {
             />
           </CardBody>
         </Card>
-        <Button>
-          <NavLink to="/admin/supervisor" color="primary">Add New SuperVisor</NavLink>
-        </Button>
+
+        <NavLink to="/admin/supervisor">
+          <Button type="button" color="primary" round>
+            <PersonAdd /> Add Supervisor
+          </Button>
+        </NavLink>
       </GridItem>
     </GridContainer>
   );

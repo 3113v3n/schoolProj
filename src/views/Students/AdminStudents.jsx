@@ -2,7 +2,7 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-
+import PersonAdd from "@material-ui/icons/PersonAdd";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
@@ -206,9 +206,12 @@ class AdminStudents extends React.Component {
               </div>
             </CardBody>
           </Card>
-          <Button>
-            <NavLink to="/admin/students" color="primary"> New Student</NavLink>
-          </Button>
+
+          <NavLink to="/admin/students">
+            <Button type="button" color="primary" round>
+              <PersonAdd /> Add New Student
+            </Button>
+          </NavLink>
         </GridItem>
       </GridContainer>
     );

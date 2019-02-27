@@ -14,6 +14,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 import avatar from "assets/img/faces/marc.jpg";
+import { NavLink } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -164,9 +165,11 @@ function UserProfile(props) {
                 human foundation in truth And I love you like Kanye loves Kanye
                 I love Rick Owens’ bed design but the back is...
               </p>
-              <Button color="primary" round>
-                Follow
-              </Button>
+              <NavLink to="">
+                <Button color="primary" round>
+                  Follow
+                </Button>
+              </NavLink>
             </CardBody>
           </Card>
         </GridItem>

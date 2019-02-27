@@ -13,9 +13,12 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomMarkInput from "components/CustomInput/CustomMarkInput.jsx";
-import { NavLink } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Table from "components/Table/Table.jsx";
-
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Edit from "@material-ui/icons/Edit";
+import GetApp from "@material-ui/icons/GetApp";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -85,91 +88,138 @@ const styles = {
     flexDirection: "row"
   }
 };
-function Progress(props) {
-  const { classes } = props;
-  return (
-    <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Student form</h4>
-            </CardHeader>
-            <CardBody>
-              <CustomInput
-                labelText="Adm Number"
-                id="regular"
-                formControlProps={{
-                  fullWidth: true
-                }}
-                inputProps={{
-                  disabled: true
-                }}
-              />
-              <CustomInput
-                labelText="Document Submitted"
-                id="float"
-                formControlProps={{
-                  fullWidth: true
-                }}
-                inputProps={{
-                  multiline: true,
-                  rows: 3
-                }}
-              />
-              <CustomInput
-                labelText="Comments"
-                id="float"
-                formControlProps={{
-                  fullWidth: true
-                }}
-                inputProps={{
-                  multiline: true,
-                  rows: 5
-                }}
-              />
-              <CustomMarkInput
-                labelText="Marks"
-                id="regular"
-                formControlProps={{
-                  fullWidth: true
-                }}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Student Progress Table</h4>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={[
-                  "Date",
-                  "Documents",
-                  "Comments",
-                  "Marks",
-                  "Actions"
-                ]}
-                tableData={[
-                  [
-                    "23 - 02 -2019",
-                    "Proposal",
-                    "Work on your References",
-                    "12",
-                    <Button color="success" round key={1}>
-                      <NavLink to="edit"> Edit </NavLink>
-                    </Button>
-                  ]
-                ]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
-    </div>
-  );
+class Progress extends React.Component {
+  state = {
+    toEditScreen: false
+  };
+  goToEdit = () => {
+    this.setState({
+      toEditScreen: true
+    });
+  };
+  render() {
+    if (this.state.toEditScreen === true) {
+      return <Redirect to="" />;
+    }
+    const { classes } = this.props;
+    return (
+      <div>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Student form</h4>
+              </CardHeader>
+              <CardBody>
+                <CustomInput
+                  labelText="Adm Number"
+                  id="regular"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    disabled: true
+                  }}
+                />
+                <CustomInput
+                  labelText="Document Submitted"
+                  id="float"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    multiline: true,
+                    rows: 3
+                  }}
+                />
+                <CustomInput
+                  labelText="Comments"
+                  id="float"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    multiline: true,
+                    rows: 5
+                  }}
+                />
+                <CustomMarkInput
+                  labelText="Marks"
+                  id="regular"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </CardBody>
+            </Card>
+            <Button color="primary" round>
+              Submit
+            </Button>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="warning">
+                <h4 className={classes.cardTitleWhite}>
+                  Student Progress Table
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <Tooltip
+                  id="tooltip-top"
+                  title="Export file"
+                  placement="right-end"
+                  classes={{ tooltip: classes.tooltip }}
+                >
+                  <IconButton
+                    aria-label="Export"
+                    className={classes.tableActionButton}
+                  >
+                    <GetApp />
+                  </IconButton>
+                </Tooltip>
+                <Table
+                  tableHeaderColor="warning"
+                  tableHead={[
+                    "Date",
+                    "Documents",
+                    "Comments",
+                    "Marks",
+                    "Actions"
+                  ]}
+                  tableData={[
+                    [
+                      "23 - 02 -2019",
+                      "Proposal",
+                      "Work on your References",
+                      "12",
+                      <Tooltip
+                        key="tool"
+                        id="tooltip-top"
+                        title="Edit Task"
+                        placement="top"
+                        classes={{ tooltip: classes.tooltip }}
+                      >
+                        <IconButton
+                          aria-label="Edit"
+                          className={classes.tableActionButton}
+                        >
+                          <Edit
+                            className={
+                              classes.tableActionButtonIcon + " " + classes.edit
+                            }
+                            onClick={this.goToEdit}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                    ]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    );
+  }
 }
 export default withStyles(styles)(Progress);
