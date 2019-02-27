@@ -27,6 +27,7 @@ function Header({ ...props }) {
     });
     return name;
   }
+
   const { classes, color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
@@ -59,7 +60,10 @@ function Header({ ...props }) {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
+  color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
+  layout: PropTypes.string,
+  routes: PropTypes.object,
+  handleDrawerToggle: PropTypes.func
 };
 
 export default withStyles(headerStyle)(Header);

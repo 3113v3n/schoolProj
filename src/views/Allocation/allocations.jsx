@@ -2,7 +2,7 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Close from "@material-ui/icons/Close";
+import Delete from "@material-ui/icons/Delete";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -148,7 +148,7 @@ class List extends React.Component {
                               aria-label="Close"
                               className={classes.tableActionButton}
                             >
-                              <Close
+                              <Delete
                                 className={
                                   classes.tableActionButtonIcon +
                                   " " +

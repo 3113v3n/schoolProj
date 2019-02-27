@@ -14,7 +14,8 @@ import TableCell from "@material-ui/core/TableCell";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
+import Delete from "@material-ui/icons/Delete";
+import { NavLink } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -99,12 +100,12 @@ function superTable(props) {
                       classes={{ tooltip: classes.tooltip }}
                     >
                       <IconButton
-                        aria-label="Close"
+                        aria-label="Delete"
                         className={classes.tableActionButton}
                       >
-                        <Close
+                        <Delete
                           className={
-                            classes.tableActionButtonIcon + " " + classes.close
+                            classes.tableActionButtonIcon + " " + classes.delete
                           }
                         />
                       </IconButton>
@@ -142,12 +143,12 @@ function superTable(props) {
                       classes={{ tooltip: classes.tooltip }}
                     >
                       <IconButton
-                        aria-label="Close"
+                        aria-label="Delete"
                         className={classes.tableActionButton}
                       >
-                        <Close
+                        <Delete
                           className={
-                            classes.tableActionButtonIcon + " " + classes.close
+                            classes.tableActionButtonIcon + " " + classes.delete
                           }
                         />
                       </IconButton>
@@ -158,8 +159,8 @@ function superTable(props) {
             />
           </CardBody>
         </Card>
-        <Button color="primary" round>
-          Add New SuperVisor
+        <Button>
+          <NavLink to="/admin/supervisor" color="primary">Add New SuperVisor</NavLink>
         </Button>
       </GridItem>
     </GridContainer>

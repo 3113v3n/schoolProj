@@ -15,10 +15,11 @@ import superTable from "views/Supervisor/Table/superTable.jsx";
 import AdminStudents from "views/Students/AdminStudents.jsx";
 import Archives from "views/Archives/Archives.jsx";
 import allocations from "views/Allocation/allocations.jsx";
+import studentTable from "./views/Students/studentTable";
+import Profile from "./views/Supervisor/Profile/Profile";
+import Progress from "./views/Forms/Progress/Progress";
 ///Supervisor
-import Progress from "views/Forms/Progress/Progress.jsx";
-import Profile from "views/Supervisor/Profile/Profile.jsx";
-import studentTable from "views/Students/studentTable.jsx";
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -27,7 +28,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin",
-    admin:true
+    admin: 1
   },
   {
     path: "/allocation",
@@ -36,7 +37,7 @@ const dashboardRoutes = [
     icon: "content_paste",
     component: allocations,
     layout: "/admin",
-    admin:true
+    admin: 1
   },
   {
     path: "/projects",
@@ -44,8 +45,7 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: LibraryBooks,
     component: Projects,
-    layout: "/admin",
-    invisible:true,
+    layout: "/admin"
   },
   {
     path: "/superTable",
@@ -54,7 +54,7 @@ const dashboardRoutes = [
     icon: "content_paste",
     component: superTable,
     layout: "/admin",
-    admin:true
+    admin: 1
   },
   {
     path: "/adminStudents",
@@ -63,7 +63,7 @@ const dashboardRoutes = [
     icon: "content_paste",
     component: AdminStudents,
     layout: "/admin",
-    admin:true
+    admin: 1
   },
   {
     path: "/supervisor",
@@ -72,7 +72,7 @@ const dashboardRoutes = [
     icon: Person,
     component: Supervisors,
     layout: "/admin",
-    invisible: true,
+    invisible: true
   },
   {
     path: "/students",
@@ -81,8 +81,7 @@ const dashboardRoutes = [
     icon: Person,
     component: Students,
     layout: "/admin",
-    invisible: true,
-
+    invisible: true
   },
   {
     path: "/archives",
@@ -91,7 +90,7 @@ const dashboardRoutes = [
     icon: Unarchive,
     component: Archives,
     layout: "/admin",
-    admin:true
+    admin: 1
   },
   {
     path: "/user",
@@ -100,7 +99,7 @@ const dashboardRoutes = [
     icon: Person,
     component: UserProfile,
     layout: "/admin",
-    admin:true
+    admin: 1
   },
   {
     path: "/studentTable",
@@ -109,7 +108,7 @@ const dashboardRoutes = [
     icon: "content_paste",
     component: studentTable,
     layout: "/admin",
-    supervisor:true
+    supervisor: 1
   },
   {
     path: "/profile",
@@ -118,7 +117,7 @@ const dashboardRoutes = [
     icon: Person,
     component: Profile,
     layout: "/admin",
-    supervisor:true
+    supervisor: 1
   },
   {
     path: "/progress",

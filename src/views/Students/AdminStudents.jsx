@@ -11,8 +11,10 @@ import CardBody from "components/Card/CardBody.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
+import Delete from "@material-ui/icons/Delete";
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
+import Button from "components/CustomButtons/Button.jsx";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -142,7 +144,7 @@ class AdminStudents extends React.Component {
                             aria-label="Close"
                             className={classes.tableActionButton}
                           >
-                            <Close
+                            <Delete
                               className={
                                 classes.tableActionButtonIcon +
                                 " " +
@@ -188,7 +190,7 @@ class AdminStudents extends React.Component {
                             aria-label="Close"
                             className={classes.tableActionButton}
                           >
-                            <Close
+                            <Delete
                               className={
                                 classes.tableActionButtonIcon +
                                 " " +
@@ -204,6 +206,9 @@ class AdminStudents extends React.Component {
               </div>
             </CardBody>
           </Card>
+          <Button>
+            <NavLink to="/admin/students" color="primary"> New Student</NavLink>
+          </Button>
         </GridItem>
       </GridContainer>
     );

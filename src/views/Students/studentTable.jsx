@@ -13,6 +13,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -80,11 +82,20 @@ const styles = {
   },
   left: {
     flexDirection: "row"
-  }
+  },
+  test: {
+    fontFamily: "sans-serif",
+    color: "#fff"
+}
 };
 
 class StudentTable extends React.Component {
+
   render() {
+    function goToEdit(e) {
+      e.preventDefault();
+    }
+
     const { classes } = this.props;
     return (
       <GridContainer justify="center">
@@ -129,6 +140,7 @@ class StudentTable extends React.Component {
                                 " " +
                                 classes.edit
                               }
+
                             />
                           </IconButton>
                         </Tooltip>
@@ -156,6 +168,7 @@ class StudentTable extends React.Component {
                                 " " +
                                 classes.edit
                               }
+                              onClick={goToEdit}
                             />
                           </IconButton>
                         </Tooltip>

@@ -2,7 +2,6 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Close from "@material-ui/icons/Close";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -14,6 +13,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
+import Delete from "@material-ui/icons/Delete";
 
 const styles = {
   cardCategoryWhite: {
@@ -154,11 +154,9 @@ class Archives extends React.Component {
                             aria-label="Close"
                             className={classes.tableActionButton}
                           >
-                            <Close
+                            <Delete
                               className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.close
+                                classes.tableActionButtonIcon + " " + classes.delete
                               }
                             />
                           </IconButton>
@@ -200,11 +198,9 @@ class Archives extends React.Component {
                             aria-label="Close"
                             className={classes.tableActionButton}
                           >
-                            <Close
+                            <Delete
                               className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.close
+                                classes.tableActionButtonIcon + " " + classes.delete
                               }
                             />
                           </IconButton>

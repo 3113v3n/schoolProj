@@ -11,7 +11,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+
 
 import routes from "routes.js";
 
@@ -23,16 +23,19 @@ import logo from "assets/img/reactlogo.png";
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/admin" ) {
         return (
+
           <Route
-            path={prop.layout + prop.path}
+            path={prop.layout + prop.path }
             component={prop.component}
             key={key}
           />
         );
       }
+
     })}
+
   </Switch>
 );
 
@@ -44,7 +47,8 @@ class Dashboard extends React.Component {
       color: "blue",
       hasImage: true,
       fixedClasses: "dropdown show",
-      mobileOpen: false
+      mobileOpen: false,
+
     };
   }
   handleImageClick = image => {
@@ -93,9 +97,9 @@ class Dashboard extends React.Component {
     return (
 
       <div className={classes.wrapper}>
-        <Sidebar
+          <Sidebar
           routes={routes}
-          logoText={"Creative Tim"}
+          logoText={ "Admin"}
           logo={logo}
           image={this.state.image}
           handleDrawerToggle={this.handleDrawerToggle}
@@ -119,14 +123,7 @@ class Dashboard extends React.Component {
             <div className={classes.map}>{switchRoutes}</div>
           )}
           {this.getRoute() ? <Footer /> : null}
-          <FixedPlugin
-            handleImageClick={this.handleImageClick}
-            handleColorClick={this.handleColorClick}
-            bgColor={this.state["color"]}
-            bgImage={this.state["image"]}
-            handleFixedClick={this.handleFixedClick}
-            fixedClasses={this.state.fixedClasses}
-          />
+
         </div>
       </div>
     );
