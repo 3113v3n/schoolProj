@@ -14,6 +14,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
+import { asyncRequest } from "../../services/requests.js";
 
 const styles = {
   cardCategoryWhite: {
@@ -188,27 +189,14 @@ class allocations extends React.Component {
     };
   }
   componentDidMount() {
-    this.fetchStudents();
+    asyncRequest("students.json").then(responseJson => {
+      this.setState({
+        data: responseJson.Students,
+        isLoading: true
+      });
+    });
   }
 
-  fetchStudents() {
-    fetch("http://localhost:80/students.json")
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            data: result.Students,
-            isLoading: true
-          });
-        },
-        error => {
-          this.setState({
-            isLoading: true,
-            error
-          });
-        }
-      );
-  }
   render() {
     const { classes } = this.props;
     const { isLoading, data, error } = this.state;
