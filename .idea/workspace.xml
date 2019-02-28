@@ -4,9 +4,10 @@
     <list default="true" id="914aa227-b7fb-49f3-8025-e0e08208d863" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Allocation/allocations.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Allocation/allocations.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Forms/Progress/Progress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/Progress/Progress.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Students/AdminStudents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Students/AdminStudents.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Students/studentTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Students/studentTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Forms/Projects/Projects.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/Projects/Projects.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/UserProfile/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/UserProfile/UserProfile.jsx" afterDir="false" />
@@ -25,8 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1833">
-              <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+            <state relative-caret-position="612">
+              <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
               <folding>
                 <element signature="e#22#75#0" expanded="true" />
                 <element signature="e#281#339#0" expanded="true" />
@@ -36,23 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/Forms/Progress/Progress.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-              <folding>
-                <element signature="e#163#215#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="18" selection-start-line="18" selection-end-line="19" />
+              <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
                 <element signature="e#547#618#0" expanded="true" />
@@ -64,7 +53,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Archives/Archives.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
+            <state relative-caret-position="18">
               <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
               <folding>
                 <element signature="e#162#214#0" expanded="true" />
@@ -75,49 +64,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/TableList/TableList.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+              <folding>
+                <element signature="e#140#192#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Allocation/allocations.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-93">
-              <caret line="194" column="11" selection-start-line="194" selection-start-column="11" selection-end-line="194" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/layouts/Admin.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-11">
-              <caret line="26" column="16" lean-forward="true" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#21#47#0" expanded="true" />
-                <element signature="e#177#226#0" expanded="true" />
-                <element signature="e#394#445#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Students/studentTable.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="103" selection-end-column="5" />
-              <folding>
-                <element signature="e#141#193#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Students/AdminStudents.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="209" column="39" selection-start-line="209" selection-start-column="39" selection-end-line="209" selection-end-column="39" />
-              <folding>
-                <element signature="e#140#193#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="136">
+              <caret line="194" column="24" selection-start-line="194" selection-start-column="24" selection-end-line="194" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -125,23 +87,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-360">
-              <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="53" />
+            <state relative-caret-position="468">
+              <caret line="119" column="23" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
               <folding>
                 <element signature="e#140#197#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="65" column="20" lean-forward="true" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
-              <folding>
-                <element signature="e#59#120#0" expanded="true" />
-                <element signature="e#195#247#0" expanded="true" />
+                <element signature="e#531#583#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -165,7 +115,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/views/Supervisor/Table/Table.jsx" />
-        <option value="$PROJECT_DIR$/src/views/Forms/Projects/Projects.jsx" />
         <option value="$PROJECT_DIR$/src/views/Forms/Students/Students.jsx" />
         <option value="$PROJECT_DIR$/src/views/Forms/Supervisors/Supervisor.jsx" />
         <option value="$PROJECT_DIR$/src/components/CustomInput/CustomNumberInput.jsx" />
@@ -182,16 +131,18 @@
         <option value="$PROJECT_DIR$/src/route.js" />
         <option value="$PROJECT_DIR$/src/components/Navbars/Navbar.jsx" />
         <option value="$PROJECT_DIR$/src/views/Archives/Archives.jsx" />
-        <option value="$PROJECT_DIR$/src/routes.js" />
         <option value="$PROJECT_DIR$/src/layouts/Admin.jsx" />
-        <option value="$PROJECT_DIR$/src/views/Allocation/allocations.jsx" />
-        <option value="$PROJECT_DIR$/src/views/UserProfile/UserProfile.jsx" />
-        <option value="$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx" />
-        <option value="$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx" />
         <option value="$PROJECT_DIR$/src/views/Students/studentTable.jsx" />
-        <option value="$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx" />
         <option value="$PROJECT_DIR$/src/views/Students/AdminStudents.jsx" />
         <option value="$PROJECT_DIR$/src/views/Forms/Progress/Progress.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx" />
+        <option value="$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx" />
+        <option value="$PROJECT_DIR$/src/views/UserProfile/UserProfile.jsx" />
+        <option value="$PROJECT_DIR$/src/routes.js" />
+        <option value="$PROJECT_DIR$/src/views/Forms/Projects/Projects.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Fetch/FetchRequests.js" />
+        <option value="$PROJECT_DIR$/src/views/Allocation/allocations.jsx" />
       </list>
     </option>
   </component>
@@ -209,7 +160,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -233,15 +183,7 @@
               <item name="material-dashboard-react-v1.6.0" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Forms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="material-dashboard-react-v1.6.0" type="b2602c69:ProjectViewProjectNode" />
-              <item name="material-dashboard-react-v1.6.0" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Forms" type="462c0819:PsiDirectoryNode" />
-              <item name="Progress" type="462c0819:PsiDirectoryNode" />
+              <item name="Notifications" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="material-dashboard-react-v1.6.0" type="b2602c69:ProjectViewProjectNode" />
@@ -255,12 +197,21 @@
               <item name="material-dashboard-react-v1.6.0" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="UserProfile" type="462c0819:PsiDirectoryNode" />
+              <item name="Supervisor" type="462c0819:PsiDirectoryNode" />
+              <item name="Table" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="material-dashboard-react-v1.6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="material-dashboard-react-v1.6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="TableList" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -299,17 +250,18 @@
       <workItem from="1551188757119" duration="4126000" />
       <workItem from="1551193564255" duration="14612000" />
       <workItem from="1551254392611" duration="18052000" />
+      <workItem from="1551354472410" duration="5427000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46671000" />
+    <option name="totallyTimeSpent" value="59204000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4992636" visible="true" weight="0.1863388" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4992636" visible="true" weight="0.1863388" />
       <window_info id="Structure" order="1" sideWeight="0.50073636" side_tool="true" weight="0.1863388" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -323,7 +275,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.26673865" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.8077754" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -388,29 +340,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/TableList/TableList.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-90">
-          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-          <folding>
-            <element signature="e#140#192#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/UpgradeToPro/UpgradeToPro.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2592" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Forms/Projects/Projects.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="34" column="14" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="14" />
-          <folding>
-            <element signature="e#140#192#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Forms/Students/Students.jsx">
@@ -546,13 +478,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/route.js" />
-    <entry file="file://$PROJECT_DIR$/src/views/UserProfile/UserProfile.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="176" column="10" lean-forward="true" selection-start-line="176" selection-start-column="10" selection-end-line="176" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/layouts/Admin.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-11">
@@ -566,39 +491,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Archives/Archives.jsx">
+    <entry file="file://$PROJECT_DIR$/src/views/Forms/Projects/Projects.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="89" column="40" selection-start-line="89" selection-start-column="40" selection-end-line="89" selection-end-column="40" />
+          <folding>
+            <element signature="e#140#192#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Forms/Progress/Progress.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
-          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <caret line="199" column="62" lean-forward="true" selection-start-line="199" selection-start-column="62" selection-end-line="199" selection-end-column="62" />
           <folding>
-            <element signature="e#162#214#0" expanded="true" />
-            <element signature="e#463#511#0" expanded="true" />
+            <element signature="e#163#215#0" expanded="true" />
+            <element signature="e#463#528#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Allocation/allocations.jsx">
+    <entry file="file://$PROJECT_DIR$/src/views/UserProfile/UserProfile.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-93">
-          <caret line="194" column="11" selection-start-line="194" selection-start-column="11" selection-end-line="194" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="18" selection-start-line="18" selection-end-line="19" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#547#618#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="65" column="20" lean-forward="true" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
+        <state relative-caret-position="303">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
           <folding>
             <element signature="e#59#120#0" expanded="true" />
             <element signature="e#195#247#0" expanded="true" />
@@ -606,24 +523,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes.js">
+    <entry file="file://$PROJECT_DIR$/src/views/Supervisor/Profile/Profile.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1833">
-          <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+        <state relative-caret-position="324">
+          <caret line="99" column="22" lean-forward="true" selection-end-line="135" />
           <folding>
-            <element signature="e#22#75#0" expanded="true" />
-            <element signature="e#281#339#0" expanded="true" />
-            <element signature="e#418#475#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360">
-          <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="53" />
-          <folding>
-            <element signature="e#140#197#0" expanded="true" />
+            <element signature="e#59#120#0" expanded="true" />
+            <element signature="e#195#247#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -638,23 +544,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Notifications/Notifications.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4877">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#235#287#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Students/studentTable.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="393">
-          <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="103" selection-end-column="5" />
+          <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
           <folding>
             <element signature="e#141#193#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Forms/Progress/Progress.jsx">
+    <entry file="file://$PROJECT_DIR$/src/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        <state relative-caret-position="612">
+          <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
           <folding>
-            <element signature="e#163#215#0" expanded="true" />
+            <element signature="e#22#75#0" expanded="true" />
+            <element signature="e#281#339#0" expanded="true" />
+            <element signature="e#418#475#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Supervisor/Table/superTable.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="119" column="23" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
+          <folding>
+            <element signature="e#140#197#0" expanded="true" />
+            <element signature="e#531#583#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Fetch/FetchRequests.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#547#618#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Archives/Archives.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding>
+            <element signature="e#162#214#0" expanded="true" />
+            <element signature="e#463#511#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/TableList/TableList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+          <folding>
+            <element signature="e#140#192#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Allocation/allocations.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="194" column="24" selection-start-line="194" selection-start-column="24" selection-end-line="194" selection-end-column="24" />
         </state>
       </provider>
     </entry>

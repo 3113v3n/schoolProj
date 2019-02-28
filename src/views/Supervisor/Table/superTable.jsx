@@ -75,7 +75,7 @@ function superTable(props) {
                   "Dr. Salesio",
                   "salesio@gmail.com",
                   "degree",
-                  " 0",
+                  " N/A",
                   <TableCell className={classes.tableActions} key={Tooltip.id}>
                     <Tooltip
                       id="tooltip-top"
@@ -117,7 +117,7 @@ function superTable(props) {
                   "2",
                   "Mr. Kariuki",
                   "dkariuki50@gmail.com",
-                  " 0",
+                  " N/A",
                   "diploma",
                   <TableCell className={classes.tableActions} key={Tooltip.id}>
                     <Tooltip

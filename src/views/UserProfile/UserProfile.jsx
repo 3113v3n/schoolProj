@@ -12,9 +12,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-
+import Person from "@material-ui/icons/Person";
 import avatar from "assets/img/faces/marc.jpg";
-import { NavLink } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -48,18 +47,6 @@ function UserProfile(props) {
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Company (disabled)"
-                    id="company-disabled"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: true
-                    }}
-                  />
-                </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
                     labelText="Username"
@@ -79,49 +66,19 @@ function UserProfile(props) {
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="City"
-                    id="city"
+                    labelText="New Password"
+                    id="password"
                     formControlProps={{
                       fullWidth: true
                     }}
                   />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Country"
-                    id="country"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
+                    labelText="Confirm New Password"
+                    id="password"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -146,7 +103,9 @@ function UserProfile(props) {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
+              <Button color="primary" round><Person/>
+                Update Profile
+              </Button>
             </CardFooter>
           </Card>
         </GridItem>
@@ -158,18 +117,13 @@ function UserProfile(props) {
               </a>
             </CardAvatar>
             <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
+              <h6 className={classes.cardCategory}>ADMIN</h6>
+              <h4 className={classes.cardTitle}>SIDNEY REEZY</h4>
               <p className={classes.description}>
                 Don't be scared of the truth because we need to restart the
                 human foundation in truth And I love you like Kanye loves Kanye
                 I love Rick Owens’ bed design but the back is...
               </p>
-              <NavLink to="">
-                <Button color="primary" round>
-                  Follow
-                </Button>
-              </NavLink>
             </CardBody>
           </Card>
         </GridItem>

@@ -13,6 +13,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "components/CheckBox/CheckBox.jsx";
 import { NavLink } from "react-router-dom";
+import Button from "../../../components/CustomButtons/Button";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -85,7 +86,9 @@ class Projects extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <NavLink to="/supervisor">Update Projects</NavLink>
+                <NavLink to="/supervisor">
+                  <Button color="primary" round>Update Project</Button>
+                </NavLink>
               </CardFooter>
             </Card>
           </GridItem>

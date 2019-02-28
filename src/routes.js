@@ -45,7 +45,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: LibraryBooks,
     component: Projects,
-    layout: "/admin"
+    layout: "/admin",
+    admin: 1
   },
   {
     path: "/superTable",

@@ -12,7 +12,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-
+import Person from "@material-ui/icons/Person";
 import avatar from "assets/img/faces/marc.jpg";
 
 const styles = {
@@ -103,7 +103,7 @@ function Profile(props) {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary" round>
+              <Button color="primary" round><Person/>
                 Update Profile
               </Button>
             </CardFooter>

@@ -178,10 +178,6 @@ class allocations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentName: "Michael Scorfield",
-      supervisor: "Link",
-      proj_Code: " KCA 3019",
-      myDate: "2019-03-12",
       isLoading: false,
       data: [],
       error: null
