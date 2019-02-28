@@ -24,7 +24,7 @@ const Sidebar = ({ ...props }) => {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
 
-  const { classes, color, logo, image, logoText, routes } = props;
+  const { classes, color, image, logoText, routes } = props;
   const filterRoutes = routes.filter(function(el) {
     if (role === "Supervisor") {
       //change route according to Role
@@ -90,18 +90,12 @@ const Sidebar = ({ ...props }) => {
     </List>
   );
   let brand = (
-    <div className={classes.logo}>
-      <a
-        href="https://www.creative-tim.com"
-        className={classNames(classes.logoLink, {
-          [classes.logoLinkRTL]: props.rtlActive
-        })}
-      >
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
-        {logoText}
-      </a>
+    <div
+      className={classNames(classes.logoLink, classes.logo, {
+        [classes.logoLinkRTL]: props.rtlActive
+      })}
+    >
+      {logoText}
     </div>
   );
   return (
