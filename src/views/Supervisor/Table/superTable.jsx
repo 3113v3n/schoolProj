@@ -2,21 +2,8 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-import Button from "components/CustomButtons/Button.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-/////////////
-import TableCell from "@material-ui/core/TableCell";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
-import PersonAdd from "@material-ui/icons/PersonAdd";
-import Delete from "@material-ui/icons/Delete";
-import { NavLink } from "react-router-dom";
+import SuperTableComponent from "./SuperTableComponent.jsx";
+import { asyncRequest } from "../../../services/requests";
 
 const styles = {
   cardCategoryWhite: {
@@ -48,127 +35,46 @@ const styles = {
   }
 };
 
-function superTable(props) {
-  const { classes } = props;
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>SuperVisors Table</h4>
-            <p className={classes.cardCategoryWhite}>SuperVisors </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={[
-                "ID",
-                "Name",
-                "Email",
-                "Degree",
-                "Diploma",
-                "Actions"
-              ]}
-              tableData={[
-                [
-                  "1",
-                  "Dr. Salesio",
-                  "salesio@gmail.com",
-                  "degree",
-                  " N/A",
-                  <TableCell className={classes.tableActions} key={Tooltip.id}>
-                    <Tooltip
-                      id="tooltip-top"
-                      title="Edit Task"
-                      placement="top"
-                      classes={{ tooltip: classes.tooltip }}
-                    >
-                      <IconButton
-                        aria-label="Edit"
-                        className={classes.tableActionButton}
-                      >
-                        <Edit
-                          className={
-                            classes.tableActionButtonIcon + " " + classes.edit
-                          }
-                        />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip
-                      id="tooltip-top-start"
-                      title="Remove"
-                      placement="top"
-                      classes={{ tooltip: classes.tooltip }}
-                    >
-                      <IconButton
-                        aria-label="Delete"
-                        className={classes.tableActionButton}
-                      >
-                        <Delete
-                          className={
-                            classes.tableActionButtonIcon + " " + classes.delete
-                          }
-                        />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                ],
-                [
-                  "2",
-                  "Mr. Kariuki",
-                  "dkariuki50@gmail.com",
-                  " N/A",
-                  "diploma",
-                  <TableCell className={classes.tableActions} key={Tooltip.id}>
-                    <Tooltip
-                      id="tooltip-top"
-                      title="Edit Task"
-                      placement="top"
-                      classes={{ tooltip: classes.tooltip }}
-                    >
-                      <IconButton
-                        aria-label="Edit"
-                        className={classes.tableActionButton}
-                      >
-                        <Edit
-                          className={
-                            classes.tableActionButtonIcon + " " + classes.edit
-                          }
-                        />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip
-                      id="tooltip-top-start"
-                      title="Remove"
-                      placement="top"
-                      classes={{ tooltip: classes.tooltip }}
-                    >
-                      <IconButton
-                        aria-label="Delete"
-                        className={classes.tableActionButton}
-                      >
-                        <Delete
-                          className={
-                            classes.tableActionButtonIcon + " " + classes.delete
-                          }
-                        />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                ]
-              ]}
-            />
-          </CardBody>
-        </Card>
 
-        <NavLink to="/admin/supervisor">
-          <Button type="button" color="primary" round>
-            <PersonAdd /> Add Supervisor
-          </Button>
-        </NavLink>
-      </GridItem>
-    </GridContainer>
-  );
+class superTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: [],
+      error: null
+    };
+  }
+  componentDidMount() {
+    asyncRequest("supervisor.json").then(responseJson => {
+      this.setState({
+        data: responseJson.supervisors,
+        isLoading: true,
+        error: null
+      });
+    });
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { isLoading, data, error } = this.state;
+    if (error) {
+      return (
+        <div>
+          Error:
+          {error.message}
+        </div>
+      );
+    } else if (!isLoading) {
+      return <div> Loading...</div>;
+    } else {
+      return (
+        <div>
+          <SuperTableComponent classes={classes} data={data} />
+        </div>
+      );
+    }
+  }
 }
 
 export default withStyles(styles)(superTable);

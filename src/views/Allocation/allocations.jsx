@@ -188,7 +188,8 @@ class allocations extends React.Component {
     asyncRequest("students.json").then(responseJson => {
       this.setState({
         data: responseJson.Students,
-        isLoading: true
+        isLoading: true,
+        error: null
       });
     });
   }
