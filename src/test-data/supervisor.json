@@ -1,0 +1,11 @@
+{
+"supervisors":[
+     {"id":"123ns","name":"Mr. Gitau","email":"gitaucharles@gmail.com","degree":"degree","diploma":"N/A"},
+     {"id":"1 hs","name":"Dr. Salesio","email":"salesiorichard@gmail.com","degree":"degree","diploma":"diploma"},
+     {"id":"Cg373","name":"Mr. Kariuki","email":"kariukijames@ymail.com","degree":"N/A","diploma":"diploma"},
+     {"id":"11dc","name":"Mr. Muasya","email":"muasya1978@gmail.com","degree":"degree","diploma":"N/A"},
+     {"id":"scci/01157","name":"Mrs. Ngaruiya","email":"ngaruiya32@gmail.com","degree":"degree","diploma":"N/A"},
+     {"id":"AbQ23","name":"Night King","email":"whitewalker14@yahoomail.com","degree":"N/A","diploma":"diploma"},
+     {"id":"KJ8900","name":"Mrs. Cersei","email":"cerseilanister@gmail.com","degree":"degree","diploma":"diploma"}
+    ]
+}
