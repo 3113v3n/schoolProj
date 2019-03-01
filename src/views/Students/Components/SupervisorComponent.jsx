@@ -1,14 +1,19 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-// @material-ui/icons
 // core components
+
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-////////////////////////////
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Edit from "@material-ui/icons/Edit";
+
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -77,21 +82,27 @@ const styles = {
   },
   left: {
     flexDirection: "row"
+  },
+  test: {
+    fontFamily: "sans-serif",
+    color: "#fff"
   }
 };
 
-//function UpgradeToPro(props)
-class Archives extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Sname: "Sidney Reezy",
-      super: " Mr. Gitau",
-      code: " 200",
-      date: "20-12-2018"
-    };
-  }
+class StudentTable extends React.Component {
+  state = {
+    toEditScreen: false
+  };
+  goToEdit = () => {
+    this.setState({
+      toEditScreen: true
+    });
+  };
   render() {
+    if (this.state.toEditScreen === true) {
+      return <Redirect to="/admin/progress" />;
+    }
+
     const { classes } = this.props;
     return (
       <GridContainer justify="center">
@@ -110,20 +121,65 @@ class Archives extends React.Component {
                       <th>Supervisor</th>
                       <th>ProjCode</th>
                       <th>Date-Registered</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className={classes.center}>
                       <td>Sidney Omondi</td>
-                      <td>Mr</td>
-                      <td>{this.state.code}</td>
-                      <td>{this.state.date}</td>
+                      <td>Mr. Gitau</td>
+                      <td>KCA 200</td>
+                      <td>28-03-2018</td>
+                      <td className={classes.left}>
+                        <Tooltip
+                          id="tooltip-top"
+                          title="Edit Task"
+                          placement="top"
+                          classes={{ tooltip: classes.tooltip }}
+                        >
+                          <IconButton
+                            aria-label="Edit"
+                            className={classes.tableActionButton}
+                          >
+                            <Edit
+                              className={
+                                classes.tableActionButtonIcon +
+                                " " +
+                                classes.edit
+                              }
+                              onClick={this.goToEdit}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
                     </tr>
                     <tr className={classes.center}>
                       <td>Evans Kiragu</td>
                       <td>Dr. Salesio</td>
-                      <td>302</td>
+                      <td>30278</td>
                       <td>11-08-2018</td>
+                      <td className={classes.left}>
+                        <Tooltip
+                          id="tooltip-top"
+                          title="Edit Task"
+                          placement="top"
+                          classes={{ tooltip: classes.tooltip }}
+                        >
+                          <IconButton
+                            aria-label="Edit"
+                            className={classes.tableActionButton}
+                          >
+                            <Edit
+                              className={
+                                classes.tableActionButtonIcon +
+                                " " +
+                                classes.edit
+                              }
+                              onClick={this.goToEdit}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -135,5 +191,8 @@ class Archives extends React.Component {
     );
   }
 }
+export default withStyles(styles)(StudentTable);
 
-export default withStyles(styles)(Archives);
+StudentTable.propTypes = {
+  classes: PropTypes.object.isRequired
+};

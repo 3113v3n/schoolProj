@@ -20,8 +20,6 @@ import allocations from "views/Allocation/allocations.jsx";
 import studentTable from "./views/Students/studentTable";
 import Profile from "./views/Supervisor/Profile/Profile";
 import Progress from "./views/Forms/Progress/Progress";
-///Login
-import AdminLogin from "views/Forms/Login/AdminLogin.jsx";
 
 const dashboardRoutes = [
   {
@@ -131,16 +129,6 @@ const dashboardRoutes = [
     component: Progress,
     layout: "/admin",
     invisible: true
-  },
-  {
-    path: "/adminLogin",
-    name: "Admin Login",
-    icon: Person,
-    component: AdminLogin,
-    layout: "/admin",
-    admin: 1,
-    supervisor: 1,
-    adminLog: true
   }
 ];
 

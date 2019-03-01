@@ -4,7 +4,6 @@ import React from "react";
 import SuperTableComponent from "./SuperTableComponent.jsx";
 import { asyncRequest } from "../../../services/requests";
 
-
 class superTable extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +38,7 @@ class superTable extends React.Component {
     } else {
       return (
         <div>
-          <SuperTableComponent  data={data} />
+          <SuperTableComponent data={data} />
         </div>
       );
     }
