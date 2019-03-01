@@ -51,7 +51,7 @@ const dashboardRoutes = [
   },
   {
     path: "/superTable",
-    name: "SuperVisor Table",
+    name: "Supervisor Table",
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
     component: superTable,
@@ -60,7 +60,7 @@ const dashboardRoutes = [
   },
   {
     path: "/adminStudents",
-    name: "AdminStudents",
+    name: "Students",
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
     component: AdminStudents,
