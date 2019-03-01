@@ -2,11 +2,10 @@ import React from "react";
 import SupervisorComponent from "./Components/SupervisorComponent.jsx";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-<<<<<<< HEAD
+
 import { asyncRequest } from "../../services/requests.js";
 // @material-ui/core components
-=======
->>>>>>> e53f9ea2342954bdd7353388a9defb77a6e6693f
+
 
 class StudentTable extends React.Component {
   state = {

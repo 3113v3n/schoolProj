@@ -31,13 +31,10 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none"
-<<<<<<< HEAD
   },
   Container: {
     paddingLeft: "37%",
     paddingTop: "10%"
-=======
->>>>>>> e53f9ea2342954bdd7353388a9defb77a6e6693f
   }
 };
 
