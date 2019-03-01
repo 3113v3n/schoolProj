@@ -16,7 +16,7 @@ class AdminStudents extends React.Component {
   componentDidMount() {
     asyncRequest("students.json").then(responseJson => {
       this.setState({
-        data: responseJson.supervisors,
+        data: responseJson.Students,
         isLoading: true,
         error: null
       });

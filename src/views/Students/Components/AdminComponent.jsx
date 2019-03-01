@@ -15,6 +15,7 @@ import Delete from "@material-ui/icons/Delete";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import Button from "components/CustomButtons/Button.jsx";
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -86,7 +87,7 @@ const styles = {
 };
 
 function AdminComponent(props) {
-  const { classes } = props;
+  const { classes, data } = props;
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={12}>
@@ -100,102 +101,62 @@ function AdminComponent(props) {
               <table className={classes.table}>
                 <thead>
                   <tr>
-                    <th>StudentName</th>
-                    <th>Supervisor</th>
-                    <th>ProjCode</th>
-                    <th>Date-Registered</th>
+                    <th>Adm Number</th>
+                    <th>Student Name</th>
+                    <th>Project Code</th>
+                    <th>Date Registered</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className={classes.center}>
-                    <td>Sidney Omondi</td>
-                    <td>Mr. Gitau</td>
-                    <td>KCA 200</td>
-                    <td>28-03-2018</td>
-                    <td className={classes.left}>
-                      <Tooltip
-                        id="tooltip-top"
-                        title="Edit Task"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Edit"
-                          className={classes.tableActionButton}
+                  {data.map(Students => (
+                    <tr className={classes.center} key={Students.admissionNo}>
+                      <td>{Students.admissionNo}</td>
+                      <td>{Students.studentName}</td>
+                      <td>{Students.projectCode}</td>
+                      <td>{Students.dateRegistered}</td>
+                      <td className={classes.left}>
+                        <Tooltip
+                          id="tooltip-top"
+                          title="Edit Task"
+                          placement="top"
+                          classes={{ tooltip: classes.tooltip }}
                         >
-                          <Edit
-                            className={
-                              classes.tableActionButtonIcon + " " + classes.edit
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        id="tooltip-top-start"
-                        title="Remove"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Close"
-                          className={classes.tableActionButton}
+                          <IconButton
+                            aria-label="Edit"
+                            className={classes.tableActionButton}
+                          >
+                            <Edit
+                              className={
+                                classes.tableActionButtonIcon +
+                                " " +
+                                classes.edit
+                              }
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip
+                          id="tooltip-top-start"
+                          title="Remove"
+                          placement="top"
+                          classes={{ tooltip: classes.tooltip }}
                         >
-                          <Delete
-                            className={
-                              classes.tableActionButtonIcon +
-                              " " +
-                              classes.close
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                  <tr className={classes.center}>
-                    <td>Evans Kiragu</td>
-                    <td>Dr. Salesio</td>
-                    <td>30278</td>
-                    <td>11-08-2018</td>
-                    <td className={classes.left}>
-                      <Tooltip
-                        id="tooltip-top"
-                        title="Edit Task"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Edit"
-                          className={classes.tableActionButton}
-                        >
-                          <Edit
-                            className={
-                              classes.tableActionButtonIcon + " " + classes.edit
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        id="tooltip-top-start"
-                        title="Remove"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Close"
-                          className={classes.tableActionButton}
-                        >
-                          <Delete
-                            className={
-                              classes.tableActionButtonIcon +
-                              " " +
-                              classes.close
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
+                          <IconButton
+                            aria-label="Close"
+                            className={classes.tableActionButton}
+                          >
+                            <Delete
+                              className={
+                                classes.tableActionButtonIcon +
+                                " " +
+                                classes.close
+                              }
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -214,5 +175,6 @@ function AdminComponent(props) {
 export default withStyles(styles)(AdminComponent);
 
 AdminComponent.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  data: PropTypes.array
 };

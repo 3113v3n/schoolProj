@@ -2,19 +2,32 @@ import React from "react";
 import SupervisorComponent from "./Components/SupervisorComponent.jsx";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import { asyncRequest } from "../../services/requests.js";
 // @material-ui/core components
 
 class StudentTable extends React.Component {
   state = {
-    toEditScreen: false
+    toEditScreen: false,
+    isLoading: true,
+    data: [],
+    error: null
   };
   goToEdit = () => {
     this.setState({
       toEditScreen: true
     });
   }
+  componentDidMount() {
+    asyncRequest("students.json").then(responseJson => {
+      this.setState({
+        data: responseJson.Students,
+        isLoading: true,
+        error: null
+      });
+    });
+  }
   render() {
-    if(this.state.toEditScreen === true){
+    if (this.state.toEditScreen === true) {
       return <Redirect to="/admin/progress" />;
     }
 
@@ -31,7 +44,7 @@ class StudentTable extends React.Component {
     } else {
       return (
         <div>
-          <SupervisorComponent data={data} goToEdit={this.goToEdit} />
+          <SupervisorComponent data={data} goToEdit={() => this.goToEdit()} />
         </div>
       );
     }

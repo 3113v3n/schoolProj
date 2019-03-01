@@ -13,7 +13,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 
 import PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -89,47 +88,35 @@ const styles = {
   }
 };
 
-class StudentTable extends React.Component {
-  state = {
-    toEditScreen: false
-  };
-  goToEdit = () => {
-    this.setState({
-      toEditScreen: true
-    });
-  };
-  render() {
-    if (this.state.toEditScreen === true) {
-      return <Redirect to="/admin/progress" />;
-    }
-
-    const { classes } = this.props;
-    return (
-      <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Student Table</h4>
-              <p className={classes.cardCategoryWhite}>students </p>
-            </CardHeader>
-            <CardBody>
-              <div className={classes.tableUpgradeWrapper}>
-                <table className={classes.table}>
-                  <thead>
-                    <tr>
-                      <th>StudentName</th>
-                      <th>Supervisor</th>
-                      <th>ProjCode</th>
-                      <th>Date-Registered</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className={classes.center}>
-                      <td>Sidney Omondi</td>
-                      <td>Mr. Gitau</td>
-                      <td>KCA 200</td>
-                      <td>28-03-2018</td>
+function SupervisorComponent(props) {
+  const { classes, goToEdit, data } = props;
+  return (
+    <GridContainer justify="center">
+      <GridItem xs={12} sm={12} md={12}>
+        <Card>
+          <CardHeader color="primary">
+            <h4 className={classes.cardTitleWhite}>Student Table</h4>
+            <p className={classes.cardCategoryWhite}>students </p>
+          </CardHeader>
+          <CardBody>
+            <div className={classes.tableUpgradeWrapper}>
+              <table className={classes.table}>
+                <thead>
+                  <tr>
+                    <th>StudentName</th>
+                    <th>Supervisor</th>
+                    <th>ProjCode</th>
+                    <th>Date-Registered</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map(Students => (
+                    <tr className={classes.center} key={Students.studentName}>
+                      <td>{Students.studentName}</td>
+                      <td>{Students.supervisor}</td>
+                      <td>{Students.projectCode}</td>
+                      <td>{Students.dateRegistered}</td>
                       <td className={classes.left}>
                         <Tooltip
                           id="tooltip-top"
@@ -147,52 +134,26 @@ class StudentTable extends React.Component {
                                 " " +
                                 classes.edit
                               }
-                              onClick={this.goToEdit}
+                              onClick={() => goToEdit()}
                             />
                           </IconButton>
                         </Tooltip>
                       </td>
                     </tr>
-                    <tr className={classes.center}>
-                      <td>Evans Kiragu</td>
-                      <td>Dr. Salesio</td>
-                      <td>30278</td>
-                      <td>11-08-2018</td>
-                      <td className={classes.left}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Task"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                          >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                              onClick={this.goToEdit}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
-    );
-  }
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardBody>
+        </Card>
+      </GridItem>
+    </GridContainer>
+  );
 }
-export default withStyles(styles)(StudentTable);
+export default withStyles(styles)(SupervisorComponent);
 
-StudentTable.propTypes = {
-  classes: PropTypes.object.isRequired
+SupervisorComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  goToEdit: PropTypes.func,
+  data: PropTypes.object
 };

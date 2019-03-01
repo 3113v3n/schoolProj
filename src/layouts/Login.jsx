@@ -33,7 +33,7 @@ const styles = {
     textDecoration: "none"
   },
   Container: {
-    paddingLeft: "40%",
+    paddingLeft: "37%",
     paddingTop: "10%"
   }
 };
