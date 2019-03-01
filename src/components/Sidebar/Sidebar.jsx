@@ -16,7 +16,7 @@ import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
-var role = "Admin";
+var role = "Supervisor";
 
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
@@ -26,11 +26,15 @@ const Sidebar = ({ ...props }) => {
 
   const { classes, color, image, logoText, routes } = props;
   const filterRoutes = routes.filter(function(el) {
-    if (role === "Supervisor") {
-      //change route according to Role
-      return el.supervisor === 1;
-    } else if (role === "Admin") {
-      return el.admin === 1;
+    if (props.adminLog) {
+      return el.adminLog;
+    } else {
+      if (role === "Supervisor") {
+        //change route according to Role
+        return el.supervisor === 1;
+      } else if (role === "Admin") {
+        return el.admin === 1;
+      }
     }
   });
   let links = (

@@ -1,7 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputLabel from "@material-ui/core/InputLabel";
+
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -9,11 +9,9 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
-import avatar from "assets/img/faces/marc.jpg";
 
 const styles = {
   cardCategoryWhite: {
@@ -34,32 +32,23 @@ const styles = {
   }
 };
 
-function Profile(props) {
+function AdminLogin(props) {
   const { classes } = props;
   return (
     <div>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={5}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
+              <h4 className={classes.cardTitleWhite}>CREATE ACCOUNT</h4>
+              <p className={classes.cardCategoryWhite}>Enter Your Details</p>
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={3}>
+                <GridItem xs={12} sm={12} md={11}>
                   <CustomInput
-                    labelText="Username"
-                    id="username"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Email address"
-                    id="email-address"
+                    labelText="Staff-Id"
+                    id="regular"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -68,7 +57,7 @@ function Profile(props) {
               </GridContainer>
 
               <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={11}>
                   <CustomInput
                     labelText="New Password"
                     id="password"
@@ -85,46 +74,52 @@ function Profile(props) {
                   />
                 </GridItem>
               </GridContainer>
+            </CardBody>
+            <CardFooter>
+              <Button color="primary" round>
+                <Person />
+                REGISTER
+              </Button>
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader color="success">
+              <h4 className={classes.cardTitleWhite}>Login</h4>
+              <p className={classes.cardCategoryWhite}>Enter Your Details</p>
+            </CardHeader>
+            <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
+                <GridItem xs={12} sm={12} md={10}>
                   <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
+                    labelText="Staff-Id"
+                    id="regular"
                     formControlProps={{
                       fullWidth: true
                     }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
+                  />
+                </GridItem>
+              </GridContainer>
+
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={10}>
+                  <CustomInput
+                    labelText=" Password"
+                    id="password"
+                    formControlProps={{
+                      fullWidth: true
                     }}
                   />
                 </GridItem>
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary" round><Person/>
-                Update Profile
+              <Button color="success" round>
+                <Person />
+                Login
               </Button>
             </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src={avatar} alt="..." />
-              </a>
-            </CardAvatar>
-            <CardBody profile>
-              <h6 className={classes.cardCategory}>ADMIN</h6>
-              <h4 className={classes.cardTitle}>SIDNEY REEZY</h4>
-              <p className={classes.description}>
-                Don't be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
-              </p>
-            </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
@@ -132,4 +127,4 @@ function Profile(props) {
   );
 }
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(AdminLogin);

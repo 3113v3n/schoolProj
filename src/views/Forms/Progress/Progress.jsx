@@ -99,7 +99,7 @@ class Progress extends React.Component {
   };
   render() {
     if (this.state.toEditScreen === true) {
-      return <Redirect to="" />;
+      return <Redirect to="/admin/studentTable" />;
     }
     const { classes } = this.props;
     return (

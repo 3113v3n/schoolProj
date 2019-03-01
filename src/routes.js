@@ -15,10 +15,13 @@ import superTable from "views/Supervisor/Table/superTable.jsx";
 import AdminStudents from "views/Students/AdminStudents.jsx";
 import Archives from "views/Archives/Archives.jsx";
 import allocations from "views/Allocation/allocations.jsx";
+
+///Supervisor
 import studentTable from "./views/Students/studentTable";
 import Profile from "./views/Supervisor/Profile/Profile";
 import Progress from "./views/Forms/Progress/Progress";
-///Supervisor
+///Login
+import AdminLogin from "views/Forms/Login/AdminLogin.jsx";
 
 const dashboardRoutes = [
   {
@@ -45,7 +48,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: LibraryBooks,
     component: Projects,
-    layout: "/admin"
+    layout: "/admin",
+    admin: 1
   },
   {
     path: "/superTable",
@@ -127,6 +131,16 @@ const dashboardRoutes = [
     component: Progress,
     layout: "/admin",
     invisible: true
+  },
+  {
+    path: "/adminLogin",
+    name: "Admin Login",
+    icon: Person,
+    component: AdminLogin,
+    layout: "/admin",
+    admin: 1,
+    supervisor: 1,
+    adminLog: true
   }
 ];
 
