@@ -5,12 +5,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "components/CustomButtons/Button.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
+
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 /////////////
-import TableCell from "@material-ui/core/TableCell";
+
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
@@ -45,6 +45,46 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  tableUpgradeWrapper: {
+    display: "block",
+    width: "100%",
+    overflowX: "auto",
+    WebkitOverflowScrolling: "touch",
+    MsOverflowStyle: "-ms-autohiding-scrollbar"
+  },
+  table: {
+    width: "100%",
+    maxWidth: "100%",
+    marginBottom: "1rem",
+    backgroundColor: "transparent",
+    borderCollapse: "collapse",
+    display: "table",
+    borderSpacing: "2px",
+    borderColor: "grey",
+    "& thdead tr th": {
+      fontSize: "1.063rem",
+      padding: "12px 8px",
+      verticalAlign: "middle",
+      fontWeight: "300",
+      borderTopWidth: "0",
+      borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
+      textAlign: "inherit"
+    },
+    "& tbody tr td": {
+      padding: "12px 8px",
+      verticalAlign: "middle",
+      borderTop: "1px solid rgba(0, 0, 0, 0.06)"
+    },
+    "& td, & th": {
+      display: "table-cell"
+    }
+  },
+  center: {
+    textAlign: "center"
+  },
+  left: {
+    flexDirection: "row"
   }
 };
 function superTableComponent(props) {
@@ -58,30 +98,26 @@ function superTableComponent(props) {
             <p className={classes.cardCategoryWhite}>SuperVisors </p>
           </CardHeader>
           <CardBody>
-            {data.map(supervisor => (
-              <Table
-
-                tableHeaderColor="primary"
-                tableHead={[
-                  "ID",
-                  "Name",
-                  "Email",
-                  "Degree",
-                  "Diploma",
-                  "Actions"
-                ]}
-                key={supervisor.id}
-                tableData={[
-                  [
-                    supervisor.id,
-                    supervisor.name,
-                    supervisor.email,
-                    supervisor.degree,
-                    supervisor.diploma,
-                    <TableCell
-                      className={classes.tableActions}
-                      key={Tooltip.id}
-                    >
+            <table className={classes.table}>
+              <thead>
+                <tr>
+                  <th>Staff-Id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Degree</th>
+                  <th>Diploma</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map(supervisors => (
+                  <tr className={classes.center} key={supervisors.id}>
+                    <td>{supervisors.id}</td>
+                    <td>{supervisors.name}</td>
+                    <td>{supervisors.email}</td>
+                    <td>{supervisors.degree}</td>
+                    <td>{supervisors.diploma}</td>
+                    <td className={classes.left}>
                       <Tooltip
                         id="tooltip-top"
                         title="Edit Task"
@@ -106,23 +142,23 @@ function superTableComponent(props) {
                         classes={{ tooltip: classes.tooltip }}
                       >
                         <IconButton
-                          aria-label="Delete"
+                          aria-label="Close"
                           className={classes.tableActionButton}
                         >
                           <Delete
                             className={
                               classes.tableActionButtonIcon +
                               " " +
-                              classes.delete
+                              classes.close
                             }
                           />
                         </IconButton>
                       </Tooltip>
-                    </TableCell>
-                  ]
-                ]}
-              />
-            ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </CardBody>
         </Card>
 

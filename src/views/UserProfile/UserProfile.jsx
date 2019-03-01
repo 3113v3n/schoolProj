@@ -1,7 +1,6 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -47,7 +46,7 @@ function UserProfile(props) {
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={3}>
+                <GridItem xs={12} sm={12} md={8}>
                   <CustomInput
                     labelText="Username"
                     id="username"
@@ -56,7 +55,7 @@ function UserProfile(props) {
                     }}
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={8}>
                   <CustomInput
                     labelText="Email address"
                     id="email-address"
@@ -68,7 +67,7 @@ function UserProfile(props) {
               </GridContainer>
 
               <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={8}>
                   <CustomInput
                     labelText="New Password"
                     id="password"
@@ -85,25 +84,10 @@ function UserProfile(props) {
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary" round><Person/>
+              <Button color="primary" round>
+                <Person />
                 Update Profile
               </Button>
             </CardFooter>
@@ -119,11 +103,7 @@ function UserProfile(props) {
             <CardBody profile>
               <h6 className={classes.cardCategory}>ADMIN</h6>
               <h4 className={classes.cardTitle}>SIDNEY REEZY</h4>
-              <p className={classes.description}>
-                Don't be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
-              </p>
+              <h5 className={classes.cardTitle}>sydneyreezy@gmail.com</h5>
             </CardBody>
           </Card>
         </GridItem>

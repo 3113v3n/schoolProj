@@ -25,14 +25,6 @@ import AdminLogin from "views/Forms/Login/AdminLogin.jsx";
 
 const dashboardRoutes = [
   {
-    path: "/adminLogin",
-    name: "Admin Login",
-    icon: Person,
-    component: AdminLogin,
-    layout: "/admin",
-    admin: 1
-  },
-  {
     path: "/dashboard",
     name: "Dashboard",
     rtlName: "لوحة القيادة",
@@ -139,6 +131,16 @@ const dashboardRoutes = [
     component: Progress,
     layout: "/admin",
     invisible: true
+  },
+  {
+    path: "/adminLogin",
+    name: "Admin Login",
+    icon: Person,
+    component: AdminLogin,
+    layout: "/admin",
+    admin: 1,
+    supervisor: 1,
+    adminLog: true
   }
 ];
 
