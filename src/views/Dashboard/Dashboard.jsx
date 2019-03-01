@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
                     <Warning />
                   </Danger>
                   <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more space
+                    view students
                   </a>
                 </div>
               </CardFooter>

@@ -101,29 +101,17 @@ function AdminComponent(props) {
               <table className={classes.table}>
                 <thead>
                   <tr>
-<<<<<<< HEAD
-                    <th>Adm Number</th>
+                    <th>Admission</th>
                     <th>Student Name</th>
                     <th>Project Code</th>
                     <th>Date Registered</th>
-=======
-                    <th>Admission</th>
-                    <th>StudentName</th>
-                    <th>ProjCode</th>
-                    <th>Date-Registered</th>
->>>>>>> e307c402a3ab9fcbd924efa57534938a53122182
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.map(Students => (
-<<<<<<< HEAD
-                    <tr className={classes.center} key={Students.admissionNo}>
-                      <td>{Students.admissionNo}</td>
-=======
-                    <tr className={classes.center}>
+                    <tr className={classes.center} key={Students.studentName}>
                       <td>{Students.admNo}</td>
->>>>>>> e307c402a3ab9fcbd924efa57534938a53122182
                       <td>{Students.studentName}</td>
                       <td>{Students.projectCode}</td>
                       <td>{Students.dateRegistered}</td>
@@ -133,7 +121,6 @@ function AdminComponent(props) {
                           title="Edit Task"
                           placement="top"
                           classes={{ tooltip: classes.tooltip }}
-<<<<<<< HEAD
                         >
                           <IconButton
                             aria-label="Edit"
@@ -155,29 +142,6 @@ function AdminComponent(props) {
                           classes={{ tooltip: classes.tooltip }}
                         >
                           <IconButton
-=======
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                          >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
->>>>>>> e307c402a3ab9fcbd924efa57534938a53122182
                             aria-label="Close"
                             className={classes.tableActionButton}
                           >

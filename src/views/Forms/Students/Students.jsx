@@ -6,10 +6,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-
+import Person from "@material-ui/icons/Person";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-
+import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
@@ -86,7 +86,12 @@ class Students extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <NavLink to="/typography">Update Student </NavLink>
+                <NavLink to="/typography">
+                  <Button color="success" round>
+                    <Person />
+                    Update Students
+                  </Button>
+                </NavLink>
               </CardFooter>
             </Card>
           </GridItem>

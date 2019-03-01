@@ -20,9 +20,9 @@ class StudentTable extends React.Component {
     });
   }
   componentDidMount() {
-    asyncRequest("students.json").then(responseJson => {
+    asyncRequest("allocations2.json").then(responseJson => {
       this.setState({
-        data: responseJson.Students,
+        data: responseJson.Allocations,
         isLoading: true,
         error: null
       });

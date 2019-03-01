@@ -87,7 +87,9 @@ class Projects extends React.Component {
               </CardBody>
               <CardFooter>
                 <NavLink to="/supervisor">
-                  <Button color="primary" round>Update Project</Button>
+                  <Button color="success" round>
+                    Update Project
+                  </Button>
                 </NavLink>
               </CardFooter>
             </Card>

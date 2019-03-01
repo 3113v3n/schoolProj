@@ -111,12 +111,12 @@ function SupervisorComponent(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map(Students => (
-                    <tr className={classes.center} key={Students.studentName}>
-                      <td>{Students.studentName}</td>
-                      <td>{Students.supervisor}</td>
-                      <td>{Students.projectCode}</td>
-                      <td>{Students.dateRegistered}</td>
+                  {data.map(Allocations => (
+                    <tr className={classes.center} key={Allocations.studentName}>
+                      <td>{Allocations.studentName}</td>
+                      <td>{Allocations.supervisor}</td>
+                      <td>{Allocations.projectCode}</td>
+                      <td>{Allocations.dateRegistered}</td>
                       <td className={classes.left}>
                         <Tooltip
                           id="tooltip-top"

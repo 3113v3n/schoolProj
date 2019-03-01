@@ -1,19 +1,13 @@
 {
   "Students": [
-<<<<<<< HEAD
-    { "admissionNo": "150521", "studentName":"Sidney Omondi","projectCode":"ESC2525","dateRegistered":"2-Feb-2018"},
-    { "admissionNo": "150522", "studentName":"Paul Odera","projectCode":"KCA 002","dateRegistered":"2-July-2018"},
-    { "admissionNo": "150523", "studentName":"Felix Omondi","projectCode":"E#77","dateRegistered":"12-March-2018"},
-    { "admissionNo": "150524", "studentName":"Caroline Mutoko","projectCode":"kCA 036","dateRegistered":"21-March-2018"},
-    { "admissionNo": "150525", "studentName":"Kit Harington","projectCode":"GOT 08","dateRegistered":"14-April-2019"},
-    { "admissionNo": "150526", "studentName":"Arya Stark","projectCode":"Tu897","dateRegistered":"22-April-2019"}
-=======
+
+
     { "admNo": "150521", "studentName":"Sidney Omondi","projectCode":"ESC2525","dateRegistered":"2-Feb-2018"},
     { "admNo": "150522", "studentName":"Paul Odera","projectCode":"KCA 002","dateRegistered":"2-July-2018"},
     { "admNo": "150523", "studentName":"Felix Omondi","projectCode":"E#77","dateRegistered":"12-March-2018"},
     { "admNo": "150524", "studentName":"Caroline Mutoko","projectCode":"kCA 036","dateRegistered":"21-March-2018"},
     { "admNo": "150525", "studentName":"Kit Harington","projectCode":"GOT 08","dateRegistered":"14-April-2019"},
     { "admNo": "150526", "studentName":"Arya Stark","projectCode":"Tu897","dateRegistered":"22-April-2019"}
->>>>>>> e53f9ea2342954bdd7353388a9defb77a6e6693f
+
   ]
 }
