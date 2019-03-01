@@ -14,9 +14,9 @@ class allocations extends React.Component {
     };
   }
   componentDidMount() {
-    asyncRequest("students.json").then(responseJson => {
+    asyncRequest("allocations.json").then(responseJson => {
       this.setState({
-        data: responseJson.Students,
+        data: responseJson.Allocations,
         isLoading: true,
         error: null
       });
