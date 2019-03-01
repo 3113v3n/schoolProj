@@ -31,19 +31,15 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none"
-  },
-  Container: {
-    paddingLeft: "40%",
-    paddingTop: "10%"
   }
 };
 
 function Login(props) {
   const { classes } = props;
   return (
-    <div className={classes.Container}>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={5}>
+    <div>
+      <GridContainer container justify="center" alignItems="baseline">
+        <GridItem xs={12} sm={12} md={3}>
           <Card>
             <CardHeader color="success">
               <h4 className={classes.cardTitleWhite}>Login</h4>

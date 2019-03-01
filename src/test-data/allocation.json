@@ -1,0 +1,10 @@
+{
+	"Allocations":[
+		{"studentName":"Sidney Omondi","supervisor":"Mr. Gitau","projectCode":"ESC2525","dateRegistered":"2-Feb-2018"},
+		{"studentName":"Paul Odera","supervisor":"Dr. Owuor","projectCode":"KCA 002","dateRegistered":"2-July-2018"},
+		{"studentName":"Felix Omondi","supervisor":"Mr. Mwangi","projectCode":"E#77","dateRegistered":"12-March-2018"},
+		{"studentName":"Caroline Mutoko","supervisor":"Mrs Ngaruiya","projectCode":"kCA 036","dateRegistered":"21-March-2018"},
+		{"studentName":"Kit Harington","supervisor":"Night King","projectCode":"GOT 08","dateRegistered":"14-April-2019"},
+		{"studentName":"Arya Stark","supervisor":"George RR","projectCode":"Tu897","dateRegistered":"22-April-2019"}
+	]
+}
