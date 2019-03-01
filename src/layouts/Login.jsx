@@ -12,6 +12,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
+import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -29,65 +31,22 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none"
+  },
+  Container: {
+    paddingLeft: "40%",
+    paddingTop: "10%"
   }
 };
 
-function AdminLogin(props) {
+function Login(props) {
   const { classes } = props;
   return (
-    <div>
+    <div className={classes.Container}>
       <GridContainer>
         <GridItem xs={12} sm={12} md={5}>
           <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>CREATE ACCOUNT</h4>
-              <p className={classes.cardCategoryWhite}>Enter Your Details</p>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={11}>
-                  <CustomInput
-                    labelText="Staff-Id"
-                    id="regular"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={11}>
-                  <CustomInput
-                    labelText="New Password"
-                    id="password"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                  <CustomInput
-                    labelText="Confirm New Password"
-                    id="password"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <CardFooter>
-              <Button color="primary" round>
-                <Person />
-                REGISTER
-              </Button>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
             <CardHeader color="success">
               <h4 className={classes.cardTitleWhite}>Login</h4>
-              <p className={classes.cardCategoryWhite}>Enter Your Details</p>
             </CardHeader>
             <CardBody>
               <GridContainer>
@@ -115,10 +74,12 @@ function AdminLogin(props) {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="success" round>
-                <Person />
-                Login
-              </Button>
+              <NavLink to="/admin/dashboard">
+                <Button color="success" round>
+                  <Person />
+                  Login
+                </Button>
+              </NavLink>
             </CardFooter>
           </Card>
         </GridItem>
@@ -126,5 +87,7 @@ function AdminLogin(props) {
     </div>
   );
 }
-
-export default withStyles(styles)(AdminLogin);
+Login.propTypes = {
+  classes: PropTypes.object
+};
+export default withStyles(styles)(Login);

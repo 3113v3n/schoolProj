@@ -14,6 +14,7 @@
     "prettier": "1.16.4",
     "prop-types": "15.7.1",
     "react": "16.8.1",
+    "react-center": "^1.1.1",
     "react-chartist": "0.13.3",
     "react-dom": "16.8.1",
     "react-google-maps": "9.4.5",

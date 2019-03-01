@@ -10,11 +10,6 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 ////////////////////////////
 
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
-
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -115,7 +110,6 @@ class Archives extends React.Component {
                       <th>Supervisor</th>
                       <th>ProjCode</th>
                       <th>Date-Registered</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -124,88 +118,12 @@ class Archives extends React.Component {
                       <td>Mr</td>
                       <td>{this.state.code}</td>
                       <td>{this.state.date}</td>
-                      <td className={classes.left}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Task"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                          >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Close"
-                            className={classes.tableActionButton}
-                          >
-                            <Delete
-                              className={
-                                classes.tableActionButtonIcon + " " + classes.delete
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
                     </tr>
                     <tr className={classes.center}>
                       <td>Evans Kiragu</td>
                       <td>Dr. Salesio</td>
                       <td>302</td>
                       <td>11-08-2018</td>
-                      <td className={classes.left}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Task"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                          >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Close"
-                            className={classes.tableActionButton}
-                          >
-                            <Delete
-                              className={
-                                classes.tableActionButtonIcon + " " + classes.delete
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
