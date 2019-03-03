@@ -1,5 +1,5 @@
 import React from "react";
-import ArchiveComponent from "./ArchiveComponent.jsx";
+import ArchiveComponent from "../../views/Archives/ArchiveComponent.jsx";
 
 class Archives extends React.Component {
   constructor(props) {

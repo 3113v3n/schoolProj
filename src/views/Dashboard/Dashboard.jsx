@@ -20,19 +20,11 @@ import CardIcon from "components/Card/CardIcon.jsx";
 
 import CardFooter from "components/Card/CardFooter.jsx";
 
-
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Dashboard extends React.Component {
   state = {
     value: 0
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
   };
   render() {
     const { classes } = this.props;

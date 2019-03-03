@@ -9,9 +9,17 @@ import "assets/css/material-dashboard-react.css?v=1.6.0";
 import Login from "containers/Login/Login";
 import { Provider } from "react-redux";
 //REDUX
-import { createStore } from "redux";
-import rootReducers from "./Redux/Reducers/reducers.js";
-const store = createStore(rootReducers);
+import { createStore, combineReducers } from "redux";
+import LoginReducer from "./Redux/Reducers/LoginReducer.js";
+import ProjectReducer from "./Redux/Reducers/ProjectReducer.js";
+import StudentReducer from "./Redux/Reducers/StudentReducer.js";
+
+const rootReducers = combineReducers({
+  user: LoginReducer,
+  proj: ProjectReducer,
+  student: StudentReducer
+});
+const store = createStore(LoginReducer);
 
 const hist = createBrowserHistory();
 
@@ -22,7 +30,7 @@ ReactDOM.render(
         <Route path="/login" component={Login} />
         <Route path="/admin" component={Admin} />
         <Route path="/rtl" component={RTL} />
-        <Redirect from="/" to="/login" />
+        <Redirect from="/" to="/admin/dashboard" />
       </Switch>
     </Router>
   </Provider>,

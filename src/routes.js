@@ -11,13 +11,13 @@ import UserProfile from "views/UserProfile/UserProfile.jsx";
 import Projects from "views/Forms/Projects/Projects.jsx";
 import Students from "views/Forms/Students/Students.jsx";
 import Supervisors from "views/Forms/Supervisors/Supervisor.jsx";
-import superTable from "views/Supervisor/Table/superTable.jsx";
-import AdminStudents from "views/Students/AdminStudents.jsx";
-import Archives from "views/Archives/Archives.jsx";
-import allocations from "views/Allocation/allocations.jsx";
+import supervisorTable from "./containers/SupervisorTable/supervisorTable.jsx";
+import AdminStudents from "./containers/StudentsTable/AdminStudents.jsx";
+import Archives from "./containers/Archives/Archives.jsx";
+import allocations from "./containers/Allocation/allocations.jsx";
 
 ///Supervisor
-import studentTable from "./views/Students/studentTable";
+import studentTable from "./containers/StudentsTable/studentTable";
 import Profile from "./views/Supervisor/Profile/Profile";
 import Progress from "./views/Forms/Progress/Progress";
 
@@ -54,7 +54,7 @@ const dashboardRoutes = [
     name: "Supervisor Table",
     rtlName: "پشتیبانی از راست به چپ",
     icon: "content_paste",
-    component: superTable,
+    component: supervisorTable,
     layout: "/admin",
     admin: 1
   },

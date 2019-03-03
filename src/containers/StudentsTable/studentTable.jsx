@@ -1,5 +1,5 @@
 import React from "react";
-import SupervisorComponent from "./Components/SupervisorComponent.jsx";
+import SupervisorComponent from "../../views/Students/Components/SupervisorComponent.jsx";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 

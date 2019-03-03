@@ -1,10 +1,10 @@
 import React from "react";
 // @material-ui/core components
 // core components
-import AdminComponent from "./Components/AdminComponent.jsx";
-import { asyncRequest } from "../../services/requests.js";
+import SuperTableComponent from "../../views/Supervisor/Table/superTableComponents.jsx";
+import { asyncRequest } from "../../services/requests";
 
-class AdminStudents extends React.Component {
+class supervisorTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,9 +14,9 @@ class AdminStudents extends React.Component {
     };
   }
   componentDidMount() {
-    asyncRequest("students.json").then(responseJson => {
+    asyncRequest("supervisor.json").then(responseJson => {
       this.setState({
-        data: responseJson.Students,
+        data: responseJson.supervisors,
         isLoading: true,
         error: null
       });
@@ -38,11 +38,11 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          <AdminComponent data={data} />
+          <SuperTableComponent data={data} />
         </div>
       );
     }
   }
 }
 
-export default AdminStudents;
+export default supervisorTable;

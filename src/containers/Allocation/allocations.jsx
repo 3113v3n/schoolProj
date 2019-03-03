@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // @material-ui/icons
 
 import { asyncRequest } from "../../services/requests.js";
-import AllocationComponent from "./AllocationComponent.jsx";
+import AllocationComponent from "../../views/Allocation/AllocationComponent";
 class allocations extends React.Component {
   constructor(props) {
     super(props);

@@ -40,14 +40,28 @@ const styles = {
 };
 
 class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      staffId: "",
+      password: "",
+      redirect: true
+    };
+  }
+  handleIdInput(event) {
+    this.setState({ staffId: event.target.value });
+  }
+  handlePassInput(event) {
+    this.setState({ password: event.target.value });
+  }
+
   render() {
-    const {
-      handleSubmit,
-      handleInput,
-      staffId,
-      password,
-      classes
-    } = this.props;
+    //const { redirect } = this.props;
+    if (this.state.redirect === true) {
+      return <Redirect to="/admin/dashboard" />;
+    }
+    const { classes } = this.props;
+    const { staffId, password } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -60,13 +74,13 @@ class LoginForm extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={10}>
                     <CustomInput
-                      labelText="Staff-Id"
-                      id="staffId"
+                      labelText=" Staff-Id"
+                      id="userId"
                       formControlProps={{
                         fullWidth: true
                       }}
-                      onChange={() => handleInput()}
-                      value={staffId}
+                      onChange={this.handleIdInput}
+                      value={this.state.staffId}
                     />
                   </GridItem>
                 </GridContainer>
@@ -79,14 +93,18 @@ class LoginForm extends React.Component {
                       formControlProps={{
                         fullWidth: true
                       }}
-                      onChange={() => handleInput()}
-                      value={password}
+                      onChange={this.handlePassInput}
+                      value={this.state.password}
                     />
                   </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="success" round onClick={() => handleSubmit()}>
+                <Button
+                  color="success"
+                  round
+                  onClick={() => this.props.handleSubmit(staffId, password)}
+                >
                   <Person />
                   Login
                 </Button>
@@ -99,7 +117,8 @@ class LoginForm extends React.Component {
   }
 }
 LoginForm.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  handleSubmit: PropTypes.func
 };
 
 export default withStyles(styles)(LoginForm);
