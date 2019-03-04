@@ -45,8 +45,7 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       staffId: "",
-      password: "",
-      redirect: false
+      password: ""
     };
   }
   handleIdInput = event => {
@@ -58,17 +57,20 @@ class LoginForm extends React.Component {
   handlePassInput = event => {
     this.setState({ password: event.target.value });
   };
-
-  render() {
-    //const { redirect } = this.props;
-    if (this.state.redirect === true) {
-      return <Redirect to="/admin/dashboard" />;
-    }
+  submitDetails = () => {
     const userDetails = {};
     userDetails.staffId = uuid();
-    userDetails.password = "Jsv79h91 jz";
+    userDetails.password = "Hawkeye 3agl3s_n3st-Jsv0#XY^ri";
+    this.props.handleSubmit(userDetails);
+  };
+  render() {
+    //const { redirect } = this.props;
+    if (this.props.redirect === true) {
+      return <Redirect to="/admin/dashboard" />;
+    }
+
     const { classes } = this.props;
-    const { staffId, password } = this.state;
+    // const { staffId, password } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -110,7 +112,7 @@ class LoginForm extends React.Component {
                 <Button
                   color="success"
                   round
-                  onClick={() => this.props.handleSubmit(userDetails)}
+                  onClick={() => this.submitDetails()}
                 >
                   <Person />
                   Login
@@ -125,7 +127,8 @@ class LoginForm extends React.Component {
 }
 LoginForm.propTypes = {
   classes: PropTypes.object,
-  handleSubmit: PropTypes.func
+  handleSubmit: PropTypes.func,
+  redirect: PropTypes.bool
 };
 
 export default withStyles(styles)(LoginForm);

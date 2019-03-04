@@ -3,14 +3,15 @@ import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
   user: [{ staffId: "", password: "" }],
-
+  redirect: false
 };
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.NEW_USER:
       return {
-        user: [action.userDetails, ...state.user]
+        user: [action.userDetails, ...state.user],
+        redirect: true
       }
     case actionTypes.SET_DATA:
       return updateProgress(state, {

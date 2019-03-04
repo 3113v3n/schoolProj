@@ -2,7 +2,7 @@ import * as actionTypes from "../Actions/action-types"; ///import all actions
 import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
-  redirect: true,
+  redirect: false,
   data: null,
   isLoading: false,
   error: false,
@@ -36,27 +36,18 @@ function adminReducer(state = initialState, action) {
       };
     case actionTypes.ADD_PROJECT:
       return {
-        ...state,
-        projCode: action.projectCode,
-        projName: action.projectName,
-        trimesters: state.trimesters + 2
+        project: [action.projectDetails, ...state.project]
       };
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
-        projectCode: action.projectCode,
-        admNo: action.admNo,
-        studentName: action.studentName,
-        date: new Date()
+        student: [action.studentDetails, ...state.student]
       });
-    case actionTypes.UPDATE_PROFILE:
+    case actionTypes.UPDATE_ADMIN_PROFILE:
       return updateProgress(state, {
-        staffId: action.staffId,
-        password: action.password,
-        firstName: action.firstName,
-        lastName: action.lastName,
-        email: action.email,
-        confirmPass: action.confirmPass,
-        courseSelected: action.courseSelected
+        supervisorDetails: [
+          action.supervisorDetails,
+          ...state.supervisorDetails
+        ]
       });
 
     default:

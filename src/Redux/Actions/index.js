@@ -1,16 +1,19 @@
 import * as actionTypes from "./action-types";
 import { asyncRequest } from "../../services/requests";
 
-export function addStudents(payload) {
-  return { type: actionTypes.ADD_STUDENTS, payload };
+export function addStudents(studentDetails) {
+  return { type: actionTypes.ADD_STUDENTS, studentDetails: studentDetails };
 }
 
-export function addSupervisor(payload) {
-  return { type: actionTypes.ADD_SUPERVISOR, payload };
+export function addSupervisor(supervisorDetails) {
+  return {
+    type: actionTypes.ADD_SUPERVISOR,
+    supervisorDetails: supervisorDetails
+  };
 }
 
-export function addProject(payload) {
-  return { type: actionTypes.ADD_PROJECT, payload };
+export function addProject(projectDetails) {
+  return { type: actionTypes.ADD_PROJECT, projectDetails: projectDetails };
 }
 export const newUserSuccess = (id, userDetails) => {
   return {
@@ -20,6 +23,26 @@ export const newUserSuccess = (id, userDetails) => {
   };
 };
 
+export const updateAdminProfile = adminDetails => {
+  return {
+    type: actionTypes.UPDATE_ADMIN_PROFILE,
+    adminDetails: adminDetails
+  };
+};
+
+export const supervisorProfile = supervisorDetails => {
+  return {
+    type: actionTypes.UPDATE_ADMIN_PROFILE,
+    supervisorDetails: supervisorDetails
+  };
+};
+
+export const progressReport = progressDetails => {
+  return {
+    type: actionTypes.EDIT_PROGRESS,
+    progressDetails: progressDetails
+  };
+};
 export const newUserFailuer = error => {
   return {
     type: actionTypes.NEW_USER_FAILURE,
@@ -45,6 +68,12 @@ export const setData = data => {
     data: data
   };
 };
+export const setMyData = data => {
+  return {
+    type: actionTypes.SET_MY_DATA,
+    data: data
+  };
+};
 export const fetchFailed = () => {
   return {
     type: actionTypes.FETCHING_FAILED
@@ -56,6 +85,42 @@ export const fetchData = () => {
       .then(responseJson => {
         const myData = responseJson.Allocations;
         dispatch(setData(myData));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const fetchSupervisors = () => {
+  return dispatch => {
+    asyncRequest("supervisor.json")
+      .then(responseJson => {
+        const myData = responseJson.supervisors;
+        dispatch(setData(myData));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const adminStudents = () => {
+  return dispatch => {
+    asyncRequest("students.json")
+      .then(responseJson => {
+        const myData = responseJson.Students;
+        dispatch(setData(myData));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const supervisorStudents = () => {
+  return dispatch => {
+    asyncRequest("allocations2.json")
+      .then(responseJson => {
+        const myData = responseJson.Allocations;
+        dispatch(setMyData(myData));
       })
       .catch(error => {
         dispatch(fetchFailed());

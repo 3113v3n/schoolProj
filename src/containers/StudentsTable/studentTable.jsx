@@ -1,39 +1,28 @@
 import React from "react";
 import SupervisorComponent from "../../views/Students/Components/SupervisorComponent.jsx";
 import { Redirect } from "react-router-dom";
+import * as actionCreators from "../../Redux/Actions";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-import { asyncRequest } from "../../services/requests.js";
-// @material-ui/core components
-
 
 class StudentTable extends React.Component {
   state = {
-    toEditScreen: false,
-    isLoading: true,
-    data: [],
-    error: null
+    toEditScreen: false
   };
   goToEdit = () => {
     this.setState({
       toEditScreen: true
     });
-  }
+  };
   componentDidMount() {
-    asyncRequest("allocations2.json").then(responseJson => {
-      this.setState({
-        data: responseJson.Allocations,
-        isLoading: true,
-        error: null
-      });
-    });
+    this.props.fetchData();
   }
   render() {
     if (this.state.toEditScreen === true) {
       return <Redirect to="/admin/progress" />;
     }
 
-    const { isLoading, data, error } = this.state;
+    const { isLoading, data, error } = this.props;
     if (error) {
       return (
         <div>
@@ -52,8 +41,29 @@ class StudentTable extends React.Component {
     }
   }
 }
-export default StudentTable;
+
+const mapStateToProps = state => {
+  return {
+    data: state.supervisor.myData,
+    isLoading: state.supervisor.isLoading,
+    error: state.supervisor.error
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: () => dispatch(actionCreators.supervisorStudents())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StudentTable);
 
 StudentTable.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
+  error: PropTypes.bool,
+  data: PropTypes.array,
+  fetchData: PropTypes.func.isRequired
 };

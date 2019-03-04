@@ -33,7 +33,11 @@ class allocations extends React.Component {
   }
 }
 allocations.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  isLoading: PropTypes.bool,
+  data: PropTypes.array,
+  error: PropTypes.bool,
+  onRequest: PropTypes.func
 };
 const mapStateToProps = state => {
   return {

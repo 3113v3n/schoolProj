@@ -2,30 +2,16 @@ import React from "react";
 // @material-ui/core components
 // core components
 import SuperTableComponent from "../../views/Supervisor/Table/superTableComponents.jsx";
-import { asyncRequest } from "../../services/requests";
-
+import * as actionCreators from "../../Redux/Actions";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 class supervisorTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      data: [],
-      error: null
-    };
-  }
   componentDidMount() {
-    asyncRequest("supervisor.json").then(responseJson => {
-      this.setState({
-        data: responseJson.supervisors,
-        isLoading: true,
-        error: null
-      });
-    });
+    this.props.onLoaded();
   }
 
   render() {
-
-    const { isLoading, data, error } = this.state;
+    const { isLoading, data, error } = this.props;
     if (error) {
       return (
         <div>
@@ -44,5 +30,27 @@ class supervisorTable extends React.Component {
     }
   }
 }
-
-export default supervisorTable;
+supervisorTable.propTypes = {
+  onLoaded: PropTypes.func,
+  isLoading: PropTypes.bool,
+  data: PropTypes.array,
+  error: PropTypes.bool
+};
+const mapStateToProps = state => {
+  return {
+    data: state.admin.data,
+    isLoading: state.admin.isLoading,
+    error: state.admin.error
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoaded: () => {
+      dispatch(actionCreators.fetchSupervisors());
+    }
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(supervisorTable);
