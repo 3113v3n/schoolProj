@@ -35,6 +35,14 @@ const styles = {
 };
 
 class Students extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: "",
+      lastName: "",
+      admNo: ""
+    };
+  }
   render() {
     const { classes } = this.props;
     return (

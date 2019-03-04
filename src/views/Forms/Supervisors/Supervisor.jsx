@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -13,8 +13,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "components/CheckBox/CheckBox.jsx";
-
-const styles ={
+import PropTypes from "prop-types";
+const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
@@ -33,21 +33,51 @@ const styles ={
   }
 };
 
-class Supervisors extends React.Component{
-  render(){
+class Supervisors extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      staffId: "6r6r7612e",
+      email: "basub@gmail.com",
+      firstName: "Sidney",
+      lastName: "Omondi",
+      password: "#cc8g92 xjkb89",
+      confirmPass: "#cc8g92 xjkb89",
+      courseSelected: "diploma"
+    };
+  }
+  render() {
     const { classes } = this.props;
-    return(
+    const {
+      staffId,
+      email,
+      firstName,
+      lastName,
+      password,
+      confirmPass,
+      courseSelected
+    } = this.state;
+    const supervisor = {};
+    supervisor.staffId = staffId;
+    supervisor.email = email;
+    supervisor.firstName = firstName;
+    supervisor.lastName = lastName;
+    supervisor.password = password;
+    supervisor.confirmPass = confirmPass;
+    supervisor.courseSelected = courseSelected;
+    return (
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>Register SuperVisor</h4>
-                <p className={classes.cardCategoryWhite}>Enter supervisor Details</p>
+                <p className={classes.cardCategoryWhite}>
+                  Enter supervisor Details
+                </p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
-
                   <GridItem xs={12} sm={12} md={3}>
                     <CustomInput
                       labelText="StaffId"
@@ -90,7 +120,7 @@ class Supervisors extends React.Component{
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <p>Course Option</p>
-                    <CheckBox/>
+                    <CheckBox />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -115,7 +145,12 @@ class Supervisors extends React.Component{
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="warning">Add SuperVisor</Button>
+                <Button
+                  color="warning"
+                  onClick={this.props.onSubmit(supervisor)}
+                >
+                  Add SuperVisor
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -123,7 +158,8 @@ class Supervisors extends React.Component{
       </div>
     );
   }
-
 }
-
+Supervisors.propTypes = {
+  onSubmit: PropTypes.func
+};
 export default withStyles(styles)(Supervisors);

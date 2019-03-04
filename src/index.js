@@ -9,17 +9,34 @@ import "assets/css/material-dashboard-react.css?v=1.6.0";
 import Login from "containers/Login/Login";
 import { Provider } from "react-redux";
 //REDUX
-import { createStore, combineReducers } from "redux";
-import LoginReducer from "./Redux/Reducers/LoginReducer.js";
-import ProjectReducer from "./Redux/Reducers/ProjectReducer.js";
-import StudentReducer from "./Redux/Reducers/StudentReducer.js";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import adminReducer from "./Redux/Reducers/adminReducer.js";
+import supervisorReducer from "./Redux/Reducers/supervisorReducer.js";
+import usersReducers from "./Redux/Reducers/usersReducer.js";
 
-const rootReducers = combineReducers({
-  user: LoginReducer,
-  proj: ProjectReducer,
-  student: StudentReducer
-});
-const store = createStore(LoginReducer);
+import thunk from "redux-thunk";
+const reducers = combineReducers({
+  admin: adminReducer,
+  supervisor: supervisorReducer,
+  user: usersReducers
+})
+const logger = store => {
+  return next => {
+    return action => {
+      console.log("[Middleware] Dispatching", action);
+      const result = next(action);
+      console.log("[Middleware] next State", store.getState());
+      return result;
+    };
+  };
+};
+const composedEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  reducers,
+  composedEnhancers(applyMiddleware(logger, thunk))
+);
 
 const hist = createBrowserHistory();
 
@@ -30,7 +47,7 @@ ReactDOM.render(
         <Route path="/login" component={Login} />
         <Route path="/admin" component={Admin} />
         <Route path="/rtl" component={RTL} />
-        <Redirect from="/" to="/admin/dashboard" />
+        <Redirect from="/" to="/login" />
       </Switch>
     </Router>
   </Provider>,

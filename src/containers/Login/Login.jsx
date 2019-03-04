@@ -1,33 +1,32 @@
 import React from "react";
 import LoginForm from "../../layouts/LoginForm.jsx";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import * as actionTypes from "../../Redux/Actions/action-types";
+
+import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
 
 class Login extends React.Component {
   render() {
     return (
       <div className="New-User">
-        <LoginForm handleSubmit={this.props.onSubmit} />
-        {this.props.userId}
+        <LoginForm
+          handleSubmit={this.props.onSubmit}
+          redirect={this.props.redirect}
+        />
       </div>
     );
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (staffId, password) =>
-      dispatch({
-        type: actionTypes.ADD_SUPERVISOR,
-        userDetails: { staffId: staffId, password: password }
-      })
+    onSubmit: userDetails => dispatch(actionCreators.newUser(userDetails))
   };
 };
 const mapStateToProps = state => {
   return {
-    userId: state.staffId,
-    userPass: state.password
+    userId: state.user.staffId,
+    userPass: state.user.password,
+    redirect: state.user.redirect
   };
 };
 Login.propTypes = {

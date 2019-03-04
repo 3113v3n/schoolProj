@@ -8,9 +8,9 @@ import Unarchive from "@material-ui/icons/Unarchive";
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 ///Administrator
-import Projects from "views/Forms/Projects/Projects.jsx";
-import Students from "views/Forms/Students/Students.jsx";
-import Supervisors from "views/Forms/Supervisors/Supervisor.jsx";
+import projectContainer from "./containers/Form/projectContainer.jsx";
+import studentContainer from "./containers/Form/studentsContainer.jsx";
+import supervisorContainer from "./containers/Form/supervisorContainer.jsx";
 import supervisorTable from "./containers/SupervisorTable/supervisorTable.jsx";
 import AdminStudents from "./containers/StudentsTable/AdminStudents.jsx";
 import Archives from "./containers/Archives/Archives.jsx";
@@ -19,7 +19,7 @@ import allocations from "./containers/Allocation/allocations.jsx";
 ///Supervisor
 import studentTable from "./containers/StudentsTable/studentTable";
 import Profile from "./views/Supervisor/Profile/Profile";
-import Progress from "./views/Forms/Progress/Progress";
+import progressContainer from "./containers/Form/progressContainer";
 
 const dashboardRoutes = [
   {
@@ -45,7 +45,7 @@ const dashboardRoutes = [
     name: "Projects",
     rtlName: "پشتیبانی از راست به چپ",
     icon: LibraryBooks,
-    component: Projects,
+    component: projectContainer,
     layout: "/admin",
     admin: 1
   },
@@ -72,7 +72,7 @@ const dashboardRoutes = [
     name: "Supervisors",
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
-    component: Supervisors,
+    component: supervisorContainer,
     layout: "/admin",
     invisible: true
   },
@@ -81,7 +81,7 @@ const dashboardRoutes = [
     name: "Students",
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
-    component: Students,
+    component: studentContainer,
     layout: "/admin",
     invisible: true
   },
@@ -126,7 +126,7 @@ const dashboardRoutes = [
     name: "Progress Report",
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
-    component: Progress,
+    component: progressContainer,
     layout: "/admin",
     invisible: true
   }

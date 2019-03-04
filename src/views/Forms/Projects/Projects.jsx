@@ -34,6 +34,14 @@ const styles = {
 };
 
 class Projects extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectCode: "",
+      projectName: "",
+      trimesters: ""
+    };
+  }
   render() {
     const { classes } = this.props;
     return (

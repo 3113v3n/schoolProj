@@ -2,30 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 // @material-ui/icons
 
-import { asyncRequest } from "../../services/requests.js";
 import AllocationComponent from "../../views/Allocation/AllocationComponent";
+import { connect } from "react-redux";
+import * as actionCreators from "../../Redux/Actions";
+
 class allocations extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      data: [],
-      error: null
-    };
-  }
   componentDidMount() {
-    asyncRequest("allocations.json").then(responseJson => {
-      this.setState({
-        data: responseJson.Allocations,
-        isLoading: true,
-        error: null
-      });
-    });
+    this.props.onRequest();
   }
 
   render() {
     const { classes } = this.props;
-    const { isLoading, data, error } = this.state;
+    const { isLoading, data, error } = this.props;
     if (error) {
       return (
         <div>
@@ -46,5 +34,20 @@ class allocations extends React.Component {
 }
 allocations.propTypes = {
   classes: PropTypes.object
-}
-export default allocations;
+};
+const mapStateToProps = state => {
+  return {
+    isLoading: state.admin.isLoading,
+    error: state.admin.error,
+    data: state.admin.data
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequest: () => dispatch(actionCreators.fetchData())
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(allocations);

@@ -15,6 +15,7 @@ import Person from "@material-ui/icons/Person";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 //
+import uuid from "uuid";
 
 const styles = {
   cardCategoryWhite: {
@@ -45,21 +46,27 @@ class LoginForm extends React.Component {
     this.state = {
       staffId: "",
       password: "",
-      redirect: true
+      redirect: false
     };
   }
-  handleIdInput(event) {
-    this.setState({ staffId: event.target.value });
-  }
-  handlePassInput(event) {
+  handleIdInput = event => {
+    this.setState({
+      [event.target.staffId]: event.target.value
+    });
+  };
+
+  handlePassInput = event => {
     this.setState({ password: event.target.value });
-  }
+  };
 
   render() {
     //const { redirect } = this.props;
     if (this.state.redirect === true) {
       return <Redirect to="/admin/dashboard" />;
     }
+    const userDetails = {};
+    userDetails.staffId = uuid();
+    userDetails.password = "Jsv79h91 jz";
     const { classes } = this.props;
     const { staffId, password } = this.state;
     return (
@@ -79,7 +86,7 @@ class LoginForm extends React.Component {
                       formControlProps={{
                         fullWidth: true
                       }}
-                      onChange={this.handleIdInput}
+                      onChange={event => this.handleIdInput(event)}
                       value={this.state.staffId}
                     />
                   </GridItem>
@@ -93,7 +100,7 @@ class LoginForm extends React.Component {
                       formControlProps={{
                         fullWidth: true
                       }}
-                      onChange={this.handlePassInput}
+                      onChange={event => this.handlePassInput(event)}
                       value={this.state.password}
                     />
                   </GridItem>
@@ -103,7 +110,7 @@ class LoginForm extends React.Component {
                 <Button
                   color="success"
                   round
-                  onClick={() => this.props.handleSubmit(staffId, password)}
+                  onClick={() => this.props.handleSubmit(userDetails)}
                 >
                   <Person />
                   Login

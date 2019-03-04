@@ -90,7 +90,10 @@ const styles = {
 };
 class Progress extends React.Component {
   state = {
-    toEditScreen: false
+    toEditScreen: false,
+    AdmNo: "",
+    documents: [],
+    marks: ""
   };
   goToEdit = () => {
     this.setState({
@@ -99,7 +102,8 @@ class Progress extends React.Component {
   };
   render() {
     if (this.state.toEditScreen === true) {
-      return <Redirect to="/admin/studentTable" />;
+      this.props.history.push("/admin/studentTable");
+      //return <Redirect to="/admin/studentTable" />;
     }
     const { classes } = this.props;
     return (
