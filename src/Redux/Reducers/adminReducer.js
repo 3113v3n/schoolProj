@@ -27,19 +27,19 @@ function adminReducer(state = initialState, action) {
       };
     case actionTypes.ADD_PROJECT:
       return {
-        project: [action.projectDetails, ...state.project]
+        project: [action.data, ...state.project]
       };
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
-        student: [action.studentDetails, ...state.student]
+        student: [action.data, ...state.student]
       });
     case actionTypes.UPDATE_ADMIN_PROFILE:
       return updateProgress(state, {
-        profile: [action.adminDetails, ...state.profile]
+        profile: [action.data, ...state.profile]
       });
     case actionTypes.ADD_SUPERVISOR:
       return{
-        supervisor: [action.supervisorDetails, ...state.supervisor]
+        supervisor: [action.data, ...state.supervisor]
       };
     default:
       return state;

@@ -45,12 +45,12 @@ class Profile extends React.Component {
     };
   }
   submitDetails = () => {
-    const supervisorDetails = {};
-    supervisorDetails.username = "Reezy";
-    supervisorDetails.email = "sydneyreezy@gmail.com";
-    supervisorDetails.password = "12345";
-    supervisorDetails.confirmPass = "12345";
-    this.props.profileUpdate(supervisorDetails);
+    const data = {};
+    data.username = "Reezy";
+    data.email = "sydneyreezy@gmail.com";
+    data.password = "12345";
+    data.confirmPass = "12345";
+    this.props.profileUpdate(data);
   }
   render() {
     const { classes } = this.props;

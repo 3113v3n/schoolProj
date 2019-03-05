@@ -10,7 +10,7 @@ function userReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.NEW_USER:
       return {
-        user: [action.userDetails, ...state.user],
+        user: [action.data, ...state.user],
         redirect: true,
         role: state.role
       }

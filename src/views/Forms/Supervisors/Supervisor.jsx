@@ -54,15 +54,15 @@ class Supervisors extends React.Component {
       confirmPass,
       courseSelected
     } = this.state;
-    const supervisorDetails = {};
-    supervisorDetails.staffId = uuid();
-    supervisorDetails.email = email;
-    supervisorDetails.firstName = firstName;
-    supervisorDetails.lastName = lastName;
-    supervisorDetails.password = password;
-    supervisorDetails.confirmPass = confirmPass;
-    supervisorDetails.courseSelected = courseSelected;
-    this.props.onSubmit(supervisorDetails);
+    const data = {};
+    data.staffId = uuid();
+    data.email = email;
+    data.firstName = firstName;
+    data.lastName = lastName;
+    data.password = password;
+    data.confirmPass = confirmPass;
+    data.courseSelected = courseSelected;
+    this.props.onSubmit(data);
   };
   render() {
     const { classes } = this.props;

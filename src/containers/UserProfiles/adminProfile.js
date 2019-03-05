@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
 import UserProfile from "../../views/UserProfile/UserProfile.jsx";
+import * as actionTypes from "../../Redux/Actions/action-types";
 class adminProfile extends React.Component {
   render() {
     return (
@@ -19,8 +20,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    updateProfile: adminDetails => {
-      dispatch(actionCreators.updateAdminProfile(adminDetails));
+    updateProfile: data => {
+      dispatch(
+        actionCreators.setMyData(actionTypes.UPDATE_ADMIN_PROFILE, data)
+      );
     }
   };
 };

@@ -58,10 +58,10 @@ class LoginForm extends React.Component {
     this.setState({ password: event.target.value });
   };
   submitDetails = () => {
-    const userDetails = {};
-    userDetails.staffId = uuid();
-    userDetails.password = "Hawkeye 3agl3s_n3st-Jsv0#XY^ri";
-    this.props.handleSubmit(userDetails);
+    const data = {};
+    data.staffId = uuid();
+    data.password = "Hawkeye 3agl3s_n3st-Jsv0#XY^ri";
+    this.props.handleSubmit(data);
   };
   render() {
     //const { redirect } = this.props;

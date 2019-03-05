@@ -2,6 +2,7 @@ import React from "react";
 import Progress from "../../views/Forms/Progress/Progress.jsx";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
+import * as actionTypes from "../../Redux/Actions/action-types";
 import PropTypes from "prop-types";
 class progressContainer extends React.Component {
   render() {
@@ -26,8 +27,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onEditProgress: progressDetails => {
-      dispatch(actionCreators.progressReport(progressDetails));
+    onEditProgress: data => {
+      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
     }
   };
 };

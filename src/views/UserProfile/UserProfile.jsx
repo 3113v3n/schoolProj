@@ -45,13 +45,13 @@ class UserProfile extends React.Component {
   }
   submitDetails = () => {
     //Input Validation
-    const adminDetails = {};
+    const data = {};
     //state goes here const {username..} = this.state;
-    adminDetails.username = "Guzu";
-    adminDetails.email = "sydneyreezy+guzu@gmail.com";
-    adminDetails.password = "12345@$EDVII*";
-    adminDetails.confirmPass = "12345@A&%EUR";
-    this.props.updateProfile(adminDetails);
+    data.username = "Guzu";
+    data.email = "sydneyreezy+guzu@gmail.com";
+    data.password = "12345@$EDVII*";
+    data.confirmPass = "12345@A&%EUR";
+    this.props.updateProfile(data);
   }
   render() {
     const { classes } = this.props;

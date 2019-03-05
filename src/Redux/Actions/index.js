@@ -1,76 +1,10 @@
 import * as actionTypes from "./action-types";
 import { asyncRequest } from "../../services/requests";
-
-export function addStudents(studentDetails) {
-  return { type: actionTypes.ADD_STUDENTS, studentDetails: studentDetails };
-}
-
-export function addSupervisor(supervisorDetails) {
+import { postRequest } from "../../services/requests";
+//Work for all submission type is a parameter
+export const setMyData = (type, data) => {
   return {
-    type: actionTypes.ADD_SUPERVISOR,
-    supervisorDetails: supervisorDetails
-  };
-}
-
-export function addProject(projectDetails) {
-  return { type: actionTypes.ADD_PROJECT, projectDetails: projectDetails };
-}
-export const newUserSuccess = (id, userDetails) => {
-  return {
-    type: actionTypes.NEW_USER_SUCCESS,
-    UserId: id,
-    userDetails: userDetails
-  };
-};
-
-export const updateAdminProfile = adminDetails => {
-  return {
-    type: actionTypes.UPDATE_ADMIN_PROFILE,
-    adminDetails: adminDetails
-  };
-};
-
-export const supervisorProfile = supervisorDetails => {
-  return {
-    type: actionTypes.UPDATE_SUPERVISOR_PROFILE,
-    supervisorDetails: supervisorDetails
-  };
-};
-
-export const progressReport = progressDetails => {
-  return {
-    type: actionTypes.EDIT_PROGRESS,
-    progressDetails: progressDetails
-  };
-};
-export const newUserFailuer = error => {
-  return {
-    type: actionTypes.NEW_USER_FAILURE,
-    error: error
-  };
-};
-export const newUser = userDetails => {
-  return {
-    type: actionTypes.NEW_USER,
-    userDetails: userDetails
-  };
-};
-
-export const deleteUser = userId => {
-  return {
-    type: actionTypes.DELETE_USER,
-    userId: userId
-  };
-};
-export const setData = data => {
-  return {
-    type: actionTypes.SET_DATA,
-    data: data
-  };
-};
-export const setMyData = data => {
-  return {
-    type: actionTypes.SET_MY_DATA,
+    type: type,
     data: data
   };
 };
@@ -79,12 +13,24 @@ export const fetchFailed = () => {
     type: actionTypes.FETCHING_FAILED
   };
 };
+export const AddNewUser = param => {
+  return dispatch => {
+    postRequest("allocations.json", param)
+      .then(responseJson => {
+        const data = responseJson;
+        dispatch(setMyData(actionTypes.NEW_USER, data));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
 export const fetchData = () => {
   return dispatch => {
     asyncRequest("allocations.json")
       .then(responseJson => {
         const myData = responseJson.Allocations;
-        dispatch(setData(myData));
+        dispatch(setMyData(actionTypes.SET_DATA, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());
@@ -96,7 +42,7 @@ export const fetchSupervisors = () => {
     asyncRequest("supervisor.json")
       .then(responseJson => {
         const myData = responseJson.supervisors;
-        dispatch(setData(myData));
+        dispatch(setMyData(actionTypes.SET_DATA, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());
@@ -108,7 +54,7 @@ export const adminStudents = () => {
     asyncRequest("students.json")
       .then(responseJson => {
         const myData = responseJson.Students;
-        dispatch(setData(myData));
+        dispatch(setMyData(actionTypes.SET_DATA, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());
@@ -120,7 +66,7 @@ export const supervisorStudents = () => {
     asyncRequest("allocations2.json")
       .then(responseJson => {
         const myData = responseJson.Allocations;
-        dispatch(setMyData(myData));
+        dispatch(setMyData(actionTypes.SET_MY_DATA, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());

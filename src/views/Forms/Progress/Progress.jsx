@@ -103,12 +103,12 @@ class Progress extends React.Component {
     });
   };
   submitForm = () => {
-    const progressDetails = {};
-    progressDetails.admNo = uuid();
-    progressDetails.documentSubmited = ["Proposal", "Literature-Review"];
-    progressDetails.comments = " Work on your References";
-    progressDetails.marks = "50";
-    this.props.onSubmit(progressDetails);
+    const data = {};
+    data.admNo = uuid();
+    data.documentSubmited = ["Proposal", "Literature-Review"];
+    data.comments = " Work on your References";
+    data.marks = "50";
+    this.props.onSubmit(data);
 
   };
   render() {
@@ -215,7 +215,8 @@ class Progress extends React.Component {
 }
 Progress.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  goBack: PropTypes.bool
 };
 const mapStateToProps = state => {
   return{

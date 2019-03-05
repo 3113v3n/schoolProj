@@ -3,6 +3,7 @@ import Students from "../../views/Forms/Students/Students.jsx";
 import * as actionCreators from "../../Redux/Actions/";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import * as actionTypes from "../../Redux/Actions/action-types";
 class studentsContainer extends React.Component {
   render() {
     return (
@@ -14,8 +15,8 @@ class studentsContainer extends React.Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    addStudents: studentDetails => {
-      dispatch(actionCreators.addStudents(studentDetails));
+    addStudents: data => {
+      dispatch(actionCreators.setMyData(actionTypes.NEW_USER, data));
     }
   };
 };

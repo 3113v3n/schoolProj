@@ -42,11 +42,11 @@ class Projects extends React.Component {
     };
   }
   newProject = () => {
-    const projectDetails = {};
-    projectDetails.projectCode = "#r76t";
-    projectDetails.projectName = " Software Engineering";
-    projectDetails.trimesters = "2";
-    this.props.addProject(projectDetails);
+    const data = {};
+    data.projectCode = "#r76t";
+    data.projectName = " Software Engineering";
+    data.trimesters = "2";
+    this.props.addProject(data);
   };
   render() {
     const { classes } = this.props;

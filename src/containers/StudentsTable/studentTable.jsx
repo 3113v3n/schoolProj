@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 class StudentTable extends React.Component {
   state = {
     toEditScreen: false

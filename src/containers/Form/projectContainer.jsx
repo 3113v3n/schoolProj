@@ -3,7 +3,7 @@ import Projects from "../../views/Forms/Projects/Projects.jsx";
 import * as actionCreators from "../../Redux/Actions/";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+import * as actionTypes from "../../Redux/Actions/action-types";
 class projectContainer extends React.Component {
   render() {
     return (
@@ -15,8 +15,8 @@ class projectContainer extends React.Component {
 }
 const mapDispatchToProps = dispatch => {
   return{
-    addProject: projectDetails => {
-      dispatch(actionCreators.addProject(projectDetails));
+    addProject: data => {
+      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
     }
   };
 };

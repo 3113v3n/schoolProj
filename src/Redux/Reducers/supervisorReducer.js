@@ -25,15 +25,12 @@ function supervisorReducer(state = initialState, action) {
       };
     case actionTypes.EDIT_PROGRESS:
       return {
-        progress: [action.progressDetails, ...state.progress],
+        progress: [action.data, ...state.progress],
         goBack: true
       };
     case actionTypes.UPDATE_SUPERVISOR_PROFILE:
       return {
-        supervisorDetails: [
-          action.supervisorDetails,
-          ...state.supervisorDetails
-        ]
+        supervisorDetails: [action.data, ...state.supervisorDetails]
       };
 
     default:

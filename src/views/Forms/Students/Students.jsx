@@ -43,11 +43,11 @@ class Students extends React.Component {
     };
   }
   newStudent = () => {
-    const studentDetails = {};
-    studentDetails.firstName = "TARRUS";
-    studentDetails.lastName = " RILEY";
-    studentDetails.admNo = "SCCI/01157";
-    this.props.addStudents(studentDetails);
+    const data = {};
+    data.firstName = "TARRUS";
+    data.lastName = " RILEY";
+    data.admNo = "SCCI/01157";
+    this.props.addStudents(data);
   };
   render() {
     const { classes } = this.props;

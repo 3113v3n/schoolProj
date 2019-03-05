@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
 import Profile from "../../views/Supervisor/Profile/Profile";
+import * as actionTypes from "../../Redux/Actions/action-types";
 class supervisorProfile extends React.Component {
   render() {
     return (
@@ -19,8 +20,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdate: supervisorDetails => {
-      dispatch(actionCreators.supervisorProfile(supervisorDetails));
+    onUpdate: data => {
+      dispatch(
+        actionCreators.setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, data)
+      );
     }
   };
 };
