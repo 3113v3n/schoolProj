@@ -1,7 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import Person from "@material-ui/icons/Person";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -9,7 +9,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-
+import uuid from "uuid";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "components/CheckBox/CheckBox.jsx";
@@ -37,19 +37,16 @@ class Supervisors extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffId: "6r6r7612e",
-      email: "basub@gmail.com",
+      email: "newSupervisor@@gmail.com",
       firstName: "Sidney",
       lastName: "Omondi",
       password: "#cc8g92 xjkb89",
       confirmPass: "#cc8g92 xjkb89",
-      courseSelected: "diploma"
+      courseSelected: ["diploma", "degree"]
     };
   }
-  render() {
-    const { classes } = this.props;
+  addSupervisor = () => {
     const {
-      staffId,
       email,
       firstName,
       lastName,
@@ -57,14 +54,19 @@ class Supervisors extends React.Component {
       confirmPass,
       courseSelected
     } = this.state;
-    const supervisor = {};
-    supervisor.staffId = staffId;
-    supervisor.email = email;
-    supervisor.firstName = firstName;
-    supervisor.lastName = lastName;
-    supervisor.password = password;
-    supervisor.confirmPass = confirmPass;
-    supervisor.courseSelected = courseSelected;
+    const supervisorDetails = {};
+    supervisorDetails.staffId = uuid();
+    supervisorDetails.email = email;
+    supervisorDetails.firstName = firstName;
+    supervisorDetails.lastName = lastName;
+    supervisorDetails.password = password;
+    supervisorDetails.confirmPass = confirmPass;
+    supervisorDetails.courseSelected = courseSelected;
+    this.props.onSubmit(supervisorDetails);
+  };
+  render() {
+    const { classes } = this.props;
+
     return (
       <div>
         <GridContainer>
@@ -145,14 +147,14 @@ class Supervisors extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button
-                  color="warning"
-                  onClick={this.props.onSubmit(supervisor)}
-                >
+
+                <Button color="warning" onClick={this.addSupervisor}>
+                  <Person />
                   Add SuperVisor
                 </Button>
               </CardFooter>
             </Card>
+            <Button color="success">Alert n go back</Button>
           </GridItem>
         </GridContainer>
       </div>
@@ -160,6 +162,7 @@ class Supervisors extends React.Component {
   }
 }
 Supervisors.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.object
 };
 export default withStyles(styles)(Supervisors);

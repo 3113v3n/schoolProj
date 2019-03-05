@@ -46,7 +46,7 @@ const mapStateToProps = state => {
   return {
     data: state.supervisor.myData,
     isLoading: state.supervisor.isLoading,
-    error: state.supervisor.error
+    error: state.supervisor.error,
   };
 };
 const mapDispatchToProps = dispatch => {

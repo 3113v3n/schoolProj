@@ -6,19 +6,10 @@ const initialState = {
   data: null,
   isLoading: false,
   error: false,
-  project: [{ projectCode: "", projectName: "", trimesters: 0 }],
-  student: [{ projectCode: "", admNo: "", name: "", date: new Date() }],
-  supervisorDetails: [
-    {
-      staffId: "",
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-      confirmPass: "",
-      courseSelected: ""
-    }
-  ]
+  project: [],
+  student: [],
+  supervisor: [],
+  profile: []
 };
 
 function adminReducer(state = initialState, action) {
@@ -44,12 +35,12 @@ function adminReducer(state = initialState, action) {
       });
     case actionTypes.UPDATE_ADMIN_PROFILE:
       return updateProgress(state, {
-        supervisorDetails: [
-          action.supervisorDetails,
-          ...state.supervisorDetails
-        ]
+        profile: [action.adminDetails, ...state.profile]
       });
-
+    case actionTypes.ADD_SUPERVISOR:
+      return{
+        supervisor: [action.supervisorDetails, ...state.supervisor]
+      };
     default:
       return state;
   }

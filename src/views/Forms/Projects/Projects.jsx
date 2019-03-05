@@ -8,11 +8,10 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import CustomNumberInput from "components/CustomInput/CustomNumberInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-
+import PropTypes from "prop-types";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "components/CheckBox/CheckBox.jsx";
-import { NavLink } from "react-router-dom";
 import Button from "../../../components/CustomButtons/Button";
 const styles = {
   cardCategoryWhite: {
@@ -42,6 +41,13 @@ class Projects extends React.Component {
       trimesters: ""
     };
   }
+  newProject = () => {
+    const projectDetails = {};
+    projectDetails.projectCode = "#r76t";
+    projectDetails.projectName = " Software Engineering";
+    projectDetails.trimesters = "2";
+    this.props.addProject(projectDetails);
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -94,11 +100,9 @@ class Projects extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <NavLink to="/supervisor">
-                  <Button color="success" round>
-                    Update Project
-                  </Button>
-                </NavLink>
+                <Button color="success" round onClick={this.newProject}>
+                  Update Project
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -107,4 +111,8 @@ class Projects extends React.Component {
     );
   }
 }
+Projects.propTypes = {
+  classes: PropTypes.object,
+  addProject: PropTypes.func.isRequired
+};
 export default withStyles(styles)(Projects);

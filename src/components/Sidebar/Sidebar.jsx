@@ -16,10 +16,9 @@ import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
-var role = "Supervisor";
-
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
+  const { role } = props;
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }

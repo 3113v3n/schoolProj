@@ -2,7 +2,7 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-
+import PropTypes from "prop-types";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -17,8 +17,9 @@ import { Redirect } from "react-router-dom";
 import Table from "components/Table/Table.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
 import GetApp from "@material-ui/icons/GetApp";
+import uuid from "uuid";
+import { connect } from "react-redux";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -90,20 +91,29 @@ const styles = {
 };
 class Progress extends React.Component {
   state = {
-    toEditScreen: false,
+    goBack: false,
     AdmNo: "",
     documents: [],
+    comments: "",
     marks: ""
   };
-  goToEdit = () => {
+  goBack = () => {
     this.setState({
-      toEditScreen: true
+      goBack: true
     });
   };
+  submitForm = () => {
+    const progressDetails = {};
+    progressDetails.admNo = uuid();
+    progressDetails.documentSubmited = ["Proposal", "Literature-Review"];
+    progressDetails.comments = " Work on your References";
+    progressDetails.marks = "50";
+    this.props.onSubmit(progressDetails);
+
+  };
   render() {
-    if (this.state.toEditScreen === true) {
-      this.props.history.push("/admin/studentTable");
-      //return <Redirect to="/admin/studentTable" />;
+    if (this.props.goBack === true) {
+      return <Redirect to="/admin/studentTable" />;
     }
     const { classes } = this.props;
     return (
@@ -112,7 +122,9 @@ class Progress extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Student form</h4>
+                <h4 className={classes.cardTitleWhite}>
+                  Edit Student Progress
+                </h4>
               </CardHeader>
               <CardBody>
                 <CustomInput
@@ -156,7 +168,7 @@ class Progress extends React.Component {
                 />
               </CardBody>
             </Card>
-            <Button color="primary" round>
+            <Button color="primary" round onClick={this.submitForm}>
               Submit
             </Button>
           </GridItem>
@@ -183,38 +195,13 @@ class Progress extends React.Component {
                 </Tooltip>
                 <Table
                   tableHeaderColor="warning"
-                  tableHead={[
-                    "Date",
-                    "Documents",
-                    "Comments",
-                    "Marks",
-                    "Actions"
-                  ]}
+                  tableHead={["Date", "Documents", "Comments", "Marks"]}
                   tableData={[
                     [
                       "23 - 02 -2019",
                       "Proposal",
                       "Work on your References",
-                      "12",
-                      <Tooltip
-                        key="tool"
-                        id="tooltip-top"
-                        title="Edit Task"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Edit"
-                          className={classes.tableActionButton}
-                        >
-                          <Edit
-                            className={
-                              classes.tableActionButtonIcon + " " + classes.edit
-                            }
-                            onClick={this.goToEdit}
-                          />
-                        </IconButton>
-                      </Tooltip>
+                      "12"
                     ]
                   ]}
                 />
@@ -226,4 +213,14 @@ class Progress extends React.Component {
     );
   }
 }
-export default withStyles(styles)(Progress);
+Progress.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.object
+};
+const mapStateToProps = state => {
+  return{
+    //admission Number from Redux and store in userName
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Progress));

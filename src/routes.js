@@ -6,7 +6,7 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import UserProfile from "views/UserProfile/UserProfile.jsx";
+import adminProfile from "./containers/UserProfiles/adminProfile";
 ///Administrator
 import projectContainer from "./containers/Form/projectContainer.jsx";
 import studentContainer from "./containers/Form/studentsContainer.jsx";
@@ -18,7 +18,7 @@ import allocations from "./containers/Allocation/allocations.jsx";
 
 ///Supervisor
 import studentTable from "./containers/StudentsTable/studentTable";
-import Profile from "./views/Supervisor/Profile/Profile";
+import supervisorProfile from "./containers/UserProfiles/supervisorProfile";
 import progressContainer from "./containers/Form/progressContainer";
 
 const dashboardRoutes = [
@@ -99,7 +99,7 @@ const dashboardRoutes = [
     name: "Admin Profile",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
-    component: UserProfile,
+    component: adminProfile,
     layout: "/admin",
     admin: 1
   },
@@ -117,7 +117,7 @@ const dashboardRoutes = [
     name: "Settings ",
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
-    component: Profile,
+    component: supervisorProfile,
     layout: "/admin",
     supervisor: 1
   },

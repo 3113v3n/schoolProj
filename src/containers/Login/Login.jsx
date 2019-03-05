@@ -24,8 +24,6 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   return {
-    userId: state.user.staffId,
-    userPass: state.user.password,
     redirect: state.user.redirect
   };
 };

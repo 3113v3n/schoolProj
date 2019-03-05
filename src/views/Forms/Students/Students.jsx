@@ -13,7 +13,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -43,6 +42,13 @@ class Students extends React.Component {
       admNo: ""
     };
   }
+  newStudent = () => {
+    const studentDetails = {};
+    studentDetails.firstName = "TARRUS";
+    studentDetails.lastName = " RILEY";
+    studentDetails.admNo = "SCCI/01157";
+    this.props.addStudents(studentDetails);
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -94,12 +100,10 @@ class Students extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <NavLink to="/typography">
-                  <Button color="success" round>
-                    <Person />
-                    Update Students
-                  </Button>
-                </NavLink>
+                <Button color="success" round onClick={this.newStudent}>
+                  <Person />
+                  Update Students
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -109,9 +113,8 @@ class Students extends React.Component {
   }
 }
 Students.popTypes = {
-  lastName: PropTypes.string,
-  firstName: PropTypes.string,
-  admNumber: PropTypes.string
+  addStudents: PropTypes.func.isRequired,
+  classes: PropTypes.object
 };
 
 export default withStyles(styles)(Students);

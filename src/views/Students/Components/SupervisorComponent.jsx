@@ -106,16 +106,21 @@ function SupervisorComponent(props) {
                     <th>StudentName</th>
                     <th>Supervisor</th>
                     <th>ProjCode</th>
+                    <th>Document Submited</th>
                     <th>Date-Registered</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.map(Allocations => (
-                    <tr className={classes.center} key={Allocations.studentName}>
+                    <tr
+                      className={classes.center}
+                      key={Allocations.studentName}
+                    >
                       <td>{Allocations.studentName}</td>
                       <td>{Allocations.supervisor}</td>
                       <td>{Allocations.projectCode}</td>
+                      <td>Proposal</td>
                       <td>{Allocations.dateRegistered}</td>
                       <td className={classes.left}>
                         <Tooltip
@@ -134,7 +139,7 @@ function SupervisorComponent(props) {
                                 " " +
                                 classes.edit
                               }
-                              onClick={() => goToEdit()}
+                              onClick={() => goToEdit(Allocations.studentName)}
                             />
                           </IconButton>
                         </Tooltip>

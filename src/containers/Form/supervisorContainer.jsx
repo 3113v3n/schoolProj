@@ -1,6 +1,6 @@
 import React from "react";
 import Supervisor from "../../views/Forms/Supervisors/Supervisor.jsx";
-import * as actionTypes from "../../Redux/Actions/action-types";
+import * as actionCreators from "../../Redux/Actions/";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 class supervisorContainer extends React.Component {
@@ -15,27 +15,8 @@ class supervisorContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (
-      staffId,
-      email,
-      firstName,
-      lastName,
-      password,
-      confirmPass,
-      selected
-    ) =>
-      dispatch({
-        type: actionTypes.ADD_SUPERVISOR,
-        supervisorDetails: {
-          staffId: staffId,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          password: password,
-          confirmPass: confirmPass,
-          courseSelected: selected
-        }
-      })
+    onSubmit: supervisorDetails =>
+      dispatch(actionCreators.addSupervisor(supervisorDetails))
   };
 };
 export default connect(

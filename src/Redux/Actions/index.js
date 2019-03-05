@@ -32,7 +32,7 @@ export const updateAdminProfile = adminDetails => {
 
 export const supervisorProfile = supervisorDetails => {
   return {
-    type: actionTypes.UPDATE_ADMIN_PROFILE,
+    type: actionTypes.UPDATE_SUPERVISOR_PROFILE,
     supervisorDetails: supervisorDetails
   };
 };

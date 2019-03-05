@@ -1,9 +1,9 @@
 import * as actionTypes from "../Actions/action-types"; ///import all actions
-import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
   user: [{ staffId: "", password: "" }],
-  redirect: false
+  redirect: false,
+  role: "Admin"
 };
 
 function userReducer(state = initialState, action) {
@@ -11,19 +11,9 @@ function userReducer(state = initialState, action) {
     case actionTypes.NEW_USER:
       return {
         user: [action.userDetails, ...state.user],
-        redirect: true
+        redirect: true,
+        role: state.role
       }
-    case actionTypes.SET_DATA:
-      return updateProgress(state, {
-        data: action.data,
-        isLoading: true,
-        error: false
-      });
-    case actionTypes.FETCHING_FAILED:
-      return {
-        ...state,
-        error: true
-      };
     case actionTypes.DELETE_USER:
       return{
         ...state,

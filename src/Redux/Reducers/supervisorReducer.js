@@ -3,15 +3,9 @@ import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
   mydata: null,
-  supervisorDetails: [
-    {
-      staffId: "6r6r7612e",
-      email: "basub@gmail.com",
-      password: "#cc8g92 xjkb89",
-      confirmPass: "#cc8g92 xjkb89",
-    }
-  ],
-  progress: [{ admNo: "", documentSubmited: [], comments: "", marks: "" }],
+  supervisorDetails: [],
+  goBack: false,
+  progress: [],
   error: false,
   isLoading: false
 };
@@ -30,8 +24,9 @@ function supervisorReducer(state = initialState, action) {
         error: true
       };
     case actionTypes.EDIT_PROGRESS:
-      return{
-        progress: [action.progressDetails, ...state.progress]
+      return {
+        progress: [action.progressDetails, ...state.progress],
+        goBack: true
       };
     case actionTypes.UPDATE_SUPERVISOR_PROFILE:
       return {
