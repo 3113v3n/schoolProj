@@ -1,6 +1,8 @@
 import * as actionTypes from "./action-types";
 import { asyncRequest } from "../../services/requests";
-import { postRequest } from "../../services/requests";
+import axios from "axios";
+import { setAuthorizationToken } from "../../services/requests";
+import jwt from "jsonwebtoken";
 //Work for all submission type is a parameter
 export const setMyData = (type, data) => {
   return {
@@ -13,24 +15,41 @@ export const fetchFailed = () => {
     type: actionTypes.FETCHING_FAILED
   };
 };
-export const AddNewUser = param => {
+export const AddNewUser = data => {
   return dispatch => {
-    postRequest("allocations.json", param)
-      .then(responseJson => {
-        const data = responseJson;
-        dispatch(setMyData(actionTypes.NEW_USER, data));
+    return axios
+      .post("/192.168.0.162:5000/test", data)
+      .then(res => {
+        const token = res.data.token;
+        localStorage.setItem("jwtToken", token);
+        setAuthorizationToken(token);
+        const myToken = jwt.decode(token);
+        dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
       })
       .catch(error => {
         dispatch(fetchFailed());
       });
   };
 };
+
 export const fetchData = () => {
   return dispatch => {
     asyncRequest("allocations.json")
       .then(responseJson => {
         const myData = responseJson.Allocations;
         dispatch(setMyData(actionTypes.SET_DATA, myData));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const fetchUser = () => {
+  return dispatch => {
+    asyncRequest("allocations.json")
+      .then(responseJson => {
+        const myData = responseJson.Allocations;
+        dispatch(setMyData(actionTypes.GET_USER, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());

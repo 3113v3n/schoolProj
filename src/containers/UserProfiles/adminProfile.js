@@ -16,6 +16,7 @@ class adminProfile extends React.Component {
 const mapStateToProps = state => {
   return {
     //profile details go here
+    user: state.user.user
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -24,11 +25,15 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         actionCreators.setMyData(actionTypes.UPDATE_ADMIN_PROFILE, data)
       );
+    },
+    fetchData: () => {
+      dispatch(actionCreators.fetchUser());
     }
   };
 };
 adminProfile.propTypes = {
-  updateProfile: PropTypes.func.isRequired
+  updateProfile: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired
 };
 export default connect(
   mapStateToProps,

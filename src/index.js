@@ -8,13 +8,17 @@ import RTL from "layouts/RTL.jsx";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 import Login from "containers/Login/Login";
 import { Provider } from "react-redux";
+import { setAuthorizationToken} from "./services/requests"
 //REDUX
+import jwt from "jsonwebtoken";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import adminReducer from "./Redux/Reducers/adminReducer.js";
 import supervisorReducer from "./Redux/Reducers/supervisorReducer.js";
 import usersReducers from "./Redux/Reducers/usersReducer.js";
-
+import * as actionTypes from "./Redux/Actions/action-types";
 import thunk from "redux-thunk";
+import AuthenticationComponent from "./containers/Authentication/AuthenticationComponent";
+import { setMyData } from "./Redux/Actions";
 const reducers = combineReducers({
   admin: adminReducer,
   supervisor: supervisorReducer,
@@ -37,13 +41,19 @@ const store = createStore(
   reducers,
   composedEnhancers(applyMiddleware(logger, thunk))
 );
-
+if (localStorage.jwtToken) {
+  setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch(
+    setMyData(actionTypes.SET_CURRENT_USER, jwt.decode(localStorage.jwt))
+  );
+}
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
       <Switch>
+        <Route path="/auth" component={AuthenticationComponent} />
         <Route path="/login" component={Login} />
         <Route path="/admin" component={Admin} />
         <Route path="/rtl" component={RTL} />

@@ -15,7 +15,8 @@ import Person from "@material-ui/icons/Person";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 //
-import uuid from "uuid";
+//import uuid from "uuid";
+import validateInputs from "../constants/validateInput";
 
 const styles = {
   cardCategoryWhite: {
@@ -44,23 +45,29 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffId: "",
-      password: ""
+      staff_id: "",
+      password: "",
+      redirect: true,
+      errors: {}
     };
   }
-  handleIdInput = event => {
-    this.setState({
-      [event.target.staffId]: event.target.value
-    });
+  isValid() {
+    const { errors, isValid } = validateInputs(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
+  handleInput = event => {
+    this.setState({ [event.target.id]: event.target.value });
   };
 
-  handlePassInput = event => {
-    this.setState({ password: event.target.value });
-  };
   submitDetails = () => {
+    this.setState({ errors: {} });
+    const { staff_id, password } = this.state;
     const data = {};
-    data.staffId = uuid();
-    data.password = "Hawkeye 3agl3s_n3st-Jsv0#XY^ri";
+    data.staff_id = staff_id; //uuid();
+    data.password = password;
     this.props.handleSubmit(data);
   };
   render() {
@@ -68,9 +75,8 @@ class LoginForm extends React.Component {
     if (this.props.redirect === true) {
       return <Redirect to="/admin/dashboard" />;
     }
-
+    const { errors } = this.state;
     const { classes } = this.props;
-    // const { staffId, password } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -84,12 +90,14 @@ class LoginForm extends React.Component {
                   <GridItem xs={12} sm={12} md={10}>
                     <CustomInput
                       labelText=" Staff-Id"
-                      id="userId"
+                      id="staff_id"
+                      name="staff_id"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        onChange: this.handleInput,
+                        value: this.state.staff_id,
+                        type: "password"
                       }}
-                      onChange={event => this.handleIdInput(event)}
-                      value={this.state.staffId}
                     />
                   </GridItem>
                 </GridContainer>
@@ -99,11 +107,12 @@ class LoginForm extends React.Component {
                     <CustomInput
                       labelText=" Password"
                       id="password"
+                      name="password"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        onChange: this.handleInput,
+                        value: this.state.password
                       }}
-                      onChange={event => this.handlePassInput(event)}
-                      value={this.state.password}
                     />
                   </GridItem>
                 </GridContainer>

@@ -42,6 +42,9 @@ class Students extends React.Component {
       admNo: ""
     };
   }
+  handleInput = event => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
   newStudent = () => {
     const data = {};
     data.firstName = "TARRUS";
@@ -68,9 +71,11 @@ class Students extends React.Component {
                     <CustomInput
                       className="firstName"
                       labelText="First Name"
-                      id="first-name"
+                      id="firstName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.firstName,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
@@ -78,9 +83,11 @@ class Students extends React.Component {
                     <CustomInput
                       className="lastName"
                       labelText="Last Name"
-                      id="last-name"
+                      id="lastName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.lastName,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
@@ -91,9 +98,11 @@ class Students extends React.Component {
                     <CustomInput
                       className="admNumber"
                       labelText="Admission Number"
-                      id="admission-number"
+                      id="admNo"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.admNo,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>

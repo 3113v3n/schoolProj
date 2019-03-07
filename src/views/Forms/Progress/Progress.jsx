@@ -102,6 +102,9 @@ class Progress extends React.Component {
       goBack: true
     });
   };
+  handleInput = event => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
   submitForm = () => {
     const data = {};
     data.admNo = uuid();
@@ -129,7 +132,7 @@ class Progress extends React.Component {
               <CardBody>
                 <CustomInput
                   labelText="Adm Number"
-                  id="regular"
+                  id="admNo"
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -139,9 +142,11 @@ class Progress extends React.Component {
                 />
                 <CustomInput
                   labelText="Document Submitted"
-                  id="float"
+                  id="documents"
                   formControlProps={{
-                    fullWidth: true
+                    fullWidth: true,
+                    value: this.state.documents,
+                    onChange: this.handleInput
                   }}
                   inputProps={{
                     multiline: true,
@@ -152,7 +157,9 @@ class Progress extends React.Component {
                   labelText="Comments"
                   id="float"
                   formControlProps={{
-                    fullWidth: true
+                    fullWidth: true,
+                    value: this.state.comments,
+                    onChange: this.handleInput
                   }}
                   inputProps={{
                     multiline: true,
@@ -161,9 +168,11 @@ class Progress extends React.Component {
                 />
                 <CustomMarkInput
                   labelText="Marks"
-                  id="regular"
+                  id="marks"
                   formControlProps={{
-                    fullWidth: true
+                    fullWidth: true,
+                    value: this.state.marks,
+                    onChange: this.handleInput
                   }}
                 />
               </CardBody>

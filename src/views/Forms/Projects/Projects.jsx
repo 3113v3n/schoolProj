@@ -11,7 +11,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import PropTypes from "prop-types";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import CheckBox from "components/CheckBox/CheckBox.jsx";
+import CheckBox from "@material-ui/core/Checkbox";
 import Button from "../../../components/CustomButtons/Button";
 const styles = {
   cardCategoryWhite: {
@@ -38,15 +38,32 @@ class Projects extends React.Component {
     this.state = {
       projectCode: "",
       projectName: "",
-      trimesters: ""
+      trimesters: "",
+      degreeSelected: false,
+      diplomaSelected: true
     };
   }
+  handleInput = event => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
   newProject = () => {
+    const {
+      projectCode,
+      projectName,
+      trimesters,
+      degreeSelected,
+      diplomaSelected
+    } = this.state;
     const data = {};
-    data.projectCode = "#r76t";
-    data.projectName = " Software Engineering";
-    data.trimesters = "2";
+    data.projectCode = projectCode;
+    data.projectName = projectName;
+    data.trimesters = trimesters;
+    data.degree = degreeSelected;
+    data.diploma = diplomaSelected;
     this.props.addProject(data);
+  };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
   render() {
     const { classes } = this.props;
@@ -64,18 +81,21 @@ class Projects extends React.Component {
                   <GridItem xs={12} sm={12} md={3}>
                     <CustomInput
                       labelText="Project Code"
-                      id="project-code"
+                      id="projectCode"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.projectCode
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Project Name"
-                      id="project-name"
+                      id="projectName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        onChange: this.handleInput,
+                        value: this.state.projectName
                       }}
                     />
                   </GridItem>
@@ -84,7 +104,7 @@ class Projects extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomNumberInput
                       labelText="Trimesters number (1 || 2)"
-                      id="number"
+                      id="trimesters"
                       value="number"
                       formControlProps={{
                         fullWidth: true
@@ -94,8 +114,21 @@ class Projects extends React.Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
-                    <p>Course Option</p>
-                    <CheckBox />
+                    <div>
+                      <p>Course Option</p>
+                      <p> Degree</p>
+                      <CheckBox
+                        checked={this.state.degreeSelected}
+                        onChange={this.handleChange("degreeSelected")}
+                        value="degreeSelected"
+                      />
+                      <p> Diploma</p>
+                      <CheckBox
+                        checked={this.state.diplomaSelected}
+                        onChange={this.handleChange("diplomaSelected")}
+                        value="diplomaSelected"
+                      />
+                    </div>
                   </GridItem>
                 </GridContainer>
               </CardBody>

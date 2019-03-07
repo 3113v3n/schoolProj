@@ -36,7 +36,6 @@ class CheckboxExample extends React.Component {
       <div>
         <GridContainer>
           <GridItem>
-            <p>Degree</p>
             <Checkbox
               tabIndex={-1}
               onClick={this.handleToggle(1)}
@@ -48,16 +47,6 @@ class CheckboxExample extends React.Component {
             />
           </GridItem>
           <GridItem>
-            <p>Diploma</p>
-            <Checkbox
-              tabIndex={-1}
-              onClick={this.handleToggle(2)}
-              checkedIcon={<Check className={classes.checkedIcon} />}
-              icon={<Check className={classes.uncheckedIcon} />}
-              classes={{
-                checked: classes.checked
-              }}
-            />
           </GridItem>
         </GridContainer>
       </div>

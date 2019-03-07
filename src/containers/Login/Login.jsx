@@ -20,7 +20,8 @@ class Login extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     onSubmit: data =>
-      dispatch(actionCreators.setMyData(actionTypes.NEW_USER, data))
+      dispatch(actionCreators.setMyData(actionTypes.NEW_USER, data)) //Redux storage
+    //onSubmit: data => dispatch(actionCreators.AddNewUser(data)) // add to server
   };
 };
 const mapStateToProps = state => {

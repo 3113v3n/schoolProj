@@ -5,7 +5,7 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views for Admin layout
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import dashboard from "./containers/Dashboard/dashboard.jsx";
 import adminProfile from "./containers/UserProfiles/adminProfile";
 ///Administrator
 import projectContainer from "./containers/Form/projectContainer.jsx";
@@ -27,7 +27,7 @@ const dashboardRoutes = [
     name: "Dashboard",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
-    component: DashboardPage,
+    component: dashboard,
     layout: "/admin",
     admin: 1
   },

@@ -1,4 +1,5 @@
 import paths from "../constants/paths.js";
+import axios from "axios";
 const requests = paths.localhost;
 
 async function asyncRequest(path) {
@@ -34,5 +35,14 @@ async function postRequest(path, param) {
   }
 }
 
+function setAuthorizationToken(token) {
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token};`;
+  } else {
+    delete axios.defaults.headers.common["Authorization"];
+  }
+}
+
 export { asyncRequest };
 export { postRequest };
+export { setAuthorizationToken };

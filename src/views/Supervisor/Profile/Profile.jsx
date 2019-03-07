@@ -35,7 +35,7 @@ const styles = {
 };
 
 class Profile extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       username: "",
@@ -51,7 +51,10 @@ class Profile extends React.Component {
     data.password = "12345";
     data.confirmPass = "12345";
     this.props.profileUpdate(data);
-  }
+  };
+  handleInput = event => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -72,16 +75,20 @@ class Profile extends React.Component {
                       labelText="Username"
                       id="username"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.username,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Email address"
-                      id="email-address"
+                      id="email"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.email,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
@@ -93,14 +100,18 @@ class Profile extends React.Component {
                       labelText="New Password"
                       id="password"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.password,
+                        onChange: this.handleInput
                       }}
                     />
                     <CustomInput
                       labelText="Confirm New Password"
                       id="password"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.confirmPass,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
@@ -138,5 +149,5 @@ class Profile extends React.Component {
 Profile.propTypes = {
   profileUpdate: PropTypes.func.isRequired,
   classes: PropTypes.object
-}
+};
 export default withStyles(styles)(Profile);

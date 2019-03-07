@@ -12,7 +12,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import uuid from "uuid";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import CheckBox from "components/CheckBox/CheckBox.jsx";
+import CheckBox from "@material-ui/core/Checkbox";
 import PropTypes from "prop-types";
 const styles = {
   cardCategoryWhite: {
@@ -37,32 +37,44 @@ class Supervisors extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      staff_id: uuid(),
       email: "newSupervisor@@gmail.com",
       firstName: "Sidney",
       lastName: "Omondi",
       password: "#cc8g92 xjkb89",
       confirmPass: "#cc8g92 xjkb89",
-      courseSelected: ["diploma", "degree"]
+
+      degreeSelected: true,
+      diplomaSelected: false
     };
   }
+  handleInput = event => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
   addSupervisor = () => {
     const {
+      staff_id,
       email,
       firstName,
       lastName,
       password,
       confirmPass,
-      courseSelected
+      degreeSelected,
+      diplomaSelected
     } = this.state;
     const data = {};
-    data.staffId = uuid();
+    data.staff_id = staff_id;
     data.email = email;
     data.firstName = firstName;
     data.lastName = lastName;
     data.password = password;
     data.confirmPass = confirmPass;
-    data.courseSelected = courseSelected;
+    data.degreeSelected = degreeSelected;
+    data.diplomaSelected = diplomaSelected;
     this.props.onSubmit(data);
+  };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
   render() {
     const { classes } = this.props;
@@ -85,16 +97,20 @@ class Supervisors extends React.Component {
                       labelText="StaffId"
                       id="staff_id"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.staff_id,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Email address"
-                      id="email-address"
+                      id="email"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.email,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
@@ -103,51 +119,72 @@ class Supervisors extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="First Name"
-                      id="first-name"
+                      id="firstName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.firstName,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Last Name"
-                      id="last-name"
+                      id="lastName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.lastName,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
                 </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <p>Course Option</p>
-                    <CheckBox />
-                  </GridItem>
-                </GridContainer>
+
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="set Password"
                       id="password"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.password,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Confirm Password"
-                      id="confirm-password"
+                      id="confirmPass"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.confirmPass,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <div>
+                      <p>Course Option</p>
+                      <p> Degree</p>
+                      <CheckBox
+                        checked={this.state.degreeSelected}
+                        onChange={this.handleChange("degreeSelected")}
+                        value="degreeSelected"
+                      />
+                      <p> Diploma</p>
+                      <CheckBox
+                        checked={this.state.diplomaSelected}
+                        onChange={this.handleChange("diplomaSelected")}
+                        value="diplomaSelected"
+                      />
+                    </div>
+                  </GridItem>
+                </GridContainer>
               </CardBody>
               <CardFooter>
-
                 <Button color="warning" onClick={this.addSupervisor}>
                   <Person />
                   Add SuperVisor
