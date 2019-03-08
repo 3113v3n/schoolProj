@@ -5,12 +5,14 @@ import PropTypes from "prop-types";
 import AllocationComponent from "../../views/Allocation/AllocationComponent";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
-
+import * as actionTypes from "../../Redux/Actions/action-types";
 class allocations extends React.Component {
   componentDidMount() {
     this.props.onRequest();
   }
-
+  deleteMe = id => {
+    console.log(id);
+  }
   render() {
     const { classes } = this.props;
     const { isLoading, data, error } = this.props;
@@ -26,7 +28,7 @@ class allocations extends React.Component {
     } else {
       return (
         <div>
-          <AllocationComponent classes={classes} data={data} />
+          <AllocationComponent classes={classes} data={data} onDelete={this.props.onDelete}/>
         </div>
       );
     }
@@ -37,7 +39,8 @@ allocations.propTypes = {
   isLoading: PropTypes.bool,
   data: PropTypes.array,
   error: PropTypes.bool,
-  onRequest: PropTypes.func
+  onRequest: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 const mapStateToProps = state => {
   return {
@@ -48,7 +51,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onRequest: () => dispatch(actionCreators.fetchData())
+    onRequest: () => dispatch(actionCreators.fetchData()),
+    onDelete: data =>
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_ALLOCATION, data))
   };
 };
 export default connect(

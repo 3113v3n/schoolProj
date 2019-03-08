@@ -16,7 +16,7 @@ class studentsContainer extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     addStudents: data => {
-      dispatch(actionCreators.setMyData(actionTypes.NEW_USER, data));
+      dispatch(actionCreators.setMyData(actionTypes.ADD_STUDENTS, data));
     }
   };
 };

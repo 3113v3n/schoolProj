@@ -6,6 +6,7 @@ import AdminComponent from "../../views/Students/Components/AdminComponent.jsx";
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import * as actionTypes from "../../Redux/Actions/action-types";
 class AdminStudents extends React.Component {
   componentDidMount() {
     this.props.Loaded();
@@ -25,7 +26,7 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          <AdminComponent data={data} />
+          <AdminComponent data={data} onDelete={this.props.onDelete} />
         </div>
       );
     }
@@ -35,7 +36,8 @@ AdminStudents.propTypes = {
   isLoading: PropTypes.bool,
   error: PropTypes.bool,
   data: PropTypes.array,
-  Loaded: PropTypes.func
+  Loaded: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 const mapStateToProps = state => {
   return {
@@ -48,7 +50,10 @@ const mapDispatchToProps = dispatch => {
   return {
     Loaded: () => {
       dispatch(actionCreators.adminStudents());
-    }
+
+    },
+    onDelete: students =>
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, students))
   };
 };
 export default connect(

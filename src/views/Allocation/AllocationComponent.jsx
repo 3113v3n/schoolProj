@@ -15,7 +15,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 
-
+import shortid from "shortid";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -87,93 +87,102 @@ const styles = {
 };
 
 //function UpgradeToPro(props)
-function AllocationComponent(props) {
-  const { classes, data } = props;
-  return (
-    <GridContainer justify="center">
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Student Table</h4>
-            <p className={classes.cardCategoryWhite}>students </p>
-          </CardHeader>
-          <CardBody>
-            <div className={classes.tableUpgradeWrapper}>
-              <table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th>StudentName</th>
-                    <th>Supervisor</th>
-                    <th>ProjCode</th>
-                    <th>Date-Registered</th>
-                    <th>allocations</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map(Allocations => (
-                    <tr
-                      className={classes.center}
-                      key={Allocations.studentName}
-                    >
-                      <td>{Allocations.studentName}</td>
-                      <td>{Allocations.supervisor}</td>
-                      <td>{Allocations.projectCode}</td>
-                      <td>{Allocations.dateRegistered}</td>
-                      <td>Unallocated</td>
-                      <td className={classes.left}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Task"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                          >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Close"
-                            className={classes.tableActionButton}
-                          >
-                            <Delete
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.close
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
+class AllocationComponent extends React.Component {
+  render() {
+    console.log(this.props);
+    const { classes, data, onDelete } = this.props;
+
+    return (
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Student Table</h4>
+              <p className={classes.cardCategoryWhite}>students </p>
+            </CardHeader>
+            <CardBody>
+              <div className={classes.tableUpgradeWrapper}>
+                <table className={classes.table}>
+                  <thead>
+                    <tr>
+                      <th>StudentName</th>
+                      <th>Supervisor</th>
+                      <th>ProjCode</th>
+                      <th>Date-Registered</th>
+                      <th>allocations</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardBody>
-        </Card>
-        <Button color="info" round>
-          New Allocation
-        </Button>
-      </GridItem>
-    </GridContainer>
-  );
+                  </thead>
+                  <tbody>
+                    {data.map(Allocations => (
+                      <tr
+                        className={classes.center}
+                        key={Allocations.projectCode}
+                      >
+                        <td>{Allocations.studentName}</td>
+                        <td>{Allocations.supervisor}</td>
+                        <td>{Allocations.projectCode}</td>
+                        <td>{Allocations.dateRegistered}</td>
+                        <td>Unallocated</td>
+                        <td className={classes.left}>
+                          <Tooltip
+                            id="tooltip-top"
+                            title="Edit Task"
+                            placement="top"
+                            classes={{ tooltip: classes.tooltip }}
+                          >
+                            <IconButton
+                              aria-label="Edit"
+                              className={classes.tableActionButton}
+                            >
+                              <Edit
+                                className={
+                                  classes.tableActionButtonIcon +
+                                  " " +
+                                  classes.edit
+                                }
+                              />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip
+                            id="tooltip-top-start"
+                            title="Remove"
+                            placement="top"
+                            classes={{ tooltip: classes.tooltip }}
+                          >
+                            <IconButton
+                              aria-label="Close"
+                              className={classes.tableActionButton}
+                            >
+                              <Delete
+                                className={
+                                  classes.tableActionButtonIcon +
+                                  " " +
+                                  classes.close
+                                }
+                                onClick={
+                                  () => {
+                                    onDelete(Allocations.studentName);
+                                  } //pass Id here
+                                }
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardBody>
+          </Card>
+          <Button color="info" round>
+            New Allocation
+          </Button>
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
 
 export default withStyles(styles)(AllocationComponent);

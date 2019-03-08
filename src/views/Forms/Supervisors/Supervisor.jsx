@@ -38,13 +38,12 @@ class Supervisors extends React.Component {
     super(props);
     this.state = {
       staff_id: uuid(),
-      email: "newSupervisor@@gmail.com",
-      firstName: "Sidney",
-      lastName: "Omondi",
-      password: "#cc8g92 xjkb89",
-      confirmPass: "#cc8g92 xjkb89",
-
-      degreeSelected: true,
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      confirmPass: "",
+      degreeSelected: false,
       diplomaSelected: false
     };
   }
@@ -98,8 +97,9 @@ class Supervisors extends React.Component {
                       id="staff_id"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.staff_id,
-                        onChange: this.handleInput
+
+                        onChange: this.handleInput,
+                        value: this.state.staff_id
                       }}
                     />
                   </GridItem>
@@ -109,8 +109,9 @@ class Supervisors extends React.Component {
                       id="email"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.email,
-                        onChange: this.handleInput
+
+                        onChange: this.handleInput,
+                        value: this.state.email
                       }}
                     />
                   </GridItem>
@@ -122,8 +123,8 @@ class Supervisors extends React.Component {
                       id="firstName"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.firstName,
-                        onChange: this.handleInput
+                        onChange: this.handleInput,
+                        value: this.state.firstName
                       }}
                     />
                   </GridItem>
@@ -147,8 +148,11 @@ class Supervisors extends React.Component {
                       id="password"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.password,
-                        onChange: this.handleInput
+                        onChange: this.handleInput,
+                        value: this.state.password
+                      }}
+                      inputProps={{
+                        type: "password"
                       }}
                     />
                   </GridItem>
@@ -158,8 +162,12 @@ class Supervisors extends React.Component {
                       id="confirmPass"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.confirmPass,
-                        onChange: this.handleInput
+                        onChange: this.handleInput,
+                        value: this.state.confirmPass
+
+                      }}
+                      inputProps={{
+                        type: "password"
                       }}
                     />
                   </GridItem>

@@ -45,11 +45,12 @@ class Profile extends React.Component {
     };
   }
   submitDetails = () => {
+    const { username, email, password, confirmPass } = this.state;
     const data = {};
-    data.username = "Reezy";
-    data.email = "sydneyreezy@gmail.com";
-    data.password = "12345";
-    data.confirmPass = "12345";
+    data.username = username;
+    data.email = email;
+    data.password = password;
+    data.confirmPass = confirmPass;
     this.props.profileUpdate(data);
   };
   handleInput = event => {
@@ -104,14 +105,20 @@ class Profile extends React.Component {
                         value: this.state.password,
                         onChange: this.handleInput
                       }}
+                      inputProps={{
+                        type: "password"
+                      }}
                     />
                     <CustomInput
                       labelText="Confirm New Password"
-                      id="password"
+                      id="confirmPass"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.confirmPass,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        type: "password"
                       }}
                     />
                   </GridItem>

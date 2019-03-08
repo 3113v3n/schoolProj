@@ -88,7 +88,7 @@ const styles = {
   }
 };
 function superTableComponent(props) {
-  const { classes, data } = props;
+  const { classes, data, onDelete } = props;
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -146,6 +146,9 @@ function superTableComponent(props) {
                           className={classes.tableActionButton}
                         >
                           <Delete
+                            onClick={() => {
+                              onDelete(supervisors.id);
+                            }}
                             className={
                               classes.tableActionButtonIcon +
                               " " +

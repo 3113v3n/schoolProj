@@ -16,7 +16,7 @@ class projectContainer extends React.Component {
 const mapDispatchToProps = dispatch => {
   return{
     addProject: data => {
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
+      dispatch(actionCreators.setMyData(actionTypes.ADD_PROJECT, data));
     }
   };
 };

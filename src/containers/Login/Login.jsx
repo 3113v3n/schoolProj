@@ -12,6 +12,7 @@ class Login extends React.Component {
         <LoginForm
           handleSubmit={this.props.onSubmit}
           redirect={this.props.redirect}
+          addFlashMessage={this.props.addFlashMessage}
         />
       </div>
     );
@@ -20,8 +21,10 @@ class Login extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     onSubmit: data =>
-      dispatch(actionCreators.setMyData(actionTypes.NEW_USER, data)) //Redux storage
-    //onSubmit: data => dispatch(actionCreators.AddNewUser(data)) // add to server
+      dispatch(actionCreators.setMyData(actionTypes.SET_CURRENT_USER, data)), //Redux storage
+    // onSubmit: data => dispatch(actionCreators.AddNewUser(data)) // add to server
+    addFlashMessage: message =>
+      dispatch(actionCreators.addFlashMessage(message))
   };
 };
 const mapStateToProps = state => {
@@ -30,10 +33,11 @@ const mapStateToProps = state => {
   };
 };
 Login.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
   userId: PropTypes.string,
   userPass: PropTypes.string,
-  redirect: PropTypes.bool
+  redirect: PropTypes.bool,
+  addFlashMessage: PropTypes.func.isRequired
 };
 export default connect(
   mapStateToProps,

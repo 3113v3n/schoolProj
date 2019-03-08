@@ -17,7 +17,6 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import {connect} from "react-redux";
-
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
@@ -91,6 +90,7 @@ class Dashboard extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
+
         <Sidebar
           role = {role==="Admin"? "Admin" : "Supervisor"}
           routes={routes}

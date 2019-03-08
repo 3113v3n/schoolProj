@@ -1,15 +1,19 @@
 import * as actionTypes from "../Actions/action-types"; ///import all actions
 import { updateProgress } from "../utilityFunctions";
+import findIndex from "lodash/findIndex";
 
 const initialState = {
   redirect: false,
   data: null,
   isLoading: false,
   error: false,
-  project: [],
-  student: [],
-  supervisor: [],
-  profile: []
+  projects: [],
+  students: [],
+  supervisors: [],
+  profile: {},
+  supervisor: {},
+  allocation: {},
+  student: {}
 };
 
 function adminReducer(state = initialState, action) {
@@ -27,19 +31,44 @@ function adminReducer(state = initialState, action) {
       };
     case actionTypes.ADD_PROJECT:
       return {
-        project: [action.data, ...state.project]
+        projects: [action.data, ...state.projects]
       };
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
-        student: [action.data, ...state.student]
+        students: [action.data, ...state.students]
       });
     case actionTypes.UPDATE_ADMIN_PROFILE:
       return updateProgress(state, {
-        profile: [action.data, ...state.profile]
+        ...state,
+        profile: action.data
       });
     case actionTypes.ADD_SUPERVISOR:
-      return{
-        supervisor: [action.data, ...state.supervisor]
+      return {
+        supervisors: [action.data, ...state.supervisors]
+      };
+    case actionTypes.DELETE_ALLOCATION:
+      const newData = state.data.filter(allocation => {
+        return allocation.data !== action.data;
+      });
+      return {
+        ...state,
+        data: newData
+      };
+    case actionTypes.DELETE_STUDENT:
+      const newStudents = state.data.filter(students => {
+        return students.data !== action.data;
+      });
+      return {
+        ...state,
+        data: newStudents
+      };
+    case actionTypes.DELETE_SUPERVISOR:
+      const newSupervisor = state.supervisors.filter(supervisor => {
+        return supervisor.data !== action.data;
+      });
+      return {
+        ...state,
+        supervisors: newSupervisor
       };
     default:
       return state;
@@ -47,3 +76,9 @@ function adminReducer(state = initialState, action) {
 }
 
 export default adminReducer;
+/*
+* {
+   ...state,
+  student: state.students.filter(student => student.data !== action.data)
+  };
+  */

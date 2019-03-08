@@ -5,13 +5,14 @@ import SuperTableComponent from "../../views/Supervisor/Table/superTableComponen
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import * as actionTypes from "../../Redux/Actions/action-types";
 class supervisorTable extends React.Component {
   componentDidMount() {
     this.props.onLoaded();
   }
 
   render() {
-    const { isLoading, data, error } = this.props;
+    const { isLoading, data, error, onDelete } = this.props;
     if (error) {
       return (
         <div>
@@ -24,14 +25,15 @@ class supervisorTable extends React.Component {
     } else {
       return (
         <div>
-          <SuperTableComponent data={data} />
+          <SuperTableComponent data={data} onDelete={onDelete}/>
         </div>
       );
     }
   }
 }
 supervisorTable.propTypes = {
-  onLoaded: PropTypes.func,
+  onLoaded: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   data: PropTypes.array,
   error: PropTypes.bool
@@ -47,7 +49,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onLoaded: () => {
       dispatch(actionCreators.fetchSupervisors());
-    }
+    },
+    onDelete: data =>
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_SUPERVISOR, data))
   };
 };
 export default connect(

@@ -3,9 +3,9 @@ import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
   mydata: null,
-  supervisorDetails: [],
+  supervisorDetails: {},
   goBack: false,
-  progress: [],
+  progress: {},
   error: false,
   isLoading: false
 };
@@ -25,12 +25,14 @@ function supervisorReducer(state = initialState, action) {
       };
     case actionTypes.EDIT_PROGRESS:
       return {
-        progress: [action.data, ...state.progress],
+        ...state,
+        progress: action.progress,
         goBack: true
       };
     case actionTypes.UPDATE_SUPERVISOR_PROFILE:
       return {
-        supervisorDetails: [action.data, ...state.supervisorDetails]
+        ...state,
+        supervisorDetails: action.data
       };
 
     default:

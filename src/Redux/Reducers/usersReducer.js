@@ -1,10 +1,10 @@
-import * as actionTypes from "../Actions/action-types"; ///import all actions
-
+import * as actionTypes from "../Actions/action-types";
+import isEmpty from "lodash/isEmpty";
 const initialState = {
-  users: [{ staffId: "", password: "" }],
+  users: [],
   redirect: false,
   user: {},
-  isAuthenticated: "",
+  isAuthenticated: false,
   role: "Admin"
 };
 
@@ -21,6 +21,11 @@ function userReducer(state = initialState, action) {
         ...state,
         user: state.users.filter(user => user.data !== action.data)
       };
+    case actionTypes.NEW_USER_FAILURE:
+      return {
+        ...state,
+        error: true
+      };
     case actionTypes.GET_USER:
       return {
         ...state,
@@ -28,8 +33,15 @@ function userReducer(state = initialState, action) {
       };
     case actionTypes.SET_CURRENT_USER:
       return {
-        isAuthenticated: true,
-        user: action.data
+        isAuthenticated: !isEmpty(action.data),
+        user: action.data,
+        redirect: true,
+        role: state.role
+      };
+    case actionTypes.LOGOUT:
+      return {
+        isAuthenticated: false,
+        redirect: true
       };
     default:
       return state;

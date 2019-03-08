@@ -14,7 +14,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-//
+
 //import uuid from "uuid";
 import validateInputs from "../constants/validateInput";
 
@@ -51,6 +51,7 @@ class LoginForm extends React.Component {
       errors: {}
     };
   }
+
   isValid() {
     const { errors, isValid } = validateInputs(this.state);
     if (!isValid) {
@@ -63,12 +64,16 @@ class LoginForm extends React.Component {
   };
 
   submitDetails = () => {
-    this.setState({ errors: {} });
+    //this.setState({ errors: {} });
     const { staff_id, password } = this.state;
     const data = {};
     data.staff_id = staff_id; //uuid();
     data.password = password;
     this.props.handleSubmit(data);
+    this.props.addFlashMessage({
+      type: "success",
+      text: "Successful login welcome"
+    });
   };
   render() {
     //const { redirect } = this.props;
@@ -113,6 +118,9 @@ class LoginForm extends React.Component {
                         onChange: this.handleInput,
                         value: this.state.password
                       }}
+                      inputProps={{
+                        type: "password"
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -137,7 +145,8 @@ class LoginForm extends React.Component {
 LoginForm.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,
-  redirect: PropTypes.bool
+  redirect: PropTypes.bool,
+  addFlashMessage: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(LoginForm);

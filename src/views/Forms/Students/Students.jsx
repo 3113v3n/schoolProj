@@ -46,10 +46,11 @@ class Students extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   newStudent = () => {
+    const { firstName, lastName, admNo} = this.state;
     const data = {};
-    data.firstName = "TARRUS";
-    data.lastName = " RILEY";
-    data.admNo = "SCCI/01157";
+    data.firstName = firstName;
+    data.lastName = lastName;
+    data.admNo = admNo;
     this.props.addStudents(data);
   };
   render() {

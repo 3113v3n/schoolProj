@@ -9,6 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
+import * as actionTypes from "../../Redux/Actions/action-types";
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
@@ -17,9 +18,12 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-
+import { connect } from "react-redux";
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
-
+import { setMyData } from "../../Redux/Actions";
+// import { setAuthorizationToken } from "../../services/requests";
+// import { Redirect } from "react-router-dom";
+import FlashMessageList from "../../containers/FlashMessages/FlashMessageList";
 class HeaderLinks extends React.Component {
   state = {
     open: false
@@ -35,13 +39,19 @@ class HeaderLinks extends React.Component {
 
     this.setState({ open: false });
   };
-
+  handleLogout = () => {
+    // localStorage.removeItem("jwtToken");
+    // setAuthorizationToken(false);
+    // this.props.onLogout();
+  };
   render() {
     const { classes } = this.props;
     const { open } = this.state;
+
     return (
       <div>
         <div className={classes.searchWrapper}>
+          <FlashMessageList />
           <CustomInput
             formControlProps={{
               className: classes.margin + " " + classes.search
@@ -156,15 +166,29 @@ class HeaderLinks extends React.Component {
           simple={!(window.innerWidth > 959)}
           aria-label="Person"
           className={classes.buttonLink}
+          onClick={this.handleLogout}
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>Logout</p>
           </Hidden>
         </Button>
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    //isAuthenticated: state.user.redirect
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogout: () => dispatch(setMyData(actionTypes.LOGOUT, null))
+  };
+};
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(headerLinksStyle)(HeaderLinks));

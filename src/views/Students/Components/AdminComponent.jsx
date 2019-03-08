@@ -87,7 +87,7 @@ const styles = {
 };
 
 function AdminComponent(props) {
-  const { classes, data } = props;
+  const { classes, data, onDelete } = props;
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={12}>
@@ -151,6 +151,7 @@ function AdminComponent(props) {
                                 " " +
                                 classes.close
                               }
+                              onClick={() => onDelete(Students.studentName)}
                             />
                           </IconButton>
                         </Tooltip>

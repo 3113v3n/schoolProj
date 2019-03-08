@@ -46,11 +46,11 @@ class UserProfile extends React.Component {
   submitDetails = () => {
     //Input Validation
     const data = {};
-    //state goes here const {username..} = this.state;
-    data.username = "Guzu";
-    data.email = "sydneyreezy+guzu@gmail.com";
-    data.password = "12345@$EDVII*";
-    data.confirmPass = "12345@A&%EUR";
+    const { username, email, password, confirmPass } = this.state;
+    data.username = username;
+    data.email = email;
+    data.password = password;
+    data.confirmPass = confirmPass;
     this.props.updateProfile(data);
   };
   handleInput = event => {
@@ -105,14 +105,22 @@ class UserProfile extends React.Component {
                         value: this.state.password,
                         onChange: this.handleInput
                       }}
+                      inputProps={{
+                        type: "password"
+                      }}
                     />
                     <CustomInput
+
                       labelText="Confirm New Password"
                       id="confirmPass"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.confirmPass,
-                        onChange: this.handleInput
+                        onChange: this.handleInput,
+
+                      }}
+                      inputProps={{
+                        type: "password"
                       }}
                     />
                   </GridItem>

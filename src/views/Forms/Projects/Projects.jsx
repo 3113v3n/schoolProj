@@ -40,7 +40,7 @@ class Projects extends React.Component {
       projectName: "",
       trimesters: "",
       degreeSelected: false,
-      diplomaSelected: true
+      diplomaSelected: false
     };
   }
   handleInput = event => {
@@ -84,7 +84,8 @@ class Projects extends React.Component {
                       id="projectCode"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.projectCode
+                        value: this.state.projectCode,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
@@ -107,7 +108,9 @@ class Projects extends React.Component {
                       id="trimesters"
                       value="number"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        value: this.state.trimesters,
+                        onChange: this.handleInput
                       }}
                     />
                   </GridItem>
