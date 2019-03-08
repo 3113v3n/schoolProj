@@ -5,7 +5,7 @@ export const NEW_USER = "NEW_USER";
 export const DELETE_USER = "DELETE_USER";
 export const NEW_USER_FAILURE = "NEW_USER_FAILURE";
 
-export const ISADMIN = "ISADMIN";
+export const SET_ROLE = "SET_ROLE";
 export const SET_DATA = "SET_DATA";
 export const FETCHING_FAILED = "FETCHING_FAILED";
 export const UPDATE_ADMIN_PROFILE = "UPDATE_ADMIN_PROFILE";

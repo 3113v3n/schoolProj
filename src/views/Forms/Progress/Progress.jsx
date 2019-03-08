@@ -107,10 +107,11 @@ class Progress extends React.Component {
   };
   submitForm = () => {
     const data = {};
+    const { documents,comments,marks} =this.state;
     data.admNo = uuid();
-    data.documentSubmited = ["Proposal", "Literature-Review"];
-    data.comments = " Work on your References";
-    data.marks = "50";
+    data.documentSubmited = documents;
+    data.comments = comments;
+    data.marks = marks;
     this.props.onSubmit(data);
 
   };

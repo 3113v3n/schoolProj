@@ -16,7 +16,6 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 //import uuid from "uuid";
-import validateInputs from "../constants/validateInput";
 
 const styles = {
   cardCategoryWhite: {
@@ -52,28 +51,33 @@ class LoginForm extends React.Component {
     };
   }
 
-  isValid() {
-    const { errors, isValid } = validateInputs(this.state);
-    if (!isValid) {
-      this.setState({ errors });
-    }
-    return isValid;
-  }
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
-
+  validateInput = () => {
+    var reg = /^\d+$/;
+    var Input = this.state.staff_id;
+    return reg.test(Input);
+  };
   submitDetails = () => {
     //this.setState({ errors: {} });
     const { staff_id, password } = this.state;
     const data = {};
     data.staff_id = staff_id; //uuid();
     data.password = password;
-    this.props.handleSubmit(data);
-    this.props.addFlashMessage({
-      type: "success",
-      text: "Successful login welcome"
-    });
+    if (!this.validateInput()) {
+      alert("Invalid ID");
+      this.props.addFlashMessage({
+        type: "error",
+        text: "Invalid employee ID"
+      });
+    } else {
+      this.props.handleSubmit(data);
+      this.props.addFlashMessage({
+        type: "success",
+        text: "Successful login welcome"
+      });
+    }
   };
   render() {
     //const { redirect } = this.props;

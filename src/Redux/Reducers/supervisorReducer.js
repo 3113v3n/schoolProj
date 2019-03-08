@@ -2,7 +2,7 @@ import * as actionTypes from "../Actions/action-types"; ///import all actions
 import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
-  mydata: null,
+  myData: null,
   supervisorDetails: {},
   goBack: false,
   progress: {},

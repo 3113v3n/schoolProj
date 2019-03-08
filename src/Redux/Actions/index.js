@@ -58,10 +58,12 @@ export const AddNewUser = data => {
     return axios
       .post("192.168.0.32:5000/test", data)
       .then(res => {
+        const role = res.data.role;
         const token = res.data.token;
         localStorage.setItem("jwtToken", token);
         setAuthorizationToken(token);
         const myToken = jwtDecode(token);
+        dispatch(setMyData(actionTypes.SET_ROLE, role)); //set User Role
         dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
       })
       .catch(error => {

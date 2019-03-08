@@ -1,6 +1,5 @@
 import * as actionTypes from "../Actions/action-types"; ///import all actions
 import { updateProgress } from "../utilityFunctions";
-import findIndex from "lodash/findIndex";
 
 const initialState = {
   redirect: false,

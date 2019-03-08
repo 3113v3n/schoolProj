@@ -5,7 +5,7 @@ const initialState = {
   redirect: false,
   user: {},
   isAuthenticated: false,
-  role: "Admin"
+  role: "Supervisor"
 };
 
 function userReducer(state = initialState, action) {
@@ -15,6 +15,10 @@ function userReducer(state = initialState, action) {
         users: [action.data, ...state.users],
         redirect: true,
         role: state.role
+      };
+    case actionTypes.SET_ROLE:
+      return {
+        role: action.data //response from db
       };
     case actionTypes.DELETE_USER:
       return {
