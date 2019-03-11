@@ -58,12 +58,15 @@ class EditAllocation extends React.Component {
       degreeSelected,
       diplomaSelected
     } = this.state;
+    const { history } = this.props;
     const data = {};
     data.firstName = firstName;
     data.lastName = lastName;
     data.email = email;
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
+    this.props.onSubmit(data);
+    history.push("/admin/superTable");
   };
   render() {
     const { classes } = this.props;
@@ -73,33 +76,21 @@ class EditAllocation extends React.Component {
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="success">
-                <h4 className={classes.cardTitleWhite}>Register Students </h4>
+                <h4 className={classes.cardTitleWhite}>Edit Supervisor </h4>
                 <p className={classes.cardCategoryWhite}>
-                  Enter Student Details{" "}
+                  Enter Supervisor Details{" "}
                 </p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={3}>
                     <CustomInput
-                      className="admNo"
-                      labelText="admission"
-                      id="admNo"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.admNo,
-                        onChange: this.handleInput
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="firstName"
+                      className="text-center"
                       labelText="first Name"
-                      id="firstName"
+                      id="fistName"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.lastName,
+                        value: this.state.firstName,
                         onChange: this.handleInput
                       }}
                     />
@@ -116,32 +107,14 @@ class EditAllocation extends React.Component {
                       }}
                     />
                   </GridItem>
-                </GridContainer>
-
-                <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      className="Supervisor"
-                      labelText="Supervisor Name"
-                      id="supervisor"
+                      className="text-center"
+                      labelText="Email"
+                      id="email"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.supervisor,
-                        onChange: this.handleInput
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="project Code"
-                      labelText="Project Code"
-                      id="projCode"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.admNo,
+                        value: this.state.email,
                         onChange: this.handleInput
                       }}
                     />
@@ -181,8 +154,9 @@ class EditAllocation extends React.Component {
   }
 }
 EditAllocation.popTypes = {
-  addStudents: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  history: PropTypes.object
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

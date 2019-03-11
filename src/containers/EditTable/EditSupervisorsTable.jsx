@@ -8,7 +8,7 @@ class EditSupervisorsTable extends React.Component {
   render() {
     return (
       <div>
-        <SupervisorEdit />
+        <SupervisorEdit onSubmit={this.props.onEditProgress} />
       </div>
     );
   }
@@ -20,7 +20,9 @@ EditSupervisorsTable.propTypes = {
 const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
+      dispatch(
+        actionCreators.editTable(actionTypes.EDIT_SUPERVISOR_TABLE, data)
+      );
     }
   };
 };

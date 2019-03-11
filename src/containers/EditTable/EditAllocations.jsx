@@ -15,13 +15,14 @@ class EditAllocations extends React.Component {
 }
 EditAllocations.propTypes = {
   onEditProgress: PropTypes.func
-
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
+      dispatch(
+        actionCreators.editTable(actionTypes.EDIT_ALLOCATION_TABLE, data)
+      );
     }
   };
 };

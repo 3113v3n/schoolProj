@@ -8,29 +8,24 @@ class EditStudentTable extends React.Component {
   render() {
     return (
       <div>
-        <EdiStudents />
+        <EdiStudents onSubmit={this.props.onEditProgress} />
       </div>
     );
   }
 }
 EditStudentTable.propTypes = {
-  onEditProgress: PropTypes.func,
-  goBack: PropTypes.bool
+  onEditProgress: PropTypes.func
 };
-const mapStateToProps = state => {
-  return {
-    goBack: state.supervisor.goBack
-  };
-};
+
 const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
+      dispatch(actionCreators.editTable(actionTypes.EDIT_STUDENT_TABLE, data));
     }
   };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(EditStudentTable);

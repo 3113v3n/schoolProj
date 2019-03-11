@@ -40,18 +40,24 @@ class EditStudents extends React.Component {
       firstName: "",
       lastName: "",
       admNo: "",
-      projCode: ""
+      projCode: "",
+      date: ""
     };
   }
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   updateStudent = () => {
-    const { firstName, lastName, admNo } = this.state;
+    const { firstName, lastName, admNo, date, projCode } = this.state;
+    const { history } = this.props;
     const data = {};
     data.firstName = firstName;
     data.lastName = lastName;
     data.admNo = admNo;
+    data.dateRegistered = date;
+    data.projCode = projCode;
+    this.props.onSubmit(data);
+    history.push("/admin/adminStudents");
   };
   render() {
     const { classes } = this.props;
@@ -61,7 +67,7 @@ class EditStudents extends React.Component {
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="success">
-                <h4 className={classes.cardTitleWhite}>Register Students </h4>
+                <h4 className={classes.cardTitleWhite}>Edit Students </h4>
                 <p className={classes.cardCategoryWhite}>
                   Enter Student Details{" "}
                 </p>
@@ -119,6 +125,17 @@ class EditStudents extends React.Component {
                       }}
                     />
                   </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Date Registered"
+                      id="date"
+                      formControlProps={{
+                        fullWidth: true,
+                        value: this.state.date,
+                        onChange: this.handleInput
+                      }}
+                    />
+                  </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
@@ -135,8 +152,9 @@ class EditStudents extends React.Component {
   }
 }
 EditStudents.popTypes = {
-  addStudents: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default withRouter(withStyles(styles)(EditStudents));

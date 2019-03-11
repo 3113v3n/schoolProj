@@ -36,44 +36,57 @@ const styles = {
 class EditAllocation extends React.Component {
   constructor(props) {
     super(props);
+    const fname = this.props.location.state.studentName;
+    const superv = this.props.location.state.supervisor;
+    const code = this.props.location.state.projectCode;
+    const datee = this.props.location.state.date;
     this.state = {
-      firstName: "",
-      lastName: "",
-      supervisor: "",
-      projCode: ""
+      firstName: fname,
+      lastName: fname,
+      supervisor: superv,
+      projCode: code,
+      dateRegistered: datee
     };
   }
+
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
+  editAllocation = () => {
+    const {
+      firstName,
+      lastName,
+      supervisor,
+      projCode,
+      dateRegistered
+    } = this.state;
+    const { history } = this.props;
+    const data = {};
+    data.firstName = firstName;
+    data.lastName = lastName;
+    data.supervisor = supervisor;
+    data.projCode = projCode;
+    data.date = dateRegistered;
+    this.props.onSubmit(data);
 
+    history.push("/admin/allocation");
+  };
   render() {
     const { classes } = this.props;
+    console.log(this.props);
     return (
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="success">
-                <h4 className={classes.cardTitleWhite}>Register Students </h4>
+                <h4 className={classes.cardTitleWhite}>Edit Allocation </h4>
                 <p className={classes.cardCategoryWhite}>
-                  Enter Student Details{" "}
+                  Enter Allocation Details{" "}
                 </p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={3}>
-                    <CustomInput
-                      className="admNo"
-                      labelText="admission"
-                      id="admNo"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.admNo,
-                        onChange: this.handleInput
-                      }}
-                    />
-                  </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       className="firstName"
@@ -81,8 +94,11 @@ class EditAllocation extends React.Component {
                       id="firstName"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.lastName,
+                        value: this.state.firstName,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.firstName
                       }}
                     />
                   </GridItem>
@@ -95,6 +111,9 @@ class EditAllocation extends React.Component {
                         fullWidth: true,
                         value: this.state.lastName,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.lastName
                       }}
                     />
                   </GridItem>
@@ -111,6 +130,9 @@ class EditAllocation extends React.Component {
                         value: this.state.supervisor,
                         onChange: this.handleInput
                       }}
+                      inputProps={{
+                        value: this.state.supervisor
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -123,15 +145,33 @@ class EditAllocation extends React.Component {
                       id="projCode"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.admNo,
+                        value: this.state.projCode,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.projCode
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      className="bootstrap-datetimepicker-widget"
+                      labelText="Date Registered"
+                      id="dateRegistered"
+                      formControlProps={{
+                        fullWidth: true,
+                        value: this.state.dateRegistered,
+                        onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.dateRegistered
                       }}
                     />
                   </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="success" round>
+                <Button color="success" round onClick={this.editAllocation}>
                   <Person />
                   Update Row
                 </Button>
@@ -144,8 +184,13 @@ class EditAllocation extends React.Component {
   }
 }
 EditAllocation.popTypes = {
-  addStudents: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.object,
+  history: PropTypes.object,
+  studentName: PropTypes.string,
+  projectCode: PropTypes.string,
+  supervisor: PropTypes.string,
+  date: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

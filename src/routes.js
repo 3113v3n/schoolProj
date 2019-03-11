@@ -135,7 +135,7 @@ const dashboardRoutes = [
   },
   {
     path: "/editAllocations",
-    name: "Progress Report",
+    name: "Edit Allocations",
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: EditAllocations,
@@ -153,7 +153,7 @@ const dashboardRoutes = [
   },
   {
     path: "/editSupervisorTable",
-    name: "Edit Table",
+    name: "Edit Supervisors",
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: EditSupervisorsTable,
