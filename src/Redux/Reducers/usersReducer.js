@@ -5,7 +5,8 @@ const initialState = {
   redirect: false,
   user: {},
   isAuthenticated: false,
-  role: "Admin"
+  role: "Admin",
+  token: " "
 };
 
 function userReducer(state = initialState, action) {
@@ -37,10 +38,16 @@ function userReducer(state = initialState, action) {
       };
     case actionTypes.SET_CURRENT_USER:
       return {
+        ...state,
         isAuthenticated: !isEmpty(action.data),
         user: action.data,
         redirect: true,
         role: state.role
+      };
+    case actionTypes.STORE_TOKEN:
+      return {
+        ...state,
+        token: action.token
       };
     case actionTypes.LOGOUT:
       return {

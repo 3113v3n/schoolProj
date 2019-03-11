@@ -13,6 +13,9 @@ import { withRouter } from "react-router";
 import Button from "components/CustomButtons/Button.jsx";
 import PropTypes from "prop-types";
 import AllocationTableRow from "../../components/Table/AllocationTableRow";
+import CustomInput from "../../components/CustomInput/CustomInput";
+import { Input } from "@material-ui/core";
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -85,11 +88,57 @@ const styles = {
 
 //function UpgradeToPro(props)
 class AllocationComponent extends React.Component {
-  render() {
-    const { classes, data } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtered: []
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      filtered: this.props.data
+    });
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      filtered: nextProps.data
+    });
+  }
+  handleChange = e => {
+    let currentList = []; // original List
 
+    let newList = []; //copy of list
+
+    if (e.target.value !== "") {
+      currentList = this.props.data;
+
+      newList = currentList.filter(item => {
+        const lc = `${item.studentName.toLowerCase()} 
+        ${item.supervisor.toLowerCase()} ${item.dateRegistered.toLowerCase()} //filter through table contents
+         ${item.projectCode.toLowerCase()}`;
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter); //returns components present in the table
+      });
+    } else {
+      newList = this.props.data;
+    }
+    this.setState({
+      filtered: newList
+    });
+  };
+  render() {
+    const { classes } = this.props;
+    const { filtered } = this.state;
     return (
       <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={8}>
+          <Input
+            type="text"
+            className="input"
+            onChange={this.handleChange}
+            placeholder="Search..."
+          />
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
@@ -109,13 +158,13 @@ class AllocationComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {data.map(Allocations => (
+                  {filtered.map(item => (
                     <AllocationTableRow
-                      studentName={Allocations.studentName}
-                      supervisor={Allocations.supervisor}
-                      dateRegistered={Allocations.dateRegistered}
-                      key={Allocations.studentName}
-                      projectCode={Allocations.projectCode}
+                      studentName={item.studentName}
+                      supervisor={item.supervisor}
+                      dateRegistered={item.dateRegistered}
+                      key={item.studentName}
+                      projectCode={item.projectCode}
                     />
                   ))}
                 </table>
@@ -133,5 +182,5 @@ class AllocationComponent extends React.Component {
 AllocationComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.array
-}
+};
 export default withRouter(withStyles(styles)(AllocationComponent));

@@ -32,7 +32,12 @@ export const editTable = (type, data) => {
     data: data
   };
 };
-
+export const storeToken = data => {
+  return {
+    type: actionTypes.STORE_TOKEN,
+    token: data
+  };
+};
 export const fetchFailed = () => {
   return {
     type: actionTypes.FETCHING_FAILED
@@ -58,8 +63,9 @@ export const AddNewUser = data => {
         localStorage.setItem("jwtToken", token);
         setAuthorizationToken(token);
         const myToken = jwtDecode(token);
+        dispatch(storeToken(token)); //store token
         dispatch(setMyData(actionTypes.SET_ROLE, role)); //set User Role
-        dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
+        dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken)); //user details
       })
       .catch(error => {
         dispatch(userRegistrationFailed());

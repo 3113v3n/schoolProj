@@ -23,3 +23,4 @@ export const DELETE_SUPERVISOR = "DELETE_ALLOCATION";
 export const LOGOUT = "LOGOUT";
 ///
 export const ADD_FLASH_MESSAGE = "ADD_FLASH_MESSAGE";
+export const STORE_TOKEN = "STORE_TOKEN";

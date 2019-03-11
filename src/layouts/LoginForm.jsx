@@ -14,7 +14,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-
+import {withRouter} from "react-router";
 //import uuid from "uuid";
 
 const styles = {
@@ -47,7 +47,8 @@ class LoginForm extends React.Component {
       staff_id: "",
       password: "",
       redirect: true,
-      errors: {}
+      errors: {},
+
     };
   }
 
@@ -77,13 +78,12 @@ class LoginForm extends React.Component {
         type: "success",
         text: "Successful login welcome"
       });
+      const{history}=this.props;
+      history.push("/admin/dashboard")
     }
   };
   render() {
     //const { redirect } = this.props;
-    if (this.props.redirect === true) {
-      return <Redirect to="/admin/dashboard" />;
-    }
     const { errors } = this.state;
     const { classes } = this.props;
     return (
@@ -138,6 +138,7 @@ class LoginForm extends React.Component {
                   <Person />
                   Login
                 </Button>
+
               </CardFooter>
             </Card>
           </GridItem>
@@ -153,4 +154,4 @@ LoginForm.propTypes = {
   addFlashMessage: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(LoginForm);
+export default withRouter(withStyles(styles)(LoginForm));

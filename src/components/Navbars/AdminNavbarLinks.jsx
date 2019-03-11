@@ -14,16 +14,13 @@ import * as actionTypes from "../../Redux/Actions/action-types";
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
+
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+
 import Button from "components/CustomButtons/Button.jsx";
-import { connect } from "react-redux";
+
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
-import { setMyData } from "../../Redux/Actions";
-// import { setAuthorizationToken } from "../../services/requests";
-// import { Redirect } from "react-router-dom";
-import FlashMessageList from "../../containers/FlashMessages/FlashMessageList";
+
 class HeaderLinks extends React.Component {
   state = {
     open: false
@@ -39,34 +36,14 @@ class HeaderLinks extends React.Component {
 
     this.setState({ open: false });
   };
-  handleLogout = () => {
-    // localStorage.removeItem("jwtToken");
-    // setAuthorizationToken(false);
-    // this.props.onLogout();
-  };
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
 
     return (
       <div>
-        <div className={classes.searchWrapper}>
-          <FlashMessageList />
-          <CustomInput
-            formControlProps={{
-              className: classes.margin + " " + classes.search
-            }}
-            inputProps={{
-              placeholder: "Search",
-              inputProps: {
-                "aria-label": "Search"
-              }
-            }}
-          />
-          <Button color="white" aria-label="edit" justIcon round>
-            <Search />
-          </Button>
-        </div>
+        <div className={classes.searchWrapper} />
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -177,18 +154,5 @@ class HeaderLinks extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    //isAuthenticated: state.user.redirect
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    onLogout: () => dispatch(setMyData(actionTypes.LOGOUT, null))
-  };
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(headerLinksStyle)(HeaderLinks));
+export default withStyles(headerLinksStyle)(HeaderLinks);

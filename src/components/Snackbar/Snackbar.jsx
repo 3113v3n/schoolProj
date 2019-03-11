@@ -19,7 +19,8 @@ function Snackbar({ ...props }) {
     icon,
     place,
     open,
-    rtlActive
+    rtlActive,
+    timer
   } = props;
   var action = [];
   const messageClasses = classNames({
@@ -50,6 +51,7 @@ function Snackbar({ ...props }) {
             : "right"
       }}
       open={open}
+      timer={timer}
       message={
         <div>
           {icon !== undefined ? <props.icon className={classes.icon} /> : null}
@@ -76,7 +78,8 @@ Snackbar.propTypes = {
   icon: PropTypes.func,
   place: PropTypes.oneOf(["tl", "tr", "tc", "br", "bl", "bc"]),
   open: PropTypes.bool,
-  rtlActive: PropTypes.bool
+  rtlActive: PropTypes.bool,
+  timer: PropTypes.number
 };
 
 export default withStyles(snackbarContentStyle)(Snackbar);
