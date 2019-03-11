@@ -26,8 +26,7 @@ function supervisorReducer(state = initialState, action) {
     case actionTypes.EDIT_PROGRESS:
       return {
         ...state,
-        progress: action.progress,
-        goBack: true
+        progress: action.data
       };
     case actionTypes.UPDATE_SUPERVISOR_PROFILE:
       return {

@@ -20,7 +20,10 @@ import allocations from "./containers/Allocation/allocations.jsx";
 import studentTable from "./containers/StudentsTable/studentTable";
 import supervisorProfile from "./containers/UserProfiles/supervisorProfile";
 import progressContainer from "./containers/Form/progressContainer";
-
+///Edit Table
+import EditStudentTable from "./containers/EditTable/EditStudentTable";
+import EditAllocations from "./containers/EditTable/EditAllocations";
+import EditSupervisorsTable from "./containers/EditTable/EditSupervisorsTable";
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -127,6 +130,33 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: progressContainer,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/editAllocations",
+    name: "Progress Report",
+    rtlName: "پشتیبانی از راست به چپ",
+    icon: Person,
+    component: EditAllocations,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/editStudentTable",
+    name: "Students Table",
+    rtlName: "پشتیبانی از راست به چپ",
+    icon: Person,
+    component: EditStudentTable,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/editSupervisorTable",
+    name: "Edit Table",
+    rtlName: "پشتیبانی از راست به چپ",
+    icon: Person,
+    component: EditSupervisorsTable,
     layout: "/admin",
     invisible: true
   }

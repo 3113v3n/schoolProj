@@ -25,7 +25,13 @@ class supervisorTable extends React.Component {
     } else {
       return (
         <div>
-          <SuperTableComponent data={data} onDelete={onDelete}/>
+          {data.length ? (
+            <SuperTableComponent data={data} onDelete={onDelete} />
+          ) : (
+            <div>
+              <p>No registered supervisor yet</p>
+            </div>
+          )}
         </div>
       );
     }

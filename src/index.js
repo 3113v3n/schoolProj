@@ -20,11 +20,13 @@ import * as actionTypes from "./Redux/Actions/action-types";
 import thunk from "redux-thunk";
 import { setMyData } from "./Redux/Actions";
 import requireAuth from "./containers/Authentication/requireAuth";
+import editTableReducers from "./Redux/Reducers/editTableReducers.js";
 const reducers = combineReducers({
   admin: adminReducer,
   supervisor: supervisorReducer,
   user: usersReducers,
-  flashMessageReducer
+  flashMessageReducer,
+  editTable: editTableReducers
 })
 const logger = store => {
   return next => {

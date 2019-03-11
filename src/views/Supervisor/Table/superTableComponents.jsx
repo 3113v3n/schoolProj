@@ -10,13 +10,9 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 /////////////
-
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
 import PersonAdd from "@material-ui/icons/PersonAdd";
-import Delete from "@material-ui/icons/Delete";
 import { NavLink } from "react-router-dom";
+import SupervisorTableRow from "../../../components/Table/SupervisorTableRow";
 
 const styles = {
   cardCategoryWhite: {
@@ -101,7 +97,6 @@ function superTableComponent(props) {
             <table className={classes.table}>
               <thead>
                 <tr>
-                  <th>Staff-Id</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Degree</th>
@@ -109,58 +104,15 @@ function superTableComponent(props) {
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                {data.map(supervisors => (
-                  <tr className={classes.center} key={supervisors.id}>
-                    <td>{supervisors.id}</td>
-                    <td>{supervisors.name}</td>
-                    <td>{supervisors.email}</td>
-                    <td>{supervisors.degree}</td>
-                    <td>{supervisors.diploma}</td>
-                    <td className={classes.left}>
-                      <Tooltip
-                        id="tooltip-top"
-                        title="Edit Task"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Edit"
-                          className={classes.tableActionButton}
-                        >
-                          <Edit
-                            className={
-                              classes.tableActionButtonIcon + " " + classes.edit
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        id="tooltip-top-start"
-                        title="Remove"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Close"
-                          className={classes.tableActionButton}
-                        >
-                          <Delete
-                            onClick={() => {
-                              onDelete(supervisors.id);
-                            }}
-                            className={
-                              classes.tableActionButtonIcon +
-                              " " +
-                              classes.close
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {data.map(supervisors => (
+                <SupervisorTableRow
+                  key={supervisors.id}
+                  name={supervisors.name}
+                  email={supervisors.email}
+                  diploma={supervisors.diploma}
+                  degree={supervisors.degree}
+                />
+              ))}
             </table>
           </CardBody>
         </Card>

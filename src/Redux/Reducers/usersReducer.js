@@ -5,7 +5,7 @@ const initialState = {
   redirect: false,
   user: {},
   isAuthenticated: false,
-  role: "Supervisor"
+  role: "Admin"
 };
 
 function userReducer(state = initialState, action) {

@@ -10,9 +10,6 @@ class allocations extends React.Component {
   componentDidMount() {
     this.props.onRequest();
   }
-  deleteMe = id => {
-    console.log(id);
-  }
   render() {
     const { classes } = this.props;
     const { isLoading, data, error } = this.props;
@@ -28,7 +25,17 @@ class allocations extends React.Component {
     } else {
       return (
         <div>
-          <AllocationComponent classes={classes} data={data} onDelete={this.props.onDelete}/>
+          {data.length ? (
+            <AllocationComponent
+              classes={classes}
+              data={data}
+              onDelete={this.props.onDelete}
+            />
+          ) : (
+            <div>
+              <p> No allocations present</p>
+            </div>
+          )}
         </div>
       );
     }

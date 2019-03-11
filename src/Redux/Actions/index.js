@@ -3,7 +3,7 @@ import { asyncRequest } from "../../services/requests";
 import axios from "axios";
 import { setAuthorizationToken } from "../../services/requests";
 import jwtDecode from "jwt-decode";
-import decode from "jwt-decode";
+
 //Work for all submission type is a parameter
 
 export const setMyData = (type, data) => {
@@ -26,16 +26,11 @@ export const addFlashMessage = message => {
     message
   };
 };
-export const isTokenExpired = token => {
-  try {
-    const decoded = decode(token);
-    if (decoded.exp < Date.now() / 1000) {
-      // Checking if token is expired. N
-      return true;
-    } else return false;
-  } catch (err) {
-    return false;
-  }
+export const editTable = (type, data) => {
+  return {
+    type: type,
+    data: data
+  };
 };
 
 export const fetchFailed = () => {

@@ -8,13 +8,11 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import Button from "components/CustomButtons/Button.jsx";
+import StudentTableRow from "../../../components/Table/StudentTableRow";
+import { withRouter } from "react-router";
 
 const styles = {
   cardCategoryWhite: {
@@ -87,7 +85,7 @@ const styles = {
 };
 
 function AdminComponent(props) {
-  const { classes, data, onDelete } = props;
+  const { classes, data } = props;
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={12}>
@@ -108,57 +106,15 @@ function AdminComponent(props) {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {data.map(Students => (
-                    <tr className={classes.center} key={Students.studentName}>
-                      <td>{Students.admNo}</td>
-                      <td>{Students.studentName}</td>
-                      <td>{Students.projectCode}</td>
-                      <td>{Students.dateRegistered}</td>
-                      <td className={classes.left}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Task"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                          >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Close"
-                            className={classes.tableActionButton}
-                          >
-                            <Delete
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.close
-                              }
-                              onClick={() => onDelete(Students.studentName)}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                {data.map(Students => (
+                  <StudentTableRow
+                    name={Students.studentName}
+                    admNo={Students.admNo}
+                    dateRegistered={Students.dateRegistered}
+                    projectCode={Students.projectCode}
+                    key={Students.admNo}
+                  />
+                ))}
               </table>
             </div>
           </CardBody>
@@ -173,7 +129,7 @@ function AdminComponent(props) {
     </GridContainer>
   );
 }
-export default withStyles(styles)(AdminComponent);
+export default withRouter(withStyles(styles)(AdminComponent));
 
 AdminComponent.propTypes = {
   classes: PropTypes.object.isRequired,

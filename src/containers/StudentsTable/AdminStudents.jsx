@@ -26,7 +26,13 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          <AdminComponent data={data} onDelete={this.props.onDelete} />
+          {data.length ? (
+            <AdminComponent data={data} onDelete={this.props.onDelete} />
+          ) : (
+            <div>
+              <p> No allocations present</p>
+            </div>
+          )}
         </div>
       );
     }
@@ -50,7 +56,6 @@ const mapDispatchToProps = dispatch => {
   return {
     Loaded: () => {
       dispatch(actionCreators.adminStudents());
-
     },
     onDelete: students =>
       dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, students))

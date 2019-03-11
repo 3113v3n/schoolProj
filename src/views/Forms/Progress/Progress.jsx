@@ -10,16 +10,18 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 ////////////////////////////
+import * as actionTypes from "../../../Redux/Actions/action-types";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomMarkInput from "components/CustomInput/CustomMarkInput.jsx";
-import { Redirect } from "react-router-dom";
+import * as actionCreators from "../../../Redux/Actions";
 import Table from "components/Table/Table.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import GetApp from "@material-ui/icons/GetApp";
 import uuid from "uuid";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -92,34 +94,33 @@ const styles = {
 class Progress extends React.Component {
   state = {
     goBack: false,
-    AdmNo: "",
-    documents: [],
-    comments: "",
-    marks: ""
+    AdmNo: `${this.props.location.state.marks}`,
+    documents: "documents",
+    comments: "comments",
+    marks: "marks"
   };
-  goBack = () => {
-    this.setState({
-      goBack: true
-    });
-  };
+
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //
+  // }
+
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   submitForm = () => {
     const data = {};
-    const { documents,comments,marks} =this.state;
+    const { documents, comments, marks } = this.state;
     data.admNo = uuid();
     data.documentSubmited = documents;
     data.comments = comments;
     data.marks = marks;
     this.props.onSubmit(data);
-
+    const { history } = this.props;
+    history.push("/admin/studentTable");
   };
   render() {
-    if (this.props.goBack === true) {
-      return <Redirect to="/admin/studentTable" />;
-    }
-    const { classes } = this.props;
+    const { classes, location } = this.props;
+    const { date, comments, marks, documents } = location.state;
     return (
       <div>
         <GridContainer>
@@ -138,7 +139,8 @@ class Progress extends React.Component {
                     fullWidth: true
                   }}
                   inputProps={{
-                    disabled: true
+                    disabled: true,
+                    value: this.state.AdmNo
                   }}
                 />
                 <CustomInput
@@ -146,8 +148,8 @@ class Progress extends React.Component {
                   id="documents"
                   formControlProps={{
                     fullWidth: true,
-                    value: this.state.documents,
-                    onChange: this.handleInput
+                    onChange: this.handleInput,
+                    value: this.state.documents
                   }}
                   inputProps={{
                     multiline: true,
@@ -159,8 +161,8 @@ class Progress extends React.Component {
                   id="float"
                   formControlProps={{
                     fullWidth: true,
-                    value: this.state.comments,
-                    onChange: this.handleInput
+                    onChange: this.handleInput,
+                    value: this.state.comments
                   }}
                   inputProps={{
                     multiline: true,
@@ -172,8 +174,8 @@ class Progress extends React.Component {
                   id="marks"
                   formControlProps={{
                     fullWidth: true,
-                    value: this.state.marks,
-                    onChange: this.handleInput
+                    onChange: this.handleInput,
+                    value: this.state.marks
                   }}
                 />
               </CardBody>
@@ -207,12 +209,7 @@ class Progress extends React.Component {
                   tableHeaderColor="warning"
                   tableHead={["Date", "Documents", "Comments", "Marks"]}
                   tableData={[
-                    [
-                      "23 - 02 -2019",
-                      "Proposal",
-                      "Work on your References",
-                      "12"
-                    ]
+                    [`${date}`, `${documents}`, `${comments}`, `${marks}`]
                   ]}
                 />
               </CardBody>
@@ -226,12 +223,24 @@ class Progress extends React.Component {
 Progress.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object,
-  goBack: PropTypes.bool
+  goBack: PropTypes.bool,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  date: PropTypes.string,
+  documents: PropTypes.string,
+  comments: PropTypes.string,
+  marks: PropTypes.string,
+  onEdit: PropTypes.func.isRequired
 };
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch =>{
   return{
-    //admission Number from Redux and store in userName
-  }
+    onEdit: data =>
+      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS,data))
+  };
 }
-
-export default connect(mapStateToProps)(withStyles(styles)(Progress));
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(withStyles(styles)(Progress))
+);

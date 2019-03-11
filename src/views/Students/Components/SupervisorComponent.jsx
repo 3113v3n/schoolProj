@@ -8,13 +8,10 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
 
 import PropTypes from "prop-types";
-import { Redirect, Link } from "react-router-dom";
-
+import { withRouter } from "react-router";
+import TableRow from "../../../components/Table/TableRow";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -90,20 +87,8 @@ const styles = {
 };
 
 class SupervisorComponent extends React.Component {
-  state = {
-    toEditScreen: false
-  };
-  goToEdit = () => {
-    this.setState({
-      toEditScreen: true
-    });
-  };
-
   render() {
-    const { classes, onEdit, data } = this.props;
-    if (this.state.toEditScreen === true) {
-      return <Redirect to="/admin/progress" />;
-    }
+    const { classes, data } = this.props;
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
@@ -119,52 +104,22 @@ class SupervisorComponent extends React.Component {
                     <tr>
                       <th>StudentName</th>
                       <th>Supervisor</th>
-                      <th>ProjCode</th>
-                      <th>Document Submited</th>
+                      <th>Project Code</th>
+                      <th>Document Submitted</th>
                       <th>Date-Registered</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {data.map(Allocations => (
-                      <tr
-                        className={classes.center}
-                        key={Allocations.studentName}
-                      >
-                        <td>{Allocations.studentName}</td>
-                        <td>{Allocations.supervisor}</td>
-                        <td>{Allocations.projectCode}</td>
-                        <td>Proposal</td>
-                        <td>{Allocations.dateRegistered}</td>
-                        <td className={classes.left}>
-                          <Tooltip
-                            id="tooltip-top"
-                            title="Edit Task"
-                            placement="top"
-                            classes={{ tooltip: classes.tooltip }}
-                          >
-                            <IconButton
-                              aria-label="Edit"
-                              className={classes.tableActionButton}
-                            >
-                              <Edit
-                                className={
-                                  classes.tableActionButtonIcon +
-                                  " " +
-                                  classes.edit
-                                }
-                                onClick={() => {
-                                  onEdit(Allocations.studentName).then(() =>
-                                    this.goToEdit()
-                                  );
-                                }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+
+                  {data.map(Allocations => (
+                    <TableRow
+                      key={Allocations.studentName}
+                      studentName={Allocations.studentName}
+                      supervisor={Allocations.supervisor}
+                      projectCode={Allocations.projectCode}
+                      dateRegistered={Allocations.dateRegistered}
+                    />
+                  ))}
                 </table>
               </div>
             </CardBody>
@@ -174,7 +129,8 @@ class SupervisorComponent extends React.Component {
     );
   }
 }
-export default withStyles(styles)(SupervisorComponent);
+
+export default withRouter(withStyles(styles)(SupervisorComponent));
 
 SupervisorComponent.propTypes = {
   classes: PropTypes.object.isRequired,

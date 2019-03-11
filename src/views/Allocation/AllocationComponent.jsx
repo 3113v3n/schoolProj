@@ -2,7 +2,6 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Delete from "@material-ui/icons/Delete";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -10,12 +9,10 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 ////////////////////////////
+import { withRouter } from "react-router";
 import Button from "components/CustomButtons/Button.jsx";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
-
-import shortid from "shortid";
+import PropTypes from "prop-types";
+import AllocationTableRow from "../../components/Table/AllocationTableRow";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -89,8 +86,7 @@ const styles = {
 //function UpgradeToPro(props)
 class AllocationComponent extends React.Component {
   render() {
-    console.log(this.props);
-    const { classes, data, onDelete } = this.props;
+    const { classes, data } = this.props;
 
     return (
       <GridContainer justify="center">
@@ -113,65 +109,15 @@ class AllocationComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {data.map(Allocations => (
-                      <tr
-                        className={classes.center}
-                        key={Allocations.projectCode}
-                      >
-                        <td>{Allocations.studentName}</td>
-                        <td>{Allocations.supervisor}</td>
-                        <td>{Allocations.projectCode}</td>
-                        <td>{Allocations.dateRegistered}</td>
-                        <td>Unallocated</td>
-                        <td className={classes.left}>
-                          <Tooltip
-                            id="tooltip-top"
-                            title="Edit Task"
-                            placement="top"
-                            classes={{ tooltip: classes.tooltip }}
-                          >
-                            <IconButton
-                              aria-label="Edit"
-                              className={classes.tableActionButton}
-                            >
-                              <Edit
-                                className={
-                                  classes.tableActionButtonIcon +
-                                  " " +
-                                  classes.edit
-                                }
-                              />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip
-                            id="tooltip-top-start"
-                            title="Remove"
-                            placement="top"
-                            classes={{ tooltip: classes.tooltip }}
-                          >
-                            <IconButton
-                              aria-label="Close"
-                              className={classes.tableActionButton}
-                            >
-                              <Delete
-                                className={
-                                  classes.tableActionButtonIcon +
-                                  " " +
-                                  classes.close
-                                }
-                                onClick={
-                                  () => {
-                                    onDelete(Allocations.studentName);
-                                  } //pass Id here
-                                }
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+                  {data.map(Allocations => (
+                    <AllocationTableRow
+                      studentName={Allocations.studentName}
+                      supervisor={Allocations.supervisor}
+                      dateRegistered={Allocations.dateRegistered}
+                      key={Allocations.studentName}
+                      projectCode={Allocations.projectCode}
+                    />
+                  ))}
                 </table>
               </div>
             </CardBody>
@@ -184,5 +130,8 @@ class AllocationComponent extends React.Component {
     );
   }
 }
-
-export default withStyles(styles)(AllocationComponent);
+AllocationComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  data: PropTypes.array
+}
+export default withRouter(withStyles(styles)(AllocationComponent));
