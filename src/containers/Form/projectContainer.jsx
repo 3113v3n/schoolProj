@@ -8,22 +8,28 @@ class projectContainer extends React.Component {
   render() {
     return (
       <div>
-        <Projects addProject={this.props.addProject} />
+        <Projects addProject={this.props.addProject} error={this.props.error} />
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    error: state.admin.error
+  };
+};
 const mapDispatchToProps = dispatch => {
-  return{
+  return {
     addProject: data => {
       dispatch(actionCreators.setMyData(actionTypes.ADD_PROJECT, data));
     }
   };
 };
 projectContainer.propTypes = {
-  addProject: PropTypes.func.isRequired
-}
+  addProject: PropTypes.func.isRequired,
+  error: PropTypes.bool
+};
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(projectContainer);

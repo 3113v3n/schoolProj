@@ -1,5 +1,5 @@
 import * as actionTypes from "./action-types";
-import { asyncRequest } from "../../services/requests";
+import { asyncRequest, postRequest } from "../../services/requests";
 import axios from "axios";
 import { setAuthorizationToken } from "../../services/requests";
 import jwtDecode from "jwt-decode";
@@ -53,19 +53,22 @@ export const failure = () => {
     type: actionTypes.FETCHING_FAILED
   };
 };
-export const AddNewUser = data => {
+
+export const LogMeIn = data => {
   return dispatch => {
-    return axios
-      .post("192.168.0.32:5000/test", data)
-      .then(res => {
-        const role = res.data.role;
-        const token = res.data.token;
-        localStorage.setItem("jwtToken", token);
-        setAuthorizationToken(token);
+    postRequest("auth/login", data)
+      .then(responseJson => {
+        const token = responseJson.access_token;
+        const refreshToken = responseJson.refresh_token;
         const myToken = jwtDecode(token);
-        dispatch(storeToken(token)); //store token
-        dispatch(setMyData(actionTypes.SET_ROLE, role)); //set User Role
-        dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken)); //user details
+        const status = responseJson.status;
+        localStorage.setItem("access_Token", token);
+        localStorage.setItem("refresh_Token", token);
+        dispatch(setMyData(actionTypes.REFRESH_TOKEN, refreshToken));
+        dispatch(setMyData(actionTypes.STATUS, status));
+        dispatch(storeToken(token)); // TODO : store refresh
+        setAuthorizationToken(token);
+        dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
       })
       .catch(error => {
         dispatch(userRegistrationFailed());

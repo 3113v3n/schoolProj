@@ -14,6 +14,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "@material-ui/core/Checkbox";
 import PropTypes from "prop-types";
+import Snackbar from "../../../components/Snackbar/Snackbar";
+import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -47,8 +49,38 @@ class Supervisors extends React.Component {
       diplomaSelected: false
     };
   }
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
+  }
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
+  };
+  clearInput = () => {
+    this.setState({
+      staff_id: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      confirmPass: "",
+      degreeSelected: false,
+      diplomaSelected: false
+    });
   };
   addSupervisor = () => {
     const {
@@ -71,6 +103,8 @@ class Supervisors extends React.Component {
     data.degreeSelected = degreeSelected;
     data.diplomaSelected = diplomaSelected;
     this.props.onSubmit(data);
+    this.clearInput();
+    this.showNotification("tl");
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
@@ -164,7 +198,6 @@ class Supervisors extends React.Component {
                         fullWidth: true,
                         onChange: this.handleInput,
                         value: this.state.confirmPass
-
                       }}
                       inputProps={{
                         type: "password"
@@ -197,9 +230,17 @@ class Supervisors extends React.Component {
                   <Person />
                   Add SuperVisor
                 </Button>
+                <Snackbar
+                  place="tl"
+                  color="success"
+                  icon={AddAlert}
+                  message="Supervisor successfully Added."
+                  open={this.state.tl}
+                  closeNotification={() => this.setState({ tl: false })}
+                  close
+                />
               </CardFooter>
             </Card>
-            <Button color="success">Alert n go back</Button>
           </GridItem>
         </GridContainer>
       </div>

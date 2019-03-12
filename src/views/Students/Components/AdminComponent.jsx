@@ -13,6 +13,10 @@ import { NavLink } from "react-router-dom";
 import Button from "components/CustomButtons/Button.jsx";
 import StudentTableRow from "../../../components/Table/StudentTableRow";
 import { withRouter } from "react-router";
+import CustomInput from "../../../components/CustomInput/CustomInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
+import Search from "@material-ui/icons/Search";
 
 const styles = {
   cardCategoryWhite: {
@@ -84,50 +88,110 @@ const styles = {
   }
 };
 
-function AdminComponent(props) {
-  const { classes, data } = props;
-  return (
-    <GridContainer justify="center">
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Student Table</h4>
-            <p className={classes.cardCategoryWhite}>students </p>
-          </CardHeader>
-          <CardBody>
-            <div className={classes.tableUpgradeWrapper}>
-              <table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th>Admission</th>
-                    <th>Student Name</th>
-                    <th>Project Code</th>
-                    <th>Date Registered</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                {data.map(Students => (
-                  <StudentTableRow
-                    name={Students.studentName}
-                    admNo={Students.admNo}
-                    dateRegistered={Students.dateRegistered}
-                    projectCode={Students.projectCode}
-                    key={Students.admNo}
-                  />
-                ))}
-              </table>
-            </div>
-          </CardBody>
-        </Card>
+class AdminComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtered: []
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      filtered: this.props.data
+    });
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      filtered: nextProps.data
+    });
+  }
+  handleChange = e => {
+    let currentList = []; // original List
 
-        <NavLink to="/admin/students">
-          <Button type="button" color="primary" round>
-            <PersonAdd /> Add New Student
-          </Button>
-        </NavLink>
-      </GridItem>
-    </GridContainer>
-  );
+    let newList = []; //copy of list
+
+    if (e.target.value !== "") {
+      currentList = this.props.data;
+
+      newList = currentList.filter(item => {
+        const lc = `${item.studentName.toLowerCase()} 
+        ${
+          item.admNo
+        } ${item.dateRegistered.toLowerCase()} //filter through table contents
+         ${item.projectCode.toLowerCase()}`;
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter); //returns components present in the table
+      });
+    } else {
+      newList = this.props.data;
+    }
+    this.setState({
+      filtered: newList
+    });
+  };
+  render() {
+    const { classes } = this.props;
+    const { filtered } = this.state;
+    return (
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Student Table</h4>
+              <p className={classes.cardCategoryWhite}>students </p>
+            </CardHeader>
+            <CardBody>
+              <div className={classes.tableUpgradeWrapper}>
+                <GridItem xs={2} sm={2} md={2}>
+                  <CustomInput
+                    labelText="Type to filter"
+                    id="material"
+                    formControlProps={{
+                      fullWidth: true,
+                      onChange: this.handleChange
+                    }}
+                    inputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Search />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </GridItem>
+                <table className={classes.table}>
+                  <thead>
+                    <tr>
+                      <th>Admission</th>
+                      <th>Student Name</th>
+                      <th>Project Code</th>
+                      <th>Date Registered</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  {filtered.map(item => (
+                    <StudentTableRow
+                      name={item.studentName}
+                      admNo={item.admNo}
+                      dateRegistered={item.dateRegistered}
+                      projectCode={item.projectCode}
+                      key={item.admNo}
+                    />
+                  ))}
+                </table>
+              </div>
+            </CardBody>
+          </Card>
+
+          <NavLink to="/admin/students">
+            <Button type="button" color="primary" round>
+              <PersonAdd /> Add New Student
+            </Button>
+          </NavLink>
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
 export default withRouter(withStyles(styles)(AdminComponent));
 

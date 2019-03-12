@@ -30,7 +30,8 @@ function adminReducer(state = initialState, action) {
       };
     case actionTypes.ADD_PROJECT:
       return {
-        projects: [action.data, ...state.projects]
+        projects: [action.data, ...state.projects],
+        error: false
       };
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {

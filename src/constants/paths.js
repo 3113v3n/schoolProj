@@ -1,6 +1,6 @@
 const paths = {
   localhost: "http://localhost:80/",
-  production: "<SERVER_IP_ADDRESS:PORT>" //for use in production environment
+  production: "http://192.168.0.32:5000/" //for use in production environment
 };
 
 export default paths;

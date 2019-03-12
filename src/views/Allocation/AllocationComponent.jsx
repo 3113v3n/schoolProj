@@ -14,8 +14,9 @@ import Button from "components/CustomButtons/Button.jsx";
 import PropTypes from "prop-types";
 import AllocationTableRow from "../../components/Table/AllocationTableRow";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import { Input } from "@material-ui/core";
-
+import InputAdornment from "@material-ui/core/InputAdornment";
+// @material-ui/icons
+import Search from "@material-ui/icons/Search";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -131,14 +132,6 @@ class AllocationComponent extends React.Component {
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={8}>
-          <Input
-            type="text"
-            className="input"
-            onChange={this.handleChange}
-            placeholder="Search..."
-          />
-        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
@@ -147,6 +140,25 @@ class AllocationComponent extends React.Component {
             </CardHeader>
             <CardBody>
               <div className={classes.tableUpgradeWrapper}>
+                <GridItem xs={2} sm={2} md={2}>
+                  <CustomInput
+                    labelText="Type to filter"
+                    id="material"
+                    formControlProps={{
+                      fullWidth: true,
+                      onChange: this.handleChange
+                    }}
+                    inputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Search />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+
+                </GridItem>
+
                 <table className={classes.table}>
                   <thead>
                     <tr>

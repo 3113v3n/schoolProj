@@ -13,7 +13,11 @@ import CardBody from "components/Card/CardBody.jsx";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import { NavLink } from "react-router-dom";
 import SupervisorTableRow from "../../../components/Table/SupervisorTableRow";
+import CustomInput from "../../../components/CustomInput/CustomInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
+import Search from "@material-ui/icons/Search";
+import PropTypes from "prop-types";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -83,48 +87,110 @@ const styles = {
     flexDirection: "row"
   }
 };
-function superTableComponent(props) {
-  const { classes, data, onDelete } = props;
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>SuperVisors Table</h4>
-            <p className={classes.cardCategoryWhite}>SuperVisors </p>
-          </CardHeader>
-          <CardBody>
-            <table className={classes.table}>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Degree</th>
-                  <th>Diploma</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              {data.map(supervisors => (
-                <SupervisorTableRow
-                  key={supervisors.id}
-                  name={supervisors.name}
-                  email={supervisors.email}
-                  diploma={supervisors.diploma}
-                  degree={supervisors.degree}
+class superTableComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtered: []
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      filtered: this.props.data
+    });
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      filtered: nextProps.data
+    });
+  }
+  handleChange = e => {
+    let currentList = []; // original List
+
+    let newList = []; //copy of list
+
+    if (e.target.value !== "") {
+      currentList = this.props.data;
+
+      newList = currentList.filter(item => {
+        const lc = `${item.degree.toLowerCase()} 
+        ${item.diploma.toLowerCase()}
+        ${item.id} ${item.name.toLowerCase()} //filter through table contents
+         ${item.email.toLowerCase()}`;
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter); //returns components present in the table
+      });
+    } else {
+      newList = this.props.data;
+    }
+    this.setState({
+      filtered: newList
+    });
+  };
+  render() {
+    const { classes } = this.props;
+    const { filtered } = this.state;
+    return (
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>SuperVisors Table</h4>
+              <p className={classes.cardCategoryWhite}>SuperVisors </p>
+            </CardHeader>
+            <CardBody>
+              <GridItem xs={2} sm={2} md={2}>
+                <CustomInput
+                  labelText="Type to filter"
+                  id="material"
+                  formControlProps={{
+                    fullWidth: true,
+                    onChange: this.handleChange
+                  }}
+                  inputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Search />
+                      </InputAdornment>
+                    )
+                  }}
                 />
-              ))}
-            </table>
-          </CardBody>
-        </Card>
+              </GridItem>
+              <table className={classes.table}>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Degree</th>
+                    <th>Diploma</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                {filtered.map(item => (
+                  <SupervisorTableRow
+                    key={item.id}
+                    name={item.name}
+                    email={item.email}
+                    diploma={item.diploma}
+                    degree={item.degree}
+                  />
+                ))}
+              </table>
+            </CardBody>
+          </Card>
 
-        <NavLink to="/admin/supervisor">
-          <Button type="button" color="primary" round>
-            <PersonAdd /> Add Supervisor
-          </Button>
-        </NavLink>
-      </GridItem>
-    </GridContainer>
-  );
+          <NavLink to="/admin/supervisor">
+            <Button type="button" color="primary" round>
+              <PersonAdd /> Add Supervisor
+            </Button>
+          </NavLink>
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
-
+superTableComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  data: PropTypes.array
+};
 export default withStyles(styles)(superTableComponent);

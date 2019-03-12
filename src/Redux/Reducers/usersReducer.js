@@ -6,7 +6,10 @@ const initialState = {
   user: {},
   isAuthenticated: false,
   role: "Admin",
-  token: " "
+  token: " ",
+  error: false,
+  status: "",
+  refreshToken: ""
 };
 
 function userReducer(state = initialState, action) {
@@ -20,6 +23,11 @@ function userReducer(state = initialState, action) {
     case actionTypes.SET_ROLE:
       return {
         role: action.data //response from db
+      };
+    case actionTypes.STATUS:
+      return {
+        ...state,
+        status: action.data
       };
     case actionTypes.DELETE_USER:
       return {
@@ -48,6 +56,11 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         token: action.token
+      };
+    case actionTypes.REFRESH_TOKEN:
+      return{
+        ...state,
+        refreshToken: action.data
       };
     case actionTypes.LOGOUT:
       return {

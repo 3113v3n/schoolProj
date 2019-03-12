@@ -8,6 +8,10 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import CustomInput from "../../../components/CustomInput/CustomInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+// @material-ui/icons
+import Search from "@material-ui/icons/Search";
 
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
@@ -87,8 +91,47 @@ const styles = {
 };
 
 class SupervisorComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtered: []
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      filtered: this.props.data
+    });
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      filtered: nextProps.data
+    });
+  }
+  handleChange = e => {
+    let currentList = []; // original List
+
+    let newList = []; //copy of list
+
+    if (e.target.value !== "") {
+      currentList = this.props.data;
+
+      newList = currentList.filter(item => {
+        const lc = `${item.studentName.toLowerCase()} 
+        ${item.supervisor.toLowerCase()} ${item.dateRegistered.toLowerCase()} //filter through table contents
+         ${item.projectCode.toLowerCase()}`;
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter); //returns components present in the table
+      });
+    } else {
+      newList = this.props.data;
+    }
+    this.setState({
+      filtered: newList
+    });
+  };
   render() {
-    const { classes, data } = this.props;
+    const { classes } = this.props;
+    const { filtered } = this.state;
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
@@ -99,6 +142,23 @@ class SupervisorComponent extends React.Component {
             </CardHeader>
             <CardBody>
               <div className={classes.tableUpgradeWrapper}>
+                <GridItem xs={2} sm={2} md={2}>
+                  <CustomInput
+                    labelText="Type to filter"
+                    id="material"
+                    formControlProps={{
+                      fullWidth: true,
+                      onChange: this.handleChange
+                    }}
+                    inputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Search />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </GridItem>
                 <table className={classes.table}>
                   <thead>
                     <tr>
@@ -111,13 +171,13 @@ class SupervisorComponent extends React.Component {
                     </tr>
                   </thead>
 
-                  {data.map(Allocations => (
+                  {filtered.map(item => (
                     <TableRow
-                      key={Allocations.studentName}
-                      studentName={Allocations.studentName}
-                      supervisor={Allocations.supervisor}
-                      projectCode={Allocations.projectCode}
-                      dateRegistered={Allocations.dateRegistered}
+                      key={item.studentName}
+                      studentName={item.studentName}
+                      supervisor={item.supervisor}
+                      projectCode={item.projectCode}
+                      dateRegistered={item.dateRegistered}
                     />
                   ))}
                 </table>

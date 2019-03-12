@@ -4,7 +4,7 @@ export const ADD_PROJECT = "ADD_PROJECT";
 export const NEW_USER = "NEW_USER";
 export const DELETE_USER = "DELETE_USER";
 export const NEW_USER_FAILURE = "NEW_USER_FAILURE";
-
+export const STATUS = "STATUS";
 export const SET_ROLE = "SET_ROLE";
 export const SET_DATA = "SET_DATA";
 export const FETCHING_FAILED = "FETCHING_FAILED";
@@ -24,3 +24,4 @@ export const LOGOUT = "LOGOUT";
 ///
 export const ADD_FLASH_MESSAGE = "ADD_FLASH_MESSAGE";
 export const STORE_TOKEN = "STORE_TOKEN";
+export const REFRESH_TOKEN = "REFRESH_TOKEN";

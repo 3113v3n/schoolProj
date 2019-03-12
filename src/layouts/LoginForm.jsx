@@ -13,10 +13,11 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
 import PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
-import {withRouter} from "react-router";
-//import uuid from "uuid";
-
+import { withRouter } from "react-router";
+import AddAlert from "@material-ui/icons/AddAlert";
+import AuthHelperMethods from "../containers/Authentication/AuthHelperMethods";
+// //core components
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -47,9 +48,27 @@ class LoginForm extends React.Component {
       staff_id: "",
       password: "",
       redirect: true,
-      errors: {},
-
+      tr: false
     };
+  }
+  Auth = new AuthHelperMethods();
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
   }
 
   handleInput = event => {
@@ -60,31 +79,27 @@ class LoginForm extends React.Component {
     var Input = this.state.staff_id;
     return reg.test(Input);
   };
-  submitDetails = () => {
-    //this.setState({ errors: {} });
-    const { staff_id, password } = this.state;
-    const data = {};
-    data.staff_id = staff_id; //uuid();
-    data.password = password;
-    if (!this.validateInput()) {
-      alert("Invalid ID");
-      this.props.addFlashMessage({
-        type: "error",
-        text: "Invalid employee ID"
-      });
-    } else {
-      this.props.handleSubmit(data);
-      this.props.addFlashMessage({
-        type: "success",
-        text: "Successful login welcome"
-      });
-      const{history}=this.props;
-      history.push("/admin/dashboard")
+  validatePassInput = () => {
+    const { password, staff_id } = this.state;
+    if (password.length === 0 || staff_id.length === 0) {
+      this.showNotification("tr");
+    } else if (password.length !== 0 && staff_id.length !== 0) {
+      const data = {};
+      data.emp_no = staff_id; //uuid();
+      data.password = password;
+      if (!this.validateInput()) {
+        this.showNotification("tr");
+      } else {
+        this.props.handleSubmit(data);
+      }
     }
   };
+
   render() {
-    //const { redirect } = this.props;
-    const { errors } = this.state;
+    if (this.props.isAuthenticated === true) {
+      const { history } = this.props;
+      history.push("/admin/dashboard");
+    }
     const { classes } = this.props;
     return (
       <div>
@@ -100,12 +115,10 @@ class LoginForm extends React.Component {
                     <CustomInput
                       labelText=" Staff-Id"
                       id="staff_id"
-                      name="staff_id"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
-                        value: this.state.staff_id,
-                        type: "password"
+                        value: this.state.staff_id
                       }}
                     />
                   </GridItem>
@@ -116,7 +129,6 @@ class LoginForm extends React.Component {
                     <CustomInput
                       labelText=" Password"
                       id="password"
-                      name="password"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
@@ -133,12 +145,20 @@ class LoginForm extends React.Component {
                 <Button
                   color="success"
                   round
-                  onClick={() => this.submitDetails()}
+                  onClick={() => this.validatePassInput()}
                 >
                   <Person />
                   Login
                 </Button>
-
+                <Snackbar
+                  place="tr"
+                  color={"danger"}
+                  icon={AddAlert}
+                  message={"Invalid Credentials"}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
               </CardFooter>
             </Card>
           </GridItem>
@@ -150,8 +170,10 @@ class LoginForm extends React.Component {
 LoginForm.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,
-  redirect: PropTypes.bool,
-  addFlashMessage: PropTypes.func.isRequired
+  error: PropTypes.bool,
+  addFlashMessage: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  isAuthenticated: PropTypes.bool
 };
 
 export default withRouter(withStyles(styles)(LoginForm));

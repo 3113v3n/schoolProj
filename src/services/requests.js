@@ -1,6 +1,6 @@
 import paths from "../constants/paths.js";
 import axios from "axios";
-const requests = paths.localhost;
+const requests = paths.production; //localhost;
 
 async function asyncRequest(path) {
   return fetch(`${requests}${path}`)

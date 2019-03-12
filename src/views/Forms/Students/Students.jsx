@@ -13,6 +13,8 @@ import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
+import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
+import Snackbar from "../../../components/Snackbar/Snackbar";
 
 const styles = {
   cardCategoryWhite: {
@@ -42,6 +44,24 @@ class Students extends React.Component {
       admNo: ""
     };
   }
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
+  }
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
@@ -52,6 +72,7 @@ class Students extends React.Component {
     data.lastName = lastName;
     data.admNo = admNo;
     this.props.addStudents(data);
+    this.showNotification("tl");
   };
   render() {
     const { classes } = this.props;
@@ -114,6 +135,15 @@ class Students extends React.Component {
                   <Person />
                   Update Students
                 </Button>
+                <Snackbar
+                  place="tl"
+                  color="success"
+                  icon={AddAlert}
+                  message="Student successfully Added."
+                  open={this.state.tl}
+                  closeNotification={() => this.setState({ tl: false })}
+                  close
+                />
               </CardFooter>
             </Card>
           </GridItem>

@@ -13,6 +13,12 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "@material-ui/core/Checkbox";
 import Button from "../../../components/CustomButtons/Button";
+///////////
+import AddAlert from "@material-ui/icons/AddAlert";
+//core components
+import Snackbar from "components/Snackbar/Snackbar.jsx";
+
+
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -40,9 +46,29 @@ class Projects extends React.Component {
       projectName: "",
       trimesters: "",
       degreeSelected: false,
-      diplomaSelected: false
+      diplomaSelected: false,
+      tr: false
     };
   }
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
+  }
+
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
@@ -61,6 +87,7 @@ class Projects extends React.Component {
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
     this.props.addProject(data);
+    this.showNotification("tr");
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
@@ -137,8 +164,21 @@ class Projects extends React.Component {
               </CardBody>
               <CardFooter>
                 <Button color="success" round onClick={this.newProject}>
-                  Update Project
+                  Add Project
                 </Button>
+                <Snackbar
+                  place="tr"
+                  color={this.props.error === false ? "success" : "danger"}
+                  icon={AddAlert}
+                  message={
+                    this.props.error === false
+                      ? "Project successfully Added."
+                      : "Something went wrong."
+                  }
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
               </CardFooter>
             </Card>
           </GridItem>
@@ -149,6 +189,7 @@ class Projects extends React.Component {
 }
 Projects.propTypes = {
   classes: PropTypes.object,
-  addProject: PropTypes.func.isRequired
+  addProject: PropTypes.func.isRequired,
+  error: PropTypes.bool
 };
 export default withStyles(styles)(Projects);
