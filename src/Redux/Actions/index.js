@@ -1,7 +1,6 @@
 import * as actionTypes from "./action-types";
 import { asyncRequest, postRequest } from "../../services/requests";
-import axios from "axios";
-import { setAuthorizationToken } from "../../services/requests";
+//import { setAuthorizationToken } from "../../services/requests";
 import jwtDecode from "jwt-decode";
 
 //Work for all submission type is a parameter
@@ -14,9 +13,10 @@ export const setMyData = (type, data) => {
 };
 export const logMeout = () => {
   return dispatch => {
-    localStorage.removeItem("jwtToken");
-    setAuthorizationToken(false);
-    dispatch(setMyData(actionTypes.SET_CURRENT_USER, {}));
+    //localStorage.removeItem("access_token");
+    //localStorage.removeItem("refresh_token");
+    localStorage.clear();
+    dispatch(setMyData(actionTypes.NOT_AUTHENTICATED));
   };
 };
 //FLASH MESSAGE
@@ -63,12 +63,13 @@ export const LogMeIn = data => {
         const myToken = jwtDecode(token);
         const status = responseJson.status;
         localStorage.setItem("access_Token", token);
-        localStorage.setItem("refresh_Token", token);
-        dispatch(setMyData(actionTypes.REFRESH_TOKEN, refreshToken));
+        localStorage.setItem("refresh_Token", refreshToken);
+
         dispatch(setMyData(actionTypes.STATUS, status));
-        dispatch(storeToken(token)); // TODO : store refresh
-        setAuthorizationToken(token);
         dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
+        dispatch(storeToken(token));
+        dispatch(setMyData(actionTypes.AUTHENTICATED));
+        dispatch(setMyData(actionTypes.REFRESH_TOKEN, refreshToken));
       })
       .catch(error => {
         dispatch(userRegistrationFailed());

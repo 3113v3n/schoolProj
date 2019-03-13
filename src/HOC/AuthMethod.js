@@ -1,32 +1,46 @@
 import decode from "jwt-decode";
 
-export default class AuthHelperMethods {
-  // Initializing important variables
-  constructor(domain) {
-    //THIS LINE IS ONLY USED WHEN YOU'RE IN PRODUCTION MODE!
-    this.domain = domain || "http://192.168.0.32:5000"; // API server domain
-  }
-  login = data => {
-    // Get a token from api server using the fetch api
-    return this.fetch(`/auth/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        data
-      })
-    })
-      .then(res => res.json())
-      .then(responseJson => {
-        this.setToken(responseJson.status); // Setting the token in localStorage
+
+export default class AuthMethod {
+  async allPostRequest(param) {
+    try {
+      let requestParams = {
+        method: "POST",
+        body: JSON.stringify(param)
+      };
+      let response = await this.fetch(
+        "http://192.168.0.32:5000/auth/login",
+        requestParams
+      );
+
+      let responseJson = await response.json();
+      return responseJson.then(responseJson => {
+        this.setToken(responseJson.access_token); // Setting the token in localStorage
+        this.setRefreshToken(responseJson.refresh_token); //refresh Token
         return Promise.resolve(responseJson);
       });
+    } catch (error) {
+      console.error(`Error is : ${error}`);
+    }
+  }
+  getToken = () => {
+    // Retrieves the user token from localStorage
+    return localStorage.getItem("access_token");
   };
-
   loggedIn = () => {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken(); // Getting token from localstorage
     return !!token && !this.isTokenExpired(token); // handwaiving here
   };
-
+  logout = () => {
+    // Clear user token and profile data from localStorage
+    localStorage.removeItem("access_token");
+  };
+  getConfirm = () => {
+    // Using jwt-decode npm package to decode the token
+    let answer = decode(this.getToken());
+    return answer;
+  };
   isTokenExpired = token => {
     try {
       const decoded = decode(token);
@@ -35,33 +49,16 @@ export default class AuthHelperMethods {
         return true;
       } else return false;
     } catch (err) {
-      console.log("expired check failed! Line 42: AuthService.js");
       return false;
     }
   };
-
+  setRefreshToken = token => {
+    localStorage.setItem("refreshToken", token);
+  }
   setToken = idToken => {
     // Saves user token to localStorage
-    localStorage.setItem("id_token", idToken);
+    localStorage.setItem("access_token", idToken);
   };
-
-  getToken = () => {
-    // Retrieves the user token from localStorage
-    return localStorage.getItem("id_token");
-  };
-
-  logout = () => {
-    // Clear user token and profile data from localStorage
-    localStorage.removeItem("id_token");
-  };
-
-  getConfirm = () => {
-    // Using jwt-decode npm package to decode the token
-    let answer = decode(this.getToken());
-    console.log("Recieved answer!");
-    return answer;
-  };
-
   fetch = (url, options) => {
     // performs api calls sending the required authentication headers
     const headers = {
@@ -81,7 +78,6 @@ export default class AuthHelperMethods {
       .then(this._checkStatus)
       .then(response => response.json());
   };
-
   _checkStatus = response => {
     // raises an error in case response status is not a success
     if (response.status >= 200 && response.status < 300) {

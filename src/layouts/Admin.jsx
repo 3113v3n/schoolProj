@@ -17,7 +17,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import {connect} from "react-redux";
-import withAuth from "containers/Authentication/withAuth";
+
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
@@ -87,8 +87,9 @@ class Dashboard extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-    const{role} = this.props;
-    const { classes, ...rest } = this.props;
+
+    const { classes, role,token,...rest } = this.props;
+  if(token.length !== 0 ){
     return (
       <div className={classes.wrapper}>
 
@@ -118,7 +119,7 @@ class Dashboard extends React.Component {
             <div className={classes.map}>{switchRoutes}</div>
           )}
           {this.getRoute() ? <Footer /> : null}
-           <FixedPlugin
+          <FixedPlugin
             handleImageClick={this.handleImageClick}
             handleColorClick={this.handleColorClick}
             bgColor={this.state["color"]}
@@ -130,6 +131,7 @@ class Dashboard extends React.Component {
       </div>
     );
   }
+  }
 }
 
 Dashboard.propTypes = {
@@ -137,7 +139,8 @@ Dashboard.propTypes = {
 };
 const mapStateToProps = state => {
   return{
-    role: state.user.role
+    role: state.user.role,
+    token: state.user.token
   }
-}
+};
 export default connect(mapStateToProps)(withStyles(dashboardStyle)(Dashboard));

@@ -1,5 +1,5 @@
 import * as actionTypes from "../Actions/action-types";
-import isEmpty from "lodash/isEmpty";
+//import isEmpty from "lodash/isEmpty";
 const initialState = {
   users: [],
   redirect: false,
@@ -9,7 +9,8 @@ const initialState = {
   token: " ",
   error: false,
   status: "",
-  refreshToken: ""
+  refreshToken: "",
+  errorMessage: "Can not Login, Please try again"
 };
 
 function userReducer(state = initialState, action) {
@@ -37,7 +38,8 @@ function userReducer(state = initialState, action) {
     case actionTypes.NEW_USER_FAILURE:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: state.errorMessage //action.error
       };
     case actionTypes.GET_USER:
       return {
@@ -47,11 +49,20 @@ function userReducer(state = initialState, action) {
     case actionTypes.SET_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.data),
         user: action.data,
         redirect: true,
         role: state.role
       };
+    case actionTypes.AUTHENTICATED:
+      return{
+        ...state,
+        isAuthenticated: true
+      };
+    case actionTypes.NOT_AUTHENTICATED:
+      return{
+        ...state,
+        isAuthenticated: state.isAuthenticated
+      }
     case actionTypes.STORE_TOKEN:
       return {
         ...state,

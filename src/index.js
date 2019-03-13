@@ -12,16 +12,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import adminReducer from "./Redux/Reducers/adminReducer.js";
 import supervisorReducer from "./Redux/Reducers/supervisorReducer.js";
 import usersReducers from "./Redux/Reducers/usersReducer.js";
-import flashMessageReducer from "./Redux/Reducers/flashMessageReducer.js";
-
+import * as actionTypes from "./Redux/Actions/action-types";
 import thunk from "redux-thunk";
 import editTableReducers from "./Redux/Reducers/editTableReducers.js";
-
+import requireAuth from "./HOC/requireAuth";
+import { setMyData } from "./Redux/Actions";
 const reducers = combineReducers({
   admin: adminReducer,
   supervisor: supervisorReducer,
   user: usersReducers,
-  flashMessageReducer,
   editTable: editTableReducers
 })
 const logger = store => {
@@ -41,7 +40,10 @@ const store = createStore(
   reducers,
   composedEnhancers(applyMiddleware(logger, thunk))
 );
-
+const user = localStorage.getItem("access_token");
+if(user){
+  store.dispatch(setMyData(actionTypes.STORE_TOKEN));
+}
 const hist = createBrowserHistory();
 
 ReactDOM.render(
@@ -49,7 +51,7 @@ ReactDOM.render(
     <Router history={hist}>
       <Switch>
         <Route path="/login" component={Login} />
-        <Route path="/admin" component={Admin} />
+        <Route path="/admin" component={requireAuth(Admin)} />
         <Route path="/rtl" component={RTL} />
         <Redirect from="/" to="/login" />
       </Switch>

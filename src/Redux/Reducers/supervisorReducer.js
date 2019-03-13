@@ -4,7 +4,6 @@ import { updateProgress } from "../utilityFunctions";
 const initialState = {
   myData: null,
   supervisorDetails: {},
-  goBack: false,
   progress: {},
   error: false,
   isLoading: false

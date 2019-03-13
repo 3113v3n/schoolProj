@@ -15,7 +15,6 @@ import Person from "@material-ui/icons/Person";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import AddAlert from "@material-ui/icons/AddAlert";
-import AuthHelperMethods from "../containers/Authentication/AuthHelperMethods";
 // //core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 const styles = {
@@ -48,10 +47,10 @@ class LoginForm extends React.Component {
       staff_id: "",
       password: "",
       redirect: true,
-      tr: false
+      tr: false,
+      tc: false
     };
   }
-  Auth = new AuthHelperMethods();
   componentWillUnmount() {
     var id = window.setTimeout(null, 0);
     while (id--) {
@@ -94,7 +93,7 @@ class LoginForm extends React.Component {
       }
     }
   };
-
+  
   render() {
     if (this.props.isAuthenticated === true) {
       const { history } = this.props;
@@ -154,7 +153,7 @@ class LoginForm extends React.Component {
                   place="tr"
                   color={"danger"}
                   icon={AddAlert}
-                  message={"Invalid Credentials"}
+                  message={"Invalid Login Credentials"}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -171,9 +170,9 @@ LoginForm.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,
   error: PropTypes.bool,
-  addFlashMessage: PropTypes.func.isRequired,
   history: PropTypes.object,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  errorMessage: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(LoginForm));

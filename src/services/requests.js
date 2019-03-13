@@ -1,9 +1,10 @@
 import paths from "../constants/paths.js";
-import axios from "axios";
+//import axios from "axios";
+//import decode from "jwt-decode";
 const requests = paths.production; //localhost;
-
+const localrequest = paths.localhost;
 async function asyncRequest(path) {
-  return fetch(`${requests}${path}`)
+  return fetch(`${localrequest}${path}`)
     .then(response => response.json())
     .then(responseJson => {
       return responseJson;
@@ -28,21 +29,19 @@ async function postRequest(path, param) {
     let response = await fetch(`${requests}${path}`, requestParams);
 
     let responseJson = await response.json();
-    console.log(responseJson);
     return responseJson;
   } catch (error) {
     console.error(`Error is : ${error}`);
   }
 }
-
-function setAuthorizationToken(token) {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token};`;
-  } else {
-    delete axios.defaults.headers.common["Authorization"];
-  }
-}
+// function setAuthorizationToken(token) {
+//   if (token) {
+//     axios.defaults.headers.common["Authorization"] = `Bearer ${token};`;
+//   } else {
+//     delete axios.defaults.headers.common["Authorization"];
+//   }
+// }
 
 export { asyncRequest };
 export { postRequest };
-export { setAuthorizationToken };
+//export { setAuthorizationToken };
