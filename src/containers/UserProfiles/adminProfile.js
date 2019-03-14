@@ -6,9 +6,13 @@ import UserProfile from "../../views/UserProfile/UserProfile.jsx";
 import * as actionTypes from "../../Redux/Actions/action-types";
 class adminProfile extends React.Component {
   render() {
+    console.log(this.props);
     return (
       <div>
-        <UserProfile updateProfile={this.props.updateProfile} />
+        <UserProfile
+          updateProfile={this.props.updateProfile}
+
+        />
       </div>
     );
   }
@@ -16,7 +20,7 @@ class adminProfile extends React.Component {
 const mapStateToProps = state => {
   return {
     //profile details go here
-    user: state.user.user
+    user: state.user.profile
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -33,7 +37,8 @@ const mapDispatchToProps = dispatch => {
 };
 adminProfile.propTypes = {
   updateProfile: PropTypes.func.isRequired,
-  fetchData: PropTypes.func.isRequired
+  fetchData: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 export default connect(
   mapStateToProps,

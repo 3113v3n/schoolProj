@@ -76,6 +76,11 @@ class StudentTableRow extends React.Component {
               >
                 <Delete
                   className={classes.tableActionButtonIcon + " " + classes.edit}
+                  onClick={key =>
+                    window.confirm(
+                      "Are you sure you wish to delete this row?"
+                    ) && this.props.onDelete(key)
+                  }
                 />
               </IconButton>
             </Tooltip>
@@ -92,6 +97,7 @@ StudentTableRow.propTypes = {
   dateRegistered: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   key: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  onDelete: PropTypes.func
 };
 export default withRouter(withStyles(styles)(StudentTableRow));

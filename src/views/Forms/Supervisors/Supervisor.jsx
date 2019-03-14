@@ -94,10 +94,10 @@ class Supervisors extends React.Component {
       diplomaSelected
     } = this.state;
     const data = {};
-    data.staff_id = staff_id;
+    data.emp_no = staff_id;
     data.email = email;
-    data.firstName = firstName;
-    data.lastName = lastName;
+    data.f_name = firstName;
+    data.l_name = lastName;
     data.password = password;
     data.confirmPass = confirmPass;
     data.degreeSelected = degreeSelected;

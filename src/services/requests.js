@@ -16,7 +16,7 @@ async function asyncRequest(path) {
     });
 }
 
-async function postRequest(path, param) {
+async function loginRequest(path, param) {
   try {
     let requestParams = {
       method: "POST",
@@ -34,14 +34,48 @@ async function postRequest(path, param) {
     console.error(`Error is : ${error}`);
   }
 }
-// function setAuthorizationToken(token) {
-//   if (token) {
-//     axios.defaults.headers.common["Authorization"] = `Bearer ${token};`;
-//   } else {
-//     delete axios.defaults.headers.common["Authorization"];
-//   }
-// }
 
+async function postRequest(path, param) {
+  try {
+    const token = localStorage.getItem("access_token");
+    let requestParams = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(param)
+    };
+    let response = await fetch(`${requests}${path}`, requestParams);
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (e) {
+    console.error(`Error is : ${e}`);
+  }
+}
+
+async function refreshTokenRequest(path, param) {
+  try {
+    const token = localStorage.getItem("refresh_token");
+    let requestParams = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(param)
+    };
+    let response = await fetch(`${requests}${path}`, requestParams);
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (e) {
+    console.error(`Error is : ${e}`);
+  }
+}
+
+export { refreshTokenRequest };
 export { asyncRequest };
+export { loginRequest };
 export { postRequest };
-//export { setAuthorizationToken };

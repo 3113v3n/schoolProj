@@ -5,7 +5,6 @@ const initialState = {
   myData: null,
   supervisorDetails: {},
   progress: {},
-  error: false,
   isLoading: false
 };
 
@@ -14,14 +13,10 @@ function supervisorReducer(state = initialState, action) {
     case actionTypes.SET_MY_DATA:
       return updateProgress(state, {
         myData: action.data,
-        isLoading: true,
-        error: false
+        isLoading: !state.isLoading,
+        error: state.error
       });
-    case actionTypes.FETCHING_FAILED:
-      return {
-        ...state,
-        error: true
-      };
+
     case actionTypes.EDIT_PROGRESS:
       return {
         ...state,

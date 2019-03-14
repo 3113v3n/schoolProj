@@ -172,6 +172,7 @@ class AllocationComponent extends React.Component {
                   </thead>
                   {filtered.map(item => (
                     <AllocationTableRow
+                      onDelete={this.props.onDelete}
                       studentName={item.studentName}
                       supervisor={item.supervisor}
                       dateRegistered={item.dateRegistered}

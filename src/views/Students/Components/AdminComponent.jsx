@@ -86,6 +86,7 @@ const styles = {
   left: {
     flexDirection: "row"
   }
+
 };
 
 class AdminComponent extends React.Component {
@@ -171,6 +172,7 @@ class AdminComponent extends React.Component {
                   </thead>
                   {filtered.map(item => (
                     <StudentTableRow
+                      onDelete={this.props.onDelete}
                       name={item.studentName}
                       admNo={item.admNo}
                       dateRegistered={item.dateRegistered}
@@ -197,5 +199,6 @@ export default withRouter(withStyles(styles)(AdminComponent));
 
 AdminComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.array
+  data: PropTypes.array,
+  onDelete: PropTypes.func
 };

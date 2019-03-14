@@ -18,7 +18,6 @@ import AddAlert from "@material-ui/icons/AddAlert";
 //core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
-
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -47,7 +46,8 @@ class Projects extends React.Component {
       trimesters: "",
       degreeSelected: false,
       diplomaSelected: false,
-      tr: false
+      tr: false,
+      selection: 1
     };
   }
   componentWillUnmount() {
@@ -73,16 +73,20 @@ class Projects extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   newProject = () => {
+    this.checkBoxValidation();
+  };
+  checkBoxValidation = () => {
     const {
+      degreeSelected,
+      diplomaSelected,
       projectCode,
       projectName,
-      trimesters,
-      degreeSelected,
-      diplomaSelected
+      trimesters
     } = this.state;
+
     const data = {};
-    data.projectCode = projectCode;
-    data.projectName = projectName;
+    data.code = projectCode;
+    data.name = projectName;
     data.trimesters = trimesters;
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
@@ -116,6 +120,8 @@ class Projects extends React.Component {
                       }}
                     />
                   </GridItem>
+                </GridContainer>
+                <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Project Name"

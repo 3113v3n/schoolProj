@@ -14,6 +14,7 @@ class AdminStudents extends React.Component {
 
   render() {
     const { isLoading, data, error } = this.props;
+    console.log(this.props);
     if (error) {
       return (
         <div>
@@ -49,7 +50,7 @@ const mapStateToProps = state => {
   return {
     data: state.admin.data,
     isLoading: state.admin.isLoading,
-    error: state.admin.error
+    error: state.error.error
   };
 };
 const mapDispatchToProps = dispatch => {

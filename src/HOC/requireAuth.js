@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 
 export default function requireAuth(ComposedComponent) {
-  class Authentication extends React.Component{
+  class Authentication extends React.Component {
     UNSAFE_componentWillMount() {
-      if (!this.props.validToken) {
+      if (!this.props.authenticated) {
         this.props.history.push("/login");
       }
     }
 
     UNSAFE_componentWillUpdate(nextProps) {
-      if (!nextProps.validToken) {
+      if (!nextProps.authenticated) {
         this.props.history.push("/login");
       }
     }
@@ -21,13 +21,16 @@ export default function requireAuth(ComposedComponent) {
     }
   }
   const mapStateToProps = state => {
-    return{
-      authenticated: state.user.token
+    return {
+      authenticated: state.user.isAuthenticated,
+      Token: state.user.token,
+      admin: state.user.user
     };
   };
   Authentication.propTypes = {
+    authenticated: PropTypes.bool.isRequired,
     validToken: PropTypes.string,
     history: PropTypes.object
-}
+  };
   return connect(mapStateToProps)(withRouter(Authentication));
 }

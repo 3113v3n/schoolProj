@@ -86,6 +86,11 @@ class AllocationTableRow extends React.Component {
                   className={
                     classes.tableActionButtonIcon + " " + classes.close
                   }
+                  onClick={key =>
+                    window.confirm(
+                      "Are you sure you wish to delete this row?"
+                    ) && this.props.onDelete(key)
+                  }
                 />
               </IconButton>
             </Tooltip>

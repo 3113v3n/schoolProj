@@ -1,6 +1,9 @@
 import * as actionTypes from "./action-types";
-import { asyncRequest, postRequest } from "../../services/requests";
-//import { setAuthorizationToken } from "../../services/requests";
+import {
+  asyncRequest,
+  loginRequest,
+  postRequest
+} from "../../services/requests";
 import jwtDecode from "jwt-decode";
 
 //Work for all submission type is a parameter
@@ -13,17 +16,8 @@ export const setMyData = (type, data) => {
 };
 export const logMeout = () => {
   return dispatch => {
-    //localStorage.removeItem("access_token");
-    //localStorage.removeItem("refresh_token");
     localStorage.clear();
     dispatch(setMyData(actionTypes.NOT_AUTHENTICATED));
-  };
-};
-//FLASH MESSAGE
-export const addFlashMessage = message => {
-  return {
-    type: actionTypes.ADD_FLASH_MESSAGE,
-    message
   };
 };
 export const editTable = (type, data) => {
@@ -56,7 +50,7 @@ export const failure = () => {
 
 export const LogMeIn = data => {
   return dispatch => {
-    postRequest("auth/login", data)
+    loginRequest("auth/login", data)
       .then(responseJson => {
         const token = responseJson.access_token;
         const refreshToken = responseJson.refresh_token;
@@ -64,7 +58,6 @@ export const LogMeIn = data => {
         const status = responseJson.status;
         localStorage.setItem("access_Token", token);
         localStorage.setItem("refresh_Token", refreshToken);
-
         dispatch(setMyData(actionTypes.STATUS, status));
         dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
         dispatch(storeToken(token));
@@ -76,7 +69,7 @@ export const LogMeIn = data => {
       });
   };
 };
-
+//////---------FETCH---------- REQUESTS--***////
 export const fetchData = () => {
   return dispatch => {
     asyncRequest("allocations.json")
@@ -85,6 +78,18 @@ export const fetchData = () => {
         dispatch(setMyData(actionTypes.SET_DATA, myData));
       })
       .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const fetchProjects = () => {
+  return dispatch => {
+    asyncRequest("projects.json")
+      .then(responseJson => {
+        const projects = responseJson.projects;
+        dispatch(setMyData(actionTypes.FETCH_PROJECTS, projects));
+      })
+      .catch(e => {
         dispatch(fetchFailed());
       });
   };
@@ -117,7 +122,7 @@ export const adminStudents = () => {
   return dispatch => {
     asyncRequest("students.json")
       .then(responseJson => {
-        const myData = responseJson.Students;
+        const myData = responseJson.Students; //Students
         dispatch(setMyData(actionTypes.SET_DATA, myData));
       })
       .catch(error => {
@@ -134,6 +139,116 @@ export const supervisorStudents = () => {
       })
       .catch(error => {
         dispatch(fetchFailed());
+      });
+  };
+};
+///////------------POST---REQUESTS---------***///
+
+export const addProject = data => {
+  return dispatch => {
+    postRequest("", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.ADD_PROJECT, responseJson));
+      })
+      .catch(error => {
+        dispatch(setMyData(actionTypes.PROJECT_ERROR));
+      });
+  };
+};
+
+export const addSupervisor = data => {
+  return dispatch => {
+    postRequest("", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, responseJson));
+      })
+      .catch(error => {
+        dispatch(setMyData(actionTypes.SUPERVISOR_ERROR));
+      });
+  };
+};
+
+export const addStudents = data => {
+  return dispatch => {
+    loginRequest("students/register", data)
+      .then(dispatch(setMyData(actionTypes.ADD_STUDENTS, data)))
+      .catch(error => {
+        dispatch(setMyData(actionTypes.STUDENT_ERROR));
+      });
+  };
+};
+
+////-----**** EDIT DETAILS---****/////
+
+export const editAllocations = data => {
+  return dispatch => {
+    postRequest("endPoint", data)
+      .then(res => {
+        dispatch(setMyData(actionTypes.EDIT_ALLOCATION_TABLE, res));
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.ALLOCATION_ERROR));
+      });
+  };
+};
+export const editStudents = data => {
+  return dispatch => {
+    postRequest("", data)
+      .then(res => {
+        dispatch(setMyData(actionTypes.EDIT_STUDENT_TABLE, res));
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.STUDENT_TABLE_ERROR));
+      });
+  };
+};
+
+export const editSupervisors = data => {
+  return dispatch => {
+    postRequest("endPoint", data)
+      .then(res => {
+        dispatch(setMyData(actionTypes.EDIT_SUPERVISOR_TABLE, res)); //TODO: Change res to responseJson incase of err
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.SUPERVISOR_TABLE_ERROR));
+      });
+  };
+};
+
+export const editAdminProfile = data => {
+  return dispatch => {
+    postRequest("endPoint", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.UPDATE_ADMIN_PROFILE, responseJson));
+      })
+      .catch(error => {
+        dispatch(setMyData(actionTypes.ADMIN_PROFILE_ERROR));
+      });
+  };
+};
+
+export const editSupervisorProfile = data => {
+  return dispatch => {
+    postRequest("endPoint", data)
+      .then(responseJson => {
+        dispatch(
+          setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, responseJson)
+        );
+      })
+      .catch(error => {
+        dispatch(setMyData(actionTypes.SUPERVISOR_PROFILE_ERROR, error));
+      });
+  };
+};
+
+export const editProgress = data => {
+  return dispatch => {
+    postRequest("myPath", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.EDIT_PROGRESS, responseJson));
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.PROGRESS_ERROR));
       });
   };
 };

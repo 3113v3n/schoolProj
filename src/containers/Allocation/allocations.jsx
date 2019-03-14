@@ -12,12 +12,12 @@ class allocations extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const { isLoading, data, error } = this.props;
+    const { isLoading, data, error, errorMessage } = this.props;
     if (error) {
       return (
         <div>
           Error:
-          {error.message}
+          {errorMessage}
         </div>
       );
     } else if (!isLoading) {
@@ -47,13 +47,15 @@ allocations.propTypes = {
   data: PropTypes.array,
   error: PropTypes.bool,
   onRequest: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string
 };
 const mapStateToProps = state => {
   return {
     isLoading: state.admin.isLoading,
-    error: state.admin.error,
-    data: state.admin.data
+    error: state.error.error,
+    data: state.admin.data,
+    errorMessage: state.error.errorMessage
   };
 };
 const mapDispatchToProps = dispatch => {

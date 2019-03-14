@@ -23,15 +23,14 @@ function adminReducer(state = initialState, action) {
         isLoading: true,
         error: false
       });
-    case actionTypes.FETCHING_FAILED:
-      return {
-        ...state,
-        error: true
-      };
+    case actionTypes.FETCH_PROJECTS:
+      return updateProgress(state, {
+        projects: action.data
+      })
     case actionTypes.ADD_PROJECT:
       return {
         projects: [action.data, ...state.projects],
-        error: false
+        error: state.error
       };
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {

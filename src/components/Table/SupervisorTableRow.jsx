@@ -71,7 +71,11 @@ class SupervisorTableRow extends React.Component {
                   className={
                     classes.tableActionButtonIcon + " " + classes.close
                   }
-                  onClick={() => onDelete(key)}
+                  onClick={key =>
+                    window.confirm(
+                      "Are you sure you wish to delete this row?"
+                    ) && onDelete(key)
+                  }
                 />
               </IconButton>
             </Tooltip>

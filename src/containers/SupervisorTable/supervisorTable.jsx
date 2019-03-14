@@ -26,7 +26,7 @@ class supervisorTable extends React.Component {
       return (
         <div>
           {data.length ? (
-            <SuperTableComponent data={data} onDelete={onDelete} />
+            <SuperTableComponent data={data} onDelete={this.props.onDelete} />
           ) : (
             <div>
               <p>No registered supervisor yet</p>
@@ -48,7 +48,7 @@ const mapStateToProps = state => {
   return {
     data: state.admin.data,
     isLoading: state.admin.isLoading,
-    error: state.admin.error
+    error: state.error.error
   };
 };
 const mapDispatchToProps = dispatch => {

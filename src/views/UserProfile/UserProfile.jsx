@@ -57,7 +57,8 @@ class UserProfile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
+
     return (
       <div>
         <GridContainer>
@@ -110,14 +111,12 @@ class UserProfile extends React.Component {
                       }}
                     />
                     <CustomInput
-
                       labelText="Confirm New Password"
                       id="confirmPass"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.confirmPass,
-                        onChange: this.handleInput,
-
+                        onChange: this.handleInput
                       }}
                       inputProps={{
                         type: "password"
@@ -143,10 +142,8 @@ class UserProfile extends React.Component {
               </CardAvatar>
               <CardBody profile>
                 <h6 className={classes.cardCategory}>ADMIN</h6>
-                <h4 className={classes.cardTitle}>Name: Tommy Lee Sparta</h4>
-                <h5 className={classes.cardTitle}>
-                  Email: sydneyreezy+adminUser@gmail.com
-                </h5>
+                <h4 className={classes.cardTitle}>Name: 3113v3n</h4>
+                <h5 className={classes.cardTitle}>Email: sydneyreezy@gmail.com</h5>
               </CardBody>
             </Card>
           </GridItem>
@@ -157,7 +154,8 @@ class UserProfile extends React.Component {
 }
 UserProfile.propTypes = {
   updateProfile: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  ID: PropTypes.object
 };
 
 export default withStyles(styles)(UserProfile);

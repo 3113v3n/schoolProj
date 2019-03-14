@@ -13,7 +13,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
-
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",

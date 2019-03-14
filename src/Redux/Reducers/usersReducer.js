@@ -1,16 +1,15 @@
 import * as actionTypes from "../Actions/action-types";
 //import isEmpty from "lodash/isEmpty";
 const initialState = {
-  users: [],
-  redirect: false,
   user: {},
   isAuthenticated: false,
   role: "Admin",
+  users: [],
+  redirect: false,
   token: " ",
-  error: false,
   status: "",
   refreshToken: "",
-  errorMessage: "Can not Login, Please try again"
+  isLoading: false
 };
 
 function userReducer(state = initialState, action) {
@@ -18,7 +17,6 @@ function userReducer(state = initialState, action) {
     case actionTypes.NEW_USER:
       return {
         users: [action.data, ...state.users],
-        redirect: true,
         role: state.role
       };
     case actionTypes.SET_ROLE:
@@ -35,12 +33,7 @@ function userReducer(state = initialState, action) {
         ...state,
         user: state.users.filter(user => user.data !== action.data)
       };
-    case actionTypes.NEW_USER_FAILURE:
-      return {
-        ...state,
-        error: true,
-        errorMessage: state.errorMessage //action.error
-      };
+
     case actionTypes.GET_USER:
       return {
         ...state,
@@ -49,14 +42,14 @@ function userReducer(state = initialState, action) {
     case actionTypes.SET_CURRENT_USER:
       return {
         ...state,
+        isAuthenticated: !state.isAuthenticated,
         user: action.data,
-        redirect: true,
         role: state.role
       };
     case actionTypes.AUTHENTICATED:
       return{
         ...state,
-        isAuthenticated: true
+        isAuthenticated: !state.isAuthenticated
       };
     case actionTypes.NOT_AUTHENTICATED:
       return{
@@ -75,8 +68,8 @@ function userReducer(state = initialState, action) {
       };
     case actionTypes.LOGOUT:
       return {
-        isAuthenticated: false,
-        redirect: true
+        isAuthenticated: state.isAuthenticated,
+        redirect: !state.redirect
       };
     default:
       return state;

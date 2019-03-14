@@ -41,6 +41,7 @@ class Students extends React.Component {
     this.state = {
       firstName: "",
       lastName: "",
+      project: "",
       admNo: ""
     };
   }
@@ -66,16 +67,17 @@ class Students extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   newStudent = () => {
-    const { firstName, lastName, admNo} = this.state;
+    const { firstName, lastName, admNo, project } = this.state;
     const data = {};
-    data.firstName = firstName;
-    data.lastName = lastName;
-    data.admNo = admNo;
+    data.f_name = firstName;
+    data.l_name = lastName;
+    data.adm = admNo;
+    data.project_code = project;
     this.props.addStudents(data);
     this.showNotification("tl");
   };
   render() {
-    const { classes } = this.props;
+    const { classes, projects } = this.props;
     return (
       <div>
         <GridContainer>
@@ -112,6 +114,20 @@ class Students extends React.Component {
                         onChange: this.handleInput
                       }}
                     />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <label>Select Project Code</label>{" "}
+                    <select
+                      onChange={event => {
+                        this.setState({ project: event.target.value });
+                      }}
+                    >
+                      {projects.map(item => (
+                        <option key={item.course}> {item.code} </option>
+                      ))}
+                    </select>
                   </GridItem>
                 </GridContainer>
 
@@ -154,7 +170,8 @@ class Students extends React.Component {
 }
 Students.popTypes = {
   addStudents: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  projects: PropTypes.array
 };
 
 export default withStyles(styles)(Students);

@@ -15,7 +15,7 @@ class projectContainer extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    error: state.admin.error
+    error: state.error.error
   };
 };
 const mapDispatchToProps = dispatch => {

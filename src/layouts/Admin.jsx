@@ -89,7 +89,7 @@ class Dashboard extends React.Component {
   render() {
 
     const { classes, role,token,...rest } = this.props;
-  if(token.length !== 0 ){
+
     return (
       <div className={classes.wrapper}>
 
@@ -131,9 +131,9 @@ class Dashboard extends React.Component {
       </div>
     );
   }
-  }
-}
 
+}
+//TODO: use token length for validation
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
