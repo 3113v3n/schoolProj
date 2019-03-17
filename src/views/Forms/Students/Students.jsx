@@ -15,7 +15,9 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
 import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "../../../components/Snackbar/Snackbar";
-
+import InputLabel from "../Allocations/AllocationForm";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -118,19 +120,31 @@ class Students extends React.Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
-                    <label>Select Project Code</label>{" "}
-                    <select
+                    <label htmlFor="lecturers">
+                      Select Student Project Code
+                    </label>
+                    <Select
+                      style={{ marginLeft: 10, width: "40%", paddingTop: 20 }}
+                      value={this.state.project}
                       onChange={event => {
                         this.setState({ project: event.target.value });
                       }}
+                      formcontrolprops={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        name: "project",
+                        id: "project"
+                      }}
                     >
                       {projects.map(item => (
-                        <option key={item.course}> {item.code} </option>
+                        <MenuItem key={item.course} value={item.code}>
+                          {item.code}
+                        </MenuItem>
                       ))}
-                    </select>
+                    </Select>
                   </GridItem>
                 </GridContainer>
-
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput

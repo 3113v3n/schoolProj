@@ -3,6 +3,7 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 // core components
+
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
@@ -17,6 +18,7 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
+import { NavLink } from "react-router-dom";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -156,7 +158,6 @@ class AllocationComponent extends React.Component {
                       )
                     }}
                   />
-
                 </GridItem>
 
                 <table className={classes.table}>
@@ -184,9 +185,11 @@ class AllocationComponent extends React.Component {
               </div>
             </CardBody>
           </Card>
-          <Button color="info" round>
-            New Allocation
-          </Button>
+          <NavLink to="/admin/addAllocation">
+            <Button color="info" round>
+              New Allocation
+            </Button>
+          </NavLink>
         </GridItem>
       </GridContainer>
     );

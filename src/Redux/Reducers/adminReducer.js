@@ -26,12 +26,28 @@ function adminReducer(state = initialState, action) {
     case actionTypes.FETCH_PROJECTS:
       return updateProgress(state, {
         projects: action.data
-      })
+      });
+    case actionTypes.FETCH_ALLOCATION_STUDENTS:
+      return {
+        ...state,
+        students: action.data
+      };
+    case actionTypes.FETCH_ALLOCATION_LECTURERS:
+      return {
+        ...state,
+        supervisors: action.data
+      };
     case actionTypes.ADD_PROJECT:
       return {
         projects: [action.data, ...state.projects],
         error: state.error
       };
+    case actionTypes.NEW_ALLOCATION:
+      return {
+        ...state,
+        allocation: action.data
+      };
+
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
         students: [action.data, ...state.students]

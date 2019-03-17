@@ -11,7 +11,7 @@
 - Almost all styles have been changed due to new components, solved issues or [the prettier command](https://prettier.io/docs/en/install.html)
 ### Major components changes
 - Changes caused by running [the prettier command](https://prettier.io/docs/en/install.html) for *.jsx*, *.js*, *.html* and *.css* files
-- **src/index.js**
+- **src/AllocationForm.jsx**
 - **src/components/CustomTabs/CustomTabs.jsx**
 - **src/components/Header/Header.jsx**
 - **src/components/Sidebar/Sidebar.jsx**
@@ -134,7 +134,7 @@
 ## [1.3.0] 2018-06-15
 ### Bug Fixing
 - Changed import from `material-ui` to `@material-ui/core`
-- Droped `src/components/index.js`, and changed all the imports to separate ones
+- Droped `src/components/AllocationForm.jsx`, and changed all the imports to separate ones
 - Renamed `ItemGrid` to `GridItem`
 ### Major style changes
 - Moved the styles of `src/components/` inside `src/assets/jss/material-dashboard-react/components/`

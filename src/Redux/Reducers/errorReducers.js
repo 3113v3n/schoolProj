@@ -12,6 +12,11 @@ export default function errorReducers(state = initialState, actions) {
         ...state,
         error: true
       };
+    case actionTypes.NEW_ALLOCATION_ERROR:
+      return{
+        ...state,
+        error: true
+      }
     case actionTypes.FETCHING_FAILED:
       return {
         ...state,

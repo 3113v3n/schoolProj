@@ -15,7 +15,7 @@ import supervisorTable from "./containers/SupervisorTable/supervisorTable.jsx";
 import AdminStudents from "./containers/StudentsTable/AdminStudents.jsx";
 import Archives from "./containers/Archives/Archives.jsx";
 import allocations from "./containers/Allocation/allocations.jsx";
-
+import AddAllocationContainer from "./containers/Form/AddAllocationContainer.jsx";
 ///Supervisor
 import studentTable from "./containers/StudentsTable/studentTable";
 import supervisorProfile from "./containers/UserProfiles/supervisorProfile";
@@ -157,6 +157,14 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: EditSupervisorsTable,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/addAllocation",
+    name: "Add Allocation",
+    rtlName: "پشتیبانی از راست به چپ",
+    component: AddAllocationContainer,
     layout: "/admin",
     invisible: true
   }

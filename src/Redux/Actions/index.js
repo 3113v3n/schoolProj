@@ -142,6 +142,22 @@ export const supervisorStudents = () => {
       });
   };
 };
+
+export const fetchDetail = () => {
+  return dispatch => {
+    asyncRequest("newAllocation.json")
+      .then(responseJson => {
+        const lecturers = responseJson.lecturers;
+        const students = responseJson.students;
+        dispatch(setMyData(actionTypes.FETCH_ALLOCATION_STUDENTS, students));
+        dispatch(setMyData(actionTypes.FETCH_ALLOCATION_LECTURERS, lecturers));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+
 ///////------------POST---REQUESTS---------***///
 
 export const addProject = data => {
@@ -152,6 +168,18 @@ export const addProject = data => {
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.PROJECT_ERROR));
+      });
+  };
+};
+
+export const addAllocation = data => {
+  return dispatch => {
+    postRequest("", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.NEW_ALLOCATION, data));
+      })
+      .catch(error => {
+        dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR));
       });
   };
 };

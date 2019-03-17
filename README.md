@@ -92,7 +92,7 @@ material-dashboard-react
 │   ├── index.html
 │   └── manifest.json
 └── src
-    ├── index.js
+    ├── AllocationForm.jsx
     ├── logo.svg
     ├── routes.js
     ├── assets
