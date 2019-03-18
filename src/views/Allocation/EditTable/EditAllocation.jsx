@@ -13,6 +13,9 @@ import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
+import AddAlert from "@material-ui/icons/AddAlert";
+//core components
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -35,40 +38,72 @@ const styles = {
 class EditAllocation extends React.Component {
   constructor(props) {
     super(props);
-    const fname = this.props.location.state.studentName;
     const superv = this.props.location.state.supervisor;
     const code = this.props.location.state.projectCode;
-    const datee = this.props.location.state.date;
     this.state = {
-      firstName: fname,
-      lastName: fname,
+      firstName: "",
+      lastName: "",
       supervisor: superv,
       projCode: code,
-      dateRegistered: datee
+      tl: false
     };
+  }
+  componentDidMount() {
+    let uname = this.props.location.state.studentName;
+    let name = uname.split(" ");
+    let fname = name[0];
+    let lname = name[1];
+    this.setState({
+      firstName: fname,
+      lastName: lname
+    });
+}
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+  };
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
   }
 
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   editAllocation = () => {
-    const {
-      firstName,
-      lastName,
-      supervisor,
-      projCode,
-      dateRegistered
-    } = this.state;
+    const { firstName, lastName, supervisor, projCode } = this.state;
     const { history } = this.props;
     const data = {};
-    data.firstName = firstName;
-    data.lastName = lastName;
+    data.f_name = firstName;
+    data.l_name = lastName;
     data.supervisor = supervisor;
-    data.projCode = projCode;
-    data.date = dateRegistered;
-    this.props.onSubmit(data);
-
-    history.push("/admin/allocation");
+    data.project_code = projCode;
+    if (
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      supervisor.length === 0 ||
+      projCode.length === 0
+    ) {
+      this.showNotification("tl");
+    } else {
+      this.props.onSubmit(data);
+      this.resetValues();
+      history.push("/admin/allocation");
+    }
   };
   render() {
     const { classes } = this.props;
@@ -91,6 +126,7 @@ class EditAllocation extends React.Component {
                       className="firstName"
                       labelText="first Name"
                       id="firstName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.firstName,
@@ -106,6 +142,7 @@ class EditAllocation extends React.Component {
                       className="lastName"
                       labelText="Last Name"
                       id="lastName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.lastName,
@@ -124,6 +161,7 @@ class EditAllocation extends React.Component {
                       className="Supervisor"
                       labelText="Supervisor Name"
                       id="supervisor"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.supervisor,
@@ -142,6 +180,7 @@ class EditAllocation extends React.Component {
                       className="project Code"
                       labelText="Project Code"
                       id="projCode"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.projCode,
@@ -152,21 +191,6 @@ class EditAllocation extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="bootstrap-datetimepicker-widget"
-                      labelText="Date Registered"
-                      id="dateRegistered"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.dateRegistered,
-                        onChange: this.handleInput
-                      }}
-                      inputProps={{
-                        value: this.state.dateRegistered
-                      }}
-                    />
-                  </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
@@ -174,6 +198,15 @@ class EditAllocation extends React.Component {
                   <Person />
                   Update Row
                 </Button>
+                <Snackbar
+                  place={"tl"}
+                  color={"danger"}
+                  icon={AddAlert}
+                  message={"All fields Required"}
+                  open={this.state.tl}
+                  closeNotification={() => this.setState({ tl: false })}
+                  close
+                />
               </CardFooter>
             </Card>
           </GridItem>

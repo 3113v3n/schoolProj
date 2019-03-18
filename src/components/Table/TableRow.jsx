@@ -1,6 +1,7 @@
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
+import CheckCircle from "@material-ui/icons/CheckCircle";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router";
 import React from "react";
@@ -67,6 +68,25 @@ class TableRow extends React.Component {
                 <Edit
                   className={classes.tableActionButtonIcon + " " + classes.edit}
                   onClick={this.goToEdit}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              id="tooltip-top"
+              title="Mark Project Complete"
+              placement="top"
+              classes={{ tooltip: classes.tooltip }}
+            >
+              <IconButton
+                aria-label="Edit"
+                className={classes.tableActionButton}
+              >
+                <CheckCircle
+                  className={classes.tableActionButtonIcon + " " + classes.edit}
+                  onClick={() =>
+                    window.confirm("Mark this Project as Complete?") &&
+                    console.log("heres my key", studentName)
+                  }
                 />
               </IconButton>
             </Tooltip>

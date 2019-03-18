@@ -46,7 +46,10 @@ class Supervisors extends React.Component {
       password: "",
       confirmPass: "",
       degreeSelected: false,
-      diplomaSelected: false
+      diplomaSelected: false,
+      error: true,
+      tl: false,
+      tr: false
     };
   }
   componentWillUnmount() {
@@ -70,17 +73,9 @@ class Supervisors extends React.Component {
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
-  clearInput = () => {
-    this.setState({
-      staff_id: "",
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-      confirmPass: "",
-      degreeSelected: false,
-      diplomaSelected: false
-    });
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
   };
   addSupervisor = () => {
     const {
@@ -102,9 +97,24 @@ class Supervisors extends React.Component {
     data.confirmPass = confirmPass;
     data.degreeSelected = degreeSelected;
     data.diplomaSelected = diplomaSelected;
-    this.props.onSubmit(data);
-    this.clearInput();
-    this.showNotification("tl");
+    if (
+      staff_id.length === 0 ||
+      email.length === 0 ||
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      password.length === 0 ||
+      confirmPass.length === 0 ||
+      (degreeSelected === false && diplomaSelected === false)
+    ) {
+      this.setState({ error: false });
+      this.showNotification("tl");
+    } else {
+      this.props.onSubmit(data);
+      if (this.state.error === false) {
+        this.resetValues();
+        this.showNotification("tr");
+      }
+    }
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
@@ -129,6 +139,7 @@ class Supervisors extends React.Component {
                     <CustomInput
                       labelText="StaffId"
                       id="staff_id"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
 
@@ -141,6 +152,7 @@ class Supervisors extends React.Component {
                     <CustomInput
                       labelText="Email address"
                       id="email"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
 
@@ -155,6 +167,7 @@ class Supervisors extends React.Component {
                     <CustomInput
                       labelText="First Name"
                       id="firstName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
@@ -166,6 +179,7 @@ class Supervisors extends React.Component {
                     <CustomInput
                       labelText="Last Name"
                       id="lastName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.lastName,
@@ -180,6 +194,7 @@ class Supervisors extends React.Component {
                     <CustomInput
                       labelText="set Password"
                       id="password"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
@@ -194,6 +209,7 @@ class Supervisors extends React.Component {
                     <CustomInput
                       labelText="Confirm Password"
                       id="confirmPass"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
@@ -231,10 +247,19 @@ class Supervisors extends React.Component {
                   Add SuperVisor
                 </Button>
                 <Snackbar
-                  place="tl"
+                  place="tr"
                   color="success"
                   icon={AddAlert}
                   message="Supervisor successfully Added."
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
+                <Snackbar
+                  place="tl"
+                  color="danger"
+                  icon={AddAlert}
+                  message="All fields required."
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close

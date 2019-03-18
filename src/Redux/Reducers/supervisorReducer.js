@@ -5,7 +5,8 @@ const initialState = {
   myData: null,
   supervisorDetails: {},
   progress: {},
-  isLoading: false
+  isLoading: false,
+  completed: false
 };
 
 function supervisorReducer(state = initialState, action) {
@@ -27,7 +28,11 @@ function supervisorReducer(state = initialState, action) {
         ...state,
         supervisorDetails: action.data
       };
-
+    case actionTypes.MARK_AS_COMPLETED:
+      return{
+        ...state,
+        completed: !state.completed
+      };
     default:
       return state;
   }

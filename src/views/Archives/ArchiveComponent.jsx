@@ -8,8 +8,11 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import ArchiveRow from "../../components/Table/ArchiveRow";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 ////////////////////////////
-
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Search from "@material-ui/icons/Search";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -81,34 +84,60 @@ const styles = {
 };
 
 function ArchiveComponent(props) {
-  const { classes, name, supervisor, projCode, date } = props;
+  const {
+    classes,
+    name,
+    supervisor,
+    project_Code,
+    date,
+    finishDate,
+    adm
+  } = props;
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={8}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Student Table</h4>
-            <p className={classes.cardCategoryWhite}>students </p>
+            <h4 className={classes.cardTitleWhite}>Archives Table</h4>
           </CardHeader>
           <CardBody>
             <div className={classes.tableUpgradeWrapper}>
+              <GridItem xs={2} sm={2} md={2}>
+                <CustomInput
+                  labelText="Type to filter"
+                  id="material"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Search />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </GridItem>
               <table className={classes.table}>
                 <thead>
                   <tr>
+                    <th> Admission Number</th>
                     <th>StudentName</th>
                     <th>Supervisor</th>
                     <th>ProjCode</th>
-                    <th>Date-Registered</th>
+                    <th>Start Date</th>
+                    <th> Finish Date</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr className={classes.center}>
-                    <td>{name}</td>
-                    <td>{supervisor}</td>
-                    <td>{projCode}</td>
-                    <td>{date}</td>
-                  </tr>
-                </tbody>
+                <ArchiveRow
+                  adm={adm}
+                  studentName={name}
+                  supervisor={supervisor}
+                  projectCode={project_Code}
+                  dateRegistered={date}
+                  finishDate={finishDate}
+                  key={adm}
+                />
               </table>
             </div>
           </CardBody>

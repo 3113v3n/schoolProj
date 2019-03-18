@@ -22,6 +22,8 @@ import GetApp from "@material-ui/icons/GetApp";
 import uuid from "uuid";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import AddAlert from "@material-ui/icons/AddAlert";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -93,30 +95,53 @@ const styles = {
 };
 class Progress extends React.Component {
   state = {
-    goBack: false,
     AdmNo: `${this.props.location.state.marks}`,
-    documents: "documents",
-    comments: "comments",
-    marks: "marks"
+    documents: `${this.props.location.state.documents}`,
+    comments: `${this.props.location.state.comments}`,
+    marks: 0,
+    tr: false
   };
-
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //
-  // }
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
+  }
 
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+  };
   submitForm = () => {
     const data = {};
     const { documents, comments, marks } = this.state;
-    data.admNo = uuid();
+    data.adm = uuid();
     data.documentSubmited = documents;
     data.comments = comments;
     data.marks = marks;
-    this.props.onSubmit(data);
-    const { history } = this.props;
-    history.push("/admin/studentTable");
+    if (documents.length === 0 || comments.length === 0 || marks.length === 0) {
+      this.showNotification("tr");
+    } else {
+      this.props.onSubmit(data);
+      this.resetValues();
+      const { history } = this.props;
+      history.push("/admin/studentTable");
+    }
   };
   render() {
     const { classes, location } = this.props;
@@ -132,6 +157,15 @@ class Progress extends React.Component {
                 </h4>
               </CardHeader>
               <CardBody>
+                <Snackbar
+                  place="tr"
+                  color={"danger"}
+                  icon={AddAlert}
+                  message={"All fields are Required"}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
                 <CustomInput
                   labelText="Adm Number"
                   id="admNo"
@@ -146,32 +180,40 @@ class Progress extends React.Component {
                 <CustomInput
                   labelText="Document Submitted"
                   id="documents"
+                  name="input"
+                  inputProps={{
+                    multiline: true,
+                    rows: 3,
+                    value: this.state.documents
+                  }}
                   formControlProps={{
                     fullWidth: true,
                     onChange: this.handleInput,
                     value: this.state.documents
                   }}
-                  inputProps={{
-                    multiline: true,
-                    rows: 3
-                  }}
                 />
                 <CustomInput
                   labelText="Comments"
                   id="float"
+                  name="input"
+                  inputProps={{
+                    multiline: true,
+                    rows: 5,
+                    value: this.state.comments
+                  }}
                   formControlProps={{
                     fullWidth: true,
                     onChange: this.handleInput,
                     value: this.state.comments
                   }}
-                  inputProps={{
-                    multiline: true,
-                    rows: 5
-                  }}
                 />
                 <CustomMarkInput
                   labelText="Marks"
                   id="marks"
+                  name="input"
+                  inputProps={{
+                    value: this.state.marks
+                  }}
                   formControlProps={{
                     fullWidth: true,
                     onChange: this.handleInput,
@@ -232,12 +274,12 @@ Progress.propTypes = {
   marks: PropTypes.string,
   onEdit: PropTypes.func.isRequired
 };
-const mapDispatchToProps = dispatch =>{
-  return{
+const mapDispatchToProps = dispatch => {
+  return {
     onEdit: data =>
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS,data))
+      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data))
   };
-}
+};
 export default withRouter(
   connect(
     null,

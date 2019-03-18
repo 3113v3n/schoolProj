@@ -8,14 +8,14 @@ class supervisorProfile extends React.Component {
   render() {
     return (
       <div>
-        <Profile profileUpdate={this.props.onUpdate} />
+        <Profile profileUpdate={this.props.onUpdate} user={this.props.user} />
       </div>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    //profile details here
+    user: state.supervisor.supervisorDetails
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -28,7 +28,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 supervisorProfile.propTypes = {
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 export default connect(
   mapStateToProps,

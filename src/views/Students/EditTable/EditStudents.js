@@ -13,7 +13,9 @@ import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
-
+import AddAlert from "@material-ui/icons/AddAlert";
+//core components
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -37,27 +39,64 @@ class EditStudents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      tl: false,
       firstName: "",
       lastName: "",
-      admNo: "",
-      projCode: "",
-      date: ""
+      admNo: this.props.location.state.admNo,
+      projCode: this.props.location.state.projectCode
     };
   }
+  componentDidMount() {
+    let name = this.props.location.state.name;
+    let res = name.split(" ");
+    let f_name = res[0];
+    let l_name = res[1];
+    this.setState({
+      firstName: f_name,
+      lastName: l_name
+    });
+  }
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
+  }
+
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   updateStudent = () => {
-    const { firstName, lastName, admNo, date, projCode } = this.state;
+    const { firstName, lastName, admNo, projCode } = this.state;
     const { history } = this.props;
     const data = {};
     data.firstName = firstName;
     data.lastName = lastName;
     data.admNo = admNo;
-    data.dateRegistered = date;
     data.projCode = projCode;
-    this.props.onSubmit(data);
-    history.push("/admin/adminStudents");
+    if (
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      admNo.legth === 0 ||
+      projCode.length === 0
+    ) {
+      this.showNotification("tl");
+    } else {
+      this.props.onSubmit(data);
+      history.push("/admin/adminStudents");
+    }
   };
   render() {
     const { classes } = this.props;
@@ -74,31 +113,39 @@ class EditStudents extends React.Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={3}>
+                  <GridItem xs={12} sm={12} md={5}>
                     <CustomInput
                       className="admNo"
                       labelText="admission"
                       id="admNo"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.firstName,
+                        value: this.state.admNo,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.admNo
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       className="firstName"
                       labelText="first Name"
                       id="firstName"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.lastName,
+                        value: this.state.firstName,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.firstName
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       className="lastName"
                       labelText="Last Name"
@@ -107,6 +154,9 @@ class EditStudents extends React.Component {
                         fullWidth: true,
                         value: this.state.lastName,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.lastName
                       }}
                     />
                   </GridItem>
@@ -120,20 +170,21 @@ class EditStudents extends React.Component {
                       id="projCode"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.admNo,
+                        value: this.state.projCode,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.projCode
                       }}
                     />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Date Registered"
-                      id="date"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.date,
-                        onChange: this.handleInput
-                      }}
+                    <Snackbar
+                      place={"tl"}
+                      color={"danger"}
+                      icon={AddAlert}
+                      message={"All fields Are Required"}
+                      open={this.state.tl}
+                      closeNotification={() => this.setState({ tl: false })}
+                      close
                     />
                   </GridItem>
                 </GridContainer>
@@ -154,7 +205,8 @@ class EditStudents extends React.Component {
 EditStudents.popTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  location: PropTypes.object
 };
 
 export default withRouter(withStyles(styles)(EditStudents));

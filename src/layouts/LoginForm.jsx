@@ -47,8 +47,7 @@ class LoginForm extends React.Component {
       staff_id: "",
       password: "",
       redirect: true,
-      tr: false,
-      tc: false
+      tr: false
     };
   }
   componentWillUnmount() {

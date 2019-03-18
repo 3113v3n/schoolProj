@@ -47,7 +47,8 @@ class Projects extends React.Component {
       degreeSelected: false,
       diplomaSelected: false,
       tr: false,
-      selection: 1
+      tl: false,
+      error: true
     };
   }
   componentWillUnmount() {
@@ -68,13 +69,15 @@ class Projects extends React.Component {
       6000
     );
   }
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = " ";
+  };
 
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
-  newProject = () => {
-    this.checkBoxValidation();
-  };
+
   checkBoxValidation = () => {
     const {
       degreeSelected,
@@ -90,8 +93,21 @@ class Projects extends React.Component {
     data.trimesters = trimesters;
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
-    this.props.addProject(data);
-    this.showNotification("tr");
+    if (
+      projectCode.length === 0 ||
+      projectName.length === 0 ||
+      trimesters.length === 0 ||
+      (degreeSelected === false && diplomaSelected === false)
+    ) {
+      this.setState({ error: false });
+      this.showNotification("tl");
+    } else {
+      this.props.addProject(data);
+      if (this.state.error === false) {
+        this.showNotification("tr");
+        this.resetValues();
+      }
+    }
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
@@ -113,6 +129,7 @@ class Projects extends React.Component {
                     <CustomInput
                       labelText="Project Code"
                       id="projectCode"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.projectCode,
@@ -126,6 +143,7 @@ class Projects extends React.Component {
                     <CustomInput
                       labelText="Project Name"
                       id="projectName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
@@ -140,6 +158,7 @@ class Projects extends React.Component {
                       labelText="Trimesters number (1 || 2)"
                       id="trimesters"
                       value="number"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.trimesters,
@@ -169,18 +188,23 @@ class Projects extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="success" round onClick={this.newProject}>
+                <Button color="success" round onClick={this.checkBoxValidation}>
                   Add Project
                 </Button>
                 <Snackbar
-                  place="tr"
-                  color={this.props.error === false ? "success" : "danger"}
+                  place={"tl"}
+                  color={"danger"}
                   icon={AddAlert}
-                  message={
-                    this.props.error === false
-                      ? "Project successfully Added."
-                      : "Something went wrong."
-                  }
+                  message={"All fields Required"}
+                  open={this.state.tl}
+                  closeNotification={() => this.setState({ tl: false })}
+                  close
+                />
+                <Snackbar
+                  place={"tr"}
+                  color={"success"}
+                  icon={AddAlert}
+                  message={"Project successfully Added."}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

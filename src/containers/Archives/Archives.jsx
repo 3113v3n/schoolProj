@@ -5,21 +5,32 @@ class Archives extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Sname: "Sidney Reezy",
-      superv: " Mr. Gitau",
-      code: " 200",
-      date: "20-12-2018"
+      adm: "11947",
+      studentName: "Sidney Reezy",
+      supervisor: " Mr. Gitau",
+      project_Code: " 200",
+      date: "20-12-2018",
+      finishDate: "23-04-2019"
     };
   }
   render() {
-    const{Sname,superv,code,date} = this.state;
+    const {
+      studentName,
+      supervisor,
+      project_Code,
+      date,
+      finishDate,
+      adm
+    } = this.state;
     return (
       <div>
         <ArchiveComponent
-          name={Sname}
-          supervisor={superv}
-          projCode={code}
+          name={studentName}
+          supervisor={supervisor}
+          project_Code={project_Code}
           date={date}
+          finishDate={finishDate}
+          adm={adm}
         />
       </div>
     );

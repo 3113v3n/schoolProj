@@ -47,6 +47,7 @@ export const DELETE_SUPERVISOR = "DELETE_ALLOCATION";
 export const LOGOUT = "LOGOUT";
 export const FETCH_PROJECTS = "FETCH_PROJECTS";
 ///
+export const MARK_AS_COMPLETED = "MARK_AS_COMPLETED";
 
 export const STORE_TOKEN = "STORE_TOKEN";
 export const REFRESH_TOKEN = "REFRESH_TOKEN";

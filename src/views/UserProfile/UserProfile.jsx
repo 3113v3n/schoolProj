@@ -42,7 +42,13 @@ class UserProfile extends React.Component {
       password: "",
       confirmPass: ""
     };
+    //this.initialState = this.state;
   }
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+  };
+
   submitDetails = () => {
     //Input Validation
     const data = {};
@@ -50,8 +56,12 @@ class UserProfile extends React.Component {
     data.username = username;
     data.email = email;
     data.password = password;
-    data.confirmPass = confirmPass;
-    this.props.updateProfile(data);
+    if (password !== confirmPass) {
+      alert(" PASSWORDS DONT MATCH");
+    } else {
+      this.props.updateProfile(data);
+      this.resetValues();
+    }
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
@@ -76,6 +86,7 @@ class UserProfile extends React.Component {
                     <CustomInput
                       labelText="Username"
                       id="username"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.username,
@@ -87,6 +98,7 @@ class UserProfile extends React.Component {
                     <CustomInput
                       labelText="Email address"
                       id="email"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.email,
@@ -101,6 +113,7 @@ class UserProfile extends React.Component {
                     <CustomInput
                       labelText="New Password"
                       id="password"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.password,
@@ -113,6 +126,7 @@ class UserProfile extends React.Component {
                     <CustomInput
                       labelText="Confirm New Password"
                       id="confirmPass"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.confirmPass,
@@ -142,8 +156,8 @@ class UserProfile extends React.Component {
               </CardAvatar>
               <CardBody profile>
                 <h6 className={classes.cardCategory}>ADMIN</h6>
-                <h4 className={classes.cardTitle}>Name: 3113v3n</h4>
-                <h5 className={classes.cardTitle}>Email: sydneyreezy@gmail.com</h5>
+                <h4 className={classes.cardTitle}>Name: {user.username}</h4>
+                <h5 className={classes.cardTitle}>Email: {user.email}</h5>
               </CardBody>
             </Card>
           </GridItem>
@@ -155,7 +169,7 @@ class UserProfile extends React.Component {
 UserProfile.propTypes = {
   updateProfile: PropTypes.func.isRequired,
   classes: PropTypes.object,
-  ID: PropTypes.object
+  user: PropTypes.object
 };
 
 export default withStyles(styles)(UserProfile);

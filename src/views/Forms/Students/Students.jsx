@@ -15,7 +15,6 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
 import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "../../../components/Snackbar/Snackbar";
-import InputLabel from "../Allocations/AllocationForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 const styles = {
@@ -42,9 +41,14 @@ class Students extends React.Component {
     super(props);
     this.state = {
       firstName: "",
+      selectedFile: null,
+      loaded: 0,
       lastName: "",
       project: "",
-      admNo: ""
+      admNo: "",
+      error: true,
+      tl: false,
+      tr: false
     };
   }
   componentWillUnmount() {
@@ -53,6 +57,24 @@ class Students extends React.Component {
       window.clearTimeout(id);
     }
   }
+  validateFile = () => {
+    let validator = /\.csv$/; //check if input is .CSV only
+    let files = this.state.selectedFile;
+    return validator.test(files);
+  };
+  uploadFile = () => {
+    if (!this.validateFile()) {
+      alert("INVALID FILE TYPE MUST BE OF CSV");
+    } else {
+      alert("UPLOADED");
+    }
+  };
+  handleselectedFile = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0
+    });
+  };
   showNotification(place) {
     var x = [];
     x[place] = true;
@@ -65,19 +87,52 @@ class Students extends React.Component {
       6000
     );
   }
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+  };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   newStudent = () => {
-    const { firstName, lastName, admNo, project } = this.state;
+    const { firstName, lastName, admNo, project, error } = this.state;
     const data = {};
     data.f_name = firstName;
     data.l_name = lastName;
     data.adm = admNo;
     data.project_code = project;
-    this.props.addStudents(data);
-    this.showNotification("tl");
+    if (
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      admNo.length === 0 ||
+      project.length === 0
+    ) {
+      this.setState({ error: false });
+      this.showNotification("tl");
+    } else {
+      this.props.addStudents(data);
+      this.resetValues();
+      if (error === false) {
+        this.showNotification("tr");
+      }
+    }
   };
+  /* handleUpload = () => {
+    const data = new FormData()
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+
+    axios
+      .post(endpoint, data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
+          })
+        },
+      })
+      .then(res => {
+        console.log(res.statusText)
+      })
+  }*/
   render() {
     const { classes, projects } = this.props;
     return (
@@ -98,6 +153,7 @@ class Students extends React.Component {
                       className="firstName"
                       labelText="First Name"
                       id="firstName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.firstName,
@@ -110,6 +166,7 @@ class Students extends React.Component {
                       className="lastName"
                       labelText="Last Name"
                       id="lastName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.lastName,
@@ -124,6 +181,7 @@ class Students extends React.Component {
                       Select Student Project Code
                     </label>
                     <Select
+                      name="input"
                       style={{ marginLeft: 10, width: "40%", paddingTop: 20 }}
                       value={this.state.project}
                       onChange={event => {
@@ -133,7 +191,7 @@ class Students extends React.Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        name: "project",
+                        name: "input",
                         id: "project"
                       }}
                     >
@@ -151,6 +209,7 @@ class Students extends React.Component {
                       className="admNumber"
                       labelText="Admission Number"
                       id="admNo"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.admNo,
@@ -166,15 +225,49 @@ class Students extends React.Component {
                   Update Students
                 </Button>
                 <Snackbar
-                  place="tl"
-                  color="success"
+                  place={"tl"}
+                  color={"danger"}
                   icon={AddAlert}
-                  message="Student successfully Added."
+                  message={"All fields Required"}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
+                <Snackbar
+                  place={"tr"}
+                  color={"success"}
+                  icon={AddAlert}
+                  message={"Student successfully Added."}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
               </CardFooter>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={4}>
+            <Card>
+              <CardBody>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    UPLOAD FILE INSTEAD
+                  </h4>
+                  <p className={classes.cardCategoryWhite}>
+                    SELECT FILE (.csv){" "}
+                  </p>
+                </CardHeader>
+                <input
+                  style={{ padding: 30 }}
+                  type="file"
+                  name="Choose File Instead"
+                  id=""
+                  accept="*.csv"
+                  onChange={this.handleselectedFile}
+                />
+                <Button color="primary" round onClick={this.uploadFile}>
+                  Upload Students file
+                </Button>
+              </CardBody>
             </Card>
           </GridItem>
         </GridContainer>

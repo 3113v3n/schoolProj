@@ -94,18 +94,6 @@ export const fetchProjects = () => {
       });
   };
 };
-export const fetchUser = () => {
-  return dispatch => {
-    asyncRequest("allocations.json")
-      .then(responseJson => {
-        const myData = responseJson.Allocations;
-        dispatch(setMyData(actionTypes.GET_USER, myData));
-      })
-      .catch(error => {
-        dispatch(fetchFailed());
-      });
-  };
-};
 export const fetchSupervisors = () => {
   return dispatch => {
     asyncRequest("supervisor.json")

@@ -39,11 +39,25 @@ class EditAllocation extends React.Component {
     this.state = {
       firstName: "",
       lastName: "",
-      email: "",
+      email: this.props.location.state.email,
       degreeSelected: false,
       diplomaSelected: false
     };
   }
+  componentDidMount() {
+    let studentName = this.props.location.state.supervisor;
+    let names = studentName.split(" ");
+    let fname = names[0];
+    let lname = names[1];
+    this.setState({
+      firstName: fname,
+      lastName: lname
+    });
+  }
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+  };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
@@ -60,12 +74,13 @@ class EditAllocation extends React.Component {
     } = this.state;
     const { history } = this.props;
     const data = {};
-    data.firstName = firstName;
-    data.lastName = lastName;
+    data.f_name = firstName;
+    data.l_name = lastName;
     data.email = email;
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
     this.props.onSubmit(data);
+    this.resetValues();
     history.push("/admin/superTable");
   };
   render() {
@@ -88,10 +103,14 @@ class EditAllocation extends React.Component {
                       className="text-center"
                       labelText="first Name"
                       id="fistName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.firstName,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.firstName
                       }}
                     />
                   </GridItem>
@@ -100,10 +119,14 @@ class EditAllocation extends React.Component {
                       className="lastName"
                       labelText="Last Name"
                       id="lastName"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.lastName,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.lastName
                       }}
                     />
                   </GridItem>
@@ -112,10 +135,14 @@ class EditAllocation extends React.Component {
                       className="text-center"
                       labelText="Email"
                       id="email"
+                      name="input"
                       formControlProps={{
                         fullWidth: true,
                         value: this.state.email,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.email
                       }}
                     />
                   </GridItem>
@@ -156,7 +183,8 @@ class EditAllocation extends React.Component {
 EditAllocation.popTypes = {
   classes: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  history: PropTypes.object
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));
