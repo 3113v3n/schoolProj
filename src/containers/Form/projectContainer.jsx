@@ -20,9 +20,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    addProject: data => {
-      dispatch(actionCreators.setMyData(actionTypes.ADD_PROJECT, data));
-    }
+    addProject: data => dispatch(actionCreators.addProject(data))
+    //data => {
+    //dispatch(actionCreators.setMyData(actionTypes.ADD_PROJECT, data));
   };
 };
 projectContainer.propTypes = {

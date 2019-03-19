@@ -27,6 +27,7 @@ const mapDispatchToProps = dispatch => {
     updateProfile: data => {
       dispatch(
         actionCreators.setMyData(actionTypes.UPDATE_ADMIN_PROFILE, data)
+        //actionCreators.editAdminProfile(data)
       );
     }
   };

@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
       dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
+      // dispatch(actionCreators.editProgress(data))
     }
   };
 };

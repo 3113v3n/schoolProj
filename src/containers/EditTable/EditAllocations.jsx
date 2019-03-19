@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => {
     onEditProgress: data => {
       dispatch(
         actionCreators.editTable(actionTypes.EDIT_ALLOCATION_TABLE, data)
+        // actionCreators.editAllocations(data);
       );
     }
   };

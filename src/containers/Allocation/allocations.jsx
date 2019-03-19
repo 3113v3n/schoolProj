@@ -25,7 +25,7 @@ class allocations extends React.Component {
     } else {
       return (
         <div>
-          {data.length ? (
+          {data !== null ? (
             <AllocationComponent
               classes={classes}
               data={data}
@@ -61,8 +61,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onRequest: () => dispatch(actionCreators.fetchData()),
-    onDelete: data =>
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_ALLOCATION, data))
+    onDelete: data => {
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_ALLOCATION, data));
+      // dispatch(actionCreators.deleteAllocation(data))
+    }
   };
 };
 export default connect(

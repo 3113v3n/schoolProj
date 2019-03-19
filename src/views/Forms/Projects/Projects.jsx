@@ -42,7 +42,6 @@ class Projects extends React.Component {
     super(props);
     this.state = {
       projectCode: "",
-      projectName: "",
       trimesters: "",
       degreeSelected: false,
       diplomaSelected: false,
@@ -72,6 +71,12 @@ class Projects extends React.Component {
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = " ";
+    this.setState({
+      projectCode: "",
+      trimesters: "",
+      degreeSelected: false,
+      diplomaSelected: false
+    });
   };
 
   handleInput = event => {
@@ -83,19 +88,16 @@ class Projects extends React.Component {
       degreeSelected,
       diplomaSelected,
       projectCode,
-      projectName,
       trimesters
     } = this.state;
 
     const data = {};
     data.code = projectCode;
-    data.name = projectName;
-    data.trimesters = trimesters;
+    data.trimesters = parseInt(trimesters);
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
     if (
       projectCode.length === 0 ||
-      projectName.length === 0 ||
       trimesters.length === 0 ||
       (degreeSelected === false && diplomaSelected === false)
     ) {
@@ -134,20 +136,6 @@ class Projects extends React.Component {
                         fullWidth: true,
                         value: this.state.projectCode,
                         onChange: this.handleInput
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Project Name"
-                      id="projectName"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-                        onChange: this.handleInput,
-                        value: this.state.projectName
                       }}
                     />
                   </GridItem>

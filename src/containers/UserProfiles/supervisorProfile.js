@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => {
     onUpdate: data => {
       dispatch(
         actionCreators.setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, data)
+        // actionCreators.editSupervisorProfile(data)
       );
     }
   };

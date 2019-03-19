@@ -37,26 +37,21 @@ class EditAllocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: this.props.location.state.email,
+      firstName: this.props.location.state.firstName,
+      lastName: this.props.location.state.lastName,
       degreeSelected: false,
       diplomaSelected: false
     };
   }
-  componentDidMount() {
-    let studentName = this.props.location.state.supervisor;
-    let names = studentName.split(" ");
-    let fname = names[0];
-    let lname = names[1];
-    this.setState({
-      firstName: fname,
-      lastName: lname
-    });
-  }
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      firstName: "",
+      lastName: "",
+      degreeSelected: false,
+      diplomaSelected: false
+    });
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
@@ -127,22 +122,6 @@ class EditAllocation extends React.Component {
                       }}
                       inputProps={{
                         value: this.state.lastName
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="text-center"
-                      labelText="Email"
-                      id="email"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.email,
-                        onChange: this.handleInput
-                      }}
-                      inputProps={{
-                        value: this.state.email
                       }}
                     />
                   </GridItem>

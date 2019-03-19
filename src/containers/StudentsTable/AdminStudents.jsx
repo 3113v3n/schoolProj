@@ -27,7 +27,7 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          {data.length ? (
+          {data !== null ? (
             <AdminComponent data={data} onDelete={this.props.onDelete} />
           ) : (
             <div>
@@ -58,8 +58,10 @@ const mapDispatchToProps = dispatch => {
     Loaded: () => {
       dispatch(actionCreators.adminStudents());
     },
-    onDelete: data =>
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, data))
+    onDelete: data => {
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, data));
+      //dispatch(actionCreators.deleteStudents(data))
+    }
   };
 };
 export default connect(

@@ -25,7 +25,7 @@ class supervisorTable extends React.Component {
     } else {
       return (
         <div>
-          {data.length ? (
+          {data !== null ? (
             <SuperTableComponent data={data} onDelete={onDelete} />
           ) : (
             <div>
@@ -56,8 +56,10 @@ const mapDispatchToProps = dispatch => {
     onLoaded: () => {
       dispatch(actionCreators.fetchSupervisors());
     },
-    onDelete: data =>
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_SUPERVISOR, data))
+    onDelete: data => {
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_SUPERVISOR, data));
+      // dispatch(actionCreators.deleteSupervisors(data))
+    }
   };
 };
 export default connect(

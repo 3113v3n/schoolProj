@@ -50,7 +50,7 @@ class Profile extends React.Component {
     data.username = username;
     data.email = email;
     data.password = password;
-    // data.confirmPass = confirmPass;
+
     if (password !== confirmPass) {
       alert("passwords dont match");
     } else {
@@ -61,6 +61,7 @@ class Profile extends React.Component {
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = " ";
+    this.setState({ username: "", email: "", password: "", confirmPass: "" });
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });

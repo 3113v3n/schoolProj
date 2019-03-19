@@ -2,13 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import {isTokenExpired} from "../services/requests";
+import {isTokenExpired, refreshTokenRequest} from "../services/requests";
 
 export default function requireAuth(ComposedComponent) {
   class Authentication extends React.Component {
     // componentDidMount() {
     //   if (isTokenExpired()) {
-    //     alert("Token Expired, request for new");
+    //    refreshTokenRequest();
     //   }
     // }
 

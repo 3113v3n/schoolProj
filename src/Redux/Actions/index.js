@@ -1,12 +1,13 @@
 import * as actionTypes from "./action-types";
 import {
   asyncRequest,
+  fetchRequest,
   loginRequest,
-  postRequest
+  postRequest,
+  updateRequest,
+  deleteRequest
 } from "../../services/requests";
 import jwtDecode from "jwt-decode";
-
-
 
 //Work for all submission type is a parameter
 
@@ -99,16 +100,17 @@ export const fetchProjects = () => {
 };
 export const fetchSupervisors = () => {
   return dispatch => {
-    asyncRequest("supervisor.json")
+    // asyncRequest("supervisor.json")
+    fetchRequest("lecturers/all")
       .then(responseJson => {
-        const myData = responseJson.supervisors;
-        dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, myData));
+        dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, responseJson));
       })
       .catch(error => {
         dispatch(fetchFailed());
       });
   };
 };
+
 export const adminStudents = () => {
   return dispatch => {
     asyncRequest("students.json")
@@ -150,12 +152,24 @@ export const fetchDetail = () => {
 };
 
 ///////------------POST---REQUESTS---------***///
-
+export const uploadFile = data => {
+  return dispatch => {
+    postRequest("UPLOAD-FILE", data)
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.UPLOAD_SUCCESS));
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.UPLOAD_FAILURE));
+      });
+  };
+};
 export const addProject = data => {
   return dispatch => {
-    postRequest("", data)
+    postRequest("projects", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_PROJECT, responseJson));
+        //status
+        dispatch(setMyData(actionTypes.ADD_PROJECT, data));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.PROJECT_ERROR));
@@ -177,9 +191,10 @@ export const addAllocation = data => {
 
 export const addSupervisor = data => {
   return dispatch => {
-    postRequest("", data)
+    postRequest("auth/register", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, responseJson));
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, data));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.SUPERVISOR_ERROR));
@@ -201,7 +216,7 @@ export const addStudents = data => {
 
 export const editAllocations = data => {
   return dispatch => {
-    postRequest("endPoint", data)
+    updateRequest("endPoint", data)
       .then(res => {
         dispatch(setMyData(actionTypes.EDIT_ALLOCATION_TABLE, res));
       })
@@ -212,7 +227,7 @@ export const editAllocations = data => {
 };
 export const editStudents = data => {
   return dispatch => {
-    postRequest("", data)
+    updateRequest("", data)
       .then(res => {
         dispatch(setMyData(actionTypes.EDIT_STUDENT_TABLE, res));
       })
@@ -224,7 +239,7 @@ export const editStudents = data => {
 
 export const editSupervisors = data => {
   return dispatch => {
-    postRequest("endPoint", data)
+    updateRequest("endPoint", data)
       .then(res => {
         dispatch(setMyData(actionTypes.EDIT_SUPERVISOR_TABLE, res)); //TODO: Change res to responseJson incase of err
       })
@@ -236,7 +251,7 @@ export const editSupervisors = data => {
 
 export const editAdminProfile = data => {
   return dispatch => {
-    postRequest("endPoint", data)
+    updateRequest("endPoint", data)
       .then(responseJson => {
         dispatch(setMyData(actionTypes.UPDATE_ADMIN_PROFILE, responseJson));
       })
@@ -248,7 +263,7 @@ export const editAdminProfile = data => {
 
 export const editSupervisorProfile = data => {
   return dispatch => {
-    postRequest("endPoint", data)
+    updateRequest("endPoint", data)
       .then(responseJson => {
         dispatch(
           setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, responseJson)
@@ -262,12 +277,43 @@ export const editSupervisorProfile = data => {
 
 export const editProgress = data => {
   return dispatch => {
-    postRequest("myPath", data)
+    updateRequest("myPath", data)
       .then(responseJson => {
         dispatch(setMyData(actionTypes.EDIT_PROGRESS, responseJson));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.PROGRESS_ERROR));
+      });
+  };
+};
+/////////------------DELETE-------------------/////
+
+export const deleteAllocation = data => {
+  return dispatch => {
+    deleteRequest("END-POINT", data)
+      .then(() => dispatch(actionTypes.DELETE_ALLOCATION))
+      .catch(error => {
+        dispatch(setMyData(actionTypes.DELETE_ERROR));
+      });
+  };
+};
+
+export const deleteStudents = data => {
+  return dispatch => {
+    deleteRequest("END-POINT", data)
+      .then(() => dispatch(actionTypes.DELETE_STUDENT))
+      .catch(error => {
+        dispatch(setMyData(actionTypes.DELETE_ERROR));
+      });
+  };
+};
+
+export const deleteSupervisors = data => {
+  return dispatch => {
+    deleteRequest("END-POINT", data)
+      .then(() => dispatch(actionTypes.DELETE_SUPERVISOR))
+      .catch(error => {
+        dispatch(setMyData(actionTypes.DELETE_ERROR));
       });
   };
 };

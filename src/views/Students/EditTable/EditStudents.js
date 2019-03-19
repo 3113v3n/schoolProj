@@ -74,7 +74,16 @@ class EditStudents extends React.Component {
       6000
     );
   }
-
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      firstName: "",
+      lastName: "",
+      admNo: "",
+      projCode: ""
+    });
+  };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
@@ -95,6 +104,7 @@ class EditStudents extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
+      this.resetValues();
       history.push("/admin/adminStudents");
     }
   };

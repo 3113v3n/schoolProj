@@ -42,11 +42,11 @@ class UserProfile extends React.Component {
       password: "",
       confirmPass: ""
     };
-    //this.initialState = this.state;
   }
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({ username: "", email: "", password: "", confirmPass: "" });
   };
 
   submitDetails = () => {

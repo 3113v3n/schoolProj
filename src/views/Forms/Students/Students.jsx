@@ -42,7 +42,6 @@ class Students extends React.Component {
     this.state = {
       firstName: "",
       selectedFile: null,
-      loaded: 0,
       lastName: "",
       project: "",
       admNo: "",
@@ -62,17 +61,9 @@ class Students extends React.Component {
     let files = this.state.selectedFile;
     return validator.test(files);
   };
-  uploadFile = () => {
-    if (!this.validateFile()) {
-      alert("INVALID FILE TYPE MUST BE OF CSV");
-    } else {
-      alert("UPLOADED");
-    }
-  };
   handleselectedFile = event => {
     this.setState({
-      selectedFile: event.target.files[0],
-      loaded: 0
+      selectedFile: event.target.files[0]
     });
   };
   showNotification(place) {
@@ -90,6 +81,12 @@ class Students extends React.Component {
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      lastName: "",
+      project: "",
+      admNo: "",
+      firstName: ""
+    });
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
@@ -117,22 +114,19 @@ class Students extends React.Component {
       }
     }
   };
-  /* handleUpload = () => {
-    const data = new FormData()
-    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
-
-    axios
-      .post(endpoint, data, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
-          })
-        },
-      })
-      .then(res => {
-        console.log(res.statusText)
-      })
-  }*/
+  fileUpload = () => {
+    const { selectedFile } = this.state;
+    const data = {};
+    data.file = selectedFile;
+    if (selectedFile === null) {
+      alert(" No file Selected");
+    } else if (!this.validateFile()) {
+      alert("INVALID FILE TYPE MUST BE OF CSV");
+      this.setState({ selectedFile: null });
+    } else {
+      this.props.uploadNewFile(data);
+    }
+  };
   render() {
     const { classes, projects } = this.props;
     return (
@@ -264,7 +258,7 @@ class Students extends React.Component {
                   accept="*.csv"
                   onChange={this.handleselectedFile}
                 />
-                <Button color="primary" round onClick={this.uploadFile}>
+                <Button color="primary" round onClick={this.fileUpload}>
                   Upload Students file
                 </Button>
               </CardBody>
@@ -278,7 +272,8 @@ class Students extends React.Component {
 Students.popTypes = {
   addStudents: PropTypes.func.isRequired,
   classes: PropTypes.object,
-  projects: PropTypes.array
+  projects: PropTypes.array,
+  uploadNewFile: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Students);

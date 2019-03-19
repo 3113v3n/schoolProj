@@ -57,10 +57,16 @@ class EditAllocation extends React.Component {
       firstName: fname,
       lastName: lname
     });
-}
+  }
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      firstName: "",
+      lastName: "",
+      supervisor: "",
+      projCode: ""
+    });
   };
   componentWillUnmount() {
     var id = window.setTimeout(null, 0);

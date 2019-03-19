@@ -40,9 +40,8 @@ class Supervisors extends React.Component {
     super(props);
     this.state = {
       staff_id: uuid(),
-      email: "",
-      firstName: "",
-      lastName: "",
+      f_name: "",
+      l_name: "",
       password: "",
       confirmPass: "",
       degreeSelected: false,
@@ -76,13 +75,21 @@ class Supervisors extends React.Component {
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      staff_id: "",
+      f_name: "",
+      l_name: "",
+      password: "",
+      confirmPass: "",
+      degreeSelected: false,
+      diplomaSelected: false,
+    });
   };
   addSupervisor = () => {
     const {
       staff_id,
-      email,
-      firstName,
-      lastName,
+      f_name,
+      l_name,
       password,
       confirmPass,
       degreeSelected,
@@ -90,18 +97,15 @@ class Supervisors extends React.Component {
     } = this.state;
     const data = {};
     data.emp_no = staff_id;
-    data.email = email;
-    data.f_name = firstName;
-    data.l_name = lastName;
+    data.f_name = f_name;
+    data.l_name = l_name;
     data.password = password;
-    data.confirmPass = confirmPass;
-    data.degreeSelected = degreeSelected;
-    data.diplomaSelected = diplomaSelected;
+    data.degree = degreeSelected;
+    data.diploma = diplomaSelected;
     if (
       staff_id.length === 0 ||
-      email.length === 0 ||
-      firstName.length === 0 ||
-      lastName.length === 0 ||
+      f_name.length === 0 ||
+      l_name.length === 0 ||
       password.length === 0 ||
       confirmPass.length === 0 ||
       (degreeSelected === false && diplomaSelected === false)
@@ -109,10 +113,14 @@ class Supervisors extends React.Component {
       this.setState({ error: false });
       this.showNotification("tl");
     } else {
-      this.props.onSubmit(data);
-      if (this.state.error === false) {
-        this.resetValues();
-        this.showNotification("tr");
+      if (password !== confirmPass) {
+        alert("Password dont match");
+      } else {
+        this.props.onSubmit(data);
+        if (this.state.error === false) {
+          this.resetValues();
+          this.showNotification("tr");
+        }
       }
     }
   };
@@ -148,41 +156,28 @@ class Supervisors extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Email address"
-                      id="email"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-
-                        onChange: this.handleInput,
-                        value: this.state.email
-                      }}
-                    />
-                  </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="First Name"
-                      id="firstName"
+                      id="f_name"
                       name="input"
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
-                        value: this.state.firstName
+                        value: this.state.f_name
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Last Name"
-                      id="lastName"
+                      id="l_name"
                       name="input"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.lastName,
+                        value: this.state.l_name,
                         onChange: this.handleInput
                       }}
                     />

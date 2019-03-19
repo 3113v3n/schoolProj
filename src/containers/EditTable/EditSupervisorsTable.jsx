@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => {
     onEditProgress: data => {
       dispatch(
         actionCreators.editTable(actionTypes.EDIT_SUPERVISOR_TABLE, data)
+        // actionCreators.editSupervisors(data)
       );
     }
   };

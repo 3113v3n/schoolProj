@@ -113,10 +113,8 @@ class superTableComponent extends React.Component {
       currentList = this.props.data;
 
       newList = currentList.filter(item => {
-        const lc = `${item.degree.toLowerCase()} 
-        ${item.diploma.toLowerCase()}
-        ${item.id} ${item.name.toLowerCase()} //filter through table contents
-         ${item.email.toLowerCase()}`;
+        const lc = `${item.f_name.toLowerCase()} //filter through table contents
+         ${item.l_name.toLowerCase()}`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -126,6 +124,15 @@ class superTableComponent extends React.Component {
     this.setState({
       filtered: newList
     });
+  };
+  course = val => {
+    if (val === 1) {
+      return "Degree";
+    } else if (val === 2) {
+      return "Diploma";
+    } else if (val === 3) {
+      return "Degree && Diploma";
+    }
   };
   render() {
     const { classes, onDelete } = this.props;
@@ -141,7 +148,7 @@ class superTableComponent extends React.Component {
             <CardBody>
               <GridItem xs={2} sm={2} md={2}>
                 <CustomInput
-                  labelText="Type to filter"
+                  labelText="Filter by Name"
                   id="material"
                   formControlProps={{
                     fullWidth: true,
@@ -159,21 +166,20 @@ class superTableComponent extends React.Component {
               <table className={classes.table}>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Degree</th>
-                    <th>Diploma</th>
+                    <th>first Name</th>
+                    <th>last Name</th>
+                    <th>Course</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 {filtered.map(item => (
                   <SupervisorTableRow
-                    key={item.id}
-                    name={item.name}
-                    email={item.email}
-                    diploma={item.diploma}
-                    degree={item.degree}
+                    key={item.emp_no}
+                    f_name={item.f_name}
+                    l_name={item.l_name}
+                    course={this.course(item.course)}
                     onDelete={onDelete}
+                    emp_no={item.emp_no}
                   />
                 ))}
               </table>

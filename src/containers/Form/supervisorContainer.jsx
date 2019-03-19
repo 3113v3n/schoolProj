@@ -16,8 +16,9 @@ class supervisorContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: data =>
-      dispatch(actionCreators.setMyData(actionTypes.ADD_SUPERVISOR, data))
+    // onSubmit: data =>
+    // dispatch(actionCreators.setMyData(actionTypes.ADD_SUPERVISOR, data))
+    onSubmit: data => dispatch(actionCreators.addSupervisor(data))
   };
 };
 export default connect(

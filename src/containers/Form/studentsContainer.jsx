@@ -10,10 +10,14 @@ class studentsContainer extends React.Component {
   }
 
   render() {
-    const { addStudents, projects } = this.props;
+    const { addStudents, projects, uploadNewFile } = this.props;
     return (
       <div>
-        <Students addStudents={addStudents} projects={projects} />
+        <Students
+          addStudents={addStudents}
+          projects={projects}
+          uploadNewFile={uploadNewFile}
+        />
       </div>
     );
   }
@@ -22,15 +26,18 @@ const mapStateToProps = state => {
   return{
     projects: state.admin.projects
   };
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     fetchProjects: data => {
       dispatch(actionCreators.fetchProjects(data));
     },
     addStudents: data => {
-      dispatch(actionCreators.setMyData(actionTypes.ADD_STUDENTS, data));
-      //dispatch(actionCreators.addStudents(data));
+      // dispatch(actionCreators.setMyData(actionTypes.ADD_STUDENTS, data));
+      dispatch(actionCreators.addStudents(data));
+    },
+    uploadNewFile: data => {
+      dispatch(actionCreators.uploadFile(data));
     }
   };
 };
@@ -43,5 +50,6 @@ export default connect(
 studentsContainer.propTypes = {
   addStudents: PropTypes.func.isRequired,
   projects: PropTypes.array,
-  fetchProjects: PropTypes.func.isRequired
+  fetchProjects: PropTypes.func.isRequired,
+  uploadNewFile: PropTypes.func
 };

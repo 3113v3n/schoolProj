@@ -21,6 +21,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
       dispatch(actionCreators.editTable(actionTypes.EDIT_STUDENT_TABLE, data));
+      // dispatch(actionCreators.editStudents(data))
     }
   };
 };

@@ -22,7 +22,7 @@ class StudentTable extends React.Component {
     } else {
       return (
         <div>
-          {data.length ? (
+          {data !== null ? (
             <SupervisorComponent data={data} />
           ) : (
             <div>
