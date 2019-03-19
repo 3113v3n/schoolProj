@@ -128,7 +128,7 @@ class superTableComponent extends React.Component {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, onDelete } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer>
@@ -173,6 +173,7 @@ class superTableComponent extends React.Component {
                     email={item.email}
                     diploma={item.diploma}
                     degree={item.degree}
+                    onDelete={onDelete}
                   />
                 ))}
               </table>
@@ -191,6 +192,7 @@ class superTableComponent extends React.Component {
 }
 superTableComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.array
+  data: PropTypes.array,
+  onDelete: PropTypes.func.isRequired
 };
 export default withStyles(styles)(superTableComponent);

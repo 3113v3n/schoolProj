@@ -16,7 +16,6 @@ import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "../../../components/Snackbar/Snackbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Input } from "@material-ui/icons";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -68,37 +67,41 @@ class AllocationForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   handleMyChange = e => {
-    console.log(e);
-    // let currentList = []; // original List
-    //
-    // let newList = []; //copy of list
-    // this.setState({ students: e.target.value });
-    // if (e.course == "Degree") {
-    //   currentList = this.props.lectures;
-    //
-    //   newList = currentList.filter(item => {
-    //     const lc = item.course;
-    //     const filter = e.target.value;
-    //     return lc.includes(filter); //returns components present in the table
-    //   });
-    // } else {
-    //   newList = this.props.lectures;
-    // }
-    // this.setState({
-    //   filtered: newList
-    // });
+    const value = e.target.value;
+    const res = value.split(" ");
+    const course = res[1];
+    this.setState({ [e.target.name]: value });
+
+    let currentList = []; // original List
+
+    let newList = []; //copy of list
+
+    currentList = this.props.lecturers;
+    newList = currentList.filter(item => {
+      const lc = `${item.course.toLowerCase()}`;
+      const filter = course.toLowerCase();
+      return lc.includes(filter) || lc.includes("both"); //returns components present in the table
+    });
+
+    this.setState({
+      filtered: newList
+    });
   };
   newStudent = () => {
     const { students, lecturers } = this.state;
+    const value = students;
+    const res = value.split(" ");
+    const adm = res[0];
     const data = {};
-    data.students = students;
+    data.students = parseInt(adm);
     data.lecturers = lecturers;
+
     this.props.addAllocation(data);
     this.showNotification("tl");
   };
   render() {
-    const { classes, lecturers, students } = this.props;
-
+    const { classes, students } = this.props;
+    const { filtered } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -119,7 +122,7 @@ class AllocationForm extends React.Component {
                     <Select
                       style={{ marginLeft: 10, width: "50%" }}
                       value={this.state.students}
-                      onChange={this.handleChange}
+                      onChange={this.handleMyChange}
                       formcontrolprops={{
                         fullWidth: true
                       }}
@@ -131,8 +134,7 @@ class AllocationForm extends React.Component {
                       {students.map(item => (
                         <MenuItem
                           key={item.adm}
-                          value={item.adm}
-                          // onClick={() => this.handleMyChange(item.course)}
+                          value={`${item.adm} ${item.course}`}
                         >
                           {item.name}
                         </MenuItem>
@@ -155,7 +157,7 @@ class AllocationForm extends React.Component {
                         id: "lecturer"
                       }}
                     >
-                      {lecturers.map(item => (
+                      {filtered.map(item => (
                         <MenuItem key={item.emp_no} value={item.emp_no}>
                           {item.name}
                         </MenuItem>

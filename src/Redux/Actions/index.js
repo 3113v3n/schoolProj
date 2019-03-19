@@ -6,6 +6,8 @@ import {
 } from "../../services/requests";
 import jwtDecode from "jwt-decode";
 
+
+
 //Work for all submission type is a parameter
 
 export const setMyData = (type, data) => {
@@ -69,6 +71,7 @@ export const LogMeIn = data => {
       });
   };
 };
+
 //////---------FETCH---------- REQUESTS--***////
 export const fetchData = () => {
   return dispatch => {
@@ -99,7 +102,7 @@ export const fetchSupervisors = () => {
     asyncRequest("supervisor.json")
       .then(responseJson => {
         const myData = responseJson.supervisors;
-        dispatch(setMyData(actionTypes.SET_DATA, myData));
+        dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());
@@ -111,7 +114,7 @@ export const adminStudents = () => {
     asyncRequest("students.json")
       .then(responseJson => {
         const myData = responseJson.Students; //Students
-        dispatch(setMyData(actionTypes.SET_DATA, myData));
+        dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, myData));
       })
       .catch(error => {
         dispatch(fetchFailed());

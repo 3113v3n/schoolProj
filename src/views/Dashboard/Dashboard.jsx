@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import Store from "@material-ui/icons/Store";
-
-import Accessibility from "@material-ui/icons/Accessibility";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -31,11 +27,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
+                  <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Allocated Students</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  49/50 <small>students</small>
                 </h3>
               </CardHeader>
             </Card>
@@ -44,10 +40,10 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <Store />
+                  <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>SuperVisors</p>
-                <h3 className={classes.cardTitle}>245</h3>
+                <h3 className={classes.cardTitle}>45</h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -55,7 +51,7 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
-                  <Icon>info_outline</Icon>
+                  <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>1 trimester Students</p>
                 <h3 className={classes.cardTitle}>75</h3>
@@ -66,7 +62,7 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <Accessibility />
+                  <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>2 Trimester Students</p>
                 <h3 className={classes.cardTitle}>85</h3>

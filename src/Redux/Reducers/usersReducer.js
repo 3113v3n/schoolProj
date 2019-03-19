@@ -54,7 +54,7 @@ function userReducer(state = initialState, action) {
     case actionTypes.NOT_AUTHENTICATED:
       return{
         ...state,
-        isAuthenticated: state.isAuthenticated
+        isAuthenticated: false
       }
     case actionTypes.STORE_TOKEN:
       return {

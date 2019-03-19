@@ -1,4 +1,5 @@
 import paths from "../constants/paths.js";
+import jwtDecode from "jwt-decode";
 //import axios from "axios";
 //import decode from "jwt-decode";
 const requests = paths.production; //localhost;
@@ -54,7 +55,15 @@ async function postRequest(path, param) {
     console.error(`Error is : ${e}`);
   }
 }
-
+async function isTokenExpired() {
+  const token = localStorage.getItem("refresh_token");
+  try {
+    const decoded = jwtDecode(token);
+    return decoded.exp < Date.now() / 1000;
+  } catch (err) {
+    return false;
+  }
+}
 async function refreshTokenRequest(path, param) {
   try {
     const token = localStorage.getItem("refresh_token");
@@ -79,3 +88,4 @@ export { refreshTokenRequest };
 export { asyncRequest };
 export { loginRequest };
 export { postRequest };
+export { isTokenExpired };

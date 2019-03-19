@@ -48,7 +48,7 @@ AdminStudents.propTypes = {
 };
 const mapStateToProps = state => {
   return {
-    data: state.admin.data,
+    data: state.admin.students,
     isLoading: state.admin.isLoading,
     error: state.error.error
   };
@@ -58,8 +58,8 @@ const mapDispatchToProps = dispatch => {
     Loaded: () => {
       dispatch(actionCreators.adminStudents());
     },
-    onDelete: students =>
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, students))
+    onDelete: data =>
+      dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, data))
   };
 };
 export default connect(

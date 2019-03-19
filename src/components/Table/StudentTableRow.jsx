@@ -78,7 +78,7 @@ class StudentTableRow extends React.Component {
                   className={classes.tableActionButtonIcon + " " + classes.edit}
                   onClick={key =>
                     window.confirm(
-                      "Are you sure you wish to delete this row?"
+                      "Are you sure you wish to delete Student row?"
                     ) && this.props.onDelete(key)
                   }
                 />

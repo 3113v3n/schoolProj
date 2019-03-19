@@ -10,8 +10,8 @@ import Hidden from "@material-ui/core/Hidden";
 // @material-ui/icons
 import Menu from "@material-ui/icons/Menu";
 // core components
-import AdminNavbarLinks from "./AdminNavbarLinks.jsx";
-import RTLNavbarLinks from "./RTLNavbarLinks.jsx";
+import AdminNavbar from "../../containers/Headers/AdminNavBar";
+
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
@@ -21,7 +21,7 @@ function Header({ ...props }) {
     var name;
     props.routes.map((prop, key) => {
       if (prop.layout + prop.path === props.location.pathname) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
+        name = prop.name;
       }
       return null;
     });
@@ -42,7 +42,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+          <AdminNavbar />
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton

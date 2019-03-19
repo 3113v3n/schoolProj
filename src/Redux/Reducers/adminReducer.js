@@ -11,8 +11,7 @@ const initialState = {
   supervisors: [],
   profile: {},
   supervisor: {},
-  allocation: {},
-  student: {}
+  allocation: {}
 };
 
 function adminReducer(state = initialState, action) {
@@ -20,6 +19,18 @@ function adminReducer(state = initialState, action) {
     case actionTypes.SET_DATA:
       return updateProgress(state, {
         data: action.data,
+        isLoading: true,
+        error: false
+      });
+    case actionTypes.SET_STUDENTS_TABLE:
+      return updateProgress(state, {
+        students: action.data,
+        isLoading: true,
+        error: false
+      });
+    case actionTypes.SET_SUPERVISOR_TABLE:
+      return updateProgress(state, {
+        supervisors: action.data,
         isLoading: true,
         error: false
       });
@@ -62,29 +73,20 @@ function adminReducer(state = initialState, action) {
         supervisors: [action.data, ...state.supervisors]
       };
     case actionTypes.DELETE_ALLOCATION:
-      const newData = state.data.filter(allocation => {
-        return allocation.data !== action.data;
-      });
-      return {
-        ...state,
-        data: newData
-      };
+      return [
+        ...state.data.slice(0, action.data),
+        ...state.data.slice(action.data + 1)
+      ];
     case actionTypes.DELETE_STUDENT:
-      const newStudents = state.data.filter(students => {
-        return students.data !== action.data;
-      });
-      return {
-        ...state,
-        data: newStudents
-      };
+      return [
+        ...state.students.slice(0, action.data),
+        ...state.students.slice(action.data + 1)
+      ];
     case actionTypes.DELETE_SUPERVISOR:
-      const newSupervisor = state.supervisors.filter(supervisor => {
-        return supervisor.data !== action.data;
-      });
-      return {
-        ...state,
-        supervisors: newSupervisor
-      };
+      return [
+        ...state.supervisors.slice(0, action.data),
+        ...state.supervisors.slice(action.data + 1)
+      ];
     default:
       return state;
   }

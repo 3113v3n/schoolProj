@@ -131,7 +131,7 @@ class AdminComponent extends React.Component {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, onDelete } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
@@ -172,7 +172,7 @@ class AdminComponent extends React.Component {
                   </thead>
                   {filtered.map(item => (
                     <StudentTableRow
-                      onDelete={this.props.onDelete}
+                      onDelete={onDelete}
                       name={item.studentName}
                       admNo={item.admNo}
                       dateRegistered={item.dateRegistered}
