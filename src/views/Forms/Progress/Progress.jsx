@@ -138,9 +138,12 @@ class Progress extends React.Component {
       this.showNotification("tr");
     } else {
       this.props.onSubmit(data);
-      this.resetValues();
-      const { history } = this.props;
-      history.push("/admin/studentTable");
+
+      const { history, status } = this.props;
+      if (status === "success") {
+        this.resetValues();
+        history.push("/admin/studentTable");
+      }
     }
   };
   render() {
@@ -265,24 +268,12 @@ class Progress extends React.Component {
 Progress.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object,
-  goBack: PropTypes.bool,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  date: PropTypes.string,
   documents: PropTypes.string,
   comments: PropTypes.string,
-  marks: PropTypes.string,
-  onEdit: PropTypes.func.isRequired
+  status: PropTypes.string,
+  marks: PropTypes.string
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    onEdit: data =>
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data))
-  };
-};
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(withStyles(styles)(Progress))
-);
+
+export default withRouter(connect()(withStyles(styles)(Progress)));

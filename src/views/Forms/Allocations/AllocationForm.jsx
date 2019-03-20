@@ -89,15 +89,17 @@ class AllocationForm extends React.Component {
   };
   newStudent = () => {
     const { students, lecturers } = this.state;
+    const { status } = this.props;
     const value = students;
     const res = value.split(" ");
     const adm = res[0];
     const data = {};
-    data.students = parseInt(adm);
-    data.lecturers = lecturers;
-
-    this.props.addAllocation(data);
-    this.showNotification("tl");
+    data.adm = parseInt(adm);
+    data.lec_emp_no = parseInt(lecturers);
+   this.props.addAllocation(data);
+    if (status === "success") {
+      this.showNotification("tl");
+    }
   };
   render() {
     const { classes, students } = this.props;
@@ -191,7 +193,8 @@ class AllocationForm extends React.Component {
 AllocationForm.popTypes = {
   lecturers: PropTypes.array.isRequired,
   students: PropTypes.array.isRequired,
-  addAllocation: PropTypes.func.isRequired
+  addAllocation: PropTypes.func.isRequired,
+  status: PropTypes.string
 };
 
 export default withStyles(styles)(AllocationForm);

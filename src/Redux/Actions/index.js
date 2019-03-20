@@ -64,7 +64,6 @@ export const LogMeIn = data => {
         dispatch(setMyData(actionTypes.STATUS, status));
         dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
         dispatch(storeToken(token));
-        dispatch(setMyData(actionTypes.AUTHENTICATED));
         dispatch(setMyData(actionTypes.REFRESH_TOKEN, refreshToken));
       })
       .catch(error => {
@@ -76,10 +75,9 @@ export const LogMeIn = data => {
 //////---------FETCH---------- REQUESTS--***////
 export const fetchData = () => {
   return dispatch => {
-    asyncRequest("allocations.json")
+    fetchRequest("allocations")
       .then(responseJson => {
-        const myData = responseJson.Allocations;
-        dispatch(setMyData(actionTypes.SET_DATA, myData));
+        dispatch(setMyData(actionTypes.SET_DATA, responseJson));
       })
       .catch(error => {
         dispatch(fetchFailed());
@@ -88,10 +86,10 @@ export const fetchData = () => {
 };
 export const fetchProjects = () => {
   return dispatch => {
-    asyncRequest("projects.json")
+    fetchRequest("projects")
       .then(responseJson => {
-        const projects = responseJson.projects;
-        dispatch(setMyData(actionTypes.FETCH_PROJECTS, projects));
+        const data = responseJson.projects;
+        dispatch(setMyData(actionTypes.FETCH_PROJECTS, data));
       })
       .catch(e => {
         dispatch(fetchFailed());
@@ -111,12 +109,90 @@ export const fetchSupervisors = () => {
   };
 };
 
+export const fetchAllocationCount = () => {
+  return dispatch => {
+    fetchRequest("END POINT")
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.STUDENT_COUNT, responseJson));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+
+export const fetchSupervisorCount = () => {
+  return dispatch => {
+    fetchRequest("END POINT")
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.SUPERVISOR_COUNT, responseJson));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+
+export const fetchOneTrimester = () => {
+  return dispatch => {
+    // asyncRequest("supervisor.json")
+    fetchRequest("lecturers/all")
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.ONE_TRIMESTER_STUDENTS, responseJson));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+
+export const fetchTwoTrimester = () => {
+  return dispatch => {
+    // asyncRequest("supervisor.json")
+    fetchRequest("lecturers/all")
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.TWO_TRIMESTER_STUDENTS, responseJson));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+
 export const adminStudents = () => {
   return dispatch => {
-    asyncRequest("students.json")
+    fetchRequest("students/all")
       .then(responseJson => {
-        const myData = responseJson.Students; //Students
-        dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, myData));
+        //Students
+        dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, responseJson));
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const allocationStudents = () => {
+  return dispatch => {
+    fetchRequest("students/all")
+      .then(responseJson => {
+        //Students
+        dispatch(
+          setMyData(actionTypes.FETCH_ALLOCATION_STUDENTS, responseJson)
+        );
+      })
+      .catch(error => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const allocationSupervisors = () => {
+  return dispatch => {
+    fetchRequest("students/all")
+      .then(responseJson => {
+        //Students
+        dispatch(
+          setMyData(actionTypes.FETCH_ALLOCATION_LECTURERS, responseJson)
+        );
       })
       .catch(error => {
         dispatch(fetchFailed());
@@ -136,27 +212,13 @@ export const supervisorStudents = () => {
   };
 };
 
-export const fetchDetail = () => {
-  return dispatch => {
-    asyncRequest("newAllocation.json")
-      .then(responseJson => {
-        const lecturers = responseJson.lecturers;
-        const students = responseJson.students;
-        dispatch(setMyData(actionTypes.FETCH_ALLOCATION_STUDENTS, students));
-        dispatch(setMyData(actionTypes.FETCH_ALLOCATION_LECTURERS, lecturers));
-      })
-      .catch(error => {
-        dispatch(fetchFailed());
-      });
-  };
-};
-
 ///////------------POST---REQUESTS---------***///
 export const uploadFile = data => {
   return dispatch => {
-    postRequest("UPLOAD-FILE", data)
+    fetchRequest("UPLOAD-FILE", data)
       .then(responseJson => {
         const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.UPLOAD_SUCCESS));
       })
       .catch(e => {
@@ -168,7 +230,6 @@ export const addProject = data => {
   return dispatch => {
     postRequest("projects", data)
       .then(responseJson => {
-        //status
         dispatch(setMyData(actionTypes.ADD_PROJECT, data));
       })
       .catch(error => {
@@ -179,8 +240,10 @@ export const addProject = data => {
 
 export const addAllocation = data => {
   return dispatch => {
-    postRequest("", data)
+    postRequest("allocations", data)
       .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.NEW_ALLOCATION, data));
       })
       .catch(error => {
@@ -194,6 +257,7 @@ export const addSupervisor = data => {
     postRequest("auth/register", data)
       .then(responseJson => {
         const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.ADD_SUPERVISOR, data));
       })
       .catch(error => {
@@ -205,7 +269,13 @@ export const addSupervisor = data => {
 export const addStudents = data => {
   return dispatch => {
     loginRequest("students/register", data)
-      .then(dispatch(setMyData(actionTypes.ADD_STUDENTS, data)))
+      .then(
+        dispatch(responseJson => {
+          const status = responseJson.status;
+          dispatch(setMyData(actionTypes.SET_STATUS, status));
+          setMyData(actionTypes.ADD_STUDENTS, data);
+        })
+      )
       .catch(error => {
         dispatch(setMyData(actionTypes.STUDENT_ERROR));
       });
@@ -217,8 +287,10 @@ export const addStudents = data => {
 export const editAllocations = data => {
   return dispatch => {
     updateRequest("endPoint", data)
-      .then(res => {
-        dispatch(setMyData(actionTypes.EDIT_ALLOCATION_TABLE, res));
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.EDIT_ALLOCATION_TABLE, data));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.ALLOCATION_ERROR));
@@ -228,8 +300,10 @@ export const editAllocations = data => {
 export const editStudents = data => {
   return dispatch => {
     updateRequest("", data)
-      .then(res => {
-        dispatch(setMyData(actionTypes.EDIT_STUDENT_TABLE, res));
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.EDIT_STUDENT_TABLE, data));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.STUDENT_TABLE_ERROR));
@@ -240,9 +314,12 @@ export const editStudents = data => {
 export const editSupervisors = data => {
   return dispatch => {
     updateRequest("endPoint", data)
-      .then(res => {
-        dispatch(setMyData(actionTypes.EDIT_SUPERVISOR_TABLE, res)); //TODO: Change res to responseJson incase of err
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.EDIT_SUPERVISOR_TABLE, data));
       })
+
       .catch(e => {
         dispatch(setMyData(actionTypes.SUPERVISOR_TABLE_ERROR));
       });
@@ -253,7 +330,9 @@ export const editAdminProfile = data => {
   return dispatch => {
     updateRequest("endPoint", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.UPDATE_ADMIN_PROFILE, responseJson));
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.UPDATE_ADMIN_PROFILE, data));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.ADMIN_PROFILE_ERROR));
@@ -265,9 +344,9 @@ export const editSupervisorProfile = data => {
   return dispatch => {
     updateRequest("endPoint", data)
       .then(responseJson => {
-        dispatch(
-          setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, responseJson)
-        );
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, data));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.SUPERVISOR_PROFILE_ERROR, error));
@@ -279,7 +358,9 @@ export const editProgress = data => {
   return dispatch => {
     updateRequest("myPath", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.EDIT_PROGRESS, responseJson));
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.EDIT_PROGRESS, data));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.PROGRESS_ERROR));
@@ -291,7 +372,11 @@ export const editProgress = data => {
 export const deleteAllocation = data => {
   return dispatch => {
     deleteRequest("END-POINT", data)
-      .then(() => dispatch(actionTypes.DELETE_ALLOCATION))
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.DELETE_ALLOCATION));
+      })
       .catch(error => {
         dispatch(setMyData(actionTypes.DELETE_ERROR));
       });
@@ -301,7 +386,11 @@ export const deleteAllocation = data => {
 export const deleteStudents = data => {
   return dispatch => {
     deleteRequest("END-POINT", data)
-      .then(() => dispatch(actionTypes.DELETE_STUDENT))
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.DELETE_STUDENT));
+      })
       .catch(error => {
         dispatch(setMyData(actionTypes.DELETE_ERROR));
       });
@@ -311,7 +400,11 @@ export const deleteStudents = data => {
 export const deleteSupervisors = data => {
   return dispatch => {
     deleteRequest("END-POINT", data)
-      .then(() => dispatch(actionTypes.DELETE_SUPERVISOR))
+      .then(responseJson => {
+        const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SET_STATUS, status));
+        dispatch(setMyData(actionTypes.DELETE_SUPERVISOR));
+      })
       .catch(error => {
         dispatch(setMyData(actionTypes.DELETE_ERROR));
       });

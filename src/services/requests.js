@@ -35,6 +35,7 @@ async function loginRequest(path, param) {
   }
 }
 
+
 async function updateRequest(path, param) {
   try {
     let requestParams = {

@@ -12,7 +12,8 @@ const initialState = {
   supervisors: [],
   profile: {},
   supervisor: {},
-  allocation: {}
+  allocation: {},
+  status: "success"
 };
 
 function adminReducer(state = initialState, action) {
@@ -33,6 +34,11 @@ function adminReducer(state = initialState, action) {
         isLoading: true,
         error: false
       });
+    case actionTypes.SET_STATUS:
+      return{
+        ...state,
+        status: action.data
+      };
     case actionTypes.SET_SUPERVISOR_TABLE:
       return updateProgress(state, {
         supervisors: action.data,
@@ -56,26 +62,31 @@ function adminReducer(state = initialState, action) {
     case actionTypes.ADD_PROJECT:
       return {
         projects: [action.data, ...state.projects],
-        error: state.error
+        error: state.error,
+        status: state.status
       };
     case actionTypes.NEW_ALLOCATION:
       return {
         ...state,
-        allocation: action.data
+        allocation: action.data,
+        status: state.status
       };
 
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
-        students: [action.data, ...state.students]
+        students: [action.data, ...state.students],
+        status: state.status
       });
     case actionTypes.UPDATE_ADMIN_PROFILE:
       return updateProgress(state, {
         ...state,
-        profile: action.data
+        profile: action.data,
+        status: state.status
       });
     case actionTypes.ADD_SUPERVISOR:
       return {
-        supervisors: [action.data, ...state.supervisors]
+        supervisors: [action.data, ...state.supervisors],
+        status: state.status
       };
     case actionTypes.DELETE_ALLOCATION:
       return [

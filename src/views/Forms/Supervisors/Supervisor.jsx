@@ -117,7 +117,7 @@ class Supervisors extends React.Component {
         alert("Password dont match");
       } else {
         this.props.onSubmit(data);
-        if (this.state.error === false) {
+        if (this.props.status === "success") {
           this.resetValues();
           this.showNotification("tr");
         }
@@ -269,6 +269,7 @@ class Supervisors extends React.Component {
 }
 Supervisors.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  status: PropTypes.string
 };
 export default withStyles(styles)(Supervisors);

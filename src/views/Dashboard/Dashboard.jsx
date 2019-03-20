@@ -18,8 +18,13 @@ class Dashboard extends React.Component {
     value: 0
   };
   render() {
-    const { classes } = this.props;
-    console.log(this.props);
+    const {
+      classes,
+      StudentCount,
+      SupervisorCount,
+      oneTrimester,
+      twoTrimester
+    } = this.props;
     return (
       <div>
         <GridContainer>
@@ -31,7 +36,7 @@ class Dashboard extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Allocated Students</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>students</small>
+                  {StudentCount} <small>students</small>
                 </h3>
               </CardHeader>
             </Card>
@@ -43,7 +48,7 @@ class Dashboard extends React.Component {
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>SuperVisors</p>
-                <h3 className={classes.cardTitle}>45</h3>
+                <h3 className={classes.cardTitle}>{SupervisorCount}</h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -54,7 +59,7 @@ class Dashboard extends React.Component {
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>1 trimester Students</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <h3 className={classes.cardTitle}>{oneTrimester}</h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -65,7 +70,7 @@ class Dashboard extends React.Component {
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>2 Trimester Students</p>
-                <h3 className={classes.cardTitle}>85</h3>
+                <h3 className={classes.cardTitle}>{twoTrimester}</h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -76,7 +81,11 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  StudentCount: PropTypes.number,
+  SupervisorCount: PropTypes.number,
+  oneTrimester: PropTypes.number,
+  twoTrimester: PropTypes.number
 };
 
 export default withStyles(dashboardStyle)(Dashboard);

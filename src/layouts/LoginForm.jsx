@@ -92,13 +92,14 @@ class LoginForm extends React.Component {
       }
     }
   };
-  
+
   render() {
     if (this.props.isAuthenticated === true) {
       const { history } = this.props;
       history.push("/admin/dashboard");
     }
     const { classes } = this.props;
+    const { staff_id, password } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -152,7 +153,11 @@ class LoginForm extends React.Component {
                   place="tr"
                   color={"danger"}
                   icon={AddAlert}
-                  message={"Invalid Login Credentials"}
+                  message={
+                    staff_id.length === 0 || password.length === 0
+                      ? "ALL FIELDS ARE REQUIRED"
+                      : "INVALID LOGIN CREDENTIALS"
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

@@ -10,7 +10,8 @@ export default function errorReducers(state = initialState, actions) {
     case actionTypes.NEW_USER_FAILURE:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: "INVALID USER CREDENTIALS"
       };
     case actionTypes.UPLOAD_FAILURE:
       return{

@@ -89,7 +89,7 @@ class EditStudents extends React.Component {
   };
   updateStudent = () => {
     const { firstName, lastName, admNo, projCode } = this.state;
-    const { history } = this.props;
+    const { history, status } = this.props;
     const data = {};
     data.firstName = firstName;
     data.lastName = lastName;
@@ -104,8 +104,10 @@ class EditStudents extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
-      this.resetValues();
-      history.push("/admin/adminStudents");
+      if (status === "success"){
+        this.resetValues();
+        history.push("/admin/adminStudents");
+      }
     }
   };
   render() {
@@ -216,7 +218,8 @@ EditStudents.popTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  location: PropTypes.object
+  location: PropTypes.object,
+  status: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(EditStudents));

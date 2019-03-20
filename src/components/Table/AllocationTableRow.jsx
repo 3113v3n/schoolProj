@@ -23,7 +23,6 @@ class AllocationTableRow extends React.Component {
   goToEdit = () => {
     const {
       history,
-      dateRegistered,
       projectCode,
       supervisor,
       studentName
@@ -32,7 +31,6 @@ class AllocationTableRow extends React.Component {
       pathname: "/admin/editAllocations",
       state: {
         supervisor: supervisor,
-        date: dateRegistered,
         projectCode: projectCode,
         studentName: studentName
       }
@@ -44,6 +42,7 @@ class AllocationTableRow extends React.Component {
       supervisor,
       projectCode,
       dateRegistered,
+      dueDate,
       classes,
       key
     } = this.props;
@@ -54,7 +53,7 @@ class AllocationTableRow extends React.Component {
           <td>{supervisor}</td>
           <td>{projectCode}</td>
           <td>{dateRegistered}</td>
-          <td>Unallocated</td>
+          <td>{dueDate}</td>
           <td className={classes.left}>
             <Tooltip
               id="tooltip-top"
@@ -105,6 +104,7 @@ AllocationTableRow.propTypes = {
   supervisor: PropTypes.string.isRequired,
   projectCode: PropTypes.string.isRequired,
   dateRegistered: PropTypes.string.isRequired,
+  dueDate: PropTypes.string,
   classes: PropTypes.object.isRequired,
   key: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,

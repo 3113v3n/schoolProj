@@ -11,18 +11,21 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import adminReducer from "./Redux/Reducers/adminReducer.js";
 import supervisorReducer from "./Redux/Reducers/supervisorReducer.js";
 import usersReducers from "./Redux/Reducers/usersReducer.js";
+import countReducers from "./Redux/Reducers/countReducers.js";
 import * as actionTypes from "./Redux/Actions/action-types";
 import thunk from "redux-thunk";
 import editTableReducers from "./Redux/Reducers/editTableReducers.js";
 import errorReducers from "./Redux/Reducers/errorReducers.js";
 import requireAuth from "./HOC/requireAuth";
 import { setMyData } from "./Redux/Actions";
+
 const reducers = combineReducers({
   admin: adminReducer,
   supervisor: supervisorReducer,
   user: usersReducers,
   editTable: editTableReducers,
-  error: errorReducers
+  error: errorReducers,
+  count: countReducers
 })
 const logger = store => {
   return next => {

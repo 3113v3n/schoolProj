@@ -3,7 +3,7 @@ import * as actionTypes from "../Actions/action-types";
 const initialState = {
   user: {},
   isAuthenticated: false,
-  role: "Supervisor",
+  role: "Admin",
   users: [],
   redirect: false,
   token: " ",
@@ -42,14 +42,9 @@ function userReducer(state = initialState, action) {
     case actionTypes.SET_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: !state.isAuthenticated,
+        isAuthenticated: true,
         user: action.data,
         role: state.role
-      };
-    case actionTypes.AUTHENTICATED:
-      return{
-        ...state,
-        isAuthenticated: !state.isAuthenticated
       };
     case actionTypes.NOT_AUTHENTICATED:
       return{

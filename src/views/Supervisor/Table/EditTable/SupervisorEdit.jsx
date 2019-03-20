@@ -67,7 +67,7 @@ class EditAllocation extends React.Component {
       degreeSelected,
       diplomaSelected
     } = this.state;
-    const { history } = this.props;
+    const { history, status } = this.props;
     const data = {};
     data.f_name = firstName;
     data.l_name = lastName;
@@ -75,8 +75,10 @@ class EditAllocation extends React.Component {
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
     this.props.onSubmit(data);
-    this.resetValues();
-    history.push("/admin/superTable");
+    if(status === "success"){
+      this.resetValues();
+      history.push("/admin/superTable");
+    };
   };
   render() {
     const { classes } = this.props;
@@ -163,7 +165,8 @@ EditAllocation.popTypes = {
   classes: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   history: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  status: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

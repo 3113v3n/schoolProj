@@ -166,18 +166,16 @@ class AdminComponent extends React.Component {
                       <th>Admission</th>
                       <th>Student Name</th>
                       <th>Project Code</th>
-                      <th>Date Registered</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   {filtered.map(item => (
                     <StudentTableRow
                       onDelete={onDelete}
-                      name={item.studentName}
-                      admNo={item.admNo}
-                      dateRegistered={item.dateRegistered}
-                      projectCode={item.projectCode}
-                      key={item.admNo}
+                      name={item.name}
+                      admNo={item.adm}
+                      projectCode={item.project_code}
+                      key={item.adm}
                     />
                   ))}
                 </table>

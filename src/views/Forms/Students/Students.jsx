@@ -92,8 +92,9 @@ class Students extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   newStudent = () => {
-    const { firstName, lastName, admNo, project, error } = this.state;
+    const { firstName, lastName, admNo, project } = this.state;
     const data = {};
+    const { status } = this.props;
     data.f_name = firstName;
     data.l_name = lastName;
     data.adm = admNo;
@@ -109,7 +110,7 @@ class Students extends React.Component {
     } else {
       this.props.addStudents(data);
       this.resetValues();
-      if (error === false) {
+      if (status === "success") {
         this.showNotification("tr");
       }
     }
@@ -190,8 +191,8 @@ class Students extends React.Component {
                       }}
                     >
                       {projects.map(item => (
-                        <MenuItem key={item.course} value={item.code}>
-                          {item.code}
+                        <MenuItem key={item.code} value={item.name}>
+                          {item.name}
                         </MenuItem>
                       ))}
                     </Select>
@@ -273,7 +274,8 @@ Students.popTypes = {
   addStudents: PropTypes.func.isRequired,
   classes: PropTypes.object,
   projects: PropTypes.array,
-  uploadNewFile: PropTypes.func.isRequired
+  uploadNewFile: PropTypes.func.isRequired,
+  status: PropTypes.string
 };
 
 export default withStyles(styles)(Students);

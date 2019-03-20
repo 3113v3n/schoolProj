@@ -118,7 +118,7 @@ class AllocationComponent extends React.Component {
       newList = currentList.filter(item => {
         const lc = `${item.studentName.toLowerCase()} 
         ${item.supervisor.toLowerCase()} ${item.dateRegistered.toLowerCase()} //filter through table contents
-         ${item.projectCode.toLowerCase()}`;
+         ${item.projectCode.toLowerCase()} `;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -165,20 +165,21 @@ class AllocationComponent extends React.Component {
                     <tr>
                       <th>StudentName</th>
                       <th>Supervisor</th>
-                      <th>ProjCode</th>
-                      <th>Date-Registered</th>
-                      <th>allocations</th>
+                      <th>Project Code</th>
+                      <th>Date Registered</th>
+                      <th>Due Date</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   {filtered.map(item => (
                     <AllocationTableRow
                       onDelete={this.props.onDelete}
-                      studentName={item.studentName}
+                      studentName={item.student_name}
                       supervisor={item.supervisor}
-                      dateRegistered={item.dateRegistered}
-                      key={item.studentName}
-                      projectCode={item.projectCode}
+                      dateRegistered={item.date_registered}
+                      key={item.allocation_id}
+                      dueDate={item.due_date}
+                      projectCode={item.project_code}
                     />
                   ))}
                 </table>

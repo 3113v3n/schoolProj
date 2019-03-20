@@ -8,11 +8,9 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
-import avatar from "assets/img/faces/marc.jpg";
 import PropTypes from "prop-types";
 
 const styles = {
@@ -38,39 +36,39 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      email: "",
+      oldPass: "",
       password: "",
       confirmPass: ""
     };
   }
   submitDetails = () => {
-    const { username, email, password, confirmPass } = this.state;
+    const { oldPass, password, confirmPass } = this.state;
     const data = {};
-    data.username = username;
-    data.email = email;
+    data.oldPass = oldPass;
     data.password = password;
 
     if (password !== confirmPass) {
       alert("passwords dont match");
     } else {
       this.props.profileUpdate(data);
-      this.resetValues();
+      if (this.props.status === "success") {
+        this.resetValues();
+      }
     }
   };
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = " ";
-    this.setState({ username: "", email: "", password: "", confirmPass: "" });
+    this.setState({ oldPass: "", password: "", confirmPass: "" });
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes, user } = this.props;
+    const { classes } = this.props;
     return (
       <div>
-        <GridContainer>
+        <GridContainer container justify="center" alignItems="baseline">
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="primary">
@@ -83,25 +81,16 @@ class Profile extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Username"
-                      id="username"
+                      labelText="Enter Your Old Password"
+                      id="oldPass"
                       name="input"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.username,
+                        value: this.state.oldPass,
                         onChange: this.handleInput
                       }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Email address"
-                      id="email"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.email,
-                        onChange: this.handleInput
+                      inputProps={{
+                        type: "password"
                       }}
                     />
                   </GridItem>
@@ -146,20 +135,6 @@ class Profile extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card profile>
-              <CardAvatar profile>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  <img src={avatar} alt="..." />
-                </a>
-              </CardAvatar>
-              <CardBody profile>
-                <h6 className={classes.cardCategory}>SUPERVISOR</h6>
-                <h4 className={classes.cardTitle}>Name: {user.username}</h4>
-                <h4 className={classes.cardTitle}>Email: {user.email}</h4>
-              </CardBody>
-            </Card>
-          </GridItem>
         </GridContainer>
       </div>
     );
@@ -168,6 +143,6 @@ class Profile extends React.Component {
 Profile.propTypes = {
   profileUpdate: PropTypes.func.isRequired,
   classes: PropTypes.object,
-  user: PropTypes.object
+  status: PropTypes.string
 };
 export default withStyles(styles)(Profile);

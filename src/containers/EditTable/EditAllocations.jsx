@@ -8,15 +8,26 @@ class EditAllocations extends React.Component {
   render() {
     return (
       <div>
-        <EditAllocation onSubmit={this.props.onEditProgress} />
+        <EditAllocation
+          onSubmit={this.props.onEditProgress}
+          error={this.props.error}
+          status={this.props.status}
+        />
       </div>
     );
   }
 }
 EditAllocations.propTypes = {
-  onEditProgress: PropTypes.func
+  onEditProgress: PropTypes.func,
+  error: PropTypes.bool,
+  status: PropTypes.string
 };
-
+const mapStateToProps = state => {
+  return {
+    error: state.error.error,
+    status: state.admin.status
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
@@ -29,6 +40,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(EditAllocations);

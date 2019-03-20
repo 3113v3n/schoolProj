@@ -105,9 +105,9 @@ class Projects extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.addProject(data);
-      if (this.state.error === false) {
+      this.resetValues();
+      if (this.props.status === "success") {
         this.showNotification("tr");
-        this.resetValues();
       }
     }
   };
@@ -118,10 +118,10 @@ class Projects extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <GridContainer>
+        <GridContainer container justify="center" alignItems="baseline">
           <GridItem xs={12} sm={12} md={8}>
             <Card>
-              <CardHeader color="primary">
+              <CardHeader color="success">
                 <h4 className={classes.cardTitleWhite}>PROJECTS</h4>
                 <p className={classes.cardCategoryWhite}>Project Details</p>
               </CardHeader>
@@ -208,6 +208,7 @@ class Projects extends React.Component {
 Projects.propTypes = {
   classes: PropTypes.object,
   addProject: PropTypes.func.isRequired,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  status: PropTypes.string
 };
 export default withStyles(styles)(Projects);

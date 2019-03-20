@@ -20,9 +20,10 @@ class Login extends React.Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: data =>
-      dispatch(actionCreators.setMyData(actionTypes.SET_CURRENT_USER, data)) //Redux storage
-    // onSubmit: data => dispatch(actionCreators.LogMeIn(data)) // add to server
+    onSubmit: data => {
+       dispatch(actionCreators.LogMeIn(data))
+      // dispatch(actionCreators.setMyData(actionTypes.SET_CURRENT_USER, data)); //Redux storage
+    }
   };
 };
 const mapStateToProps = state => {
@@ -30,7 +31,7 @@ const mapStateToProps = state => {
     redirect: state.user.redirect,
     error: state.error.error,
     isAuthenticated: state.user.isAuthenticated,
-    errorMessage: state.user.errorMessage
+    errorMessage: state.error.errorMessage
   };
 };
 Login.propTypes = {

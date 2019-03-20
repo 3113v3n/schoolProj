@@ -11,6 +11,8 @@ class progressContainer extends React.Component {
         <Progress
           onSubmit={this.props.onEditProgress}
           goBack={this.props.goBack}
+          error={this.props.error}
+          status={this.props.status}
         />
       </div>
     );
@@ -18,11 +20,15 @@ class progressContainer extends React.Component {
 }
 progressContainer.propTypes = {
   onEditProgress: PropTypes.func,
-  goBack: PropTypes.bool
+  goBack: PropTypes.bool,
+  error: PropTypes.bool,
+  status: PropTypes.string
 };
 const mapStateToProps = state => {
   return {
-    goBack: state.supervisor.goBack
+    goBack: state.supervisor.goBack,
+    error: state.error.error,
+    status: state.supervisor.status
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -8,7 +8,11 @@ class supervisorContainer extends React.Component {
   render() {
     return (
       <div>
-        <Supervisor onSubmit={this.props.onSubmit} />
+        <Supervisor
+          onSubmit={this.props.onSubmit}
+          error={this.props.error}
+          status={this.props.status}
+        />
       </div>
     );
   }
@@ -21,10 +25,18 @@ const mapDispatchToProps = dispatch => {
     onSubmit: data => dispatch(actionCreators.addSupervisor(data))
   };
 };
+const mapStateToProps = state => {
+  return {
+    error: state.error.error,
+    status: state.admin.status
+  };
+};
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(supervisorContainer);
 supervisorContainer.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  error: PropTypes.bool,
+  status: PropTypes.string
 };

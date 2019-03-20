@@ -92,7 +92,7 @@ class EditAllocation extends React.Component {
   };
   editAllocation = () => {
     const { firstName, lastName, supervisor, projCode } = this.state;
-    const { history } = this.props;
+    const { history, status } = this.props;
     const data = {};
     data.f_name = firstName;
     data.l_name = lastName;
@@ -107,8 +107,11 @@ class EditAllocation extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
-      this.resetValues();
-      history.push("/admin/allocation");
+
+      if (status === "success") {
+        this.resetValues();
+        history.push("/admin/allocation");
+      }
     }
   };
   render() {
@@ -228,7 +231,7 @@ EditAllocation.popTypes = {
   studentName: PropTypes.string,
   projectCode: PropTypes.string,
   supervisor: PropTypes.string,
-  date: PropTypes.string
+  status: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

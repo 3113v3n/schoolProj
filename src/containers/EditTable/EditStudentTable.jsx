@@ -8,13 +8,19 @@ class EditStudentTable extends React.Component {
   render() {
     return (
       <div>
-        <EdiStudents onSubmit={this.props.onEditProgress} />
+        <EdiStudents
+          onSubmit={this.props.onEditProgress}
+          error={this.props.error}
+          status={this.props.status}
+        />
       </div>
     );
   }
 }
 EditStudentTable.propTypes = {
-  onEditProgress: PropTypes.func
+  onEditProgress: PropTypes.func,
+  error: PropTypes.bool,
+  status: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch => {
@@ -25,8 +31,14 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
+const mapStateToProps = state => {
+  return {
+    error: state.error.error,
+    status: state.admin.status
+  };
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(EditStudentTable);

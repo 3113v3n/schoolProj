@@ -20,33 +20,24 @@ const styles = {
 };
 class StudentTableRow extends React.Component {
   goToEdit = () => {
-    const { history, dateRegistered, projectCode, name, admNo } = this.props;
+    const { history, projectCode, name, admNo } = this.props;
     history.push({
       pathname: "/admin/editStudentTable",
       state: {
         name: name,
-        date: dateRegistered,
         admNo: admNo,
         projectCode: projectCode
       }
     });
   };
   render() {
-    const {
-      admNo,
-      name,
-      projectCode,
-      dateRegistered,
-      classes,
-      key
-    } = this.props;
+    const { admNo, name, projectCode, classes, key } = this.props;
     return (
       <tbody>
         <tr className={classes.center} key={key}>
           <td>{admNo}</td>
           <td>{name}</td>
           <td>{projectCode}</td>
-          <td>{dateRegistered}</td>
           <td className={classes.left}>
             <Tooltip
               id="tooltip-top"

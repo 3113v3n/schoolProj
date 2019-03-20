@@ -20,7 +20,7 @@ const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
   const { role } = props;
   function activeRoute(routeName) {
-    return props.location.pathname.indexOf(routeName) > -1 ? true : false;
+    return props.location.pathname.indexOf(routeName) > -1;
   }
 
   const { classes, color, image, logoText, routes } = props;
@@ -93,6 +93,7 @@ const Sidebar = ({ ...props }) => {
       className={classNames(classes.logoLink, classes.logo, {
         [classes.logoLinkRTL]: props.rtlActive
       })}
+      style={{ paddingLeft: "40%" }}
     >
       {logoText}
     </div>
@@ -154,7 +155,8 @@ const Sidebar = ({ ...props }) => {
 
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
-  logoText: PropTypes.string
+  logoText: PropTypes.string,
+  role: PropTypes.string.isRequired
 };
 
 export default withStyles(sidebarStyle)(Sidebar);
