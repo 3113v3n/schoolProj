@@ -59,8 +59,10 @@ export const LogMeIn = data => {
         const refreshToken = responseJson.refresh_token;
         const myToken = jwtDecode(token);
         const status = responseJson.status;
+        const role = responseJson.role;
         localStorage.setItem("access_Token", token);
         localStorage.setItem("refresh_Token", refreshToken);
+        dispatch(setMyData(actionTypes.SET_ROLE, role));
         dispatch(setMyData(actionTypes.STATUS, status));
         dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
         dispatch(storeToken(token));
@@ -99,7 +101,7 @@ export const fetchProjects = () => {
 export const fetchSupervisors = () => {
   return dispatch => {
     // asyncRequest("supervisor.json")
-    fetchRequest("lecturers/all")
+    fetchRequest("lecturers")
       .then(responseJson => {
         dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, responseJson));
       })
@@ -136,7 +138,7 @@ export const fetchSupervisorCount = () => {
 export const fetchOneTrimester = () => {
   return dispatch => {
     // asyncRequest("supervisor.json")
-    fetchRequest("lecturers/all")
+    fetchRequest("lecturers")
       .then(responseJson => {
         dispatch(setMyData(actionTypes.ONE_TRIMESTER_STUDENTS, responseJson));
       })
@@ -149,7 +151,7 @@ export const fetchOneTrimester = () => {
 export const fetchTwoTrimester = () => {
   return dispatch => {
     // asyncRequest("supervisor.json")
-    fetchRequest("lecturers/all")
+    fetchRequest("lecturers")
       .then(responseJson => {
         dispatch(setMyData(actionTypes.TWO_TRIMESTER_STUDENTS, responseJson));
       })
@@ -161,7 +163,7 @@ export const fetchTwoTrimester = () => {
 
 export const adminStudents = () => {
   return dispatch => {
-    fetchRequest("students/all")
+    fetchRequest("students")
       .then(responseJson => {
         //Students
         dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, responseJson));
@@ -173,7 +175,7 @@ export const adminStudents = () => {
 };
 export const allocationStudents = () => {
   return dispatch => {
-    fetchRequest("students/all")
+    fetchRequest("students")
       .then(responseJson => {
         //Students
         dispatch(
@@ -187,7 +189,7 @@ export const allocationStudents = () => {
 };
 export const allocationSupervisors = () => {
   return dispatch => {
-    fetchRequest("students/all")
+    fetchRequest("lecturers")
       .then(responseJson => {
         //Students
         dispatch(
@@ -215,7 +217,7 @@ export const supervisorStudents = () => {
 ///////------------POST---REQUESTS---------***///
 export const uploadFile = data => {
   return dispatch => {
-    fetchRequest("UPLOAD-FILE", data)
+    fetchRequest("students/register", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
@@ -286,7 +288,7 @@ export const addStudents = data => {
 
 export const editAllocations = data => {
   return dispatch => {
-    updateRequest("endPoint", data)
+    updateRequest("allocations", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
@@ -299,7 +301,7 @@ export const editAllocations = data => {
 };
 export const editStudents = data => {
   return dispatch => {
-    updateRequest("", data)
+    updateRequest("students", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
@@ -313,7 +315,7 @@ export const editStudents = data => {
 
 export const editSupervisors = data => {
   return dispatch => {
-    updateRequest("endPoint", data)
+    updateRequest("lecturers", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));

@@ -16,6 +16,9 @@ import PropTypes from "prop-types";
 import AddAlert from "@material-ui/icons/AddAlert";
 //core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "../../Forms/Allocations/AllocationForm";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -41,6 +44,7 @@ class EditAllocation extends React.Component {
     const superv = this.props.location.state.supervisor;
     const code = this.props.location.state.projectCode;
     this.state = {
+      adm: 11947,
       firstName: "",
       lastName: "",
       supervisor: superv,
@@ -62,6 +66,7 @@ class EditAllocation extends React.Component {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
     this.setState({
+      adm: "",
       firstName: "",
       lastName: "",
       supervisor: "",
@@ -91,19 +96,13 @@ class EditAllocation extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   editAllocation = () => {
-    const { firstName, lastName, supervisor, projCode } = this.state;
+    const { adm, supervisor, projCode } = this.state;
     const { history, status } = this.props;
     const data = {};
-    data.f_name = firstName;
-    data.l_name = lastName;
+    data.adm = adm;
     data.supervisor = supervisor;
     data.project_code = projCode;
-    if (
-      firstName.length === 0 ||
-      lastName.length === 0 ||
-      supervisor.length === 0 ||
-      projCode.length === 0
-    ) {
+    if (supervisor.length === 0 || projCode.length === 0) {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
@@ -114,9 +113,12 @@ class EditAllocation extends React.Component {
       }
     }
   };
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
   render() {
-    const { classes } = this.props;
-    console.log(this.props);
+    const { classes, lecturers } = this.props;
+    console.log("logging HISTORY===>", this.props.history);
     return (
       <div>
         <GridContainer>
@@ -132,6 +134,22 @@ class EditAllocation extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
+                      labelText="Admission Number"
+                      id="adm"
+                      name="input"
+                      formControlProps={{
+                        fullWidth: true,
+                        value: this.state.adm,
+                        onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        disabled: true,
+                        value: this.state.adm
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
                       className="firstName"
                       labelText="first Name"
                       id="firstName"
@@ -142,6 +160,7 @@ class EditAllocation extends React.Component {
                         onChange: this.handleInput
                       }}
                       inputProps={{
+                        disabled: true,
                         value: this.state.firstName
                       }}
                     />
@@ -158,6 +177,7 @@ class EditAllocation extends React.Component {
                         onChange: this.handleInput
                       }}
                       inputProps={{
+                        disabled: true,
                         value: this.state.lastName
                       }}
                     />
@@ -166,20 +186,28 @@ class EditAllocation extends React.Component {
 
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="Supervisor"
-                      labelText="Supervisor Name"
-                      id="supervisor"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.supervisor,
-                        onChange: this.handleInput
+                    <label htmlFor="lecturers">Select Supervisor</label>
+                    <Select
+                      style={{ marginLeft: 10, width: "50%" }}
+                      value={this.state.supervisor}
+                      onChange={this.handleChange}
+                      formcontrolprops={{
+                        fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.supervisor
+                        name: "supervisor",
+                        id: "supervisor"
                       }}
-                    />
+                    >
+                      {lecturers.map(item => (
+                        <MenuItem
+                          key={item.emp_no}
+                          value={item.emp_no}
+                        >
+                          {item.f_name} {item.l_name}
+                        </MenuItem>
+                      ))}
+                    </Select>
                   </GridItem>
                 </GridContainer>
 

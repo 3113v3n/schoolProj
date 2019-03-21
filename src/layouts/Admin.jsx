@@ -88,9 +88,9 @@ class Dashboard extends React.Component {
   }
   render() {
 
-    const { classes, role,token,...rest } = this.props;
-
-    if(token){
+    const { classes, role,...rest } = this.props;
+    const Token = localStorage.getItem("access_Token");
+    if(Token){
       return (
         <div className={classes.wrapper}>
 
@@ -136,6 +136,7 @@ class Dashboard extends React.Component {
 
 }
 //TODO: use token length for validation
+//TODO: set Redux Token Persistent
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };

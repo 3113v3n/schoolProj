@@ -2,14 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import {isTokenExpired, refreshTokenRequest} from "../services/requests";
+import { isTokenExpired, refreshTokenRequest } from "../services/requests";
 
 export default function requireAuth(ComposedComponent) {
   class Authentication extends React.Component {
-    // componentDidMount() {
+    //  componentDidMount() {
     //   if (isTokenExpired()) {
     //    refreshTokenRequest();
     //   }
+
     // }
 
     UNSAFE_componentWillMount() {
@@ -24,13 +25,17 @@ export default function requireAuth(ComposedComponent) {
       }
     }
     render() {
-      return <ComposedComponent {...this.props} />;
+      const Token = localStorage.getItem("access_Token");
+      if (Token !== null) {
+        return <ComposedComponent {...this.props} />;
+      } else {
+        this.props.history.push("/login");
+      }
     }
   }
   const mapStateToProps = state => {
     return {
       authenticated: state.user.isAuthenticated,
-      Token: state.user.token,
       admin: state.user.user
     };
   };

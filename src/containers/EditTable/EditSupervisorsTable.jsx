@@ -10,7 +10,7 @@ class EditSupervisorsTable extends React.Component {
       <div>
         <SupervisorEdit
           onSubmit={this.props.onEditProgress}
-          error={this.state.error}
+          error={this.props.error}
           status={this.props.status}
         />
       </div>

@@ -96,14 +96,14 @@ class AllocationForm extends React.Component {
     const data = {};
     data.adm = parseInt(adm);
     data.lec_emp_no = parseInt(lecturers);
-   this.props.addAllocation(data);
+    this.props.addAllocation(data);
     if (status === "success") {
       this.showNotification("tl");
     }
   };
   render() {
-    const { classes, students } = this.props;
-    const { filtered } = this.state;
+    const { classes, students, lecturers } = this.props;
+    //const { filtered } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -124,7 +124,7 @@ class AllocationForm extends React.Component {
                     <Select
                       style={{ marginLeft: 10, width: "50%" }}
                       value={this.state.students}
-                      onChange={this.handleMyChange}
+                      onChange={this.handleChange}
                       formcontrolprops={{
                         fullWidth: true
                       }}
@@ -159,9 +159,9 @@ class AllocationForm extends React.Component {
                         id: "lecturer"
                       }}
                     >
-                      {filtered.map(item => (
+                      {lecturers.map(item => (
                         <MenuItem key={item.emp_no} value={item.emp_no}>
-                          {item.name}
+                          {item.f_name} {item.l_name}
                         </MenuItem>
                       ))}
                     </Select>

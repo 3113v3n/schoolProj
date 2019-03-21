@@ -17,7 +17,7 @@ class supervisorTable extends React.Component {
       return (
         <div>
           Error:
-          {error.message}
+          {error}
         </div>
       );
     } else if (!isLoading) {

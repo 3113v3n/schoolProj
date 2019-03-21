@@ -21,12 +21,7 @@ const styles = {
 };
 class AllocationTableRow extends React.Component {
   goToEdit = () => {
-    const {
-      history,
-      projectCode,
-      supervisor,
-      studentName
-    } = this.props;
+    const { history, projectCode, supervisor, studentName } = this.props;
     history.push({
       pathname: "/admin/editAllocations",
       state: {

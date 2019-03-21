@@ -86,7 +86,6 @@ const styles = {
   left: {
     flexDirection: "row"
   }
-
 };
 
 class AdminComponent extends React.Component {
@@ -116,9 +115,7 @@ class AdminComponent extends React.Component {
 
       newList = currentList.filter(item => {
         const lc = `${item.studentName.toLowerCase()} 
-        ${
-          item.admNo
-        } ${item.dateRegistered.toLowerCase()} //filter through table contents
+        ${item.admNo} 
          ${item.projectCode.toLowerCase()}`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table

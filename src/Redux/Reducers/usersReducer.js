@@ -3,7 +3,7 @@ import * as actionTypes from "../Actions/action-types";
 const initialState = {
   user: {},
   isAuthenticated: false,
-  role: "Admin",
+  role: "",
   users: [],
   redirect: false,
   token: " ",
