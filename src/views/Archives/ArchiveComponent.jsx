@@ -13,6 +13,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 ////////////////////////////
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Search from "@material-ui/icons/Search";
+import PropTypes from "prop-types";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -146,5 +147,13 @@ function ArchiveComponent(props) {
     </GridContainer>
   );
 }
-
+ArchiveComponent.propTypes = {
+  classes: PropTypes.object,
+  name: PropTypes.string,
+  supervisor: PropTypes.string,
+  project_Code: PropTypes.string,
+  date: PropTypes.string,
+  finishDate: PropTypes.string,
+  adm: PropTypes.string
+};
 export default withStyles(styles)(ArchiveComponent);

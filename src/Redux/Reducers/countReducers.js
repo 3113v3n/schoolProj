@@ -3,32 +3,32 @@ import * as actionTypes from "../Actions/action-types";
 const initialState = {
   allocatedCount: 2,
   supervisorCount: 10,
-  oneTrimesterCount: 7,
-  twoTrimesterCount: 5
+  degreeCount: 7,
+  diplomaCount: 5
 };
 
-export default function countReducers(state = initialState, actions) {
-  switch (actions.type) {
+export default function countReducers(state = initialState, action) {
+  switch (action.type) {
     case actionTypes.STUDENT_COUNT:
       return {
         ...state,
         allocatedCount: state.allocatedCount //action.data
       };
     case actionTypes.SUPERVISOR_COUNT:
-      return{
+      return {
         ...state,
         supervisorCount: state.supervisorCount
-      }
-    case actionTypes.ONE_TRIMESTER_STUDENTS:
-      return{
+      };
+    case actionTypes.DEGREE_STUDENTS:
+      return {
         ...state,
-        oneTrimesterCount: state.oneTrimesterCount
-      }
-    case actionTypes.TWO_TRIMESTER_STUDENTS:
-      return{
+        degreeCount: state.degreeCount
+      };
+    case actionTypes.DIPLOMA_STUDENTS:
+      return {
         ...state,
-        twoTrimesterCount: state.twoTrimesterCount
-      }
+        diplomaCount: state.diplomaCount
+      };
     default:
       return state;
   }

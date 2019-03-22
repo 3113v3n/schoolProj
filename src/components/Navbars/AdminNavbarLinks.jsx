@@ -2,7 +2,7 @@ import React from "react";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import { withRouter } from "react-router";
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 
@@ -13,6 +13,11 @@ import Button from "components/CustomButtons/Button.jsx";
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
 
 class HeaderLinks extends React.Component {
+  logout = () => {
+    const { history, onLogout } = this.props;
+    onLogout();
+    history.push("/login");
+  }
   render() {
     const { classes } = this.props;
 
@@ -25,7 +30,7 @@ class HeaderLinks extends React.Component {
           simple={!(window.innerWidth > 959)}
           aria-label="Log Out"
           className={classes.buttonLink}
-          onClick={this.props.onLogout}
+          onClick={this.logout}
         >
           <Person className={classes.icons} />
           <p className={classes.linkText}>Logout</p>
@@ -36,7 +41,8 @@ class HeaderLinks extends React.Component {
 }
 HeaderLinks.propTypes = {
   classes: PropTypes.object.isRequired,
-  onLogout: PropTypes.func.isRequired
+  onLogout: PropTypes.func.isRequired,
+  history: PropTypes.object
 };
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+export default withRouter(withStyles(headerLinksStyle)(HeaderLinks));

@@ -47,7 +47,8 @@ class LoginForm extends React.Component {
       staff_id: "",
       password: "",
       redirect: true,
-      tr: false
+      tr: false,
+      tc: false
     };
   }
   componentWillUnmount() {
@@ -89,6 +90,9 @@ class LoginForm extends React.Component {
         this.showNotification("tr");
       } else {
         this.props.handleSubmit(data);
+        if (this.props.error === true) {
+          this.showNotification("tc");
+        }
       }
     }
   };
@@ -98,7 +102,7 @@ class LoginForm extends React.Component {
       const { history } = this.props;
       history.push("/admin/dashboard");
     }
-    const { classes } = this.props;
+    const { classes, errorMessage } = this.props;
     const { staff_id, password } = this.state;
     return (
       <div>
@@ -156,10 +160,19 @@ class LoginForm extends React.Component {
                   message={
                     staff_id.length === 0 || password.length === 0
                       ? "ALL FIELDS ARE REQUIRED"
-                      : "INVALID LOGIN CREDENTIALS"
+                      : "ID IS NOT VALID!!"
                   }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
+                <Snackbar
+                  place="tc"
+                  color={"danger"}
+                  icon={AddAlert}
+                  message={errorMessage}
+                  open={this.state.tc}
+                  closeNotification={() => this.setState({ tc: false })}
                   close
                 />
               </CardFooter>

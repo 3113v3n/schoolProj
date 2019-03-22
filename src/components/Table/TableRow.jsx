@@ -20,40 +20,33 @@ const styles = {
 };
 class TableRow extends React.Component {
   goToEdit = () => {
-    const {
-      history,
-      dateRegistered,
-      projectCode,
-      supervisor,
-      studentName
-    } = this.props;
+    const { history } = this.props;
     history.push({
       pathname: "/admin/progress",
       state: {
-        documents: supervisor,
-        date: dateRegistered,
-        comments: projectCode,
-        marks: studentName
+        documents: "",
+        date: "",
+        comments: "",
+        marks: ""
       }
     });
   };
   render() {
     const {
       studentName,
-      supervisor,
       projectCode,
       dateRegistered,
       classes,
+      dueDate,
       key
     } = this.props;
     return (
       <tbody>
         <tr className={classes.center} key={key}>
           <td>{studentName}</td>
-          <td>{supervisor}</td>
           <td>{projectCode}</td>
-          <td>Proposal</td>
           <td>{dateRegistered}</td>
+          <td>{dueDate}</td>
           <td className={classes.left}>
             <Tooltip
               id="tooltip-top"
@@ -84,8 +77,7 @@ class TableRow extends React.Component {
                 <CheckCircle
                   className={classes.tableActionButtonIcon + " " + classes.edit}
                   onClick={() =>
-                    window.confirm("Mark this Project as Complete?") &&
-                    console.log("heres my key", studentName)
+                    window.confirm("Mark this Project as Complete?")
                   }
                 />
               </IconButton>
@@ -103,6 +95,7 @@ TableRow.propTypes = {
   dateRegistered: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   key: PropTypes.string.isRequired,
-  history: PropTypes.object
+  history: PropTypes.object,
+  dueDate: PropTypes.string
 };
 export default withRouter(withStyles(styles)(TableRow));

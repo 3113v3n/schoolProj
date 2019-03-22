@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import AllocationComponent from "../../views/Allocation/AllocationComponent";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
-import * as actionTypes from "../../Redux/Actions/action-types";
 class allocations extends React.Component {
   componentDidMount() {
     this.props.onRequest();
@@ -29,7 +28,6 @@ class allocations extends React.Component {
             <AllocationComponent
               classes={classes}
               data={data}
-              onDelete={this.props.onDelete}
             />
           ) : (
             <div>
@@ -47,7 +45,6 @@ allocations.propTypes = {
   data: PropTypes.array,
   error: PropTypes.bool,
   onRequest: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
   errorMessage: PropTypes.string
 };
 const mapStateToProps = state => {
@@ -60,11 +57,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onRequest: () => dispatch(actionCreators.fetchData()),
-    onDelete: data => {
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_ALLOCATION, data));
-      // dispatch(actionCreators.deleteAllocation(data))
-    }
+    onRequest: () => dispatch(actionCreators.fetchData())
   };
 };
 export default connect(

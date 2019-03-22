@@ -6,12 +6,15 @@ import UserProfile from "../../views/UserProfile/UserProfile.jsx";
 import * as actionTypes from "../../Redux/Actions/action-types";
 class adminProfile extends React.Component {
   render() {
-    const { updateProfile, user } = this.props;
+    const { updateProfile, user, error, errorMessage, message } = this.props;
     return (
       <div>
         <UserProfile
           updateProfile={updateProfile}
           user={user}
+          error={error}
+          errorMessage={errorMessage}
+          message={message}
         />
       </div>
     );
@@ -19,14 +22,17 @@ class adminProfile extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.admin.profile
+    user: state.user.user,
+    error: state.error.error,
+    errorMessage: state.error.errorMessage,
+    message: state.admin.message
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     updateProfile: data => {
       dispatch(
-        actionCreators.setMyData(actionTypes.UPDATE_ADMIN_PROFILE, data)
+        actionCreators.setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, data)
         //actionCreators.editAdminProfile(data)
       );
     }
@@ -35,6 +41,9 @@ const mapDispatchToProps = dispatch => {
 adminProfile.propTypes = {
   updateProfile: PropTypes.func.isRequired,
   user: PropTypes.object,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  message: PropTypes.string
 };
 export default connect(
   mapStateToProps,

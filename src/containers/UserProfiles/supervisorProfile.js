@@ -6,23 +6,31 @@ import Profile from "../../views/Supervisor/Profile/Profile";
 import * as actionTypes from "../../Redux/Actions/action-types";
 class supervisorProfile extends React.Component {
   render() {
+    const { error, errorMessage, onUpdate, user } = this.props;
     return (
       <div>
-        <Profile profileUpdate={this.props.onUpdate} user={this.props.user} />
+        <Profile
+          profileUpdate={onUpdate}
+          user={user}
+          error={error}
+          errorMessage={errorMessage}
+        />
       </div>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    user: state.supervisor.supervisorDetails
+    user: state.user.user, //emp_no
+    error: state.error.error,
+    errorMessage: state.error.errorMessage
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onUpdate: data => {
       dispatch(
-        actionCreators.setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, data)
+        actionCreators.setMyData(actionTypes.CHANGE_SUPERVISOR_PASSWORD, data)
         // actionCreators.editSupervisorProfile(data)
       );
     }
@@ -30,7 +38,9 @@ const mapDispatchToProps = dispatch => {
 };
 supervisorProfile.propTypes = {
   onUpdate: PropTypes.func.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string
 };
 export default connect(
   mapStateToProps,

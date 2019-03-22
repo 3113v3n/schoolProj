@@ -7,47 +7,11 @@ import Admin from "layouts/Admin.jsx";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 import Login from "containers/Login/Login";
 import { Provider } from "react-redux";
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import adminReducer from "./Redux/Reducers/adminReducer.js";
-import supervisorReducer from "./Redux/Reducers/supervisorReducer.js";
-import usersReducers from "./Redux/Reducers/usersReducer.js";
-import countReducers from "./Redux/Reducers/countReducers.js";
-import * as actionTypes from "./Redux/Actions/action-types";
-import thunk from "redux-thunk";
-import editTableReducers from "./Redux/Reducers/editTableReducers.js";
-import errorReducers from "./Redux/Reducers/errorReducers.js";
+
 import requireAuth from "./HOC/requireAuth";
-import { setMyData } from "./Redux/Actions";
+import ConfigureStore from "./ConfigureStore.js";
 
-const reducers = combineReducers({
-  admin: adminReducer,
-  supervisor: supervisorReducer,
-  user: usersReducers,
-  editTable: editTableReducers,
-  error: errorReducers,
-  count: countReducers
-})
-const logger = store => {
-  return next => {
-    return action => {
-      console.log("[Middleware] Dispatching", action);
-      const result = next(action);
-      console.log("[Middleware] next State", store.getState());
-      return result;
-    };
-  };
-};
-const composedEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const user = localStorage.getItem("access_token");
-const store = createStore(
-  reducers,
-  composedEnhancers(applyMiddleware(logger, thunk))
-);
-if(user){
-  store.dispatch(setMyData(actionTypes.STORE_TOKEN));
-}
+const store = ConfigureStore();
 
 const hist = createBrowserHistory();
 

@@ -1,7 +1,6 @@
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router";
 import React from "react";
@@ -52,7 +51,7 @@ class AllocationTableRow extends React.Component {
           <td className={classes.left}>
             <Tooltip
               id="tooltip-top"
-              title="Edit Row"
+              title="REALLOCATE STUDENT"
               placement="top"
               classes={{ tooltip: classes.tooltip }}
             >
@@ -63,28 +62,6 @@ class AllocationTableRow extends React.Component {
                 <Edit
                   className={classes.tableActionButtonIcon + " " + classes.edit}
                   onClick={this.goToEdit}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip
-              id="tooltip-top-start"
-              title="Delete Row"
-              placement="top"
-              classes={{ tooltip: classes.tooltip }}
-            >
-              <IconButton
-                aria-label="Close"
-                className={classes.tableActionButton}
-              >
-                <Delete
-                  className={
-                    classes.tableActionButtonIcon + " " + classes.close
-                  }
-                  onClick={() => {
-                    window.confirm(
-                      "Are you sure you wish to delete this row?"
-                    ) && this.props.onDelete(studentName);
-                  }}
                 />
               </IconButton>
             </Tooltip>

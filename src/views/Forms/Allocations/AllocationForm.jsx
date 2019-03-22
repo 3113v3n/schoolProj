@@ -190,11 +190,12 @@ class AllocationForm extends React.Component {
     );
   }
 }
-AllocationForm.popTypes = {
+AllocationForm.propTypes = {
   lecturers: PropTypes.array.isRequired,
   students: PropTypes.array.isRequired,
   addAllocation: PropTypes.func.isRequired,
-  status: PropTypes.string
+  status: PropTypes.string,
+  classes: PropTypes.object
 };
 
 export default withStyles(styles)(AllocationForm);

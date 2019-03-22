@@ -163,10 +163,9 @@ class SupervisorComponent extends React.Component {
                   <thead>
                     <tr>
                       <th>StudentName</th>
-                      <th>Supervisor</th>
                       <th>Project Code</th>
-                      <th>Document Submitted</th>
-                      <th>Date-Registered</th>
+                      <th>Date Registered</th>
+                      <th>Due date</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -178,6 +177,7 @@ class SupervisorComponent extends React.Component {
                       supervisor={item.supervisor}
                       projectCode={item.projectCode}
                       dateRegistered={item.dateRegistered}
+                      dueDate={item.dateRegistered}
                     />
                   ))}
                 </table>

@@ -47,7 +47,7 @@ class Projects extends React.Component {
       diplomaSelected: false,
       tr: false,
       tl: false,
-      error: true
+      tc: false
     };
   }
   componentWillUnmount() {
@@ -101,13 +101,14 @@ class Projects extends React.Component {
       trimesters.length === 0 ||
       (degreeSelected === false && diplomaSelected === false)
     ) {
-      this.setState({ error: false });
       this.showNotification("tl");
     } else {
       this.props.addProject(data);
-      this.resetValues();
-      if (this.props.status === "success") {
+      if (this.props.error === false) {
+        this.resetValues();
         this.showNotification("tr");
+      } else {
+        this.showNotification("tc");
       }
     }
   };
@@ -115,7 +116,7 @@ class Projects extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, message, errorMessage } = this.props;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -183,7 +184,7 @@ class Projects extends React.Component {
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={"All fields Required"}
+                  message={"ALL FIELDS ARE REQUIRED !!!"}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
@@ -192,12 +193,21 @@ class Projects extends React.Component {
                   place={"tr"}
                   color={"success"}
                   icon={AddAlert}
-                  message={"Project successfully Added."}
+                  message={message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
+              <Snackbar
+                place={"tc"}
+                color={"danger"}
+                icon={AddAlert}
+                message={errorMessage}
+                open={this.state.tc}
+                closeNotification={() => this.setState({ tc: false })}
+                close
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -209,6 +219,8 @@ Projects.propTypes = {
   classes: PropTypes.object,
   addProject: PropTypes.func.isRequired,
   error: PropTypes.bool,
-  status: PropTypes.string
+  status: PropTypes.string,
+  errorMessage: PropTypes.string,
+  message: PropTypes.string
 };
 export default withStyles(styles)(Projects);

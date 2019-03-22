@@ -7,11 +7,18 @@ const initialState = {
   progress: {},
   isLoading: false,
   completed: false,
-  status: "success"
+  status: "",
+  message: ""
 };
 
 function supervisorReducer(state = initialState, action) {
   switch (action.type) {
+    case actionTypes.SUCCESS_MESSAGE:{
+      return{
+        ...state,
+        message: action.data
+      };
+    }
     case actionTypes.SET_MY_DATA:
       return updateProgress(state, {
         myData: action.data,
@@ -25,7 +32,7 @@ function supervisorReducer(state = initialState, action) {
         progress: action.data,
         status: state.status
       };
-    case actionTypes.UPDATE_SUPERVISOR_PROFILE:
+    case actionTypes.CHANGE_SUPERVISOR_PASSWORD:
       return {
         ...state,
         supervisorDetails: action.data,

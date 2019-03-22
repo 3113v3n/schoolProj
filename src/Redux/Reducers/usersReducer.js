@@ -6,9 +6,7 @@ const initialState = {
   role: "",
   users: [],
   redirect: false,
-  token: " ",
   status: "",
-  refreshToken: "",
   isLoading: false
 };
 
@@ -47,17 +45,17 @@ function userReducer(state = initialState, action) {
         role: state.role
       };
     case actionTypes.NOT_AUTHENTICATED:
-      return{
+      return {
         ...state,
         isAuthenticated: false
-      }
+      };
     case actionTypes.STORE_TOKEN:
       return {
         ...state,
         token: action.token
       };
     case actionTypes.REFRESH_TOKEN:
-      return{
+      return {
         ...state,
         refreshToken: action.data
       };

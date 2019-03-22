@@ -3,6 +3,8 @@ import jwtDecode from "jwt-decode";
 //import decode from "jwt-decode";
 const requests = paths.production; //localhost;
 const localrequest = paths.localhost;
+
+
 async function asyncRequest(path) {
   return fetch(`${localrequest}${path}`)
     .then(response => response.json())
@@ -34,7 +36,6 @@ async function loginRequest(path, param) {
     console.error(`Error is : ${error}`);
   }
 }
-
 
 async function updateRequest(path, param) {
   try {
@@ -136,7 +137,25 @@ async function refreshTokenRequest(path) {
     console.error(`Error is : ${e}`);
   }
 }
-
+export const loadFromStorage = () => {
+  try {
+    const serializedState = localStorage.getItem("access_Token");
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+  } catch (e) {
+    return undefined;
+  }
+};
+export const saveToStorage = state => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem("access_Token", serializedState);
+  } catch (e) {
+    console.log(e);
+  }
+};
 export { deleteRequest };
 export { updateRequest };
 export { refreshTokenRequest };

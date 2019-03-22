@@ -1,4 +1,5 @@
 import React from "react";
+import {withRouter} from "react-router";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Person from "@material-ui/icons/Person";
@@ -14,8 +15,9 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CheckBox from "@material-ui/core/Checkbox";
 import PropTypes from "prop-types";
-import Snackbar from "../../../components/Snackbar/Snackbar";
+import Snackbar from "components/Snackbar/Snackbar";
 import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
+import Clear from "@material-ui/icons/Clear";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -48,7 +50,8 @@ class Supervisors extends React.Component {
       diplomaSelected: false,
       error: true,
       tl: false,
-      tr: false
+      tr: false,
+      tc: false
     };
   }
   componentWillUnmount() {
@@ -69,6 +72,11 @@ class Supervisors extends React.Component {
       6000
     );
   }
+  validateInput = () => {
+    var reg = /^\d+$/;
+    var Input = this.state.staff_id;
+    return reg.test(Input);
+  };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
@@ -82,9 +90,10 @@ class Supervisors extends React.Component {
       password: "",
       confirmPass: "",
       degreeSelected: false,
-      diplomaSelected: false,
+      diplomaSelected: false
     });
   };
+
   addSupervisor = () => {
     const {
       staff_id,
@@ -110,32 +119,39 @@ class Supervisors extends React.Component {
       confirmPass.length === 0 ||
       (degreeSelected === false && diplomaSelected === false)
     ) {
-      this.setState({ error: false });
       this.showNotification("tl");
     } else {
       if (password !== confirmPass) {
         alert("Password dont match");
+      } else if (!this.validateInput()) {
+        alert("NOT A VALID ID SUBMITTED");
       } else {
         this.props.onSubmit(data);
-        if (this.props.status === "success") {
+        if (this.props.error === false) {
           this.resetValues();
           this.showNotification("tr");
+        } else {
+          this.showNotification("tc");
         }
       }
     }
+  };
+  cancelAdd = () => {
+    const { history } = this.props;
+    history.push("/admin/SuperTable");
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, errorMessage, message } = this.props;
 
     return (
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
-              <CardHeader color="warning">
+              <CardHeader color="info">
                 <h4 className={classes.cardTitleWhite}>Register SuperVisor</h4>
                 <p className={classes.cardCategoryWhite}>
                   Enter supervisor Details
@@ -237,19 +253,14 @@ class Supervisors extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="warning" onClick={this.addSupervisor}>
+                <Button color="info" onClick={this.addSupervisor} round>
                   <Person />
                   Add SuperVisor
                 </Button>
-                <Snackbar
-                  place="tr"
-                  color="success"
-                  icon={AddAlert}
-                  message="Supervisor successfully Added."
-                  open={this.state.tr}
-                  closeNotification={() => this.setState({ tr: false })}
-                  close
-                />
+                <Button color="danger" onClick={this.cancelAdd} round>
+                  <Clear />
+                  Cancel and Go back
+                </Button>
                 <Snackbar
                   place="tl"
                   color="danger"
@@ -259,7 +270,25 @@ class Supervisors extends React.Component {
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
+                <Snackbar
+                  place="tr"
+                  color={"success"}
+                  icon={AddAlert}
+                  message={message}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
               </CardFooter>
+              <Snackbar
+                place="tc"
+                color="danger"
+                icon={AddAlert}
+                message={errorMessage}
+                open={this.state.tc}
+                closeNotification={() => this.setState({ tc: false })}
+                close
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -270,6 +299,10 @@ class Supervisors extends React.Component {
 Supervisors.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object,
-  status: PropTypes.string
+  status: PropTypes.string,
+  errorMessage: PropTypes.string,
+  message: PropTypes.string,
+  error: PropTypes.bool,
+  history: PropTypes.object
 };
-export default withStyles(styles)(Supervisors);
+export default withRouter(withStyles(styles)(Supervisors));

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { isTokenExpired, refreshTokenRequest } from "../services/requests";
+//import { isTokenExpired, refreshTokenRequest } from "../services/requests";
 
 export default function requireAuth(ComposedComponent) {
   class Authentication extends React.Component {
@@ -13,17 +13,17 @@ export default function requireAuth(ComposedComponent) {
 
     // }
 
-    UNSAFE_componentWillMount() {
-      if (!this.props.authenticated) {
-        this.props.history.push("/login");
-      }
-    }
-
-    UNSAFE_componentWillUpdate(nextProps) {
-      if (!nextProps.authenticated) {
-        this.props.history.push("/login");
-      }
-    }
+    // UNSAFE_componentWillMount() {
+    //   if (!this.props.authenticated) {
+    //     this.props.history.push("/login");
+    //   }
+    // }
+    //
+    // UNSAFE_componentWillUpdate(nextProps) {
+    //   if (!nextProps.authenticated) {
+    //     this.props.history.push("/login");
+    //   }
+    // }
     render() {
       const Token = localStorage.getItem("access_Token");
       if (Token !== null) {

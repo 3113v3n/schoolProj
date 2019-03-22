@@ -14,6 +14,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
 import CheckBox from "@material-ui/core/Checkbox";
+import Clear from "@material-ui/icons/Clear";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -78,7 +79,11 @@ class EditAllocation extends React.Component {
     if(status === "success"){
       this.resetValues();
       history.push("/admin/superTable");
-    };
+    }
+  };
+  cancelEdit = () => {
+    const { history } = this.props;
+    history.push("/admin/superTable");
   };
   render() {
     const { classes } = this.props;
@@ -153,6 +158,10 @@ class EditAllocation extends React.Component {
                   <Person />
                   Update Row
                 </Button>
+                <Button color="danger" round onClick={this.cancelEdit}>
+                  <Clear />
+                  Cancel
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -161,7 +170,7 @@ class EditAllocation extends React.Component {
     );
   }
 }
-EditAllocation.popTypes = {
+EditAllocation.propTypes = {
   classes: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   history: PropTypes.object,

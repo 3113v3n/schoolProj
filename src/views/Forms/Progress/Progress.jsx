@@ -10,11 +10,10 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 ////////////////////////////
-import * as actionTypes from "../../../Redux/Actions/action-types";
+
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomMarkInput from "components/CustomInput/CustomMarkInput.jsx";
-import * as actionCreators from "../../../Redux/Actions";
 import Table from "components/Table/Table.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
@@ -23,7 +22,9 @@ import uuid from "uuid";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import AddAlert from "@material-ui/icons/AddAlert";
+import Clear from "@material-ui/icons/Clear";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import CardFooter from "../../../components/Card/CardFooter";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -119,7 +120,10 @@ class Progress extends React.Component {
       6000
     );
   }
-
+  cancelProgress = () => {
+    const { history } = this.props;
+    history.push("/admin/studentTable");
+  };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
@@ -154,7 +158,7 @@ class Progress extends React.Component {
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <Card>
-              <CardHeader color="primary">
+              <CardHeader color="success">
                 <h4 className={classes.cardTitleWhite}>
                   Edit Student Progress
                 </h4>
@@ -164,74 +168,98 @@ class Progress extends React.Component {
                   place="tr"
                   color={"danger"}
                   icon={AddAlert}
-                  message={"All fields are Required"}
+                  message={"ALL FIELDS ARE REQUIRED !!!"}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
-                <CustomInput
-                  labelText="Adm Number"
-                  id="admNo"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    disabled: true,
-                    value: this.state.AdmNo
-                  }}
-                />
-                <CustomInput
-                  labelText="Document Submitted"
-                  id="documents"
-                  name="input"
-                  inputProps={{
-                    multiline: true,
-                    rows: 3,
-                    value: this.state.documents
-                  }}
-                  formControlProps={{
-                    fullWidth: true,
-                    onChange: this.handleInput,
-                    value: this.state.documents
-                  }}
-                />
-                <CustomInput
-                  labelText="Comments"
-                  id="float"
-                  name="input"
-                  inputProps={{
-                    multiline: true,
-                    rows: 5,
-                    value: this.state.comments
-                  }}
-                  formControlProps={{
-                    fullWidth: true,
-                    onChange: this.handleInput,
-                    value: this.state.comments
-                  }}
-                />
-                <CustomMarkInput
-                  labelText="Marks"
-                  id="marks"
-                  name="input"
-                  inputProps={{
-                    value: this.state.marks
-                  }}
-                  formControlProps={{
-                    fullWidth: true,
-                    onChange: this.handleInput,
-                    value: this.state.marks
-                  }}
-                />
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Adm Number"
+                      id="admNo"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        disabled: true,
+                        value: this.state.AdmNo
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Document Submitted"
+                      id="documents"
+                      name="input"
+                      inputProps={{
+                        multiline: true,
+                        rows: 3,
+                        value: this.state.documents
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        onChange: this.handleInput,
+                        value: this.state.documents
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Comments"
+                      id="float"
+                      name="input"
+                      inputProps={{
+                        multiline: true,
+                        rows: 5,
+                        value: this.state.comments
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        onChange: this.handleInput,
+                        value: this.state.comments
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomMarkInput
+                      labelText="Marks"
+                      id="marks"
+                      name="input"
+                      inputProps={{
+                        value: this.state.marks
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        onChange: this.handleInput,
+                        value: this.state.marks
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
               </CardBody>
+              <CardFooter>
+                <Button color="success" round onClick={this.submitForm}>
+                  Submit
+                </Button>
+
+                <Button color="danger" round onClick={this.cancelProgress}>
+                  <Clear />
+                  Cancel
+                </Button>
+              </CardFooter>
             </Card>
-            <Button color="primary" round onClick={this.submitForm}>
-              Submit
-            </Button>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
             <Card>
-              <CardHeader color="warning">
+              <CardHeader color="info">
                 <h4 className={classes.cardTitleWhite}>
                   Student Progress Table
                 </h4>
@@ -251,7 +279,7 @@ class Progress extends React.Component {
                   </IconButton>
                 </Tooltip>
                 <Table
-                  tableHeaderColor="warning"
+                  tableHeaderColor="info"
                   tableHead={["Date", "Documents", "Comments", "Marks"]}
                   tableData={[
                     [`${date}`, `${documents}`, `${comments}`, `${marks}`]

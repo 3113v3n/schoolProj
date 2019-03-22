@@ -35,19 +35,16 @@ export const storeToken = data => {
     token: data
   };
 };
-export const fetchFailed = () => {
+export const fetchFailed = data => {
   return {
-    type: actionTypes.FETCHING_FAILED
+    type: actionTypes.FETCHING_FAILED,
+    data: data
   };
 };
-export const userRegistrationFailed = () => {
+export const userRegistrationFailed = data => {
   return {
-    type: actionTypes.NEW_USER_FAILURE
-  };
-};
-export const failure = () => {
-  return {
-    type: actionTypes.FETCHING_FAILED
+    type: actionTypes.NEW_USER_FAILURE,
+    data: data
   };
 };
 
@@ -55,21 +52,25 @@ export const LogMeIn = data => {
   return dispatch => {
     loginRequest("auth/login", data)
       .then(responseJson => {
-        const token = responseJson.access_token;
-        const refreshToken = responseJson.refresh_token;
-        const myToken = jwtDecode(token);
-        const status = responseJson.status;
-        const role = responseJson.role;
-        localStorage.setItem("access_Token", token);
-        localStorage.setItem("refresh_Token", refreshToken);
-        dispatch(setMyData(actionTypes.SET_ROLE, role));
-        dispatch(setMyData(actionTypes.STATUS, status));
-        dispatch(setMyData(actionTypes.SET_CURRENT_USER, myToken));
-        dispatch(storeToken(token));
-        dispatch(setMyData(actionTypes.REFRESH_TOKEN, refreshToken));
+        localStorage.setItem("access_Token", responseJson.access_token);
+        localStorage.setItem("refresh_Token", responseJson.refresh_token);
+        localStorage.setItem("role", responseJson.role);
+        dispatch(setMyData(actionTypes.SET_ROLE, responseJson.role));
+        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
+
+        dispatch(
+          setMyData(
+            actionTypes.SET_CURRENT_USER,
+            jwtDecode(responseJson.access_token)
+          )
+        );
+        dispatch(storeToken(responseJson.access_token));
+        dispatch(
+          setMyData(actionTypes.REFRESH_TOKEN, responseJson.refresh_token)
+        );
       })
       .catch(error => {
-        dispatch(userRegistrationFailed());
+        dispatch(userRegistrationFailed(error.message));
       });
   };
 };
@@ -82,7 +83,7 @@ export const fetchData = () => {
         dispatch(setMyData(actionTypes.SET_DATA, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -94,19 +95,18 @@ export const fetchProjects = () => {
         dispatch(setMyData(actionTypes.FETCH_PROJECTS, data));
       })
       .catch(e => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(e.message));
       });
   };
 };
 export const fetchSupervisors = () => {
   return dispatch => {
-    // asyncRequest("supervisor.json")
     fetchRequest("lecturers")
       .then(responseJson => {
         dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -118,7 +118,7 @@ export const fetchAllocationCount = () => {
         dispatch(setMyData(actionTypes.STUDENT_COUNT, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -130,33 +130,33 @@ export const fetchSupervisorCount = () => {
         dispatch(setMyData(actionTypes.SUPERVISOR_COUNT, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
 
-export const fetchOneTrimester = () => {
+export const fetchDegreeStudents = () => {
   return dispatch => {
     // asyncRequest("supervisor.json")
     fetchRequest("lecturers")
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.ONE_TRIMESTER_STUDENTS, responseJson));
+        dispatch(setMyData(actionTypes.DEGREE_STUDENTS, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
 
-export const fetchTwoTrimester = () => {
+export const fetchDiplomaStudents = () => {
   return dispatch => {
     // asyncRequest("supervisor.json")
     fetchRequest("lecturers")
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.TWO_TRIMESTER_STUDENTS, responseJson));
+        dispatch(setMyData(actionTypes.DIPLOMA_STUDENTS, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -169,7 +169,7 @@ export const adminStudents = () => {
         dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, responseJson));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -183,7 +183,7 @@ export const allocationStudents = () => {
         );
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -197,7 +197,7 @@ export const allocationSupervisors = () => {
         );
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
@@ -209,13 +209,14 @@ export const supervisorStudents = () => {
         dispatch(setMyData(actionTypes.SET_MY_DATA, myData));
       })
       .catch(error => {
-        dispatch(fetchFailed());
+        dispatch(fetchFailed(error.message));
       });
   };
 };
 
 ///////------------POST---REQUESTS---------***///
 export const uploadFile = data => {
+  //TODO: issue
   return dispatch => {
     fetchRequest("students/register", data)
       .then(responseJson => {
@@ -224,7 +225,7 @@ export const uploadFile = data => {
         dispatch(setMyData(actionTypes.UPLOAD_SUCCESS));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.UPLOAD_FAILURE));
+        dispatch(setMyData(actionTypes.UPLOAD_FAILURE, e.message));
       });
   };
 };
@@ -233,9 +234,10 @@ export const addProject = data => {
     postRequest("projects", data)
       .then(responseJson => {
         dispatch(setMyData(actionTypes.ADD_PROJECT, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.PROJECT_ERROR));
+        dispatch(setMyData(actionTypes.PROJECT_ERROR, error.message));
       });
   };
 };
@@ -247,9 +249,10 @@ export const addAllocation = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.NEW_ALLOCATION, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR));
+        dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR, error.message));
       });
   };
 };
@@ -258,12 +261,11 @@ export const addSupervisor = data => {
   return dispatch => {
     postRequest("auth/register", data)
       .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.ADD_SUPERVISOR, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_ERROR));
+        dispatch(setMyData(actionTypes.SUPERVISOR_ERROR, error.error));
       });
   };
 };
@@ -275,11 +277,14 @@ export const addStudents = data => {
         dispatch(responseJson => {
           const status = responseJson.status;
           dispatch(setMyData(actionTypes.SET_STATUS, status));
+          dispatch(
+            setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message)
+          );
           setMyData(actionTypes.ADD_STUDENTS, data);
         })
       )
       .catch(error => {
-        dispatch(setMyData(actionTypes.STUDENT_ERROR));
+        dispatch(setMyData(actionTypes.STUDENT_ERROR, error.message));
       });
   };
 };
@@ -291,11 +296,12 @@ export const editAllocations = data => {
     updateRequest("allocations", data)
       .then(responseJson => {
         const status = responseJson.status;
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.EDIT_ALLOCATION_TABLE, data));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.ALLOCATION_ERROR));
+        dispatch(setMyData(actionTypes.ALLOCATION_ERROR, e.message));
       });
   };
 };
@@ -306,9 +312,10 @@ export const editStudents = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.EDIT_STUDENT_TABLE, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.STUDENT_TABLE_ERROR));
+        dispatch(setMyData(actionTypes.STUDENT_TABLE_ERROR, e.message));
       });
   };
 };
@@ -320,10 +327,11 @@ export const editSupervisors = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.EDIT_SUPERVISOR_TABLE, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
 
       .catch(e => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_TABLE_ERROR));
+        dispatch(setMyData(actionTypes.SUPERVISOR_TABLE_ERROR, e.message));
       });
   };
 };
@@ -334,10 +342,11 @@ export const editAdminProfile = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.UPDATE_ADMIN_PROFILE, data));
+        dispatch(setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.ADMIN_PROFILE_ERROR));
+        dispatch(setMyData(actionTypes.ADMIN_PASS_ERROR, error.message));
       });
   };
 };
@@ -348,10 +357,11 @@ export const editSupervisorProfile = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.UPDATE_SUPERVISOR_PROFILE, data));
+        dispatch(setMyData(actionTypes.CHANGE_SUPERVISOR_PASSWORD, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_PROFILE_ERROR, error));
+        dispatch(setMyData(actionTypes.SUPERVISOR_PASS_ERROR, error.message));
       });
   };
 };
@@ -363,9 +373,10 @@ export const editProgress = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.EDIT_PROGRESS, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.PROGRESS_ERROR));
+        dispatch(setMyData(actionTypes.PROGRESS_ERROR, e.message));
       });
   };
 };
@@ -378,9 +389,10 @@ export const deleteAllocation = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.DELETE_ALLOCATION));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.DELETE_ERROR));
+        dispatch(setMyData(actionTypes.DELETE_ERROR, error.message));
       });
   };
 };
@@ -392,9 +404,10 @@ export const deleteStudents = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.DELETE_STUDENT));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.DELETE_ERROR));
+        dispatch(setMyData(actionTypes.DELETE_ERROR, error.message));
       });
   };
 };
@@ -406,9 +419,10 @@ export const deleteSupervisors = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.DELETE_SUPERVISOR));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.DELETE_ERROR));
+        dispatch(setMyData(actionTypes.DELETE_ERROR, error.message));
       });
   };
 };

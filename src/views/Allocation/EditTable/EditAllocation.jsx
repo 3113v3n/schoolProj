@@ -7,6 +7,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Person from "@material-ui/icons/Person";
+import Clear from "@material-ui/icons/Clear";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -18,7 +19,6 @@ import AddAlert from "@material-ui/icons/AddAlert";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "../../Forms/Allocations/AllocationForm";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -41,13 +41,12 @@ const styles = {
 class EditAllocation extends React.Component {
   constructor(props) {
     super(props);
-    const superv = this.props.location.state.supervisor;
     const code = this.props.location.state.projectCode;
     this.state = {
       adm: 11947,
       firstName: "",
       lastName: "",
-      supervisor: superv,
+      supervisor: "",
       projCode: code,
       tl: false
     };
@@ -113,12 +112,15 @@ class EditAllocation extends React.Component {
       }
     }
   };
+  cancelEdit = () => {
+    const { history } = this.props;
+    history.push("/admin/allocation");
+  };
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
   render() {
     const { classes, lecturers } = this.props;
-    console.log("logging HISTORY===>", this.props.history);
     return (
       <div>
         <GridContainer>
@@ -200,10 +202,7 @@ class EditAllocation extends React.Component {
                       }}
                     >
                       {lecturers.map(item => (
-                        <MenuItem
-                          key={item.emp_no}
-                          value={item.emp_no}
-                        >
+                        <MenuItem key={item.emp_no} value={item.emp_no}>
                           {item.f_name} {item.l_name}
                         </MenuItem>
                       ))}
@@ -235,6 +234,10 @@ class EditAllocation extends React.Component {
                   <Person />
                   Update Row
                 </Button>
+                <Button color="danger" round onClick={this.cancelEdit}>
+                  <Clear />
+                  Cancel
+                </Button>
                 <Snackbar
                   place={"tl"}
                   color={"danger"}
@@ -252,14 +255,16 @@ class EditAllocation extends React.Component {
     );
   }
 }
-EditAllocation.popTypes = {
+EditAllocation.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object,
   history: PropTypes.object,
   studentName: PropTypes.string,
   projectCode: PropTypes.string,
   supervisor: PropTypes.string,
-  status: PropTypes.string
+  status: PropTypes.string,
+  lecturers: PropTypes.array,
+  location: PropTypes.object
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

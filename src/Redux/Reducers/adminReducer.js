@@ -13,11 +13,17 @@ const initialState = {
   profile: {},
   supervisor: {},
   allocation: {},
-  status: "success"
+  status: "",
+  message: ""
 };
 
 function adminReducer(state = initialState, action) {
   switch (action.type) {
+    case actionTypes.SUCCESS_MESSAGE:
+      return{
+        ...state,
+        message: action.data
+      };
     case actionTypes.SET_DATA:
       return updateProgress(state, {
         data: action.data,
@@ -26,7 +32,8 @@ function adminReducer(state = initialState, action) {
       });
     case actionTypes.UPLOAD_SUCCESS:
       return updateProgress(state, {
-        upload: [action.data, ...state.upload]
+        upload: [action.data, ...state.upload],
+        message: state.message
       });
     case actionTypes.SET_STUDENTS_TABLE:
       return updateProgress(state, {
@@ -63,30 +70,35 @@ function adminReducer(state = initialState, action) {
       return {
         projects: [action.data, ...state.projects],
         error: state.error,
-        status: state.status
+        status: state.status,
+        message: state.message
       };
     case actionTypes.NEW_ALLOCATION:
       return {
         ...state,
         allocation: action.data,
-        status: state.status
+        status: state.status,
+        message: state.message
       };
 
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
         students: [action.data, ...state.students],
-        status: state.status
+        status: state.status,
+        message: state.message
       });
-    case actionTypes.UPDATE_ADMIN_PROFILE:
+    case actionTypes.CHANGE_ADMIN_PASSWORD:
       return updateProgress(state, {
         ...state,
         profile: action.data,
-        status: state.status
+        status: state.status,
+        message: state.message
       });
     case actionTypes.ADD_SUPERVISOR:
       return {
         supervisors: [action.data, ...state.supervisors],
-        status: state.status
+        status: state.status,
+        message: state.message
       };
     case actionTypes.DELETE_ALLOCATION:
       return [

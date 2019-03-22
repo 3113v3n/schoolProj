@@ -1,7 +1,6 @@
 import React from "react";
 import LoginForm from "../../layouts/LoginForm.jsx";
 import { connect } from "react-redux";
-import * as actionTypes from "../../Redux/Actions/action-types";
 import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
 class Login extends React.Component {
@@ -21,8 +20,7 @@ class Login extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     onSubmit: data => {
-       dispatch(actionCreators.LogMeIn(data))
-      // dispatch(actionCreators.setMyData(actionTypes.SET_CURRENT_USER, data)); //Redux storage
+      dispatch(actionCreators.LogMeIn(data));
     }
   };
 };

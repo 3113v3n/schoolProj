@@ -13,13 +13,12 @@ class AdminStudents extends React.Component {
   }
 
   render() {
-    const { isLoading, data, error } = this.props;
-    console.log(this.props);
+    const { isLoading, data, error, errorMessage } = this.props;
     if (error) {
       return (
         <div>
           Error:
-          {error.message}
+          {errorMessage}
         </div>
       );
     } else if (!isLoading) {
@@ -44,13 +43,15 @@ AdminStudents.propTypes = {
   error: PropTypes.bool,
   data: PropTypes.array,
   Loaded: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string
 };
 const mapStateToProps = state => {
   return {
     data: state.admin.students,
     isLoading: state.admin.isLoading,
-    error: state.error.error
+    error: state.error.error,
+    errorMessage: state.error.errorMessage
   };
 };
 const mapDispatchToProps = dispatch => {

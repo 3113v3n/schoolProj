@@ -16,6 +16,7 @@ import PropTypes from "prop-types";
 import AddAlert from "@material-ui/icons/AddAlert";
 //core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import Clear from "@material-ui/icons/Clear";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -62,6 +63,10 @@ class EditStudents extends React.Component {
       window.clearTimeout(id);
     }
   }
+  cancelEdit = () => {
+    const { history } = this.props;
+    history.push("/admin/adminStudents");
+  };
   showNotification(place) {
     var x = [];
     x[place] = true;
@@ -206,6 +211,10 @@ class EditStudents extends React.Component {
                   <Person />
                   Update Row
                 </Button>
+                <Button color="danger" round onClick={this.cancelEdit}>
+                  <Clear />
+                  Cancel
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -214,7 +223,7 @@ class EditStudents extends React.Component {
     );
   }
 }
-EditStudents.popTypes = {
+EditStudents.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,

@@ -3,7 +3,6 @@ import Supervisor from "../../views/Forms/Supervisors/Supervisor.jsx";
 import * as actionCreators from "../../Redux/Actions/";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import * as actionTypes from "../../Redux/Actions/action-types";
 class supervisorContainer extends React.Component {
   render() {
     return (
@@ -12,6 +11,8 @@ class supervisorContainer extends React.Component {
           onSubmit={this.props.onSubmit}
           error={this.props.error}
           status={this.props.status}
+          message={this.props.message}
+          errorMessage={this.props.errorMessage}
         />
       </div>
     );
@@ -20,15 +21,15 @@ class supervisorContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // onSubmit: data =>
-    // dispatch(actionCreators.setMyData(actionTypes.ADD_SUPERVISOR, data))
     onSubmit: data => dispatch(actionCreators.addSupervisor(data))
   };
 };
 const mapStateToProps = state => {
   return {
     error: state.error.error,
-    status: state.admin.status
+    status: state.admin.status,
+    message: state.admin.message,
+    errorMessage: state.admin.errorMessage
   };
 };
 export default connect(
@@ -38,5 +39,7 @@ export default connect(
 supervisorContainer.propTypes = {
   onSubmit: PropTypes.func,
   error: PropTypes.bool,
-  status: PropTypes.string
+  status: PropTypes.string,
+  message: PropTypes.string,
+  errorMessage: PropTypes.string
 };

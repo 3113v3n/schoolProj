@@ -3,22 +3,29 @@ import Students from "../../views/Forms/Students/Students.jsx";
 import * as actionCreators from "../../Redux/Actions/";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import * as actionTypes from "../../Redux/Actions/action-types";
 class studentsContainer extends React.Component {
   componentDidMount() {
     this.props.fetchProjects();
   }
 
   render() {
-    const { addStudents, projects, uploadNewFile, error, status } = this.props;
+    const {
+      addStudents,
+      projects,
+      uploadNewFile,
+      error,
+      message,
+      errorMessage
+    } = this.props;
     return (
       <div>
         <Students
           addStudents={addStudents}
           projects={projects}
           uploadNewFile={uploadNewFile}
-          status={status}
           error={error}
+          errorMessage={errorMessage}
+          message={message}
         />
       </div>
     );
@@ -28,7 +35,8 @@ const mapStateToProps = state => {
   return{
     projects: state.admin.projects,
     error: state.error.error,
-    status: state.admin.status
+    errorMessage: state.error.errorMessage,
+    message: state.admin.message
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -37,7 +45,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.fetchProjects());
     },
     addStudents: data => {
-      // dispatch(actionCreators.setMyData(actionTypes.ADD_STUDENTS, data));
       dispatch(actionCreators.addStudents(data));
     },
     uploadNewFile: data => {
@@ -57,5 +64,6 @@ studentsContainer.propTypes = {
   fetchProjects: PropTypes.func.isRequired,
   uploadNewFile: PropTypes.func,
   error: PropTypes.bool,
-  status: PropTypes.string
+  message: PropTypes.string,
+  errorMessage: PropTypes.string
 };

@@ -17,6 +17,9 @@ import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "../../../components/Snackbar/Snackbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Clear from "@material-ui/icons/Clear";
+import {withRouter} from "react-router";
+
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -47,7 +50,8 @@ class Students extends React.Component {
       admNo: "",
       error: true,
       tl: false,
-      tr: false
+      tr: false,
+      tc: false
     };
   }
   componentWillUnmount() {
@@ -60,6 +64,11 @@ class Students extends React.Component {
     let validator = /\.csv$/; //check if input is .CSV only
     let files = this.state.selectedFile;
     return validator.test(files);
+  };
+  validateInput = () => {
+    var reg = /^\d+$/;
+    var Input = this.state.staff_id;
+    return reg.test(Input);
   };
   handleselectedFile = event => {
     this.setState({
@@ -78,6 +87,7 @@ class Students extends React.Component {
       6000
     );
   }
+
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
@@ -94,7 +104,7 @@ class Students extends React.Component {
   newStudent = () => {
     const { firstName, lastName, admNo, project } = this.state;
     const data = {};
-    const { status } = this.props;
+    const { error } = this.props;
     data.f_name = firstName;
     data.l_name = lastName;
     data.adm = admNo;
@@ -107,11 +117,15 @@ class Students extends React.Component {
     ) {
       this.setState({ error: false });
       this.showNotification("tl");
+    } else if (!this.validateInput()) {
+      alert("Admission Number is Invalid");
     } else {
       this.props.addStudents(data);
       this.resetValues();
-      if (status === "success") {
+      if (error === false) {
         this.showNotification("tr");
+      } else {
+        this.showNotification("tc");
       }
     }
   };
@@ -126,10 +140,17 @@ class Students extends React.Component {
       this.setState({ selectedFile: null });
     } else {
       this.props.uploadNewFile(data);
+      if (this.props.error) {
+        this.showNotification("tl");
+      }
     }
   };
+  cancelAdd = () => {
+    const { history } = this.props;
+    history.push("/admin/adminStudents");
+  };
   render() {
-    const { classes, projects } = this.props;
+    const { classes, projects, error, errorMessage, message } = this.props;
     return (
       <div>
         <GridContainer>
@@ -219,11 +240,15 @@ class Students extends React.Component {
                   <Person />
                   Update Students
                 </Button>
+                <Button color="danger" onClick={this.cancelAdd} round>
+                  <Clear />
+                  Cancel and Go back
+                </Button>
                 <Snackbar
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={"All fields Required"}
+                  message={!error ? "ALL FIELDS ARE REQUIRED !!!" : errorMessage}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
@@ -232,18 +257,27 @@ class Students extends React.Component {
                   place={"tr"}
                   color={"success"}
                   icon={AddAlert}
-                  message={"Student successfully Added."}
+                  message={message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
+              <Snackbar
+                place={"tc"}
+                color={"danger"}
+                icon={AddAlert}
+                message={errorMessage}
+                open={this.state.tc}
+                closeNotification={() => this.setState({ tc: false })}
+                close
+              />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <Card>
               <CardBody>
-                <CardHeader color="primary">
+                <CardHeader color="info">
                   <h4 className={classes.cardTitleWhite}>
                     UPLOAD FILE INSTEAD
                   </h4>
@@ -259,8 +293,8 @@ class Students extends React.Component {
                   accept="*.csv"
                   onChange={this.handleselectedFile}
                 />
-                <Button color="primary" round onClick={this.fileUpload}>
-                  Upload Students file
+                <Button color="info" round onClick={this.fileUpload}>
+                  Upload File
                 </Button>
               </CardBody>
             </Card>
@@ -270,12 +304,16 @@ class Students extends React.Component {
     );
   }
 }
-Students.popTypes = {
+Students.propTypes = {
   addStudents: PropTypes.func.isRequired,
   classes: PropTypes.object,
   projects: PropTypes.array,
   uploadNewFile: PropTypes.func.isRequired,
-  status: PropTypes.string
+  status: PropTypes.string,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  message: PropTypes.string,
+  history: PropTypes.object
 };
 
-export default withStyles(styles)(Students);
+export default withRouter(withStyles(styles)(Students));

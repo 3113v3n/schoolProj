@@ -2,76 +2,94 @@ import * as actionTypes from "../Actions/action-types";
 
 const initialState = {
   error: false,
-  errorMessage: "Cant Login Please Try Again"
+  errorMessage: null
 };
 
-export default function errorReducers(state = initialState, actions) {
-  switch (actions.type) {
+export default function errorReducers(state = initialState, action) {
+  switch (action.type) {
     case actionTypes.NEW_USER_FAILURE:
       return {
         ...state,
         error: true,
-        errorMessage: "INVALID USER CREDENTIALS"
+        errorMessage: action.data
       };
     case actionTypes.UPLOAD_FAILURE:
       return{
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.NEW_ALLOCATION_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.DELETE_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.FETCHING_FAILED:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.ALLOCATION_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.PROGRESS_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
+      };
+    case actionTypes.PROJECT_ERROR:
+      return {
+        ...state,
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.STUDENT_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.SUPERVISOR_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.SUPERVISOR_TABLE_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     case actionTypes.STUDENT_TABLE_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
-    case actionTypes.ADMIN_PROFILE_ERROR:
+    case actionTypes.ADMIN_PASS_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
-    case actionTypes.SUPERVISOR_PROFILE_ERROR:
+    case actionTypes.SUPERVISOR_PASS_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     default:
       return state;

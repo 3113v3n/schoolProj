@@ -11,6 +11,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Person from "@material-ui/icons/Person";
+import Snackbar from "components/Snackbar/Snackbar";
+import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 import PropTypes from "prop-types";
 const styles = {
   cardCategoryWhite: {
@@ -37,8 +39,30 @@ class UserProfile extends React.Component {
     this.state = {
       oldPass: "",
       password: "",
-      confirmPass: ""
+      confirmPass: "",
+      tl: false,
+      tr: false,
+      tc: false,
+      bl: false
     };
+  }
+  componentWillUnmount() {
+    var id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    var x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
   }
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
@@ -50,14 +74,24 @@ class UserProfile extends React.Component {
     //Input Validation
     const data = {};
     const { oldPass, password, confirmPass } = this.state;
-    data.oldPass = oldPass;
+    const { error } = this.props;
+    data.old_Pass = oldPass;
     data.password = password;
-    if (password !== confirmPass) {
-      alert(" PASSWORDS DONT MATCH");
+    if (
+      oldPass.length === 0 ||
+      password.length === 0 ||
+      confirmPass.length === 0
+    ) {
+      alert("ALL FIELDS ARE REQUIRED");
+    } else if (password !== confirmPass) {
+      this.showNotification("tc");
     } else {
       this.props.updateProfile(data);
-      if (this.props.status === "success") {
+      if (error === false) {
         this.resetValues();
+        this.showNotification("tr");
+      } else {
+        this.showNotification("tl");
       }
     }
   };
@@ -65,7 +99,7 @@ class UserProfile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, message, errorMessage } = this.props;
 
     return (
       <div>
@@ -133,7 +167,34 @@ class UserProfile extends React.Component {
                   <Person />
                   Update Profile
                 </Button>
+                <Snackbar
+                  place="tl"
+                  color="danger"
+                  icon={AddAlert}
+                  message={errorMessage.toUpperCase()}
+                  open={this.state.tl}
+                  closeNotification={() => this.setState({ tl: false })}
+                  close
+                />
+                <Snackbar
+                  place="tr"
+                  color="success"
+                  icon={AddAlert}
+                  message={message.toUpperCase()}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
               </CardFooter>
+              <Snackbar
+                place="tc"
+                color="danger"
+                icon={AddAlert}
+                message="PASSWORDS DONT MATCH"
+                open={this.state.tc}
+                closeNotification={() => this.setState({ tc: false })}
+                close
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -143,7 +204,10 @@ class UserProfile extends React.Component {
 }
 UserProfile.propTypes = {
   updateProfile: PropTypes.func.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  error: PropTypes.bool,
+  message: PropTypes.string,
+  errorMessage: PropTypes.string
 };
 
 export default withStyles(styles)(UserProfile);

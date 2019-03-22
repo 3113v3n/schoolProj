@@ -8,31 +8,26 @@ class dashboard extends Component {
      const {
        studentCount,
        supervisorsCount,
-       oneTrimestersCount,
-       twoTrimestersCount
+       degreeStudents,
+       diplomaStudents
      } = this.props;
 
       * studentCount();
       * supervisorsCount();
-      * oneTrimestersCount();
-      * twoTrimestersCount();
+      * degreeStudents();
+      * diplomaStudents();
       *
   }
 */
   render() {
-    const {
-      StudentCount,
-      SupervisorCount,
-      oneTrimester,
-      twoTrimester
-    } = this.props;
+    const { StudentCount, SupervisorCount, degree, diploma } = this.props;
     return (
       <div>
         <Dashboard
           StudentCount={StudentCount}
           SupervisorCount={SupervisorCount}
-          oneTrimester={oneTrimester}
-          twoTrimester={twoTrimester}
+          degreeStudents={degree}
+          diplomaStudents={diploma}
         />
       </div>
     );
@@ -42,23 +37,23 @@ const mapStateToProps = state => {
   return {
     StudentCount: state.count.allocatedCount,
     SupervisorCount: state.count.supervisorCount,
-    oneTrimester: state.count.oneTrimesterCount,
-    twoTrimester: state.count.twoTrimesterCount
+    degree: state.count.degreeCount,
+    diploma: state.count.diplomaCount
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     studentCount: () => dispatch(actionCreators.fetchAllocationCount()),
     supervisorsCount: () => dispatch(actionCreators.fetchSupervisorCount()),
-    oneTrimestersCount: () => dispatch(actionCreators.fetchOneTrimester()),
-    twoTrimestersCount: () => dispatch(actionCreators.fetchTwoTrimester())
+    degreeStudents: () => dispatch(actionCreators.fetchDegreeStudents()),
+    diplomaStudents: () => dispatch(actionCreators.fetchDiplomaStudents())
   };
 };
 dashboard.propTypes = {
   StudentCount: PropTypes.number,
   SupervisorCount: PropTypes.number,
-  oneTrimester: PropTypes.number,
-  twoTrimester: PropTypes.number
+  degree: PropTypes.number,
+  diploma: PropTypes.number
 };
 export default connect(
   mapStateToProps,

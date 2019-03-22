@@ -87,10 +87,8 @@ class Dashboard extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-
-    const { classes, role,...rest } = this.props;
-    const Token = localStorage.getItem("access_Token");
-    if(Token){
+const role = localStorage.getItem("role");
+    const { classes,...rest } = this.props;
       return (
         <div className={classes.wrapper}>
 
@@ -119,7 +117,6 @@ class Dashboard extends React.Component {
             ) : (
               <div className={classes.map}>{switchRoutes}</div>
             )}
-            {this.getRoute() ? <Footer /> : null}
             <FixedPlugin
               handleImageClick={this.handleImageClick}
               handleColorClick={this.handleColorClick}
@@ -132,17 +129,13 @@ class Dashboard extends React.Component {
         </div>
       );
     }
-  }
-
 }
-//TODO: use token length for validation
-//TODO: set Redux Token Persistent
+
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 const mapStateToProps = state => {
   return{
-    role: state.user.role,
     token: state.user.token
   }
 };

@@ -22,8 +22,8 @@ class Dashboard extends React.Component {
       classes,
       StudentCount,
       SupervisorCount,
-      oneTrimester,
-      twoTrimester
+      degreeStudents,
+      diplomaStudents
     } = this.props;
     return (
       <div>
@@ -34,7 +34,7 @@ class Dashboard extends React.Component {
                 <CardIcon color="warning">
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Allocated Students</p>
+                <p className={classes.cardCategory}>UnAllocated Students</p>
                 <h3 className={classes.cardTitle}>
                   {StudentCount} <small>students</small>
                 </h3>
@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>SuperVisors</p>
-                <h3 className={classes.cardTitle}>{SupervisorCount}</h3>
+                <h3 className={classes.cardTitle}>{SupervisorCount} <small>supervisors</small></h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -58,8 +58,10 @@ class Dashboard extends React.Component {
                 <CardIcon color="danger">
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>1 trimester Students</p>
-                <h3 className={classes.cardTitle}>{oneTrimester}</h3>
+                <p className={classes.cardCategory}>Degree Students</p>
+                <h3 className={classes.cardTitle}>
+                  {degreeStudents} <small>students</small>
+                </h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -69,8 +71,8 @@ class Dashboard extends React.Component {
                 <CardIcon color="info">
                   <Icon>assignment_ind</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>2 Trimester Students</p>
-                <h3 className={classes.cardTitle}>{twoTrimester}</h3>
+                <p className={classes.cardCategory}>Diploma Students</p>
+                <h3 className={classes.cardTitle}>{diplomaStudents} <small>students</small></h3>
               </CardHeader>
             </Card>
           </GridItem>
@@ -84,8 +86,8 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
   StudentCount: PropTypes.number,
   SupervisorCount: PropTypes.number,
-  oneTrimester: PropTypes.number,
-  twoTrimester: PropTypes.number
+  degreeStudents: PropTypes.number,
+  diplomaStudents: PropTypes.number
 };
 
 export default withStyles(dashboardStyle)(Dashboard);
