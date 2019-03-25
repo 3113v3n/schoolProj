@@ -2,23 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Dashboard from "../../views/Dashboard/Dashboard.jsx";
 import PropTypes from "prop-types";
-import * as actionCreators from "../../Redux/Actions";
+import { fetchDashboardCount } from "../../Redux/Actions/index";
 class dashboard extends Component {
-  /* componentDidMount() {
-     const {
-       studentCount,
-       supervisorsCount,
-       degreeStudents,
-       diplomaStudents
-     } = this.props;
-
-      * studentCount();
-      * supervisorsCount();
-      * degreeStudents();
-      * diplomaStudents();
-      *
+  componentDidMount() {
+    this.props.fetchDashboardCount();
   }
-*/
+
   render() {
     const { StudentCount, SupervisorCount, degree, diploma } = this.props;
     return (
@@ -43,19 +32,20 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    studentCount: () => dispatch(actionCreators.fetchAllocationCount()),
-    supervisorsCount: () => dispatch(actionCreators.fetchSupervisorCount()),
-    degreeStudents: () => dispatch(actionCreators.fetchDegreeStudents()),
-    diplomaStudents: () => dispatch(actionCreators.fetchDiplomaStudents())
+    fetchDashboardCount: () => {
+      dispatch(fetchDashboardCount());
+    }
   };
 };
+
 dashboard.propTypes = {
   StudentCount: PropTypes.number,
   SupervisorCount: PropTypes.number,
   degree: PropTypes.number,
-  diploma: PropTypes.number
+  diploma: PropTypes.number,
+  fetchDashboardCount: PropTypes.func
 };
 export default connect(
   mapStateToProps,
-  mapDispatchToProps()
+  mapDispatchToProps
 )(dashboard);

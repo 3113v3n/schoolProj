@@ -32,7 +32,7 @@ class studentsContainer extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return{
+  return {
     projects: state.admin.projects,
     error: state.error.error,
     errorMessage: state.error.errorMessage,

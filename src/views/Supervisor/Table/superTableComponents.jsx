@@ -125,17 +125,17 @@ class superTableComponent extends React.Component {
       filtered: newList
     });
   };
-  course = val => {
-    if (val === 1) {
+  course = (val, val2) => {
+    if (val === true && val2 === false) {
       return "Degree";
-    } else if (val === 2) {
+    } else if (val === false && val2 === true) {
       return "Diploma";
-    } else if (val === 3) {
+    } else if (val === true && val2 === true) {
       return "Degree && Diploma";
     }
   };
   render() {
-    const { classes, onDelete } = this.props;
+    const { classes, onDelete, data } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer>
@@ -169,19 +169,23 @@ class superTableComponent extends React.Component {
                     <th>first Name</th>
                     <th>last Name</th>
                     <th>Course</th>
+                    <th>Allocation Count</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                {filtered.map(item => (
-                  <SupervisorTableRow
-                    key={item.emp_no}
-                    f_name={item.f_name}
-                    l_name={item.l_name}
-                    course={this.course(item.course)}
-                    onDelete={onDelete}
-                    emp_no={item.emp_no}
-                  />
-                ))}
+                {data !== null
+                  ? filtered.map(item => (
+                      <SupervisorTableRow
+                        key={item.supervisor_id}
+                        f_name={item.first_name}
+                        l_name={item.last_name}
+                        course={this.course(item.degree, item.diploma)}
+                        onDelete={onDelete}
+                        emp_no={item.supervisor_id}
+                        count={item.allocations_count}
+                      />
+                    ))
+                  : null}
               </table>
             </CardBody>
           </Card>

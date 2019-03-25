@@ -18,39 +18,37 @@ const styles = {
     MsOverflowStyle: "-ms-autohiding-scrollbar"
   }
 };
-class AllocationTableRow extends React.Component {
+class ProjectTableRow extends React.Component {
   goToEdit = () => {
-    const { history, projectCode, studentName, allocation_id } = this.props;
+    const { history, projectCode } = this.props;
     history.push({
-      pathname: "/admin/editAllocations",
+      pathname: "/admin/editProjects",
       state: {
-        projectCode: projectCode,
-        studentName: studentName,
-        allocation_id: allocation_id
+        code: projectCode
       }
     });
   };
   render() {
     const {
-      studentName,
-      supervisor,
+      classes,
       projectCode,
-      dateRegistered,
-      dueDate,
-      classes
+      trimesters,
+      degree,
+      diploma,
+      key
     } = this.props;
     return (
       <tbody>
-        <tr className={classes.center}>
-          <td>{studentName}</td>
-          <td>{supervisor}</td>
+        <tr className={classes.center} key={key}>
           <td>{projectCode}</td>
-          <td>{dateRegistered}</td>
-          <td>{dueDate}</td>
+          <td>{trimesters}</td>
+          <td>{degree}</td>
+          <td>{diploma}</td>
+
           <td className={classes.left}>
             <Tooltip
               id="tooltip-top"
-              title="REALLOCATE STUDENT"
+              title="EDIT PROJECT"
               placement="top"
               classes={{ tooltip: classes.tooltip }}
             >
@@ -70,15 +68,11 @@ class AllocationTableRow extends React.Component {
     );
   }
 }
-AllocationTableRow.propTypes = {
-  studentName: PropTypes.string.isRequired,
-  supervisor: PropTypes.string.isRequired,
-  projectCode: PropTypes.string.isRequired,
-  dateRegistered: PropTypes.string.isRequired,
-  dueDate: PropTypes.string,
+ProjectTableRow.propTypes = {
   classes: PropTypes.object.isRequired,
-
+  key: PropTypes.string.isRequired,
   history: PropTypes.object,
-  allocation_id: PropTypes.string
+  projectCode: PropTypes.string,
+  trimesters: PropTypes.number
 };
-export default withRouter(withStyles(styles)(AllocationTableRow));
+export default withRouter(withStyles(styles)(ProjectTableRow));

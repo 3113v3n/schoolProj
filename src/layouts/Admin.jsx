@@ -9,7 +9,6 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import Navbar from "components/Navbars/Navbar.jsx";
-import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 import routes from "../routes.js";
@@ -21,6 +20,7 @@ import {connect} from "react-redux";
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
+
       if (prop.layout === "/admin") {
         return (
           <Route
@@ -29,7 +29,9 @@ const switchRoutes = (
             key={key}
           />
         );
+
       }
+
     })}
   </Switch>
 );

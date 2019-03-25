@@ -130,7 +130,7 @@ class AllocationComponent extends React.Component {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
@@ -171,16 +171,19 @@ class AllocationComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {filtered.map(item => (
-                    <AllocationTableRow
-                      studentName={item.student_name}
-                      supervisor={item.supervisor}
-                      dateRegistered={item.date_registered}
-                      key={item.allocation_id}
-                      dueDate={item.due_date}
-                      projectCode={item.project_code}
-                    />
-                  ))}
+                  {data !== null
+                    ? filtered.map(item => (
+                        <AllocationTableRow
+                          studentName={item.student_name}
+                          supervisor={item.supervisor_name}
+                          dateRegistered={item.date_registered}
+                          key={item.allocation_id}
+                          dueDate={item.due_date}
+                          projectCode={item.project_code}
+                          allocation_id={item.allocation_id}
+                        />
+                      ))
+                    : null}
                 </table>
               </div>
             </CardBody>
@@ -197,6 +200,6 @@ class AllocationComponent extends React.Component {
 }
 AllocationComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.array
+  data: PropTypes.array,
 };
 export default withRouter(withStyles(styles)(AllocationComponent));

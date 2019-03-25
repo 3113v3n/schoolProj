@@ -13,8 +13,8 @@ const initialState = {
 
 function supervisorReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.SUCCESS_MESSAGE:{
-      return{
+    case actionTypes.SUCCESS_MESSAGE: {
+      return {
         ...state,
         message: action.data
       };
@@ -22,8 +22,7 @@ function supervisorReducer(state = initialState, action) {
     case actionTypes.SET_MY_DATA:
       return updateProgress(state, {
         myData: action.data,
-        isLoading: !state.isLoading,
-        error: state.error
+        isLoading: true
       });
 
     case actionTypes.EDIT_PROGRESS:
@@ -38,8 +37,18 @@ function supervisorReducer(state = initialState, action) {
         supervisorDetails: action.data,
         status: state.status
       };
+    case actionTypes.FETCH_PROGRESS:
+      return {
+        ...state,
+        myData: action.data,
+        isLoading: true
+      };
+    case actionTypes.FETCH_PROJECTS:
+      return updateProgress(state, {
+        myData: action.data
+      });
     case actionTypes.MARK_AS_COMPLETED:
-      return{
+      return {
         ...state,
         completed: !state.completed,
         status: state.status

@@ -42,13 +42,16 @@ class EditAllocation extends React.Component {
   constructor(props) {
     super(props);
     const code = this.props.location.state.projectCode;
+    const id = this.props.location.state.allocation_id;
     this.state = {
-      adm: 11947,
+      allocation_id: id,
       firstName: "",
       lastName: "",
       supervisor: "",
       projCode: code,
-      tl: false
+      tl: false,
+      tr: false,
+      tc: false
     };
   }
   componentDidMount() {
@@ -65,7 +68,7 @@ class EditAllocation extends React.Component {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
     this.setState({
-      adm: "",
+      allocation_id: "",
       firstName: "",
       lastName: "",
       supervisor: "",
@@ -95,10 +98,10 @@ class EditAllocation extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   editAllocation = () => {
-    const { adm, supervisor, projCode } = this.state;
-    const { history, status } = this.props;
+    const { allocation_id, supervisor, projCode } = this.state;
+    const { history, error } = this.props;
     const data = {};
-    data.adm = adm;
+    data.allocation_id = allocation_id;
     data.supervisor = supervisor;
     data.project_code = projCode;
     if (supervisor.length === 0 || projCode.length === 0) {
@@ -106,9 +109,12 @@ class EditAllocation extends React.Component {
     } else {
       this.props.onSubmit(data);
 
-      if (status === "success") {
+      if (error === false) {
         this.resetValues();
         history.push("/admin/allocation");
+        this.showNotification("tr");
+      } else {
+        this.showNotification("tc");
       }
     }
   };
@@ -120,7 +126,7 @@ class EditAllocation extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   render() {
-    const { classes, lecturers } = this.props;
+    const { classes, lecturers, message, errorMessage } = this.props;
     return (
       <div>
         <GridContainer>
@@ -134,22 +140,6 @@ class EditAllocation extends React.Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Admission Number"
-                      id="adm"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.adm,
-                        onChange: this.handleInput
-                      }}
-                      inputProps={{
-                        disabled: true,
-                        value: this.state.adm
-                      }}
-                    />
-                  </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       className="firstName"
@@ -202,8 +192,11 @@ class EditAllocation extends React.Component {
                       }}
                     >
                       {lecturers.map(item => (
-                        <MenuItem key={item.emp_no} value={item.emp_no}>
-                          {item.f_name} {item.l_name}
+                        <MenuItem
+                          key={item.supervisor_id}
+                          value={item.supervisor_id}
+                        >
+                          {item.name} : {item.allocations_count}
                         </MenuItem>
                       ))}
                     </Select>
@@ -247,8 +240,26 @@ class EditAllocation extends React.Component {
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
+                <Snackbar
+                  place={"tr"}
+                  color={"success"}
+                  icon={AddAlert}
+                  message={message}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
+                  close
+                />
               </CardFooter>
             </Card>
+            <Snackbar
+              place={"tc"}
+              color={"danger"}
+              icon={AddAlert}
+              message={errorMessage}
+              open={this.state.tc}
+              closeNotification={() => this.setState({ tc: false })}
+              close
+            />
           </GridItem>
         </GridContainer>
       </div>
@@ -262,9 +273,11 @@ EditAllocation.propTypes = {
   studentName: PropTypes.string,
   projectCode: PropTypes.string,
   supervisor: PropTypes.string,
-  status: PropTypes.string,
   lecturers: PropTypes.array,
-  location: PropTypes.object
+  location: PropTypes.object,
+  message: PropTypes.string,
+  errorMessage: PropTypes.string,
+  error: PropTypes.bool
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

@@ -1,23 +1,24 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+// @material-ui/icons
 // core components
-import PersonAdd from "@material-ui/icons/PersonAdd";
+
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
-import Button from "components/CustomButtons/Button.jsx";
-import StudentTableRow from "../../../components/Table/StudentTableRow";
+////////////////////////////
 import { withRouter } from "react-router";
-import CustomInput from "../../../components/CustomInput/CustomInput";
+import Button from "components/CustomButtons/Button.jsx";
+import PropTypes from "prop-types";
+import ProjectTableRow from "../../components/Table/ProjectTableRow";
+import CustomInput from "../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
+// @material-ui/icons
 import Search from "@material-ui/icons/Search";
-
+import { NavLink } from "react-router-dom";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -88,7 +89,8 @@ const styles = {
   }
 };
 
-class AdminComponent extends React.Component {
+//function UpgradeToPro(props)
+class ProjectsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,9 +116,9 @@ class AdminComponent extends React.Component {
       currentList = this.props.data;
 
       newList = currentList.filter(item => {
-        const lc = `${item.studentName.toLowerCase()} 
-        ${item.admNo} 
-         ${item.projectCode.toLowerCase()}`;
+        const lc = `${item.projectCode.toLowerCase()} 
+        ${item.trimesters} 
+         ${item.degree} ${item.diploma}`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -127,16 +129,30 @@ class AdminComponent extends React.Component {
       filtered: newList
     });
   };
+  degreeItem = val => {
+    if (val === true) {
+      return "Degree";
+    } else {
+      return "N/A";
+    }
+  };
+  diplomaItem = val => {
+    if (val === true) {
+      return "Diploma";
+    } else {
+      return "N/A";
+    }
+  };
   render() {
-    const { classes, onDelete, data } = this.props;
+    const { classes, data } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Student Table</h4>
-              <p className={classes.cardCategoryWhite}>students </p>
+              <h4 className={classes.cardTitleWhite}>Projects Table</h4>
+              <p className={classes.cardCategoryWhite}>projects </p>
             </CardHeader>
             <CardBody>
               <div className={classes.tableUpgradeWrapper}>
@@ -157,23 +173,25 @@ class AdminComponent extends React.Component {
                     }}
                   />
                 </GridItem>
+
                 <table className={classes.table}>
                   <thead>
                     <tr>
-                      <th>Admission</th>
-                      <th>Student Name</th>
                       <th>Project Code</th>
+                      <th>Trimesters</th>
+                      <th>Degree</th>
+                      <th>Diploma</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   {data !== null
                     ? filtered.map(item => (
-                        <StudentTableRow
-                          onDelete={onDelete}
-                          name={item.name}
-                          admNo={item.student_adm}
+                        <ProjectTableRow
                           projectCode={item.project_code}
-                          key={item.adm}
+                          trimesters={item.trimesters}
+                          degree={this.degreeItem(item.degree)}
+                          diploma={this.diplomaItem(item.diploma)}
+                          key={item.project_code}
                         />
                       ))
                     : null}
@@ -181,10 +199,9 @@ class AdminComponent extends React.Component {
               </div>
             </CardBody>
           </Card>
-
-          <NavLink to="/admin/students">
-            <Button type="button" color="primary" round>
-              <PersonAdd /> Add New Student
+          <NavLink to="/admin/AddProjects">
+            <Button color="info" round>
+              New Project
             </Button>
           </NavLink>
         </GridItem>
@@ -192,10 +209,8 @@ class AdminComponent extends React.Component {
     );
   }
 }
-export default withRouter(withStyles(styles)(AdminComponent));
-
-AdminComponent.propTypes = {
+ProjectsComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.array,
-  onDelete: PropTypes.func
+  data: PropTypes.array
 };
+export default withRouter(withStyles(styles)(ProjectsComponent));

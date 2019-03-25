@@ -14,7 +14,6 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomMarkInput from "components/CustomInput/CustomMarkInput.jsx";
-import Table from "components/Table/Table.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import GetApp from "@material-ui/icons/GetApp";
@@ -97,8 +96,9 @@ const styles = {
 class Progress extends React.Component {
   state = {
     AdmNo: `${this.props.location.state.marks}`,
-    documents: `${this.props.location.state.documents}`,
-    comments: `${this.props.location.state.comments}`,
+    allocation_id: "",
+    documents: "",
+    comments: "",
     marks: 0,
     tr: false
   };
@@ -150,9 +150,45 @@ class Progress extends React.Component {
       }
     }
   };
+  objectToCsv = data => {
+    const csvRow = [];
+    //get the headers
+    const headers = Object.keys(data[0]);
+    csvRow.push(headers.join(","));
+    //loop over Rows
+    for (const row of data) {
+      const val = headers.map(header => {
+        const newVal = ("" + row[header]).replace(/"/g, '\\"'); //turn values to string
+        return `"${newVal}"`;
+      });
+      csvRow.push(val.join(","));
+    }
+    return csvRow.join("\n");
+  };
+  download = data => {
+    const blob = new Blob([data], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "progress.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+  downloadTable = () => {
+    const { data } = this.props;
+    const Tabledata = data.map(item => ({
+      date: item.date_registered,
+      documents: item.documents,
+      comments: item.comments,
+      marks: item.marks
+    }));
+    const csvData = this.objectToCsv(Tabledata);
+    this.download(csvData);
+  };
   render() {
-    const { classes, location } = this.props;
-    const { date, comments, marks, documents } = location.state;
+    const { classes, data } = this.props;
     return (
       <div>
         <GridContainer>
@@ -275,16 +311,31 @@ class Progress extends React.Component {
                     aria-label="Export"
                     className={classes.tableActionButton}
                   >
-                    <GetApp />
+                    <GetApp onClick={this.downloadTable} />
                   </IconButton>
                 </Tooltip>
-                <Table
-                  tableHeaderColor="info"
-                  tableHead={["Date", "Documents", "Comments", "Marks"]}
-                  tableData={[
-                    [`${date}`, `${documents}`, `${comments}`, `${marks}`]
-                  ]}
-                />
+                <table className={classes.table}>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Documents</th>
+                      <th>Comments</th>
+                      <th>Marks</th>
+
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map(item => (
+                      <tr key={item.date}>
+                        <td>{item.date}</td>
+                        <td>{item.documents}</td>
+                        <td>{item.comments}</td>
+                        <td>{item.marks}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </CardBody>
             </Card>
           </GridItem>
@@ -297,11 +348,12 @@ Progress.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object,
   location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object,
   documents: PropTypes.string,
   comments: PropTypes.string,
   status: PropTypes.string,
-  marks: PropTypes.string
+  marks: PropTypes.string,
+  data: PropTypes.array
 };
 
 export default withRouter(connect()(withStyles(styles)(Progress)));

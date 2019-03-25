@@ -3,7 +3,8 @@ import jwtDecode from "jwt-decode";
 //import decode from "jwt-decode";
 const requests = paths.production; //localhost;
 const localrequest = paths.localhost;
-
+const token = localStorage.getItem("access_Token");
+const refreshToken = localStorage.getItem("refresh_Token");
 
 async function asyncRequest(path) {
   return fetch(`${localrequest}${path}`)
@@ -29,9 +30,7 @@ async function loginRequest(path, param) {
       body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);
-
-    let responseJson = await response.json();
-    return responseJson;
+    return await response.json();
   } catch (error) {
     console.error(`Error is : ${error}`);
   }
@@ -41,16 +40,11 @@ async function updateRequest(path, param) {
   try {
     let requestParams = {
       method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
+
       body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);
-
-    let responseJson = await response.json();
-    return responseJson;
+    return await response.json();
   } catch (error) {
     console.error(`Error is : ${error}`);
   }
@@ -62,14 +56,14 @@ async function deleteRequest(path, param) {
       method: "DELETE",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);
 
-    let responseJson = await response.json();
-    return responseJson;
+    return await response.json();
   } catch (error) {
     console.error(`Error is : ${error}`);
   }
@@ -81,21 +75,20 @@ async function fetchRequest(path, param) {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);
 
-    let responseJson = await response.json();
-    return responseJson;
+    return await response.json();
   } catch (error) {
-    console.error(`Error is : ${error}`);
+    console.warn(`Error is : ${error}`);
   }
 }
 async function postRequest(path, param) {
   try {
-    const token = localStorage.getItem("access_token");
     let requestParams = {
       method: "POST",
       headers: {
@@ -112,7 +105,6 @@ async function postRequest(path, param) {
   }
 }
 async function isTokenExpired() {
-  const token = localStorage.getItem("refresh_token");
   try {
     const decoded = jwtDecode(token);
     return decoded.exp < Date.now() / 1000;
@@ -122,13 +114,12 @@ async function isTokenExpired() {
 }
 async function refreshTokenRequest(path) {
   try {
-    const token = localStorage.getItem("access_token");
     let requestParams = {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${refreshToken}`
       }
     };
     let response = await fetch(`${requests}${path}`, requestParams);

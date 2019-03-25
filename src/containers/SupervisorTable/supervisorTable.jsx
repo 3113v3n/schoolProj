@@ -5,33 +5,19 @@ import SuperTableComponent from "../../views/Supervisor/Table/superTableComponen
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import * as actionTypes from "../../Redux/Actions/action-types";
 class supervisorTable extends React.Component {
   componentDidMount() {
     this.props.onLoaded();
   }
 
   render() {
-    const { isLoading, data, error, onDelete, errorMessage } = this.props;
-    if (error) {
-      return (
-        <div>
-          Error:
-          {errorMessage}
-        </div>
-      );
-    } else if (!isLoading) {
+    const { isLoading, data, onDelete } = this.props;
+    if (!isLoading) {
       return <div> Loading...</div>;
     } else {
       return (
         <div>
-          {data !== null ? (
-            <SuperTableComponent data={data} onDelete={onDelete} />
-          ) : (
-            <div>
-              <p>No registered supervisor yet</p>
-            </div>
-          )}
+          <SuperTableComponent data={data} onDelete={onDelete} />
         </div>
       );
     }
@@ -41,16 +27,13 @@ supervisorTable.propTypes = {
   onLoaded: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  data: PropTypes.array,
-  error: PropTypes.bool,
-  errorMessage: PropTypes.string
+  data: PropTypes.array
+
 };
 const mapStateToProps = state => {
   return {
     data: state.admin.supervisors,
     isLoading: state.admin.isLoading,
-    error: state.error.error,
-    errorMessage: state.error.errorMessage
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -59,8 +42,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.fetchSupervisors());
     },
     onDelete: data => {
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_SUPERVISOR, data));
-      // dispatch(actionCreators.deleteSupervisors(data))
+      dispatch(actionCreators.deleteSupervisors(data));
     }
   };
 };

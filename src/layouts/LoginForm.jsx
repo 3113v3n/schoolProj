@@ -84,13 +84,15 @@ class LoginForm extends React.Component {
       this.showNotification("tr");
     } else if (password.length !== 0 && staff_id.length !== 0) {
       const data = {};
-      data.emp_no = staff_id; //uuid();
+      data.supervisor_id = staff_id; //uuid();
       data.password = password;
       if (!this.validateInput()) {
         this.showNotification("tr");
       } else {
         this.props.handleSubmit(data);
         if (this.props.error === true) {
+          this.showNotification("tc");
+        } else {
           this.showNotification("tc");
         }
       }
@@ -102,7 +104,7 @@ class LoginForm extends React.Component {
       const { history } = this.props;
       history.push("/admin/dashboard");
     }
-    const { classes, errorMessage } = this.props;
+    const { classes, errorMessage ,error} = this.props;
     const { staff_id, password } = this.state;
     return (
       <div>
@@ -168,9 +170,9 @@ class LoginForm extends React.Component {
                 />
                 <Snackbar
                   place="tc"
-                  color={"danger"}
+                  color={error === true ? "danger" : "success"}
                   icon={AddAlert}
-                  message={errorMessage}
+                  message={error === true ? errorMessage : "login Successful"}
                   open={this.state.tc}
                   closeNotification={() => this.setState({ tc: false })}
                   close

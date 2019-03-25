@@ -1,3 +1,4 @@
+
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
@@ -12,7 +13,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
-import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
@@ -38,7 +38,6 @@ const Sidebar = ({ ...props }) => {
         let activePro = " ";
         let listItemClasses;
         if (prop.invisible) return null;
-        //if (!prop.supervisor ) return activeRoute();
         if (prop.path === "/upgrade-to-pro") {
           activePro = classes.activePro + " ";
           listItemClasses = classNames({
@@ -103,7 +102,7 @@ const Sidebar = ({ ...props }) => {
       <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
-          anchor={props.rtlActive ? "left" : "right"}
+          anchor={"right"}
           open={props.open}
           classes={{
             paper: classNames(classes.drawerPaper, {
@@ -117,7 +116,7 @@ const Sidebar = ({ ...props }) => {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+            <AdminNavbarLinks />
             {links}
           </div>
           {image !== undefined ? (
@@ -130,7 +129,7 @@ const Sidebar = ({ ...props }) => {
       </Hidden>
       <Hidden smDown implementation="css">
         <Drawer
-          anchor={props.rtlActive ? "right" : "left"}
+          anchor={"left"}
           variant="permanent"
           open
           classes={{

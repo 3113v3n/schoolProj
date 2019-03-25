@@ -23,6 +23,13 @@ function editTableReducer(state = [], action = {}) {
           data: action.data
         }
       ];
+    case actionTypes.EDIT_PROJECT_TABLE:
+      return[
+        ...state,
+        {
+          data: action.data
+        }
+      ];
     default:
       return state;
   }

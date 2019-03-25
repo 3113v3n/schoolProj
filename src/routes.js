@@ -16,6 +16,7 @@ import AdminStudents from "./containers/StudentsTable/AdminStudents.jsx";
 import Archives from "./containers/Archives/Archives.jsx";
 import allocations from "./containers/Allocation/allocations.jsx";
 import AddAllocationContainer from "./containers/Form/AddAllocationContainer.jsx";
+import ProjectsTable from "./containers/Projects/ProjectsTable.jsx";
 ///Supervisor
 import studentTable from "./containers/StudentsTable/studentTable";
 import supervisorProfile from "./containers/UserProfiles/supervisorProfile";
@@ -24,6 +25,7 @@ import progressContainer from "./containers/Form/progressContainer";
 import EditStudentTable from "./containers/EditTable/EditStudentTable";
 import EditAllocations from "./containers/EditTable/EditAllocations";
 import EditSupervisorsTable from "./containers/EditTable/EditSupervisorsTable";
+import EditProjectTable from "./containers/EditTable/EditProjectTable"
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -44,12 +46,32 @@ const dashboardRoutes = [
     admin: 1
   },
   {
-    path: "/projects",
+    path: "/AddProjects",
     name: "Projects",
     rtlName: "پشتیبانی از راست به چپ",
     icon: LibraryBooks,
     component: projectContainer,
     layout: "/admin",
+    invisible: true,
+    admin: 1
+  },
+  {
+    path: "/projectsTable",
+    name: "Projects Table",
+    rtlName: "پشتیبانی از راست به چپ",
+    icon: "content_paste",
+    component: ProjectsTable,
+    layout: "/admin",
+    admin: 1
+  },
+  {
+    path: "/editProjects",
+    name: "Projects",
+    rtlName: "پشتیبانی از راست به چپ",
+    icon: LibraryBooks,
+    component: EditProjectTable,
+    layout: "/admin",
+    invisible: true,
     admin: 1
   },
   {

@@ -13,26 +13,13 @@ class AdminStudents extends React.Component {
   }
 
   render() {
-    const { isLoading, data, error, errorMessage } = this.props;
-    if (error) {
-      return (
-        <div>
-          Error:
-          {errorMessage}
-        </div>
-      );
-    } else if (!isLoading) {
+    const { isLoading, data } = this.props;
+    if (!isLoading) {
       return <div> Loading...</div>;
     } else {
       return (
         <div>
-          {data !== null ? (
-            <AdminComponent data={data} onDelete={this.props.onDelete} />
-          ) : (
-            <div>
-              <p> No allocations present</p>
-            </div>
-          )}
+          <AdminComponent data={data} onDelete={this.props.onDelete} />
         </div>
       );
     }
@@ -40,18 +27,14 @@ class AdminStudents extends React.Component {
 }
 AdminStudents.propTypes = {
   isLoading: PropTypes.bool,
-  error: PropTypes.bool,
   data: PropTypes.array,
   Loaded: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string
+  onDelete: PropTypes.func.isRequired
 };
 const mapStateToProps = state => {
   return {
     data: state.admin.students,
-    isLoading: state.admin.isLoading,
-    error: state.error.error,
-    errorMessage: state.error.errorMessage
+    isLoading: state.admin.isLoading
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -60,8 +43,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.adminStudents());
     },
     onDelete: data => {
-      dispatch(actionCreators.setMyData(actionTypes.DELETE_STUDENT, data));
-      //dispatch(actionCreators.deleteStudents(data))
+      dispatch(actionCreators.deleteStudents(data));
     }
   };
 };

@@ -94,7 +94,7 @@ class EditStudents extends React.Component {
   };
   updateStudent = () => {
     const { firstName, lastName, admNo, projCode } = this.state;
-    const { history, status } = this.props;
+    const { history, error } = this.props;
     const data = {};
     data.firstName = firstName;
     data.lastName = lastName;
@@ -109,14 +109,17 @@ class EditStudents extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
-      if (status === "success"){
+      if (error === false) {
         this.resetValues();
         history.push("/admin/adminStudents");
+        this.showNotification("tr");
+      } else {
+        this.showNotification("tl");
       }
     }
   };
   render() {
-    const { classes } = this.props;
+    const { classes, error,message, errorMessage } = this.props;
     return (
       <div>
         <GridContainer>
@@ -198,9 +201,22 @@ class EditStudents extends React.Component {
                       place={"tl"}
                       color={"danger"}
                       icon={AddAlert}
-                      message={"All fields Are Required"}
+                      message={
+                        error === true
+                          ? errorMessage
+                          : "All fields Are Required"
+                      }
                       open={this.state.tl}
                       closeNotification={() => this.setState({ tl: false })}
+                      close
+                    />
+                    <Snackbar
+                      place={"tr"}
+                      color={"success"}
+                      icon={AddAlert}
+                      message={message}
+                      open={this.state.tr}
+                      closeNotification={() => this.setState({ tr: false })}
                       close
                     />
                   </GridItem>
@@ -228,7 +244,9 @@ EditStudents.propTypes = {
   history: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   location: PropTypes.object,
-  status: PropTypes.string
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  message: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(EditStudents));

@@ -11,7 +11,8 @@ class EditStudentTable extends React.Component {
         <EdiStudents
           onSubmit={this.props.onEditProgress}
           error={this.props.error}
-          status={this.props.status}
+          errorMessage={this.props.errorMessage}
+          message={this.props.message}
         />
       </div>
     );
@@ -20,7 +21,9 @@ class EditStudentTable extends React.Component {
 EditStudentTable.propTypes = {
   onEditProgress: PropTypes.func,
   error: PropTypes.bool,
-  status: PropTypes.string
+  errorMessage: PropTypes.string,
+  message: PropTypes.string
+
 };
 
 const mapDispatchToProps = dispatch => {
@@ -34,7 +37,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     error: state.error.error,
-    status: state.admin.status
+    errorMessage: state.error.errorMessage,
+    message: state.admin.message
   };
 };
 

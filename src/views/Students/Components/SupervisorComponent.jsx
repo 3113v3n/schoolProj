@@ -130,7 +130,7 @@ class SupervisorComponent extends React.Component {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
@@ -170,16 +170,18 @@ class SupervisorComponent extends React.Component {
                     </tr>
                   </thead>
 
-                  {filtered.map(item => (
-                    <TableRow
-                      key={item.studentName}
-                      studentName={item.studentName}
-                      supervisor={item.supervisor}
-                      projectCode={item.projectCode}
-                      dateRegistered={item.dateRegistered}
-                      dueDate={item.dateRegistered}
-                    />
-                  ))}
+                  {data !== null
+                    ? filtered.map(item => (
+                        <TableRow
+                          key={item.studentName}
+                          studentName={item.studentName}
+                          supervisor={item.supervisor}
+                          projectCode={item.projectCode}
+                          dateRegistered={item.dateRegistered}
+                          dueDate={item.dateRegistered}
+                        />
+                      ))
+                    : null}
                 </table>
               </div>
             </CardBody>

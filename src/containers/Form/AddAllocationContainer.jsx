@@ -1,26 +1,38 @@
 import React from "react";
 import AllocationForm from "../../views/Forms/Allocations/AllocationForm.jsx";
 import * as actionCreators from "../../Redux/Actions/";
-//import * as actionTypes from "../../Redux/Actions/action-types";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 class AddAllocationContainer extends React.Component {
   componentDidMount() {
-    this.props.fetchStudent();
-    this.props.fetchSupervisors();
+    this.props.fetchAllocations();
   }
 
   render() {
-    const { addAllocation, students, lecturers, error, status } = this.props;
+    const {
+      addAllocation,
+      students,
+      lecturers,
+      error,
+      errorMessage,
+      message
+    } = this.props;
     return (
       <div>
-        <AllocationForm
-          addAllocation={addAllocation}
-          students={students}
-          lecturers={lecturers}
-          status={status}
-          error={error}
-        />
+        {students !== null && lecturers !== null ? (
+          <AllocationForm
+            addAllocation={addAllocation}
+            students={students}
+            lecturers={lecturers}
+            error={error}
+            errorMessage={errorMessage}
+            message={message}
+          />
+        ) : (
+          <div>
+            <p> No allocations present</p>
+          </div>
+        )}
       </div>
     );
   }
@@ -30,31 +42,28 @@ const mapStateToProps = state => {
     students: state.admin.students,
     lecturers: state.admin.supervisors,
     error: state.error.error,
-    status: state.admin.status
+    errorMessage: state.error.errorMessage,
+    message: state.admin.message
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    fetchStudent: () => {
-      dispatch(actionCreators.allocationStudents());
-    },
-    fetchSupervisors: () => {
-      dispatch(actionCreators.allocationSupervisors());
+    fetchAllocations: () => {
+      dispatch(actionCreators.allocationRequirements());
     },
     addAllocation: data => {
-      // dispatch(actionCreators.setMyData(actionTypes.NEW_ALLOCATION, data));
       dispatch(actionCreators.addAllocation(data));
     }
   };
 };
 AddAllocationContainer.propTypes = {
-  fetchStudent: PropTypes.func.isRequired,
-  fetchSupervisors: PropTypes.func.isRequired,
+  fetchAllocations: PropTypes.func.isRequired,
   addAllocation: PropTypes.func,
   students: PropTypes.array,
   lecturers: PropTypes.array,
   error: PropTypes.bool,
-  status: PropTypes.string
+  message: PropTypes.string,
+  errorMessage: PropTypes.string
 };
 export default connect(
   mapStateToProps,

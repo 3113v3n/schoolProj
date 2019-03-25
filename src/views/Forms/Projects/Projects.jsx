@@ -17,6 +17,7 @@ import Button from "../../../components/CustomButtons/Button";
 import AddAlert from "@material-ui/icons/AddAlert";
 //core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import {withRouter} from "react-router";
 
 const styles = {
   cardCategoryWhite: {
@@ -92,7 +93,7 @@ class Projects extends React.Component {
     } = this.state;
 
     const data = {};
-    data.code = projectCode;
+    data.project_code = projectCode;
     data.trimesters = parseInt(trimesters);
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
@@ -108,15 +109,19 @@ class Projects extends React.Component {
         this.resetValues();
         this.showNotification("tr");
       } else {
-        this.showNotification("tc");
+        this.showNotification("tl");
       }
     }
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
+  cancelEdit = () => {
+    const { history } = this.props;
+    history.push("/admin/projectsTable");
+  };
   render() {
-    const { classes, message, errorMessage } = this.props;
+    const { classes, message, errorMessage, error } = this.props;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -180,11 +185,14 @@ class Projects extends React.Component {
                 <Button color="success" round onClick={this.checkBoxValidation}>
                   Add Project
                 </Button>
+                <Button color="danger" round onClick={this.cancelEdit}>
+                  Cancel and Go back
+                </Button>
                 <Snackbar
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={"ALL FIELDS ARE REQUIRED !!!"}
+                  message={ error === true? errorMessage :"ALL FIELDS ARE REQUIRED !!!"}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
@@ -199,15 +207,6 @@ class Projects extends React.Component {
                   close
                 />
               </CardFooter>
-              <Snackbar
-                place={"tc"}
-                color={"danger"}
-                icon={AddAlert}
-                message={errorMessage}
-                open={this.state.tc}
-                closeNotification={() => this.setState({ tc: false })}
-                close
-              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -221,6 +220,7 @@ Projects.propTypes = {
   error: PropTypes.bool,
   status: PropTypes.string,
   errorMessage: PropTypes.string,
-  message: PropTypes.string
+  message: PropTypes.string,
+  history: PropTypes.object
 };
-export default withStyles(styles)(Projects);
+export default withRouter(withStyles(styles)(Projects));

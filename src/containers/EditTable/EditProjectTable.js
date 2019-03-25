@@ -1,22 +1,16 @@
 import React from "react";
-import EditAllocation from "../../views/Allocation/EditTable/EditAllocation";
+import EditProjectTable from "../../views/Projects/EditProject/EditProjectTable";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
-import * as actionTypes from "../../Redux/Actions/action-types";
 import PropTypes from "prop-types";
 class EditAllocations extends React.Component {
-  componentDidMount() {
-    this.props.SupervisorsFetch();
-  }
-
   render() {
     return (
       <div>
-        <EditAllocation
+        <EditProjectTable
           onSubmit={this.props.onEditProgress}
           error={this.props.error}
           status={this.props.status}
-          lecturers={this.props.lecturers}
           errorMessage={this.props.errorMessage}
           message={this.props.message}
         />
@@ -29,7 +23,6 @@ EditAllocations.propTypes = {
   SupervisorsFetch: PropTypes.func,
   error: PropTypes.bool,
   status: PropTypes.string,
-  lecturers: PropTypes.array,
   errorMessage: PropTypes.string,
   message: PropTypes.string
 };
@@ -37,7 +30,6 @@ const mapStateToProps = state => {
   return {
     error: state.error.error,
     status: state.admin.status,
-    lecturers: state.admin.supervisors,
     errorMessage: state.error.errorMessage,
     message: state.admin.message
   };
@@ -45,12 +37,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
-      dispatch(
-        actionCreators.editTable(actionTypes.EDIT_ALLOCATION_TABLE, data)
-        // actionCreators.editAllocations(data);
-      );
-    },
-    SupervisorsFetch: () => dispatch(actionCreators.allocationRequirements())
+      dispatch(actionCreators.editProjects(data));
+    }
   };
 };
 

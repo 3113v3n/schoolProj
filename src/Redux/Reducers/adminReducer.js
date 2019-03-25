@@ -54,7 +54,8 @@ function adminReducer(state = initialState, action) {
       });
     case actionTypes.FETCH_PROJECTS:
       return updateProgress(state, {
-        projects: action.data
+        projects: action.data,
+        isLoading: true
       });
     case actionTypes.FETCH_ALLOCATION_STUDENTS:
       return {

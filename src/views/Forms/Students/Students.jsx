@@ -67,7 +67,7 @@ class Students extends React.Component {
   };
   validateInput = () => {
     var reg = /^\d+$/;
-    var Input = this.state.staff_id;
+    var Input = this.state.admNo;
     return reg.test(Input);
   };
   handleselectedFile = event => {
@@ -105,9 +105,9 @@ class Students extends React.Component {
     const { firstName, lastName, admNo, project } = this.state;
     const data = {};
     const { error } = this.props;
-    data.f_name = firstName;
-    data.l_name = lastName;
-    data.adm = admNo;
+    data.first_name = firstName;
+    data.last_name = lastName;
+    data.student_adm = parseInt(admNo);
     data.project_code = project;
     if (
       firstName.length === 0 ||
@@ -212,8 +212,11 @@ class Students extends React.Component {
                       }}
                     >
                       {projects.map(item => (
-                        <MenuItem key={item.code} value={item.name}>
-                          {item.name}
+                        <MenuItem
+                          key={item.project_code}
+                          value={item.project_code}
+                        >
+                          {item.project_code}
                         </MenuItem>
                       ))}
                     </Select>

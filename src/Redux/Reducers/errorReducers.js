@@ -13,6 +13,12 @@ export default function errorReducers(state = initialState, action) {
         error: true,
         errorMessage: action.data
       };
+    case actionTypes.PROJECT_EDIT_ERROR:
+      return{
+        ...state,
+        error: true,
+        errorMessage: action.data
+      };
     case actionTypes.UPLOAD_FAILURE:
       return{
         ...state,
@@ -53,7 +59,7 @@ export default function errorReducers(state = initialState, action) {
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: "Cant add project"
       };
     case actionTypes.STUDENT_ERROR:
       return {

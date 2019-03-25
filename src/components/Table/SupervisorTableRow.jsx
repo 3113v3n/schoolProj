@@ -20,24 +20,34 @@ const styles = {
 };
 class SupervisorTableRow extends React.Component {
   goToEdit = () => {
-    const { history, f_name, l_name, course } = this.props;
+    const { history, f_name, l_name, emp_no } = this.props;
     history.push({
       pathname: "/admin/editSupervisorTable",
       state: {
         firstName: f_name,
         lastName: l_name,
-        course: course
+        emp_no: emp_no
       }
     });
   };
   render() {
-    const { f_name, l_name, course, classes, key, onDelete } = this.props;
+    const {
+      f_name,
+      l_name,
+      course,
+      classes,
+      key,
+      onDelete,
+      count,
+      emp_no
+    } = this.props;
     return (
       <tbody>
         <tr className={classes.center} key={key}>
           <td>{f_name}</td>
           <td>{l_name}</td>
           <td>{course}</td>
+          <td>{count}</td>
           <td className={classes.left}>
             <Tooltip
               id="tooltip-top"
@@ -72,7 +82,7 @@ class SupervisorTableRow extends React.Component {
                   onClick={() =>
                     window.confirm(
                       "Are you sure you wish to delete this row?"
-                    ) && onDelete(this.props.Id)
+                    ) && onDelete(emp_no)
                   }
                 />
               </IconButton>
@@ -85,13 +95,13 @@ class SupervisorTableRow extends React.Component {
 }
 SupervisorTableRow.propTypes = {
   key: PropTypes.string.isRequired,
-  Id: PropTypes.string.isRequired,
+  course: PropTypes.string,
   f_name: PropTypes.string,
   l_name: PropTypes.string,
-  degree: PropTypes.string,
-  diploma: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  emp_no: PropTypes.number,
+  count: PropTypes.number
 };
 export default withRouter(withStyles(styles)(SupervisorTableRow));

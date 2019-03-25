@@ -171,7 +171,7 @@ class UserProfile extends React.Component {
                   place="tl"
                   color="danger"
                   icon={AddAlert}
-                  message={errorMessage.toUpperCase()}
+                  message={errorMessage}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
@@ -180,7 +180,7 @@ class UserProfile extends React.Component {
                   place="tr"
                   color="success"
                   icon={AddAlert}
-                  message={message.toUpperCase()}
+                  message={message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

@@ -17,7 +17,7 @@ class HeaderLinks extends React.Component {
     const { history, onLogout } = this.props;
     onLogout();
     history.push("/login");
-  }
+  };
   render() {
     const { classes } = this.props;
 

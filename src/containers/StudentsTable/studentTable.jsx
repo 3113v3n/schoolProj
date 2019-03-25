@@ -9,26 +9,13 @@ class StudentTable extends React.Component {
     this.props.fetchData();
   }
   render() {
-    const { isLoading, data, error } = this.props;
-    if (error) {
-      return (
-        <div>
-          Error:
-          {error.message}
-        </div>
-      );
-    } else if (!isLoading) {
+    const { isLoading, data } = this.props;
+    if (!isLoading) {
       return <div> Loading...</div>;
     } else {
       return (
         <div>
-          {data !== null ? (
-            <SupervisorComponent data={data} />
-          ) : (
-            <div>
-              <p> no Students available</p>
-            </div>
-          )}
+          <SupervisorComponent data={data} />
         </div>
       );
     }

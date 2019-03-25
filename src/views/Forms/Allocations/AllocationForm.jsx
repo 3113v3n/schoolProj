@@ -16,6 +16,7 @@ import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "../../../components/Snackbar/Snackbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import uuid from "uuid";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -39,8 +40,10 @@ class AllocationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: "SELECT STUDENTS",
-      lecturers: "SELECT LECTURERS",
+      students: "",
+      lecturers: "",
+      tl: false,
+      tr: false,
       filtered: []
     };
   }
@@ -87,23 +90,38 @@ class AllocationForm extends React.Component {
       filtered: newList
     });
   };
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      students: "",
+      lecturers: ""
+    });
+  };
   newStudent = () => {
     const { students, lecturers } = this.state;
-    const { status } = this.props;
+    const { error } = this.props;
     const value = students;
     const res = value.split(" ");
     const adm = res[0];
     const data = {};
-    data.adm = parseInt(adm);
-    data.lec_emp_no = parseInt(lecturers);
-    this.props.addAllocation(data);
-    if (status === "success") {
+    data.allocation_id = uuid();
+    data.student_adm = adm;
+    data.supervisor_id = lecturers;
+    if (adm.length === 0 || lecturers.length === 0) {
       this.showNotification("tl");
+    } else {
+      this.props.addAllocation(data);
+      if (error === false) {
+        this.showNotification("tr");
+      } else {
+        this.showNotification("tl");
+      }
     }
   };
   render() {
-    const { classes, students, lecturers } = this.props;
-    //const { filtered } = this.state;
+    const { classes, students, error, message, errorMessage } = this.props;
+    const { filtered } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -124,7 +142,7 @@ class AllocationForm extends React.Component {
                     <Select
                       style={{ marginLeft: 10, width: "50%" }}
                       value={this.state.students}
-                      onChange={this.handleChange}
+                      onChange={this.handleMyChange}
                       formcontrolprops={{
                         fullWidth: true
                       }}
@@ -159,9 +177,12 @@ class AllocationForm extends React.Component {
                         id: "lecturer"
                       }}
                     >
-                      {lecturers.map(item => (
-                        <MenuItem key={item.emp_no} value={item.emp_no}>
-                          {item.f_name} {item.l_name}
+                      {filtered.map(item => (
+                        <MenuItem
+                          key={item.supervisor_id}
+                          value={item.supervisor_id}
+                        >
+                          {item.name} : {item.allocations_count}
                         </MenuItem>
                       ))}
                     </Select>
@@ -175,11 +196,22 @@ class AllocationForm extends React.Component {
                 </Button>
                 <Snackbar
                   place="tl"
-                  color="success"
+                  color="danger"
                   icon={AddAlert}
-                  message="Allocation successfully Added."
+                  message={
+                    error === true ? errorMessage : "PLEASE SELECT AN OPTION"
+                  }
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
+                  close
+                />
+                <Snackbar
+                  place="tr"
+                  color="success"
+                  icon={AddAlert}
+                  message={"Allocation was Successful"}
+                  open={this.state.tr}
+                  closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
@@ -194,8 +226,10 @@ AllocationForm.propTypes = {
   lecturers: PropTypes.array.isRequired,
   students: PropTypes.array.isRequired,
   addAllocation: PropTypes.func.isRequired,
-  status: PropTypes.string,
-  classes: PropTypes.object
+  error: PropTypes.bool,
+  classes: PropTypes.object,
+  message: PropTypes.string,
+  errorMessage: PropTypes.string
 };
 
 export default withStyles(styles)(AllocationForm);

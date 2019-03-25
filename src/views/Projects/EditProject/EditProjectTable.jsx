@@ -5,19 +5,20 @@ import { withRouter } from "react-router";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
+import CustomNumberInput from "components/CustomInput/CustomNumberInput.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Person from "@material-ui/icons/Person";
+import Clear from "@material-ui/icons/Clear";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
-import CheckBox from "@material-ui/core/Checkbox";
+import AddAlert from "@material-ui/icons/AddAlert";
+//core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
-import Select from "@material-ui/core/Select";
-import Clear from "@material-ui/icons/Clear";
-import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
+import CheckBox from "@material-ui/core/Checkbox";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -37,19 +38,33 @@ const styles = {
   }
 };
 
-class EditAllocation extends React.Component {
+class EditProject extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      emp_no: this.props.location.state.emp_no,
-      firstName: this.props.location.state.firstName,
-      lastName: this.props.location.state.lastName,
+      projCode: this.props.location.state.code,
+      newProjectCode: "",
+      trimesters: 0,
       degreeSelected: false,
       diplomaSelected: false,
-      tr: false,
-      tl: false
+      tl: false,
+      tr: false
     };
   }
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+  resetValues = () => {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+    this.setState({
+      projCode: "",
+      newProjectCode: "",
+      degreeSelected: false,
+      diplomaSelected: false
+    });
+  };
   componentWillUnmount() {
     var id = window.setTimeout(null, 0);
     while (id--) {
@@ -68,120 +83,106 @@ class EditAllocation extends React.Component {
       6000
     );
   }
-  resetValues = () => {
-    let inputs = document.getElementsByTagName("input");
-    for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
-    this.setState({
-      firstName: "",
-      lastName: "",
-      degreeSelected: false,
-      diplomaSelected: false
-    });
-  };
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
+
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
-  upDateSupervisor = () => {
+  editProject = () => {
     const {
-      firstName,
-      lastName,
+      projCode,
+      newProjectCode,
+      trimesters,
       degreeSelected,
-      diplomaSelected,
-      emp_no
+      diplomaSelected
     } = this.state;
-    const { history, error, onSubmit } = this.props;
+    const { history, error } = this.props;
     const data = {};
-    data.f_name = firstName;
-    data.l_name = lastName;
+    data.new_project_code = newProjectCode;
     data.degree = degreeSelected;
+    data.trimesters = trimesters;
     data.diploma = diplomaSelected;
-    data.emp_no = emp_no
+    data.old_projects_code = projCode;
     if (
-      firstName.length === 0 ||
-      lastName.length === 0 ||
+      projCode.length === 0 ||
+      newProjectCode.length === 0 ||
+      trimesters.length === 0 ||
       (degreeSelected === false && diplomaSelected === false)
     ) {
       this.showNotification("tl");
     } else {
-      onSubmit(data);
+      this.props.onSubmit(data);
+
       if (error === false) {
         this.resetValues();
-        this.showNotification("tr");
-        history.push("/admin/superTable");
+        history.push("/admin/projectsTable");
       } else {
-        this.showNotification("tl");
+        this.showNotification("tr");
       }
     }
   };
   cancelEdit = () => {
     const { history } = this.props;
-    history.push("/admin/superTable");
+    history.push("/admin/projectsTable");
+  };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
   render() {
     const { classes, error, errorMessage, message } = this.props;
     return (
       <div>
-        <GridContainer>
+        <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="success">
-                <h4 className={classes.cardTitleWhite}>Edit Supervisor </h4>
+                <h4 className={classes.cardTitleWhite}>Edit Project </h4>
                 <p className={classes.cardCategoryWhite}>
-                  Enter Supervisor Details{" "}
+                  Enter Project Details{" "}
                 </p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem>
+                  <GridItem xs={12} sm={12} md={5}>
                     <CustomInput
-                      labelText="Staff Id"
-                      id="emp_no"
+                      labelText=" Old Project Code"
+                      id="projCode"
                       name="input"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.emp_no
+                        value: this.state.projCode,
+                        onChange: this.handleInput
                       }}
                       inputProps={{
-                        value: this.state.emp_no,
-                        disabled: true
+                        disabled: true,
+                        value: this.state.projCode
+                      }}
+                    />
+                    <CustomInput
+                      labelText="Enter New Project Code"
+                      id="newProjectCode"
+                      name="input"
+                      formControlProps={{
+                        fullWidth: true,
+                        value: this.state.newProjectCode,
+                        onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.state.newProjectCode
                       }}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={3}>
-
-                    <CustomInput
-                      className="text-center"
-                      labelText="first Name"
-                      id="fistName"
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomNumberInput
+                      labelText="Trimesters number (1 || 2)"
+                      id="trimesters"
+                      value="number"
                       name="input"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.firstName,
+                        value: this.state.trimesters,
                         onChange: this.handleInput
-                      }}
-                      inputProps={{
-                        value: this.state.firstName
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="lastName"
-                      labelText="Last Name"
-                      id="lastName"
-                      name="input"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.lastName,
-                        onChange: this.handleInput
-                      }}
-                      inputProps={{
-                        value: this.state.lastName
                       }}
                     />
                   </GridItem>
@@ -207,7 +208,7 @@ class EditAllocation extends React.Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="success" round onClick={this.upDateSupervisor}>
+                <Button color="success" round onClick={this.editProject}>
                   <Person />
                   Update Row
                 </Button>
@@ -220,7 +221,7 @@ class EditAllocation extends React.Component {
                   color={"danger"}
                   icon={AddAlert}
                   message={
-                    error === true ? errorMessage : "All fields Are Required"
+                    error === true ? errorMessage : "ALL FIELDS ARE REQUIRED"
                   }
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
@@ -243,15 +244,19 @@ class EditAllocation extends React.Component {
     );
   }
 }
-EditAllocation.propTypes = {
-  classes: PropTypes.object,
+EditProject.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.object,
   history: PropTypes.object,
-  location: PropTypes.object,
+  studentName: PropTypes.string,
+  projectCode: PropTypes.string,
+  supervisor: PropTypes.string,
   status: PropTypes.string,
+  lecturers: PropTypes.array,
+  location: PropTypes.object,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   message: PropTypes.string
 };
 
-export default withRouter(withStyles(styles)(EditAllocation));
+export default withRouter(withStyles(styles)(EditProject));

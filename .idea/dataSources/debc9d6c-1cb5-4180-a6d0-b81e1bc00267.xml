@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="projects@localhost">
+<dataSource name="schoolprojectsystem@localhost">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.14">
     <root id="1">
       <ServerVersion>5.7.25</ServerVersion>
@@ -10,7 +10,7 @@
     <schema id="2" parent="1" name="information_schema">
       <Collation>utf8_general_ci</Collation>
     </schema>
-    <schema id="3" parent="1" name="projects">
+    <schema id="3" parent="1" name="schoolprojectsystem">
       <Current>1</Current>
       <Visible>1</Visible>
       <Collation>latin1_swedish_ci</Collation>
@@ -905,220 +905,279 @@
     </collation>
     <table id="226" parent="3" name="allocations"/>
     <table id="227" parent="3" name="archives"/>
-    <table id="228" parent="3" name="lecturers"/>
-    <table id="229" parent="3" name="progress"/>
-    <table id="230" parent="3" name="projects"/>
-    <table id="231" parent="3" name="students"/>
-    <column id="232" parent="226" name="id">
+    <table id="228" parent="3" name="progress"/>
+    <table id="229" parent="3" name="projects"/>
+    <table id="230" parent="3" name="students"/>
+    <table id="231" parent="3" name="supervisors"/>
+    <column id="232" parent="226" name="allocation_id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(36)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="233" parent="226" name="student_adm">
+    <column id="233" parent="226" name="supervisor_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="234" parent="226" name="project_code">
+    <column id="234" parent="226" name="student_adm">
       <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(36)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="235" parent="226" name="lec_emp_no">
+    <column id="235" parent="226" name="project_code">
       <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(8)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="236" parent="226" name="date_registered">
       <Position>5</Position>
-      <DataType>date|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="237" parent="226" name="due_date">
       <Position>6</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="238" parent="226" name="PRIMARY">
+    <index id="238" parent="226" name="supervisor_id">
+      <ColNames>supervisor_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="239" parent="226" name="student_adm">
+      <ColNames>student_adm</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="240" parent="226" name="project_code">
+      <ColNames>project_code</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="241" parent="226" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
+      <ColNames>allocation_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="239" parent="227" name="archive_id">
+    <foreign-key id="242" parent="226" name="allocations_ibfk_1">
+      <ColNames>supervisor_id</ColNames>
+      <RefSchemaName>schoolprojectsystem</RefSchemaName>
+      <RefTableName>supervisors</RefTableName>
+      <RefColNames>supervisor_id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="243" parent="226" name="allocations_ibfk_2">
+      <ColNames>student_adm</ColNames>
+      <RefSchemaName>schoolprojectsystem</RefSchemaName>
+      <RefTableName>students</RefTableName>
+      <RefColNames>student_adm</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="244" parent="226" name="allocations_ibfk_3">
+      <ColNames>project_code</ColNames>
+      <RefSchemaName>schoolprojectsystem</RefSchemaName>
+      <RefTableName>projects</RefTableName>
+      <RefColNames>project_code</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="245" parent="227" name="archive_id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(36)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="227" name="student_adm">
+    <column id="246" parent="227" name="student_adm">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="241" parent="227" name="student_name">
+    <column id="247" parent="227" name="student_name">
       <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="227" name="project_code">
+    <column id="248" parent="227" name="supervisor_name">
       <Position>4</Position>
-      <DataType>varchar(10)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="243" parent="227" name="supervisor">
+    <column id="249" parent="227" name="project_code">
       <Position>5</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="227" name="date_started">
+    <column id="250" parent="227" name="date_registered">
       <Position>6</Position>
-      <DataType>date|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="227" name="date_completed">
+    <column id="251" parent="227" name="due_date">
       <Position>7</Position>
-      <DataType>date|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="246" parent="227" name="PRIMARY">
+    <key id="252" parent="227" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>archive_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="247" parent="228" name="emp_no">
+    <column id="253" parent="228" name="progress_id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(36)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="228" name="f_name">
+    <column id="254" parent="228" name="allocation_id">
       <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>varchar(36)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="228" name="l_name">
-      <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="250" parent="228" name="course">
-      <Position>4</Position>
-      <DataType>int(1)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="251" parent="228" name="password">
-      <Position>5</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="252" parent="228" name="role">
-      <Position>6</Position>
-      <DataType>varchar(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="253" parent="228" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>emp_no</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="254" parent="229" name="progress_id">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="255" parent="229" name="allocation_id">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="256" parent="229" name="date">
+    <column id="255" parent="228" name="date">
       <Position>3</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="257" parent="229" name="document">
+    <column id="256" parent="228" name="document">
       <Position>4</Position>
-      <DataType>varchar(100)|0s</DataType>
+      <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="229" name="comments">
+    <column id="257" parent="228" name="comments">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="229" name="marks">
+    <column id="258" parent="228" name="marks">
       <Position>6</Position>
-      <DataType>int(2)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="260" parent="229" name="PRIMARY">
+    <index id="259" parent="228" name="allocation_id">
+      <ColNames>allocation_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="260" parent="228" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>progress_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="261" parent="230" name="code">
+    <foreign-key id="261" parent="228" name="progress_ibfk_1">
+      <ColNames>allocation_id</ColNames>
+      <RefSchemaName>schoolprojectsystem</RefSchemaName>
+      <RefTableName>allocations</RefTableName>
+      <RefColNames>allocation_id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="262" parent="229" name="project_code">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="262" parent="230" name="name">
-      <Position>2</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="263" parent="230" name="trimesters">
-      <Position>3</Position>
-      <DataType>int(1)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="264" parent="230" name="course">
-      <Position>4</Position>
-      <DataType>int(1)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="265" parent="230" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>code</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="266" parent="231" name="adm">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="267" parent="231" name="f_name">
-      <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="268" parent="231" name="l_name">
-      <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="269" parent="231" name="project_code">
-      <Position>4</Position>
       <DataType>varchar(8)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="270" parent="231" name="PRIMARY">
+    <column id="263" parent="229" name="trimesters">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="264" parent="229" name="degree">
+      <Position>3</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="265" parent="229" name="diploma">
+      <Position>4</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="266" parent="229" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>adm</ColNames>
+      <ColNames>project_code</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="267" parent="230" name="student_adm">
+      <Position>1</Position>
+      <DataType>varchar(36)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="268" parent="230" name="first_name">
+      <Position>2</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="269" parent="230" name="last_name">
+      <Position>3</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="270" parent="230" name="project_code">
+      <Position>4</Position>
+      <DataType>varchar(8)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="271" parent="230" name="allocated">
+      <Position>5</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="272" parent="230" name="project_code">
+      <ColNames>project_code</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="273" parent="230" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>student_adm</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="274" parent="230" name="students_ibfk_1">
+      <ColNames>project_code</ColNames>
+      <RefSchemaName>schoolprojectsystem</RefSchemaName>
+      <RefTableName>projects</RefTableName>
+      <RefColNames>project_code</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="275" parent="231" name="supervisor_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="276" parent="231" name="first_name">
+      <Position>2</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="277" parent="231" name="last_name">
+      <Position>3</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="278" parent="231" name="role">
+      <Position>4</Position>
+      <DataType>varchar(12)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="231" name="degree">
+      <Position>5</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="280" parent="231" name="diploma">
+      <Position>6</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="281" parent="231" name="password">
+      <Position>7</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="282" parent="231" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>supervisor_id</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>
