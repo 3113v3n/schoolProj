@@ -8,6 +8,7 @@ const initialState = {
   error: false,
   projects: [],
   students: [],
+  archives: [],
   upload: [],
   supervisors: [],
   profile: {},
@@ -30,6 +31,12 @@ function adminReducer(state = initialState, action) {
         isLoading: true,
         error: false
       });
+    case actionTypes.FETCH_ARCHIVES:
+      return {
+        ...state,
+        archives: action.data,
+        isLoading: true
+      };
     case actionTypes.UPLOAD_SUCCESS:
       return updateProgress(state, {
         upload: [action.data, ...state.upload],

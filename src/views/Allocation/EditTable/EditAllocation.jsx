@@ -99,22 +99,23 @@ class EditAllocation extends React.Component {
   };
   editAllocation = () => {
     const { allocation_id, supervisor, projCode } = this.state;
-    const { history, error } = this.props;
+    const { history, error, status } = this.props;
     const data = {};
     data.allocation_id = allocation_id;
-    data.supervisor = supervisor;
-    data.project_code = projCode;
+    data.supervisor_id = supervisor;
     if (supervisor.length === 0 || projCode.length === 0) {
       this.showNotification("tl");
     } else {
+      console.log(data);
       this.props.onSubmit(data);
-
       if (error === false) {
-        this.resetValues();
-        history.push("/admin/allocation");
         this.showNotification("tr");
+        if (status !== "failed") {
+          this.resetValues();
+          history.push("/admin/allocation");
+        }
       } else {
-        this.showNotification("tc");
+        this.showNotification("tl");
       }
     }
   };
@@ -126,7 +127,14 @@ class EditAllocation extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   render() {
-    const { classes, lecturers, message, errorMessage } = this.props;
+    const {
+      classes,
+      lecturers,
+      message,
+      errorMessage,
+      error,
+      status
+    } = this.props;
     return (
       <div>
         <GridContainer>
@@ -235,31 +243,26 @@ class EditAllocation extends React.Component {
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={"All fields Required"}
+                  message={
+                    error !== true ? "All fields Required" : errorMessage
+                  }
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
                   place={"tr"}
-                  color={"success"}
+                  color={status !== "failed" ? "success" : "danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={
+                    status !== "failed" ? "Successful reallocation" : message
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
             </Card>
-            <Snackbar
-              place={"tc"}
-              color={"danger"}
-              icon={AddAlert}
-              message={errorMessage}
-              open={this.state.tc}
-              closeNotification={() => this.setState({ tc: false })}
-              close
-            />
           </GridItem>
         </GridContainer>
       </div>
@@ -277,7 +280,8 @@ EditAllocation.propTypes = {
   location: PropTypes.object,
   message: PropTypes.string,
   errorMessage: PropTypes.string,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  status: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(EditAllocation));

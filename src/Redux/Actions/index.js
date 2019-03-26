@@ -80,8 +80,22 @@ export const fetchData = () => {
   return dispatch => {
     fetchRequest("allocations")
       .then(responseJson => {
+        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_DATA, responseJson));
+      })
+      .catch(error => {
+        dispatch(fetchFailed(error.message));
+      });
+  };
+};
+export const fetchArchives = () => {
+  return dispatch => {
+    fetchRequest("archives")
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.FETCH_ARCHIVES, responseJson));
       })
       .catch(error => {
         dispatch(fetchFailed(error.message));
@@ -186,21 +200,23 @@ export const allocationRequirements = () => {
 
 export const supervisorStudents = () => {
   return dispatch => {
-    asyncRequest("allocations2.json")
+    fetchRequest("supervisor/dashboard")
       .then(responseJson => {
-        const myData = responseJson.Allocations;
-        dispatch(setMyData(actionTypes.SET_MY_DATA, myData));
+        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.SET_MY_DATA, responseJson));
       })
       .catch(error => {
         dispatch(fetchFailed(error.message));
       });
   };
 };
-export const fetchProgress = () => {
+export const fetchProgress = data => {
   return dispatch => {
-    fetchRequest("progress/<allocation_id> ")
+    fetchRequest(`progress/${data} `)
       .then(responseJson => {
-        //Students
+        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.FETCH_PROGRESS, responseJson));
       })
       .catch(error => {
@@ -254,9 +270,10 @@ export const addAllocation = data => {
 
 export const addSupervisor = data => {
   return dispatch => {
-    postRequest("auth/register", data)
+    postRequest("supervisor/register", data)
       .then(responseJson => {
         dispatch(setMyData(actionTypes.ADD_SUPERVISOR, data));
+        dispatch(setMyData(actionTypes.SET_STATUS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(error => {
@@ -288,7 +305,7 @@ export const addStudents = data => {
 
 export const editAllocations = data => {
   return dispatch => {
-    updateRequest("students", data)
+    updateRequest("allocations", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
@@ -378,7 +395,7 @@ export const editSupervisorProfile = data => {
 
 export const editProgress = data => {
   return dispatch => {
-    updateRequest("progress/", data)
+    updateRequest("progress", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
@@ -394,7 +411,7 @@ export const editProgress = data => {
 
 export const deleteStudents = data => {
   return dispatch => {
-    deleteRequest("students/<student_adm>", data)
+    deleteRequest(`students/${data}`)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
@@ -409,7 +426,7 @@ export const deleteStudents = data => {
 
 export const deleteSupervisors = data => {
   return dispatch => {
-    deleteRequest("supervisor", data)
+    deleteRequest(`supervisor/${data}`)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));

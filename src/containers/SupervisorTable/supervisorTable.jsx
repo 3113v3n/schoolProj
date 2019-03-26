@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 class supervisorTable extends React.Component {
   componentDidMount() {
-    this.props.onLoaded();
+    const { onLoaded } = this.props;
+    onLoaded();
   }
 
   render() {
@@ -28,12 +29,12 @@ supervisorTable.propTypes = {
   onDelete: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   data: PropTypes.array
-
 };
 const mapStateToProps = state => {
   return {
-    data: state.admin.supervisors,
-    isLoading: state.admin.isLoading,
+    data: state.supervisor.myData,
+    isLoading: state.supervisor.isLoading,
+    user: state.user.user
   };
 };
 const mapDispatchToProps = dispatch => {

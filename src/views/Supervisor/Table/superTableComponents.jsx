@@ -173,19 +173,29 @@ class superTableComponent extends React.Component {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {data !== null
-                  ? filtered.map(item => (
-                      <SupervisorTableRow
-                        key={item.supervisor_id}
-                        f_name={item.first_name}
-                        l_name={item.last_name}
-                        course={this.course(item.degree, item.diploma)}
-                        onDelete={onDelete}
-                        emp_no={item.supervisor_id}
-                        count={item.allocations_count}
-                      />
-                    ))
-                  : null}
+                {data.status !== "failed" ? (
+                  filtered.map(item => (
+                    <SupervisorTableRow
+                      key={item.supervisor_id}
+                      f_name={item.first_name}
+                      l_name={item.last_name}
+                      course={this.course(item.degree, item.diploma)}
+                      onDelete={onDelete}
+                      emp_no={item.supervisor_id}
+                      count={item.allocations_count}
+                    />
+                  ))
+                ) : (
+                  <tbody>
+                    <tr className={classes.center}>
+                      <td />
+                      <td />
+                      <td>NO SUPERVISORS PRESENT</td>
+                      <td />
+                      <td />
+                    </tr>
+                  </tbody>
+                )}
               </table>
             </CardBody>
           </Card>

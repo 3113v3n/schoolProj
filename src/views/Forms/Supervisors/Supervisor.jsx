@@ -1,5 +1,5 @@
 import React from "react";
-import {withRouter} from "react-router";
+import { withRouter } from "react-router";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Person from "@material-ui/icons/Person";
@@ -50,8 +50,7 @@ class Supervisors extends React.Component {
       diplomaSelected: false,
       error: true,
       tl: false,
-      tr: false,
-      tc: false
+      tr: false
     };
   }
   componentWillUnmount() {
@@ -105,9 +104,9 @@ class Supervisors extends React.Component {
       diplomaSelected
     } = this.state;
     const data = {};
-    data.emp_no = staff_id;
-    data.f_name = f_name;
-    data.l_name = l_name;
+    data.supervisor_id = parseInt(staff_id);
+    data.first_name = f_name;
+    data.last_name = l_name;
     data.password = password;
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
@@ -128,10 +127,12 @@ class Supervisors extends React.Component {
       } else {
         this.props.onSubmit(data);
         if (this.props.error === false) {
-          this.resetValues();
+          const { history } = this.props;
           this.showNotification("tr");
+          this.resetValues();
+          history.push("/admin/SuperTable");
         } else {
-          this.showNotification("tc");
+          this.showNotification("tl");
         }
       }
     }
@@ -144,7 +145,7 @@ class Supervisors extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
   render() {
-    const { classes, errorMessage, message } = this.props;
+    const { classes, errorMessage, message, status, error } = this.props;
 
     return (
       <div>
@@ -265,30 +266,27 @@ class Supervisors extends React.Component {
                   place="tl"
                   color="danger"
                   icon={AddAlert}
-                  message="All fields required."
+                  message={
+                    error === true ? errorMessage : "All fields required."
+                  }
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
-                  place="tr"
-                  color={"success"}
+                  place={status === "success" ? "tr" : "tl"}
+                  color={status === "success" ? "success" : "danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={
+                    status === "success"
+                      ? message
+                      : "Supervisor couldn't be added"
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
-              <Snackbar
-                place="tc"
-                color="danger"
-                icon={AddAlert}
-                message={errorMessage}
-                open={this.state.tc}
-                closeNotification={() => this.setState({ tc: false })}
-                close
-              />
             </Card>
           </GridItem>
         </GridContainer>

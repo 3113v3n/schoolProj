@@ -30,17 +30,12 @@ class SupervisorTableRow extends React.Component {
       }
     });
   };
+  deleteItem = id => {
+    const supervisor_id = parseInt(id);
+    this.props.onDelete(supervisor_id);
+  };
   render() {
-    const {
-      f_name,
-      l_name,
-      course,
-      classes,
-      key,
-      onDelete,
-      count,
-      emp_no
-    } = this.props;
+    const { f_name, l_name, course, classes, key, count, emp_no } = this.props;
     return (
       <tbody>
         <tr className={classes.center} key={key}>
@@ -82,7 +77,7 @@ class SupervisorTableRow extends React.Component {
                   onClick={() =>
                     window.confirm(
                       "Are you sure you wish to delete this row?"
-                    ) && onDelete(emp_no)
+                    ) && this.deleteItem(emp_no)
                   }
                 />
               </IconButton>

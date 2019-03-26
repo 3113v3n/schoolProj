@@ -99,9 +99,9 @@ class EditProject extends React.Component {
     const data = {};
     data.new_project_code = newProjectCode;
     data.degree = degreeSelected;
-    data.trimesters = trimesters;
+    data.trimesters = parseInt(trimesters);
     data.diploma = diplomaSelected;
-    data.old_projects_code = projCode;
+    data.old_project_code = projCode;
     if (
       projCode.length === 0 ||
       newProjectCode.length === 0 ||

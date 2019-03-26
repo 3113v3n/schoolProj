@@ -95,8 +95,7 @@ const styles = {
 };
 class Progress extends React.Component {
   state = {
-    AdmNo: `${this.props.location.state.marks}`,
-    allocation_id: "",
+    allocation_id: this.props.location.state.allocation_id,
     documents: "",
     comments: "",
     marks: 0,
@@ -188,7 +187,8 @@ class Progress extends React.Component {
     this.download(csvData);
   };
   render() {
-    const { classes, data } = this.props;
+    const { classes, data, error } = this.props;
+
     return (
       <div>
         <GridContainer>
@@ -209,21 +209,6 @@ class Progress extends React.Component {
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Adm Number"
-                      id="admNo"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        disabled: true,
-                        value: this.state.AdmNo
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
@@ -326,14 +311,26 @@ class Progress extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map(item => (
-                      <tr key={item.date}>
-                        <td>{item.date}</td>
-                        <td>{item.documents}</td>
-                        <td>{item.comments}</td>
-                        <td>{item.marks}</td>
-                      </tr>
-                    ))}
+                    {!error ? (
+                      data.map(item => (
+                        <tr key={item.date}>
+                          <td>{item.date}</td>
+                          <td>{item.documents}</td>
+                          <td>{item.comments}</td>
+                          <td>{item.marks}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tbody>
+                        <tr className={classes.center}>
+                          <td />
+                          <td />
+                          <td>NO PROGRESS AVAILABLE</td>
+                          <td />
+                          <td />
+                        </tr>
+                      </tbody>
+                    )}
                   </tbody>
                 </table>
               </CardBody>

@@ -41,9 +41,7 @@ class UserProfile extends React.Component {
       password: "",
       confirmPass: "",
       tl: false,
-      tr: false,
-      tc: false,
-      bl: false
+      tr: false
     };
   }
   componentWillUnmount() {
@@ -75,23 +73,23 @@ class UserProfile extends React.Component {
     const data = {};
     const { oldPass, password, confirmPass } = this.state;
     const { error } = this.props;
-    data.old_Pass = oldPass;
+    data.old_password = oldPass;
     data.password = password;
     if (
       oldPass.length === 0 ||
       password.length === 0 ||
       confirmPass.length === 0
     ) {
-      alert("ALL FIELDS ARE REQUIRED");
+      this.showNotification("tl");
     } else if (password !== confirmPass) {
-      this.showNotification("tc");
+      this.showNotification("tl");
     } else {
       this.props.updateProfile(data);
       if (error === false) {
         this.resetValues();
         this.showNotification("tr");
       } else {
-        this.showNotification("tl");
+        this.showNotification("tr");
       }
     }
   };
@@ -99,8 +97,8 @@ class UserProfile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes, message, errorMessage } = this.props;
-
+    const { classes, message, errorMessage, error, status } = this.props;
+    const { oldPass, password, confirmPass } = this.state;
     return (
       <div>
         <GridContainer container justify="center" alignItems="baseline">
@@ -171,30 +169,27 @@ class UserProfile extends React.Component {
                   place="tl"
                   color="danger"
                   icon={AddAlert}
-                  message={errorMessage}
+                  message={
+                    oldPass.length === 0 ||
+                    password.length === 0 ||
+                    confirmPass.length === 0
+                      ? "ALL FIELDS ARE REQUIRED"
+                      : "PASSWORDS DONT MATCH"
+                  }
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
                   place="tr"
-                  color="success"
+                  color={error && status === "failed" ? "danger" : "success"}
                   icon={AddAlert}
-                  message={message}
+                  message={error ? errorMessage : message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
-              <Snackbar
-                place="tc"
-                color="danger"
-                icon={AddAlert}
-                message="PASSWORDS DONT MATCH"
-                open={this.state.tc}
-                closeNotification={() => this.setState({ tc: false })}
-                close
-              />
             </Card>
           </GridItem>
         </GridContainer>

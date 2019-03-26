@@ -184,17 +184,27 @@ class ProjectsComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {data !== null
-                    ? filtered.map(item => (
-                        <ProjectTableRow
-                          projectCode={item.project_code}
-                          trimesters={item.trimesters}
-                          degree={this.degreeItem(item.degree)}
-                          diploma={this.diplomaItem(item.diploma)}
-                          key={item.project_code}
-                        />
-                      ))
-                    : null}
+                  {data.status !== "failed" ? (
+                    filtered.map(item => (
+                      <ProjectTableRow
+                        projectCode={item.project_code}
+                        trimesters={item.trimesters}
+                        degree={this.degreeItem(item.degree)}
+                        diploma={this.diplomaItem(item.diploma)}
+                        key={item.project_code}
+                      />
+                    ))
+                  ) : (
+                    <tbody>
+                      <tr className={classes.center}>
+                        <td />
+                        <td />
+                        <td>NO PROJECTS AVAILABLE</td>
+                        <td />
+                        <td />
+                      </tr>
+                    </tbody>
+                  )}
                 </table>
               </div>
             </CardBody>

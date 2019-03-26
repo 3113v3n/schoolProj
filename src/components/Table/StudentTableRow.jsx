@@ -30,6 +30,10 @@ class StudentTableRow extends React.Component {
       }
     });
   };
+  deleteRow = id => {
+    let student_adm = parseInt(id);
+    this.props.onDelete(student_adm);
+  };
   render() {
     const { admNo, name, projectCode, classes, key } = this.props;
     return (
@@ -67,10 +71,10 @@ class StudentTableRow extends React.Component {
               >
                 <Delete
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={key =>
+                  onClick={() =>
                     window.confirm(
                       "Are you sure you wish to delete Student row?"
-                    ) && this.props.onDelete(key)
+                    ) && this.deleteRow(admNo)
                   }
                 />
               </IconButton>

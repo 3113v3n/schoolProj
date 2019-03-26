@@ -166,17 +166,27 @@ class AdminComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {data !== null
-                    ? filtered.map(item => (
-                        <StudentTableRow
-                          onDelete={onDelete}
-                          name={item.name}
-                          admNo={item.student_adm}
-                          projectCode={item.project_code}
-                          key={item.adm}
-                        />
-                      ))
-                    : null}
+                  {data.status !== "failed" ? (
+                    filtered.map(item => (
+                      <StudentTableRow
+                        onDelete={onDelete}
+                        name={item.name}
+                        admNo={item.student_adm}
+                        projectCode={item.project_code}
+                        key={item.adm}
+                      />
+                    ))
+                  ) : (
+                    <tbody>
+                      <tr className={classes.center}>
+                        <td />
+                        <td />
+                        <td>NO STUDENTS AVAILABLE</td>
+                        <td />
+                        <td />
+                      </tr>
+                    </tbody>
+                  )}
                 </table>
               </div>
             </CardBody>

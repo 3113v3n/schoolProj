@@ -75,7 +75,7 @@ class Profile extends React.Component {
     const data = {};
     const { oldPass, password, confirmPass } = this.state;
     const { error } = this.props;
-    data.old_Pass = oldPass;
+    data.old_password = oldPass;
     data.password = password;
     if (
       oldPass.length === 0 ||

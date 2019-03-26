@@ -40,7 +40,11 @@ async function updateRequest(path, param) {
   try {
     let requestParams = {
       method: "PUT",
-
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);

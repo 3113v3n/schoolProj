@@ -5,6 +5,10 @@ import * as actionCreators from "../../Redux/Actions";
 import * as actionTypes from "../../Redux/Actions/action-types";
 import PropTypes from "prop-types";
 class EditStudentTable extends React.Component {
+  componentDidMount() {
+    this.props.fetchProjects();
+  }
+
   render() {
     return (
       <div>
@@ -13,6 +17,7 @@ class EditStudentTable extends React.Component {
           error={this.props.error}
           errorMessage={this.props.errorMessage}
           message={this.props.message}
+          projects={this.props.projects}
         />
       </div>
     );
@@ -22,15 +27,18 @@ EditStudentTable.propTypes = {
   onEditProgress: PropTypes.func,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  message: PropTypes.string
-
+  message: PropTypes.string,
+  projects: PropTypes.array,
+  fetchProjects: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onEditProgress: data => {
-      dispatch(actionCreators.editTable(actionTypes.EDIT_STUDENT_TABLE, data));
-      // dispatch(actionCreators.editStudents(data))
+      dispatch(actionCreators.editStudents(data));
+    },
+    fetchProjects: () => {
+      dispatch(actionCreators.fetchProjects());
     }
   };
 };
@@ -38,6 +46,7 @@ const mapStateToProps = state => {
   return {
     error: state.error.error,
     errorMessage: state.error.errorMessage,
+    projects: state.admin.projects,
     message: state.admin.message
   };
 };

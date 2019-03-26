@@ -170,18 +170,28 @@ class SupervisorComponent extends React.Component {
                     </tr>
                   </thead>
 
-                  {data !== null
-                    ? filtered.map(item => (
-                        <TableRow
-                          key={item.studentName}
-                          studentName={item.studentName}
-                          supervisor={item.supervisor}
-                          projectCode={item.projectCode}
-                          dateRegistered={item.dateRegistered}
-                          dueDate={item.dateRegistered}
-                        />
-                      ))
-                    : null}
+                  {data.status !== "failed" ? (
+                    filtered.map(item => (
+                      <TableRow
+                        key={item.allocation_id}
+                        studentName={item.student_name}
+                        projectCode={item.project_code}
+                        dateRegistered={item.date_registered}
+                        dueDate={item.due_date}
+                        allocation_id={item.allocation_id}
+                      />
+                    ))
+                  ) : (
+                    <tbody>
+                      <tr className={classes.center}>
+                        <td />
+                        <td />
+                        <td>NO STUDENTS AVAILABLE</td>
+                        <td />
+                        <td />
+                      </tr>
+                    </tbody>
+                  )}
                 </table>
               </div>
             </CardBody>

@@ -84,68 +84,76 @@ const styles = {
   }
 };
 
-function ArchiveComponent(props) {
-  const {
-    classes,
-    name,
-    supervisor,
-    project_Code,
-    date,
-    finishDate,
-    adm
-  } = props;
-  return (
-    <GridContainer justify="center">
-      <GridItem xs={12} sm={12} md={8}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Archives Table</h4>
-          </CardHeader>
-          <CardBody>
-            <div className={classes.tableUpgradeWrapper}>
-              <GridItem xs={2} sm={2} md={2}>
-                <CustomInput
-                  labelText="Type to filter"
-                  id="material"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Search />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </GridItem>
-              <table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th> Admission Number</th>
-                    <th>StudentName</th>
-                    <th>Supervisor</th>
-                    <th>ProjCode</th>
-                    <th>Start Date</th>
-                    <th> Finish Date</th>
-                  </tr>
-                </thead>
-                <ArchiveRow
-                  adm={adm}
-                  studentName={name}
-                  supervisor={supervisor}
-                  projectCode={project_Code}
-                  dateRegistered={date}
-                  finishDate={finishDate}
-                  key={adm}
-                />
-              </table>
-            </div>
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
+class ArchiveComponent extends React.Component {
+  render() {
+    const { classes, archives, status } = this.props;
+    return (
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={8}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Archives Table</h4>
+            </CardHeader>
+            <CardBody>
+              <div className={classes.tableUpgradeWrapper}>
+                <GridItem xs={2} sm={2} md={2}>
+                  <CustomInput
+                    labelText="Type to filter"
+                    id="material"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Search />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </GridItem>
+                <table className={classes.table}>
+                  <thead>
+                    <tr>
+                      <th> Admission Number</th>
+                      <th>StudentName</th>
+                      <th>Supervisor</th>
+                      <th>ProjCode</th>
+                      <th>Start Date</th>
+                      <th> Finish Date</th>
+                    </tr>
+                  </thead>
+                  {archives.status !== "failed" ? (
+                    archives.map(item => (
+                      <ArchiveRow
+                        key={item.student_adm}
+                        adm={item.student_adm}
+                        studentName={item.student_name}
+                        supervisor={item.supervisor_name}
+                        projectCode={item.project_code}
+                        dateRegistered={item.date_registered}
+                        finishDate={item.due_date}
+                      />
+                    ))
+                  ) : (
+                    <tbody>
+                      <tr className={classes.center}>
+                        <td />
+                        <td />
+                        <td>NO ARCHIVES</td>
+                        <td />
+                        <td />
+                      </tr>
+                    </tbody>
+                  )}
+                </table>
+              </div>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
 ArchiveComponent.propTypes = {
   classes: PropTypes.object,

@@ -19,6 +19,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Edit from "@material-ui/core/SvgIcon/SvgIcon";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -137,7 +140,7 @@ class AllocationComponent extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Student Table</h4>
+              <h4 className={classes.cardTitleWhite}>Allocations Table</h4>
               <p className={classes.cardCategoryWhite}>students </p>
             </CardHeader>
             <CardBody>
@@ -171,19 +174,29 @@ class AllocationComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {data !== null
-                    ? filtered.map(item => (
-                        <AllocationTableRow
-                          studentName={item.student_name}
-                          supervisor={item.supervisor_name}
-                          dateRegistered={item.date_registered}
-                          key={item.allocation_id}
-                          dueDate={item.due_date}
-                          projectCode={item.project_code}
-                          allocation_id={item.allocation_id}
-                        />
-                      ))
-                    : null}
+                  {data.status !== "failed" ? (
+                    filtered.map(item => (
+                      <AllocationTableRow
+                        studentName={item.student_name}
+                        supervisor={item.supervisor_name}
+                        dateRegistered={item.date_registered}
+                        key={item.allocation_id}
+                        dueDate={item.due_date}
+                        projectCode={item.project_code}
+                        allocation_id={item.allocation_id}
+                      />
+                    ))
+                  ) : (
+                    <tbody>
+                      <tr className={classes.center}>
+                        <td />
+                        <td />
+                        <td>NO ALLOCATIONS</td>
+                        <td />
+                        <td />
+                      </tr>
+                    </tbody>
+                  )}
                 </table>
               </div>
             </CardBody>
@@ -200,6 +213,6 @@ class AllocationComponent extends React.Component {
 }
 AllocationComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.array,
+  data: PropTypes.array
 };
 export default withRouter(withStyles(styles)(AllocationComponent));

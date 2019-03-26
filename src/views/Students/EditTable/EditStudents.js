@@ -17,6 +17,8 @@ import AddAlert from "@material-ui/icons/AddAlert";
 //core components
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import Clear from "@material-ui/icons/Clear";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -63,6 +65,7 @@ class EditStudents extends React.Component {
       window.clearTimeout(id);
     }
   }
+
   cancelEdit = () => {
     const { history } = this.props;
     history.push("/admin/adminStudents");
@@ -96,10 +99,10 @@ class EditStudents extends React.Component {
     const { firstName, lastName, admNo, projCode } = this.state;
     const { history, error } = this.props;
     const data = {};
-    data.firstName = firstName;
-    data.lastName = lastName;
-    data.admNo = admNo;
-    data.projCode = projCode;
+    data.first_name = firstName;
+    data.last_name = lastName;
+    data.student_adm = parseInt(admNo);
+    data.project_code = projCode;
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
@@ -119,7 +122,7 @@ class EditStudents extends React.Component {
     }
   };
   render() {
-    const { classes, error,message, errorMessage } = this.props;
+    const { classes, error, message, errorMessage, projects } = this.props;
     return (
       <div>
         <GridContainer>
@@ -184,19 +187,34 @@ class EditStudents extends React.Component {
 
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      className="project Code"
-                      labelText="Project Code"
-                      id="projCode"
-                      formControlProps={{
-                        fullWidth: true,
-                        value: this.state.projCode,
-                        onChange: this.handleInput
+                    <label htmlFor="lecturers">
+                      Select Student Project Code
+                    </label>
+                    <Select
+                      name="input"
+                      style={{ marginLeft: 10, width: "40%", paddingTop: 20 }}
+                      value={this.state.project}
+                      onChange={event => {
+                        this.setState({ project: event.target.value });
+                      }}
+                      formcontrolprops={{
+                        fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.projCode
+                        name: "input",
+                        id: "projCode"
                       }}
-                    />
+                    >
+                      {projects.map(item => (
+                        <MenuItem
+                          key={item.project_code}
+                          value={item.project_code}
+                        >
+                          {item.project_code}
+                        </MenuItem>
+                      ))}
+
+                    </Select>
                     <Snackbar
                       place={"tl"}
                       color={"danger"}
@@ -246,7 +264,8 @@ EditStudents.propTypes = {
   location: PropTypes.object,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  message: PropTypes.string
+  message: PropTypes.string,
+  projects: PropTypes.array
 };
 
 export default withRouter(withStyles(styles)(EditStudents));

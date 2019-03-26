@@ -1,0 +1,120 @@
+GET http://localhost:5000/progress
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2MzYwMzIsIm5iZiI6MTU1MzYzNjAzMiwianRpIjoiOGE5YTVjM2YtNmNhNS00YjFkLThkN2YtNTg0MjczMzgxZGRjIiwiZXhwIjoxNTUzNjM2OTMyLCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.e3X6WhXa0Xr4teaeu6mBCQgteKT3EFEZrw11vxCrjWg
+
+<> 2019-03-27T125402.500.html
+
+###
+
+GET http://localhost:5000/progress/c49c13fa-6025-4f87-b2d7-5f0e7857409d
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2MzYwMzIsIm5iZiI6MTU1MzYzNjAzMiwianRpIjoiOGE5YTVjM2YtNmNhNS00YjFkLThkN2YtNTg0MjczMzgxZGRjIiwiZXhwIjoxNTUzNjM2OTMyLCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.e3X6WhXa0Xr4teaeu6mBCQgteKT3EFEZrw11vxCrjWg
+
+<> 2019-03-27T125324.404.html
+
+###
+
+GET http://localhost:5000/supervisor/dashboard
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2MzYwMzIsIm5iZiI6MTU1MzYzNjAzMiwianRpIjoiOGE5YTVjM2YtNmNhNS00YjFkLThkN2YtNTg0MjczMzgxZGRjIiwiZXhwIjoxNTUzNjM2OTMyLCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.e3X6WhXa0Xr4teaeu6mBCQgteKT3EFEZrw11vxCrjWg
+
+<> 2019-03-27T123553.200.json
+
+###
+
+GET http://localhost:5000/supervisor/dashboard
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2MzUzNzYsIm5iZiI6MTU1MzYzNTM3NiwianRpIjoiNjVjZDk5YjItM2QxNS00Y2VlLTgzMTYtMThmNDFhNWFmM2VjIiwiZXhwIjoxNTUzNjM2Mjc2LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.VaKkEWKkqXpNRPM6wfe_EgmyFgzXuciZgQt8JkEKzjg
+
+<> 2019-03-27T123434.200.json
+
+###
+
+GET http://localhost:5000/supervisor/dashboard
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2MzUzNzYsIm5iZiI6MTU1MzYzNTM3NiwianRpIjoiNjVjZDk5YjItM2QxNS00Y2VlLTgzMTYtMThmNDFhNWFmM2VjIiwiZXhwIjoxNTUzNjM2Mjc2LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.VaKkEWKkqXpNRPM6wfe_EgmyFgzXuciZgQt8JkEKzjg
+
+<> 2019-03-27T122419.200.json
+
+###
+
+GET http://localhost:5000/supervisor/dashboard
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2MzQxMTYsIm5iZiI6MTU1MzYzNDExNiwianRpIjoiNDlkNDFkZGQtZThlZi00ZGUzLTg2Y2UtYjczMzg1MGM4ZDkzIiwiZXhwIjoxNTUzNjM1MDE2LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.iaUMimzQg8w0zKmNT31QmhHkUfHy6GGN7dFVS0NoVAA
+
+<> 2019-03-27T120430.200.json
+
+###
+
+POST http://localhost:5000/auth/register
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json,
+Access-Control-Allow-Origin: *
+{"supervisor_id": 18262,"first_name":"Sidney","last_name":"Omondi","degree":true,"diploma":false}
+<> 2019-03-26T022900.400.json:
+<> 2019-03-26T022829.405.json:
+<> 2019-03-26T022751.405.json:
+
+<> 2019-03-26T023136.400.json
+
+###
+
+POST http://localhost:5000/auth/register
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json,
+{"supervisor_id": 18262,"first_name":"Sidney","last_name":"Omondi","degree":true,"diploma":false}
+<> 2019-03-26T022900.400.json:
+<> 2019-03-26T022829.405.json:
+<> 2019-03-26T022751.405.json:
+
+<> 2019-03-26T023049.400.json
+
+###
+
+POST http://localhost:5000/auth/register
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json,
+
+<> 2019-03-26T022900.400.json
+
+###
+
+PUT http://localhost:5000/auth/register
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json,
+
+<> 2019-03-26T022829.405.json
+
+###
+
+PUT http://localhost:5000/auth/register
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json,
+{"supervisor_id": 1234567,"degree": true,"diploma":true}
+
+<> 2019-03-26T022751.405.json
+
+###
+
+PUT http://localhost:5000/allocations
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"allocation_id":  "6b34273f-4ce4-4271-9571-11be34d25a73", "supervisor_id": 12345}
+
+<> 2019-03-26T011042.200.json
+
+###
+

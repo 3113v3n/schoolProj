@@ -1,40 +1,46 @@
 import React from "react";
 import ArchiveComponent from "../../views/Archives/ArchiveComponent.jsx";
-
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import * as actionCreators from "../../Redux/Actions";
 class Archives extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      adm: "11947",
-      studentName: "Sidney Reezy",
-      supervisor: " Mr. Gitau",
-      project_Code: " 200",
-      date: "20-12-2018",
-      finishDate: "23-04-2019"
-    };
+  componentDidMount() {
+    this.props.fetchArchives();
   }
+
   render() {
-    const {
-      studentName,
-      supervisor,
-      project_Code,
-      date,
-      finishDate,
-      adm
-    } = this.state;
-    return (
-      <div>
-        <ArchiveComponent
-          name={studentName}
-          supervisor={supervisor}
-          project_Code={project_Code}
-          date={date}
-          finishDate={finishDate}
-          adm={adm}
-        />
-      </div>
-    );
+    const { archives, isLoading, status } = this.props;
+    if(!isLoading){
+      return <div> Loading...</div>;
+    } else {
+      return (
+        <div>
+          <ArchiveComponent archives={archives} status={status} />
+        </div>
+      );
+    }
   }
 }
+Archives.propTypes = {
+  archives: PropTypes.array.isRequired,
+  fetchArchives: PropTypes.func,
+  isLoading: PropTypes.bool,
+  status: PropTypes.string
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchArchives: () => dispatch(actionCreators.fetchArchives())
+  };
+};
+const mapStateToProps = state => {
+  return {
+    archives: state.admin.archives,
+    isLoading: state.admin.isLoading,
+    status: state.admin.status
+  };
+};
 
-export default Archives;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Archives);

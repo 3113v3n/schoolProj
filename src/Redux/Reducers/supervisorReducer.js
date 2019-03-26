@@ -24,7 +24,10 @@ function supervisorReducer(state = initialState, action) {
         myData: action.data,
         isLoading: true
       });
-
+    case actionTypes.SUPERVISOR_STATUS:
+      return {
+        status: action.data
+      };
     case actionTypes.EDIT_PROGRESS:
       return {
         ...state,
@@ -50,7 +53,7 @@ function supervisorReducer(state = initialState, action) {
     case actionTypes.MARK_AS_COMPLETED:
       return {
         ...state,
-        completed: !state.completed,
+        completed: true,
         status: state.status
       };
     default:

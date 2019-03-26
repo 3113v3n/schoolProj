@@ -20,14 +20,11 @@ const styles = {
 };
 class TableRow extends React.Component {
   goToEdit = () => {
-    const { history } = this.props;
+    const { history, allocation_id } = this.props;
     history.push({
       pathname: "/admin/progress",
       state: {
-        documents: "",
-        date: "",
-        comments: "",
-        marks: ""
+        allocation_id: allocation_id
       }
     });
   };
@@ -38,11 +35,10 @@ class TableRow extends React.Component {
       dateRegistered,
       classes,
       dueDate,
-      key
     } = this.props;
     return (
       <tbody>
-        <tr className={classes.center} key={key}>
+        <tr className={classes.center}>
           <td>{studentName}</td>
           <td>{projectCode}</td>
           <td>{dateRegistered}</td>
@@ -76,8 +72,8 @@ class TableRow extends React.Component {
               >
                 <CheckCircle
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={() =>
-                    window.confirm("Mark this Project as Complete?")
+                  onClick={
+                    () => window.confirm("Mark this Project as Complete?") //TODO:markComplete function
                   }
                 />
               </IconButton>
@@ -94,7 +90,7 @@ TableRow.propTypes = {
   projectCode: PropTypes.string.isRequired,
   dateRegistered: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  key: PropTypes.string.isRequired,
+  allocation_id: PropTypes.string,
   history: PropTypes.object,
   dueDate: PropTypes.string
 };
