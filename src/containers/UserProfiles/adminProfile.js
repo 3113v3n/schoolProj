@@ -31,10 +31,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateProfile: data => {
-      dispatch(
-        actionCreators.setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, data)
-        //actionCreators.editAdminProfile(data)
-      );
+      dispatch(actionCreators.editAdminProfile(data));
     }
   };
 };

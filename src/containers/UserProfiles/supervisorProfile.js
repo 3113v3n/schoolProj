@@ -29,10 +29,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onUpdate: data => {
-      dispatch(
-        actionCreators.setMyData(actionTypes.CHANGE_SUPERVISOR_PASSWORD, data)
-        // actionCreators.editSupervisorProfile(data)
-      );
+      dispatch(actionCreators.editSupervisorProfile(data));
     }
   };
 };
