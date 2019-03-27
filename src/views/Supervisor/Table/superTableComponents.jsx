@@ -113,8 +113,8 @@ class superTableComponent extends React.Component {
       currentList = this.props.data;
 
       newList = currentList.filter(item => {
-        const lc = `${item.f_name.toLowerCase()} //filter through table contents
-         ${item.l_name.toLowerCase()}`;
+        const lc = `${item.first_name.toLowerCase()}  
+         ${item.last_name.toLowerCase()} ${item.allocations_count}`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -148,7 +148,7 @@ class superTableComponent extends React.Component {
             <CardBody>
               <GridItem xs={2} sm={2} md={2}>
                 <CustomInput
-                  labelText="Filter by Name"
+                  labelText="Filter by Name and Count"
                   id="material"
                   formControlProps={{
                     fullWidth: true,

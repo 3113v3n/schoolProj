@@ -127,10 +127,12 @@ class Supervisors extends React.Component {
       } else {
         this.props.onSubmit(data);
         if (this.props.error === false) {
-          const { history } = this.props;
-          this.showNotification("tr");
-          this.resetValues();
-          history.push("/admin/SuperTable");
+          if (this.props.status !== "failed") {
+            const { history } = this.props;
+            this.showNotification("tr");
+            this.resetValues();
+            history.push("/admin/SuperTable");
+          }
         } else {
           this.showNotification("tl");
         }

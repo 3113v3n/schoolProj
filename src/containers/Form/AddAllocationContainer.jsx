@@ -15,11 +15,13 @@ class AddAllocationContainer extends React.Component {
       lecturers,
       error,
       errorMessage,
-      message
+      message,
+      status,
+      fetchAllocations
     } = this.props;
     return (
       <div>
-        {students !== null && lecturers !== null ? (
+        {students.status !== "failed" && lecturers.status !== "failed" ? (
           <AllocationForm
             addAllocation={addAllocation}
             students={students}
@@ -27,10 +29,12 @@ class AddAllocationContainer extends React.Component {
             error={error}
             errorMessage={errorMessage}
             message={message}
+            status={status}
+            fetchAllocations={fetchAllocations}
           />
         ) : (
           <div>
-            <p> No allocations present</p>
+            <p> Add Lecturers and Students To make allocations</p>
           </div>
         )}
       </div>
@@ -43,7 +47,8 @@ const mapStateToProps = state => {
     lecturers: state.admin.supervisors,
     error: state.error.error,
     errorMessage: state.error.errorMessage,
-    message: state.admin.message
+    message: state.admin.message,
+    status: state.admin.status
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -63,7 +68,8 @@ AddAllocationContainer.propTypes = {
   lecturers: PropTypes.array,
   error: PropTypes.bool,
   message: PropTypes.string,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  status: PropTypes.string
 };
 export default connect(
   mapStateToProps,

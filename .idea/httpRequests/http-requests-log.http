@@ -1,3 +1,44 @@
+GET http://localhost:5000/progress/d31f4dea-5ab5-48ef-9e3c-b1d2f5b8cf90
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2ODc4MDcsIm5iZiI6MTU1MzY4NzgwNywianRpIjoiNDM3OTE2YjAtMDM0Yy00ZDlhLWI4OTktN2U2ZjBkMzc4NDUzIiwiZXhwIjoxNTUzNjg4NzA3LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.dQYwIa4IVgbBr6VV4HowdNM3OH2pHmp7X_L4Zlj8Srk
+
+<> 2019-03-27T034959.200.json
+
+###
+
+GET http://localhost:5000/progress/d31f4dea-5ab5-48ef-9e3c-b1d2f5b8cf90
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2ODc4MDcsIm5iZiI6MTU1MzY4NzgwNywianRpIjoiNDM3OTE2YjAtMDM0Yy00ZDlhLWI4OTktN2U2ZjBkMzc4NDUzIiwiZXhwIjoxNTUzNjg4NzA3LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.dQYwIa4IVgbBr6VV4HowdNM3OH2pHmp7X_L4Zlj8Srk
+
+<> 2019-03-27T030918.200.json
+
+###
+
+GET http://localhost:5000/progress/"d31f4dea-5ab5-48ef-9e3c-b1d2f5b8cf90"
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2ODc4MDcsIm5iZiI6MTU1MzY4NzgwNywianRpIjoiNDM3OTE2YjAtMDM0Yy00ZDlhLWI4OTktN2U2ZjBkMzc4NDUzIiwiZXhwIjoxNTUzNjg4NzA3LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.dQYwIa4IVgbBr6VV4HowdNM3OH2pHmp7X_L4Zlj8Srk
+
+###
+
+GET http://localhost:5000/supervisor/dashboard
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2ODc4MDcsIm5iZiI6MTU1MzY4NzgwNywianRpIjoiNDM3OTE2YjAtMDM0Yy00ZDlhLWI4OTktN2U2ZjBkMzc4NDUzIiwiZXhwIjoxNTUzNjg4NzA3LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.dQYwIa4IVgbBr6VV4HowdNM3OH2pHmp7X_L4Zlj8Srk
+
+<> 2019-03-27T025902.404.json
+
+###
+
+GET http://localhost:8080/resources
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM2ODc4MDcsIm5iZiI6MTU1MzY4NzgwNywianRpIjoiNDM3OTE2YjAtMDM0Yy00ZDlhLWI4OTktN2U2ZjBkMzc4NDUzIiwiZXhwIjoxNTUzNjg4NzA3LCJpZGVudGl0eSI6Njc4OTAsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.dQYwIa4IVgbBr6VV4HowdNM3OH2pHmp7X_L4Zlj8Srk
+
+###
+
 GET http://localhost:5000/progress
 Accept: */*
 Cache-Control: no-cache

@@ -47,7 +47,7 @@ class LoginForm extends React.Component {
       staff_id: "",
       password: "",
       redirect: true,
-      tr: false,
+      tl: false,
       tc: false
     };
   }
@@ -81,13 +81,13 @@ class LoginForm extends React.Component {
   validatePassInput = () => {
     const { password, staff_id } = this.state;
     if (password.length === 0 || staff_id.length === 0) {
-      this.showNotification("tr");
+      this.showNotification("tl");
     } else if (password.length !== 0 && staff_id.length !== 0) {
       const data = {};
       data.supervisor_id = staff_id; //uuid();
       data.password = password;
       if (!this.validateInput()) {
-        this.showNotification("tr");
+        this.showNotification("tl");
       } else {
         this.props.handleSubmit(data);
         if (this.props.error === true) {
@@ -104,7 +104,7 @@ class LoginForm extends React.Component {
       const { history } = this.props;
       history.push("/admin/dashboard");
     }
-    const { classes, errorMessage ,error} = this.props;
+    const { classes, errorMessage, error } = this.props;
     const { staff_id, password } = this.state;
     return (
       <div>
@@ -156,7 +156,7 @@ class LoginForm extends React.Component {
                   Login
                 </Button>
                 <Snackbar
-                  place="tr"
+                  place="tl"
                   color={"danger"}
                   icon={AddAlert}
                   message={
@@ -164,8 +164,8 @@ class LoginForm extends React.Component {
                       ? "ALL FIELDS ARE REQUIRED"
                       : "ID IS NOT VALID!!"
                   }
-                  open={this.state.tr}
-                  closeNotification={() => this.setState({ tr: false })}
+                  open={this.state.tl}
+                  closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar

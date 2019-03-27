@@ -32,8 +32,8 @@ supervisorTable.propTypes = {
 };
 const mapStateToProps = state => {
   return {
-    data: state.supervisor.myData,
-    isLoading: state.supervisor.isLoading,
+    data: state.admin.supervisors,
+    isLoading: state.admin.isLoading,
     user: state.user.user
   };
 };

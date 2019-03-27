@@ -1,6 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import { withRouter} from "react-router";
 import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
@@ -47,6 +48,7 @@ class AllocationForm extends React.Component {
       filtered: []
     };
   }
+
   componentWillUnmount() {
     var id = window.setTimeout(null, 0);
     while (id--) {
@@ -74,13 +76,8 @@ class AllocationForm extends React.Component {
     const res = value.split(" ");
     const course = res[1];
     this.setState({ [e.target.name]: value });
-
-    let currentList = []; // original List
-
-    let newList = []; //copy of list
-
-    currentList = this.props.lecturers;
-    newList = currentList.filter(item => {
+    let currentList = this.props.lecturers;
+    let newList = currentList.filter(item => {
       const lc = `${item.course.toLowerCase()}`;
       const filter = course.toLowerCase();
       return lc.includes(filter) || lc.includes("both"); //returns components present in the table
@@ -100,7 +97,7 @@ class AllocationForm extends React.Component {
   };
   newStudent = () => {
     const { students, lecturers } = this.state;
-    const { error } = this.props;
+    const { error, status, history } = this.props;
     const value = students;
     const res = value.split(" ");
     const adm = res[0];
@@ -113,14 +110,25 @@ class AllocationForm extends React.Component {
     } else {
       this.props.addAllocation(data);
       if (error === false) {
-        this.showNotification("tr");
+        if (status !== "failed") {
+          this.showNotification("tr");
+          this.resetValues();
+          history.push("/admin/allocation");
+        }
       } else {
-        this.showNotification("tl");
+        this.showNotification("tl"); // in case of error
       }
     }
   };
   render() {
-    const { classes, students, error, message, errorMessage } = this.props;
+    const {
+      classes,
+      students,
+      error,
+      status,
+      message,
+      errorMessage
+    } = this.props;
     const { filtered } = this.state;
     return (
       <div>
@@ -207,9 +215,11 @@ class AllocationForm extends React.Component {
                 />
                 <Snackbar
                   place="tr"
-                  color="success"
+                  color={status !== "failed" ? "success" : "danger"}
                   icon={AddAlert}
-                  message={"Allocation was Successful"}
+                  message={
+                    status !== "failed" ? message : "CAN'T MAKE ALLOCATION"
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -229,7 +239,9 @@ AllocationForm.propTypes = {
   error: PropTypes.bool,
   classes: PropTypes.object,
   message: PropTypes.string,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  status: PropTypes.string,
+  history: PropTypes.object
 };
 
-export default withStyles(styles)(AllocationForm);
+export default withRouter(withStyles(styles)(AllocationForm));

@@ -118,14 +118,14 @@ class Students extends React.Component {
       this.setState({ error: false });
       this.showNotification("tl");
     } else if (!this.validateInput()) {
-      alert("Admission Number is Invalid");
+      this.showNotification("tl");
     } else {
       this.props.addStudents(data);
       this.resetValues();
       if (error === false) {
         this.showNotification("tr");
       } else {
-        this.showNotification("tc");
+        this.showNotification("tr");
       }
     }
   };
@@ -150,7 +150,13 @@ class Students extends React.Component {
     history.push("/admin/adminStudents");
   };
   render() {
-    const { classes, projects, error, errorMessage, message } = this.props;
+    const {
+      classes,
+      projects,
+      error,
+      errorMessage,
+      status
+    } = this.props;
     return (
       <div>
         <GridContainer>
@@ -251,30 +257,29 @@ class Students extends React.Component {
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={!error ? "ALL FIELDS ARE REQUIRED !!!" : errorMessage}
+                  message={
+                    !this.validateInput()
+                      ? "INVALID STUDENT ID SUPPLIED"
+                      : "ALL FIELDS ARE REQUIRED !!!"
+                  }
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
                   place={"tr"}
-                  color={"success"}
+                  color={status !== "failed" || !error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={
+                    status !== "failed" || !error
+                      ? "STUDENT WAS SUCCESSFULLY ADDED"
+                      : errorMessage
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
                 />
               </CardFooter>
-              <Snackbar
-                place={"tc"}
-                color={"danger"}
-                icon={AddAlert}
-                message={errorMessage}
-                open={this.state.tc}
-                closeNotification={() => this.setState({ tc: false })}
-                close
-              />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>

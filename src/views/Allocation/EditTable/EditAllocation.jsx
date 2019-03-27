@@ -106,7 +106,6 @@ class EditAllocation extends React.Component {
     if (supervisor.length === 0 || projCode.length === 0) {
       this.showNotification("tl");
     } else {
-      console.log(data);
       this.props.onSubmit(data);
       if (error === false) {
         this.showNotification("tr");

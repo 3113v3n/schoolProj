@@ -3,6 +3,7 @@ import { updateProgress } from "../utilityFunctions";
 
 const initialState = {
   myData: null,
+  Progress: null,
   supervisorDetails: {},
   progress: {},
   isLoading: false,
@@ -41,14 +42,9 @@ function supervisorReducer(state = initialState, action) {
         status: state.status
       };
     case actionTypes.FETCH_PROGRESS:
-      return {
-        ...state,
-        myData: action.data,
-        isLoading: true
-      };
-    case actionTypes.FETCH_PROJECTS:
       return updateProgress(state, {
-        myData: action.data
+        Progress: action.data,
+        isLoading: true
       });
     case actionTypes.MARK_AS_COMPLETED:
       return {

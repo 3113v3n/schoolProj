@@ -2,7 +2,6 @@ import React from "react";
 import EdiStudents from "../../views/Students/EditTable/EditStudents";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
-import * as actionTypes from "../../Redux/Actions/action-types";
 import PropTypes from "prop-types";
 class EditStudentTable extends React.Component {
   componentDidMount() {

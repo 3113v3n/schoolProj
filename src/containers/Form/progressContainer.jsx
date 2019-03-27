@@ -5,53 +5,69 @@ import * as actionCreators from "../../Redux/Actions";
 import * as actionTypes from "../../Redux/Actions/action-types";
 import PropTypes from "prop-types";
 class progressContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      allocation: this.props.location.state.allocation_id
+    };
+  }
   componentDidMount() {
-    const { fetchMyProgress, location } = this.props;
-    const allocation_id = location.state.allocation_id;
-    fetchMyProgress(allocation_id);
+    const { fetchMyProgress } = this.props;
+    const { allocation } = this.state;
+    fetchMyProgress(allocation);
   }
 
   render() {
-    const { location, onEditProgress, error, status, data } = this.props;
-    const allocation_id = location.state.allocation_id;
-
+    const {
+      addProgress,
+      error,
+      status,
+      data,
+      message,
+      errorMessage
+    } = this.props;
+    const { allocation_id } = this.state;
     return (
       <div>
         <Progress
-          onSubmit={onEditProgress}
+          onSubmit={addProgress}
           error={error}
           status={status}
           data={data}
           allocation_id={allocation_id}
+          message={message}
+          errorMessage={errorMessage}
         />
       </div>
     );
   }
 }
 progressContainer.propTypes = {
-  onEditProgress: PropTypes.func,
-  goBack: PropTypes.bool,
+  addProgress: PropTypes.func,
   error: PropTypes.bool,
   status: PropTypes.string,
-  data: PropTypes.object,
+  data: PropTypes.array,
   fetchMyProgress: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.object,
+  message: PropTypes.string,
+  errorMessage: PropTypes.string
 };
 const mapStateToProps = state => {
   return {
-    goBack: state.supervisor.goBack,
     error: state.error.error,
     status: state.supervisor.status,
-    data: state.supervisor.myData
+    data: state.supervisor.Progress, //TODO: issue here and sort out onrefresh student table
+    message: state.supervisor.message,
+    errorMessage: state.error.errorMessage
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onEditProgress: data => {
-      dispatch(actionCreators.setMyData(actionTypes.EDIT_PROGRESS, data));
+    addProgress: data => {
+      dispatch(actionCreators.addProgress(data));
     },
-    fetchMyProgress: () => {
-      dispatch(actionCreators.fetchProgress());
+    fetchMyProgress: data => {
+      dispatch(actionCreators.fetchProgress(data));
     }
   };
 };

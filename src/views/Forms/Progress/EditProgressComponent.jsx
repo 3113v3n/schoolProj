@@ -10,18 +10,20 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 ////////////////////////////
-import uuid from "uuid";
+
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomMarkInput from "components/CustomInput/CustomMarkInput.jsx";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import GetApp from "@material-ui/icons/GetApp";
+import uuid from "uuid";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import AddAlert from "@material-ui/icons/AddAlert";
 import Clear from "@material-ui/icons/Clear";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import CardFooter from "../../../components/Card/CardFooter";
-import ProgressTable from "./ProgressTable";
-
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -91,14 +93,14 @@ const styles = {
     flexDirection: "row"
   }
 };
-class Progress extends React.Component {
+class EditProgressComponent extends React.Component {
   state = {
-    allocation_id: this.props.location.state.allocation_id,
+    progress_id: "",
+    allocation_id: "",
     documents: "",
     comments: "",
     marks: 0,
-    tr: false,
-    tl: false
+    tr: false
   };
   componentWillUnmount() {
     var id = window.setTimeout(null, 0);
@@ -120,7 +122,7 @@ class Progress extends React.Component {
   }
   cancelProgress = () => {
     const { history } = this.props;
-    history.push("/admin/studentTable");
+    history.push("/admin/progress");
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
@@ -131,66 +133,32 @@ class Progress extends React.Component {
   };
   submitForm = () => {
     const data = {};
-    const { documents, comments, marks, allocation_id } = this.state;
-    data.progress_id = uuid();
+    const {
+      documents,
+      comments,
+      marks,
+      allocation_id,
+      progress_id
+    } = this.state;
+    data.progress_id = progress_id;
     data.allocation_id = allocation_id;
     data.document = documents;
     data.comments = comments;
     data.marks = marks;
     if (documents.length === 0 || comments.length === 0 || marks.length === 0) {
-      this.showNotification("tl");
+      this.showNotification("tr");
     } else {
-      this.props.onSubmit(data);
+      this.props.onEditProgress(data);
 
-      const { history, error } = this.props;
-      if (!error) {
+      const { history, status } = this.props;
+      if (status === "success") {
         this.resetValues();
-        this.showNotification("tr");
-        history.push("/admin/studentTable");
-      } else {
-        this.showNotification("tl");
+        history.push("/admin/progress");
       }
     }
   };
-  objectToCsv = data => {
-    const csvRow = [];
-    //get the headers
-    const headers = Object.keys(data[0]);
-    csvRow.push(headers.join(","));
-    //loop over Rows
-    for (const row of data) {
-      const val = headers.map(header => {
-        const newVal = ("" + row[header]).replace(/"/g, '\\"'); //turn values to string
-        return `"${newVal}"`;
-      });
-      csvRow.push(val.join(","));
-    }
-    return csvRow.join("\n");
-  };
-  download = data => {
-    const blob = new Blob([data], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.setAttribute("hidden", "");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "progress.csv");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-  downloadTable = () => {
-    const { data } = this.props;
-    const Tabledata = data.map(item => ({
-      date: item.date_registered,
-      documents: item.documents,
-      comments: item.comments,
-      marks: item.marks
-    }));
-    const csvData = this.objectToCsv(Tabledata);
-    this.download(csvData);
-  };
   render() {
-    const { classes, data, error, message, errorMessage } = this.props;
+    const { classes, error, message } = this.props;
     return (
       <div>
         <GridContainer>
@@ -198,24 +166,15 @@ class Progress extends React.Component {
             <Card>
               <CardHeader color="success">
                 <h4 className={classes.cardTitleWhite}>
-                  Add Student Progress
+                  Edit Student Progress
                 </h4>
               </CardHeader>
               <CardBody>
                 <Snackbar
-                  place="tl"
-                  color={"danger"}
-                  icon={AddAlert}
-                  message={error ? errorMessage : "ALL FIELDS ARE REQUIRED !!!"}
-                  open={this.state.tr}
-                  closeNotification={() => this.setState({ tr: false })}
-                  close
-                />
-                <Snackbar
                   place="tr"
                   color={"danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={"ALL FIELDS ARE REQUIRED !!!"}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -279,7 +238,7 @@ class Progress extends React.Component {
               </CardBody>
               <CardFooter>
                 <Button color="success" round onClick={this.submitForm}>
-                  Add New
+                  Update
                 </Button>
 
                 <Button color="danger" round onClick={this.cancelProgress}>
@@ -289,27 +248,19 @@ class Progress extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={12} md={6}>
-            <ProgressTable downloadTable={this.downloadTable} data={data} />
-          </GridItem>
         </GridContainer>
       </div>
     );
   }
 }
-Progress.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+EditProgressComponent.propTypes = {
+  onEditProgress: PropTypes.func.isRequired,
   classes: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object,
-  documents: PropTypes.string,
-  comments: PropTypes.string,
-  status: PropTypes.string,
-  marks: PropTypes.string,
-  data: PropTypes.array,
   error: PropTypes.bool,
   message: PropTypes.string,
-  errorMessage: PropTypes.string
+  status: PropTypes.string
 };
 
-export default withRouter(connect()(withStyles(styles)(Progress)));
+export default withRouter(connect()(withStyles(styles)(EditProgressComponent)));

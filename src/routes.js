@@ -25,7 +25,8 @@ import progressContainer from "./containers/Form/progressContainer";
 import EditStudentTable from "./containers/EditTable/EditStudentTable";
 import EditAllocations from "./containers/EditTable/EditAllocations";
 import EditSupervisorsTable from "./containers/EditTable/EditSupervisorsTable";
-import EditProjectTable from "./containers/EditTable/EditProjectTable"
+import EditProjectTable from "./containers/EditTable/EditProjectTable";
+import  EditProgress from "./containers/EditTable/EditProgress";
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -152,6 +153,15 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Person,
     component: progressContainer,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/editProgress",
+    name: "Progress Report",
+    rtlName: "پشتیبانی از راست به چپ",
+    icon: Person,
+    component: EditProgress,
     layout: "/admin",
     invisible: true
   },

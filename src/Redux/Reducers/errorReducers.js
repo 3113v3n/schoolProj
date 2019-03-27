@@ -11,7 +11,7 @@ export default function errorReducers(state = initialState, action) {
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: "INVALID LOGIN CREDENTIALS PROVIDED"
       };
     case actionTypes.PROJECT_EDIT_ERROR:
       return{

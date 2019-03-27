@@ -85,8 +85,45 @@ const styles = {
 };
 
 class ArchiveComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtered: []
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      filtered: this.props.archives
+    });
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      filtered: nextProps.archives
+    });
+  }
+  handleChange = e => {
+    let currentList = []; // original List
+
+    let newList = []; //copy of list
+
+    if (e.target.value !== "") {
+      currentList = this.props.archives;
+      newList = currentList.filter(item => {
+        const lc = `${item.name.toLowerCase()}  ${item.supervisor_name.toLowerCase()}
+        ${item.date_registered.toLowerCase()}${item.due_date.toLowerCase()}
+         ${item.student_adm} ${item.project_code.toLowerCase()}`;
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter); //returns components present in the table
+      });
+    } else {
+      newList = this.props.archives;
+    }
+    this.setState({
+      filtered: newList
+    });
+  };
   render() {
-    const { classes, archives, status } = this.props;
+    const { classes, archives } = this.props;
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={8}>
@@ -162,6 +199,7 @@ ArchiveComponent.propTypes = {
   project_Code: PropTypes.string,
   date: PropTypes.string,
   finishDate: PropTypes.string,
-  adm: PropTypes.string
+  adm: PropTypes.string,
+  archives: PropTypes.array
 };
 export default withStyles(styles)(ArchiveComponent);

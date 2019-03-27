@@ -118,6 +118,8 @@ export const fetchSupervisors = () => {
   return dispatch => {
     fetchRequest("supervisor")
       .then(responseJson => {
+        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, responseJson));
       })
       .catch(error => {
@@ -202,22 +204,22 @@ export const supervisorStudents = () => {
   return dispatch => {
     fetchRequest("supervisor/dashboard")
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
+        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_MY_DATA, responseJson));
       })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
+      .catch(() => {
+        dispatch(fetchFailed());
       });
   };
 };
 export const fetchProgress = data => {
   return dispatch => {
-    fetchRequest(`progress/${data} `)
+    fetchRequest(`progress/${data}`)
       .then(responseJson => {
         dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.FETCH_PROGRESS, responseJson));
+        dispatch(setMyData(actionTypes.FETCH_PROGRESS, responseJson.progress));
       })
       .catch(error => {
         dispatch(fetchFailed(error.message));
@@ -249,6 +251,31 @@ export const addProject = data => {
       })
       .catch(() => {
         dispatch(setMyData(actionTypes.PROJECT_ERROR));
+      });
+  };
+};
+export const addProgress = data => {
+  return dispatch => {
+    postRequest("progress", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.ADD_PROGRESS, data));
+        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.PROJECT_ERROR, e.message));
+      });
+  };
+};
+
+export const markComplete = data => {
+  return dispatch => {
+    postRequest("archives", data)
+      .then(responseJson => {
+        dispatch(setMyData(actionTypes.MARK_AS_COMPLETED));
+        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
+      })
+      .catch(e => {
+        dispatch(setMyData(actionTypes.COMPLETE_ERROR, e.message));
       });
   };
 };

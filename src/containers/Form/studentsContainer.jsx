@@ -15,7 +15,8 @@ class studentsContainer extends React.Component {
       uploadNewFile,
       error,
       message,
-      errorMessage
+      errorMessage,
+      status
     } = this.props;
     return (
       <div>
@@ -26,6 +27,7 @@ class studentsContainer extends React.Component {
           error={error}
           errorMessage={errorMessage}
           message={message}
+          status={status}
         />
       </div>
     );
@@ -36,7 +38,8 @@ const mapStateToProps = state => {
     projects: state.admin.projects,
     error: state.error.error,
     errorMessage: state.error.errorMessage,
-    message: state.admin.message
+    message: state.admin.message,
+    status: state.admin.status
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -65,5 +68,6 @@ studentsContainer.propTypes = {
   uploadNewFile: PropTypes.func,
   error: PropTypes.bool,
   message: PropTypes.string,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  status: PropTypes.string
 };

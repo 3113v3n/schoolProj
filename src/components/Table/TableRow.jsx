@@ -6,6 +6,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router";
 import React from "react";
 import PropTypes from "prop-types";
+import uuid from "uuid";
 const styles = {
   center: {
     textAlign: "center"
@@ -28,6 +29,13 @@ class TableRow extends React.Component {
       }
     });
   };
+  setCompleted = id => {
+    const data = {};
+    const { markAsCompleted } = this.props;
+    data.allocation_id = id;
+    data.archive_id = uuid();
+    markAsCompleted(data);
+  };
   render() {
     const {
       studentName,
@@ -35,6 +43,7 @@ class TableRow extends React.Component {
       dateRegistered,
       classes,
       dueDate,
+      allocation_id
     } = this.props;
     return (
       <tbody>
@@ -72,9 +81,10 @@ class TableRow extends React.Component {
               >
                 <CheckCircle
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={
-                    () => window.confirm("Mark this Project as Complete?") //TODO:markComplete function
-                  }
+                  onClick={() => {
+                    window.confirm("Mark this Project as Complete?") &&
+                      this.setCompleted(allocation_id);
+                  }}
                 />
               </IconButton>
             </Tooltip>
@@ -92,6 +102,7 @@ TableRow.propTypes = {
   classes: PropTypes.object.isRequired,
   allocation_id: PropTypes.string,
   history: PropTypes.object,
-  dueDate: PropTypes.string
+  dueDate: PropTypes.string,
+  markAsCompleted: PropTypes.func.isRequired
 };
 export default withRouter(withStyles(styles)(TableRow));

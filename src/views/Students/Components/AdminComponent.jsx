@@ -112,11 +112,9 @@ class AdminComponent extends React.Component {
 
     if (e.target.value !== "") {
       currentList = this.props.data;
-
       newList = currentList.filter(item => {
-        const lc = `${item.studentName.toLowerCase()} 
-        ${item.admNo} 
-         ${item.projectCode.toLowerCase()}`;
+        const lc = `${item.name.toLowerCase()}  
+         ${item.student_adm} ${item.project_code.toLowerCase()}`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -135,7 +133,9 @@ class AdminComponent extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Student Table</h4>
+              <h4 className={classes.cardTitleWhite}>
+                Unallocated Student Table
+              </h4>
               <p className={classes.cardCategoryWhite}>students </p>
             </CardHeader>
             <CardBody>

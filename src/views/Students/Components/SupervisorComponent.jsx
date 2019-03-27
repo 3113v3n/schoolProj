@@ -130,7 +130,7 @@ class SupervisorComponent extends React.Component {
     });
   };
   render() {
-    const { classes, data } = this.props;
+    const { classes, markAsCompleted, status } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
@@ -170,7 +170,7 @@ class SupervisorComponent extends React.Component {
                     </tr>
                   </thead>
 
-                  {data.status !== "failed" ? (
+                  {status !== "failed" ? (
                     filtered.map(item => (
                       <TableRow
                         key={item.allocation_id}
@@ -179,6 +179,7 @@ class SupervisorComponent extends React.Component {
                         dateRegistered={item.date_registered}
                         dueDate={item.due_date}
                         allocation_id={item.allocation_id}
+                        markAsCompleted={markAsCompleted}
                       />
                     ))
                   ) : (
@@ -207,5 +208,6 @@ export default withRouter(withStyles(styles)(SupervisorComponent));
 SupervisorComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   onEdit: PropTypes.func.isRequired,
-  data: PropTypes.object
+  data: PropTypes.object,
+  markAsCompleted: PropTypes.func
 };

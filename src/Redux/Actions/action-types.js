@@ -28,6 +28,7 @@ export const SET_SUPERVISOR_TABLE = "SET_SUPERVISOR_TABLE";
 export const FETCH_PROGRESS = "FETCH_PROGRESS";
 export const PROGRESS_ERROR = "PROGRESS_ERROR";
 export const EDIT_PROGRESS = "EDIT_PROGRESS";
+export const ADD_PROGRESS = "ADD_PROGRESS";
 export const SET_MY_DATA = "SET_MY_DATA";
 
 export const GET_USER = "GET_USER";
@@ -54,6 +55,7 @@ export const LOGOUT = "LOGOUT";
 export const FETCH_PROJECTS = "FETCH_PROJECTS";
 ///
 export const MARK_AS_COMPLETED = "MARK_AS_COMPLETED";
+export const COMPLETE_ERROR = "COMPLETE_ERROR";
 
 export const STORE_TOKEN = "STORE_TOKEN";
 export const REFRESH_TOKEN = "REFRESH_TOKEN";

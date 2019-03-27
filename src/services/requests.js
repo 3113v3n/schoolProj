@@ -73,16 +73,16 @@ async function deleteRequest(path, param) {
   }
 }
 
-async function fetchRequest(path, param) {
+async function fetchRequest(path) {
   try {
     let requestParams = {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Accept: "*/*",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(param)
+      }
+      // body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);
 
