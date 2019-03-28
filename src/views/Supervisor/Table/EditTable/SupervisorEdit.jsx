@@ -41,6 +41,7 @@ class EditAllocation extends React.Component {
     super(props);
     this.state = {
       emp_no: this.props.location.state.emp_no,
+      number: this.props.location.state.emp_no,
       firstName: this.props.location.state.firstName,
       lastName: this.props.location.state.lastName,
       degreeSelected: false,
@@ -50,13 +51,13 @@ class EditAllocation extends React.Component {
     };
   }
   componentWillUnmount() {
-    var id = window.setTimeout(null, 0);
+    let id = window.setTimeout(null, 0);
     while (id--) {
       window.clearTimeout(id);
     }
   }
   showNotification(place) {
-    var x = [];
+    let x = [];
     x[place] = true;
     this.setState(x);
     this.alertTimeout = setTimeout(
@@ -89,15 +90,17 @@ class EditAllocation extends React.Component {
       lastName,
       degreeSelected,
       diplomaSelected,
+      number,
       emp_no
     } = this.state;
     const { history, error, onSubmit } = this.props;
     const data = {};
-    data.f_name = firstName;
-    data.l_name = lastName;
+    data.first_name = firstName;
+    data.last_name = lastName;
     data.degree = degreeSelected;
     data.diploma = diplomaSelected;
-    data.emp_no = emp_no
+    data.supervisor_id = parseInt(number);
+    data.old_supervisor_id = parseInt(emp_no);
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
@@ -137,26 +140,25 @@ class EditAllocation extends React.Component {
                   <GridItem>
                     <CustomInput
                       labelText="Staff Id"
-                      id="emp_no"
+                      id="number"
                       name="input"
                       formControlProps={{
                         fullWidth: true,
-                        value: this.state.emp_no
+                        value: this.state.number,
+                        onChange: this.handleInput
                       }}
                       inputProps={{
-                        value: this.state.emp_no,
-                        disabled: true
+                        value: this.state.number
                       }}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={3}>
-
                     <CustomInput
                       className="text-center"
                       labelText="first Name"
-                      id="fistName"
+                      id="firstName"
                       name="input"
                       formControlProps={{
                         fullWidth: true,

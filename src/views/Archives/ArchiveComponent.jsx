@@ -127,7 +127,7 @@ class ArchiveComponent extends React.Component {
     const { classes, archives } = this.props;
     return (
       <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Archives Table</h4>

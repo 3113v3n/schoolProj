@@ -375,7 +375,7 @@ export const editStudents = data => {
 
 export const editSupervisors = data => {
   return dispatch => {
-    updateRequest("supervisor", data)
+    updateRequest("supervisor/register", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));

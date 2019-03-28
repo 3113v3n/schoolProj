@@ -54,13 +54,13 @@ class Supervisors extends React.Component {
     };
   }
   componentWillUnmount() {
-    var id = window.setTimeout(null, 0);
+    let id = window.setTimeout(null, 0);
     while (id--) {
       window.clearTimeout(id);
     }
   }
   showNotification(place) {
-    var x = [];
+    let x = [];
     x[place] = true;
     this.setState(x);
     this.alertTimeout = setTimeout(
@@ -72,8 +72,8 @@ class Supervisors extends React.Component {
     );
   }
   validateInput = () => {
-    var reg = /^\d+$/;
-    var Input = this.state.staff_id;
+    let reg = /^\d+$/;
+    let Input = this.state.staff_id;
     return reg.test(Input);
   };
   handleInput = event => {

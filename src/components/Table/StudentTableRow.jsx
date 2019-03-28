@@ -30,9 +30,13 @@ class StudentTableRow extends React.Component {
       }
     });
   };
+  refreshPage = () => {
+    window.location.reload();
+  };
   deleteRow = id => {
     let student_adm = parseInt(id);
     this.props.onDelete(student_adm);
+    this.refreshPage();
   };
   render() {
     const { admNo, name, projectCode, classes, key } = this.props;

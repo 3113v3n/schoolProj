@@ -30,9 +30,14 @@ class SupervisorTableRow extends React.Component {
       }
     });
   };
+  refreshPage = () => {
+    window.location.reload();
+  };
   deleteItem = id => {
     const supervisor_id = parseInt(id);
+    console.log(supervisor_id);
     this.props.onDelete(supervisor_id);
+    this.refreshPage();
   };
   render() {
     const { f_name, l_name, course, classes, key, count, emp_no } = this.props;
