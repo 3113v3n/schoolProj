@@ -12,7 +12,7 @@ import CustomInput from "../../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
-
+import moment from "moment";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import TableRow from "../../../components/Table/TableRow";
@@ -116,9 +116,10 @@ class SupervisorComponent extends React.Component {
       currentList = this.props.data;
 
       newList = currentList.filter(item => {
-        const lc = `${item.studentName.toLowerCase()} 
-        ${item.supervisor.toLowerCase()} ${item.dateRegistered.toLowerCase()} //filter through table contents
-         ${item.projectCode.toLowerCase()}`;
+        const lc = `${item.student_name.toLowerCase()} 
+        ${item.project_code.toLowerCase()} ${item.date_registered} ${
+          item.due_date
+        }`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -130,7 +131,7 @@ class SupervisorComponent extends React.Component {
     });
   };
   render() {
-    const { classes, markAsCompleted, status } = this.props;
+    const { classes, markAsCompleted, data } = this.props;
     const { filtered } = this.state;
     return (
       <GridContainer justify="center">
@@ -170,13 +171,17 @@ class SupervisorComponent extends React.Component {
                     </tr>
                   </thead>
 
-                  {status !== "failed" ? (
+                  {data !== null &&
+                  data !== undefined &&
+                  data.status !== "failed" ? (
                     filtered.map(item => (
                       <TableRow
                         key={item.allocation_id}
                         studentName={item.student_name}
                         projectCode={item.project_code}
-                        dateRegistered={item.date_registered}
+                        dateRegistered={moment(item.date_registered).format(
+                          "Do MMMM YYYY"
+                        )}
                         dueDate={item.due_date}
                         allocation_id={item.allocation_id}
                         markAsCompleted={markAsCompleted}

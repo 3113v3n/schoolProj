@@ -21,7 +21,7 @@ import Clear from "@material-ui/icons/Clear";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import CardFooter from "../../../components/Card/CardFooter";
 import ProgressTable from "./ProgressTable";
-
+import moment from "moment";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -181,7 +181,7 @@ class Progress extends React.Component {
   downloadTable = () => {
     const { data } = this.props;
     const Tabledata = data.map(item => ({
-      date: "March 29th 2019",
+      date: moment(item.date).format("Do MMMM YYYY"),
       documents: item.document,
       comments: item.comments,
       marks: item.marks

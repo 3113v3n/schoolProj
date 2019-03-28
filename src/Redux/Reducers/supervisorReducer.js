@@ -50,7 +50,7 @@ function supervisorReducer(state = initialState, action) {
       return {
         ...state,
         completed: true,
-        status: state.status
+        status: action.data
       };
     default:
       return state;

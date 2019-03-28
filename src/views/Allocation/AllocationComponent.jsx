@@ -19,6 +19,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
+import moment from "moment";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -171,12 +172,16 @@ class AllocationComponent extends React.Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {data.status !== "failed" ? (
+                  {data !== null &&
+                  data !== undefined &&
+                  data.status !== "failed" ? (
                     filtered.map(item => (
                       <AllocationTableRow
                         studentName={item.student_name}
                         supervisor={item.supervisor_name}
-                        dateRegistered={item.date_registered}
+                        dateRegistered={moment(item.date_registered).format(
+                          "Do MMMM YYYY"
+                        )}
                         key={item.allocation_id}
                         dueDate={item.due_date}
                         projectCode={item.project_code}

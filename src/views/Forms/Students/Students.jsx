@@ -61,7 +61,7 @@ class Students extends React.Component {
     }
   }
   validateFile = () => {
-    let validator = /\.csv$/; //check if input is .CSV only
+    let validator = /.+(\.csv)$/; ///; //check if input is .CSV only
     let files = this.state.selectedFile;
     return validator.test(files);
   };
@@ -74,6 +74,7 @@ class Students extends React.Component {
     this.setState({
       selectedFile: event.target.files[0]
     });
+    console.log("files", this.state);
   };
   showNotification(place) {
     var x = [];
@@ -297,7 +298,7 @@ class Students extends React.Component {
                   style={{ padding: 30 }}
                   type="file"
                   name="Choose File Instead"
-                  id=""
+                  id="selectedFile"
                   accept="*.csv"
                   onChange={this.handleselectedFile}
                 />

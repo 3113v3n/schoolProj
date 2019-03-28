@@ -130,7 +130,7 @@ class EditProgressComponent extends React.Component {
   }
   cancelProgress = () => {
     const { history } = this.props;
-    history.push("/admin/progress");
+    history.push("/admin/studentTable");
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
@@ -165,7 +165,7 @@ class EditProgressComponent extends React.Component {
       const { history, status } = this.props;
       if (status === "success") {
         this.resetValues();
-        history.push("/admin/progress");
+        history.push("/admin/studentTable");
       }
     }
   };

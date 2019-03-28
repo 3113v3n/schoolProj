@@ -218,7 +218,7 @@ export const fetchProgress = data => {
       .then(responseJson => {
         dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.FETCH_PROGRESS, responseJson.progress));
+        dispatch(setMyData(actionTypes.FETCH_PROGRESS, responseJson));
       })
       .catch(error => {
         dispatch(fetchFailed(error.message));
@@ -230,7 +230,7 @@ export const fetchProgress = data => {
 export const uploadFile = data => {
   //TODO: issue
   return dispatch => {
-    fetchRequest("students/register/csv", data)
+    postRequest("students/register/csv", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));

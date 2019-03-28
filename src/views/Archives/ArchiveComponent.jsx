@@ -14,6 +14,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Search from "@material-ui/icons/Search";
 import PropTypes from "prop-types";
+import moment from "moment";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -160,7 +161,9 @@ class ArchiveComponent extends React.Component {
                       <th> Finish Date</th>
                     </tr>
                   </thead>
-                  {archives.status !== "failed" ? (
+                  {archives !== undefined &&
+                  archives !== null &&
+                  archives.status !== "failed" ? (
                     archives.map(item => (
                       <ArchiveRow
                         key={item.student_adm}
@@ -168,7 +171,9 @@ class ArchiveComponent extends React.Component {
                         studentName={item.student_name}
                         supervisor={item.supervisor_name}
                         projectCode={item.project_code}
-                        dateRegistered={item.date_registered}
+                        dateRegistered={moment(item.date_registered).format(
+                          "Do MMMM YYYY"
+                        )}
                         finishDate={item.due_date}
                       />
                     ))

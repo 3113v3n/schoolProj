@@ -6,8 +6,9 @@ import PropTypes from "prop-types";
 class progressContainer extends React.Component {
   constructor(props) {
     super(props);
+    const id = this.props.location.state.allocation_id;
     this.state = {
-      allocation: this.props.location.state.allocation_id
+      allocation: id
     };
   }
   componentDidMount() {

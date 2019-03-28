@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import moment from "moment";
 ////////////////////////////
 import ProgressTableRow from "components/Table/ProgressTableRow";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -83,6 +84,9 @@ const styles = {
   }
 };
 class ProgressTable extends React.Component {
+  formatDate = date => {
+    return moment(date).format("Do MMMM YYYY");
+  };
   render() {
     const { classes, downloadTable, data } = this.props;
     return (
@@ -115,10 +119,12 @@ class ProgressTable extends React.Component {
                   <th>Action</th>
                 </tr>
               </thead>
-              {data !== undefined ? (
+              {data !== undefined &&
+              data !== null &&
+              data.status !== "failed" ? (
                 data.map(item => (
                   <ProgressTableRow
-                    Date={"March 26"}
+                    Date={this.formatDate(item.date)}
                     documents={item.document}
                     comments={item.comments}
                     marks={item.marks}

@@ -173,7 +173,9 @@ class superTableComponent extends React.Component {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {data.status !== "failed" ? (
+                {data !== null &&
+                data !== undefined &&
+                data.status !== "failed" ? (
                   filtered.map(item => (
                     <SupervisorTableRow
                       key={item.supervisor_id}
