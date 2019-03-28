@@ -20,14 +20,24 @@ const styles = {
 };
 class ProgressTableRow extends React.Component {
   goToEdit = () => {
-    const { history, Date, documents, comments, marks } = this.props;
+    const {
+      history,
+      Date,
+      documents,
+      comments,
+      marks,
+      allocation_id,
+      progress_id
+    } = this.props;
     history.push({
       pathname: "/admin/editProgress",
       state: {
         Date: Date,
         documents: documents,
         comments: comments,
-        marks: marks
+        marks: marks,
+        allocation_id: allocation_id,
+        progress_id: progress_id
       }
     });
   };
@@ -70,6 +80,7 @@ ProgressTableRow.propTypes = {
   comments: PropTypes.string,
   marks: PropTypes.number,
   history: PropTypes.object,
-  allocation_id: PropTypes.string
+  allocation_id: PropTypes.string,
+  progress_id: PropTypes.string
 };
 export default withRouter(withStyles(styles)(ProgressTableRow));

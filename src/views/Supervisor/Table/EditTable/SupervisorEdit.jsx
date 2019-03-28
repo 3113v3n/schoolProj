@@ -15,7 +15,6 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import PropTypes from "prop-types";
 import CheckBox from "@material-ui/core/Checkbox";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
-import Select from "@material-ui/core/Select";
 import Clear from "@material-ui/icons/Clear";
 import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 const styles = {

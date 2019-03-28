@@ -2,7 +2,6 @@ import React from "react";
 import Progress from "../../views/Forms/Progress/Progress.jsx";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
-import * as actionTypes from "../../Redux/Actions/action-types";
 import PropTypes from "prop-types";
 class progressContainer extends React.Component {
   constructor(props) {

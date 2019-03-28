@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
-import UserProfile from "../../views/UserProfile/UserProfile.jsx";
-import * as actionTypes from "../../Redux/Actions/action-types";
+import UserProfile from "../../views/UserProfile/UserProfile.jsx";;
 class adminProfile extends React.Component {
   render() {
     const { updateProfile, user, error, errorMessage, message } = this.props;

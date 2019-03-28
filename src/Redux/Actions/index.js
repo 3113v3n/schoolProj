@@ -1,6 +1,5 @@
 import * as actionTypes from "./action-types";
 import {
-  asyncRequest,
   fetchRequest,
   loginRequest,
   postRequest,

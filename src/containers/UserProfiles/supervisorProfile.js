@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
 import Profile from "../../views/Supervisor/Profile/Profile";
-import * as actionTypes from "../../Redux/Actions/action-types";
 class supervisorProfile extends React.Component {
   render() {
     const { error, errorMessage, onUpdate, user } = this.props;

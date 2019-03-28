@@ -181,8 +181,8 @@ class Progress extends React.Component {
   downloadTable = () => {
     const { data } = this.props;
     const Tabledata = data.map(item => ({
-      date: item.date_registered,
-      documents: item.documents,
+      date: "March 29th 2019",
+      documents: item.document,
       comments: item.comments,
       marks: item.marks
     }));

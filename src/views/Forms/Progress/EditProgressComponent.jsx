@@ -14,10 +14,6 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomMarkInput from "components/CustomInput/CustomMarkInput.jsx";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import GetApp from "@material-ui/icons/GetApp";
-import uuid from "uuid";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import AddAlert from "@material-ui/icons/AddAlert";
@@ -94,14 +90,26 @@ const styles = {
   }
 };
 class EditProgressComponent extends React.Component {
-  state = {
-    progress_id: "",
-    allocation_id: "",
-    documents: "",
-    comments: "",
-    marks: 0,
-    tr: false
-  };
+  constructor(props){
+    super(props);
+    const { location } = this.props;
+    const {
+      progress_id,
+      allocation_id,
+      documents,
+      comments,
+      marks
+    } = location.state;
+    this.state = {
+      progress_id: progress_id,
+      allocation_id: allocation_id,
+      editDocuments: documents,
+      editComments: comments,
+      editMarks: marks,
+      tr: false
+    };
+  }
+
   componentWillUnmount() {
     var id = window.setTimeout(null, 0);
     while (id--) {
@@ -134,18 +142,22 @@ class EditProgressComponent extends React.Component {
   submitForm = () => {
     const data = {};
     const {
-      documents,
-      comments,
-      marks,
+      editDocuments,
+      editComments,
+      editMarks,
       allocation_id,
       progress_id
     } = this.state;
     data.progress_id = progress_id;
     data.allocation_id = allocation_id;
-    data.document = documents;
-    data.comments = comments;
-    data.marks = marks;
-    if (documents.length === 0 || comments.length === 0 || marks.length === 0) {
+    data.document = editDocuments;
+    data.comments = editComments;
+    data.marks = editMarks;
+    if (
+      editComments.length === 0 ||
+      editDocuments.length === 0 ||
+      editMarks.length === 0
+    ) {
       this.showNotification("tr");
     } else {
       this.props.onEditProgress(data);
@@ -158,10 +170,10 @@ class EditProgressComponent extends React.Component {
     }
   };
   render() {
-    const { classes, error, message } = this.props;
+    const { classes } = this.props;
     return (
       <div>
-        <GridContainer>
+        <GridContainer container justify="center" alignItems="baseline">
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="success">
@@ -182,18 +194,18 @@ class EditProgressComponent extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Document Submitted"
-                      id="documents"
+                      labelText="Edit Documents"
+                      id="editDocuments"
                       name="input"
                       inputProps={{
                         multiline: true,
                         rows: 3,
-                        value: this.state.documents
+                        value: this.state.editDocuments
                       }}
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
-                        value: this.state.documents
+                        value: this.state.editDocuments
                       }}
                     />
                   </GridItem>
@@ -201,18 +213,18 @@ class EditProgressComponent extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Comments"
-                      id="comments"
+                      labelText="Edit Comments"
+                      id="editComments"
                       name="input"
                       inputProps={{
                         multiline: true,
                         rows: 5,
-                        value: this.state.comments
+                        value: this.state.editComments
                       }}
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
-                        value: this.state.comments
+                        value: this.state.editComments
                       }}
                     />
                   </GridItem>
@@ -222,15 +234,15 @@ class EditProgressComponent extends React.Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomMarkInput
                       labelText="Marks"
-                      id="marks"
+                      id="editMarks"
                       name="input"
                       inputProps={{
-                        value: this.state.marks
+                        value: this.state.editMarks
                       }}
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
-                        value: this.state.marks
+                        value: this.state.editMarks
                       }}
                     />
                   </GridItem>

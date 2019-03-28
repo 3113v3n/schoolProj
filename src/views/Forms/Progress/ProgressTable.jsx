@@ -3,9 +3,6 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 import PropTypes from "prop-types";
-// core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -16,7 +13,6 @@ import IconButton from "@material-ui/core/IconButton";
 import GetApp from "@material-ui/icons/GetApp";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import Edit from "@material-ui/core/SvgIcon/SvgIcon";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {

@@ -19,9 +19,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/core/SvgIcon/SvgIcon";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
