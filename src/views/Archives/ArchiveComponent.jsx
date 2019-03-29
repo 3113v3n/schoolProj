@@ -110,7 +110,7 @@ class ArchiveComponent extends React.Component {
     if (e.target.value !== "") {
       currentList = this.props.archives;
       newList = currentList.filter(item => {
-        const lc = `${item.name.toLowerCase()}  ${item.supervisor_name.toLowerCase()}
+        const lc = `${item.student_name.toLowerCase()}  ${item.supervisor_name.toLowerCase()}
         ${item.date_registered.toLowerCase()}${item.due_date.toLowerCase()}
          ${item.student_adm} ${item.project_code.toLowerCase()}`;
         const filter = e.target.value.toLowerCase();
@@ -125,6 +125,7 @@ class ArchiveComponent extends React.Component {
   };
   render() {
     const { classes, archives } = this.props;
+    const { filtered } = this.state;
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
@@ -139,7 +140,8 @@ class ArchiveComponent extends React.Component {
                     labelText="Type to filter"
                     id="material"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
+                      onChange: this.handleChange
                     }}
                     inputProps={{
                       endAdornment: (
@@ -164,7 +166,7 @@ class ArchiveComponent extends React.Component {
                   {archives !== undefined &&
                   archives !== null &&
                   archives.status !== "failed" ? (
-                    archives.map(item => (
+                    filtered.map(item => (
                       <ArchiveRow
                         key={item.student_adm}
                         adm={item.student_adm}

@@ -46,7 +46,7 @@ class EditStudents extends React.Component {
       firstName: "",
       lastName: "",
       admNo: this.props.location.state.admNo,
-      projCode: this.props.location.state.projectCode
+      projCode: ""
     };
   }
   componentDidMount() {
@@ -193,9 +193,9 @@ class EditStudents extends React.Component {
                     <Select
                       name="input"
                       style={{ marginLeft: 10, width: "40%", paddingTop: 20 }}
-                      value={this.state.project}
+                      value={this.state.projCode}
                       onChange={event => {
-                        this.setState({ project: event.target.value });
+                        this.setState({ projCode: event.target.value });
                       }}
                       formcontrolprops={{
                         fullWidth: true

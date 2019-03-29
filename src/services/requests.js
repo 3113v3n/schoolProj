@@ -2,22 +2,10 @@ import paths from "../constants/paths.js";
 import jwtDecode from "jwt-decode";
 //import decode from "jwt-decode";
 const requests = paths.production; //localhost;
-const localrequest = paths.localhost;
+
 const token = localStorage.getItem("access_Token");
 const refreshToken = localStorage.getItem("refresh_Token");
 
-async function asyncRequest(path) {
-  return fetch(`${localrequest}${path}`)
-    .then(response => response.json())
-    .then(responseJson => {
-      return responseJson;
-    })
-
-    .catch(error => {
-      console.log(error);
-      this.setState({ isLoading: false });
-    });
-}
 
 async function loginRequest(path, param) {
   try {
@@ -82,7 +70,6 @@ async function fetchRequest(path) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       }
-      // body: JSON.stringify(param)
     };
     let response = await fetch(`${requests}${path}`, requestParams);
 
@@ -154,7 +141,6 @@ export const saveToStorage = state => {
 export { deleteRequest };
 export { updateRequest };
 export { refreshTokenRequest };
-export { asyncRequest };
 export { loginRequest };
 export { postRequest };
 export { isTokenExpired };

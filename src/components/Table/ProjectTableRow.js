@@ -73,6 +73,8 @@ ProjectTableRow.propTypes = {
   key: PropTypes.string.isRequired,
   history: PropTypes.object,
   projectCode: PropTypes.string,
-  trimesters: PropTypes.number
+  trimesters: PropTypes.number,
+  degree: PropTypes.func,
+  diploma: PropTypes.func
 };
 export default withRouter(withStyles(styles)(ProjectTableRow));

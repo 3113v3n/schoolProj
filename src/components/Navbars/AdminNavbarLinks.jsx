@@ -40,8 +40,8 @@ class HeaderLinks extends React.Component {
   }
 }
 HeaderLinks.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onLogout: PropTypes.func.isRequired,
+  classes: PropTypes.object,
+  onLogout: PropTypes.func,
   history: PropTypes.object
 };
 

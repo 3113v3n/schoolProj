@@ -119,7 +119,7 @@ class AllocationComponent extends React.Component {
       newList = currentList.filter(item => {
         const lc = `${item.student_name.toLowerCase()} 
         ${item.supervisor_name.toLowerCase()} ${item.date_registered.toLowerCase()} //filter through table contents
-         ${item.project_code.toLowerCase()} `;
+         ${item.project_code.toLowerCase()}   ${item.due_date.toLowerCase()} `;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });

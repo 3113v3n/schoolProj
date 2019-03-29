@@ -211,8 +211,8 @@ class SupervisorComponent extends React.Component {
 export default withRouter(withStyles(styles)(SupervisorComponent));
 
 SupervisorComponent.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  data: PropTypes.object,
+  classes: PropTypes.object,
+  onEdit: PropTypes.func,
+  data: PropTypes.array,
   markAsCompleted: PropTypes.func
 };

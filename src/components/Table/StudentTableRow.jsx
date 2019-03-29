@@ -72,6 +72,7 @@ class StudentTableRow extends React.Component {
               <IconButton
                 aria-label="Edit"
                 className={classes.tableActionButton}
+                style={{ color: "red" }}
               >
                 <Delete
                   className={classes.tableActionButtonIcon + " " + classes.edit}

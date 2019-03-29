@@ -95,9 +95,12 @@ class AllocationForm extends React.Component {
       lecturers: ""
     });
   };
+  refreshPage = () => {
+    window.location.reload();
+  };
   newStudent = () => {
     const { students, lecturers } = this.state;
-    const { error, status, history } = this.props;
+    const { error, status } = this.props;
     const value = students;
     const res = value.split(" ");
     const adm = res[0];
@@ -113,7 +116,7 @@ class AllocationForm extends React.Component {
         if (status !== "failed") {
           this.showNotification("tr");
           this.resetValues();
-          history.push("/admin/allocation");
+          this.refreshPage();
         }
       } else {
         this.showNotification("tl"); // in case of error
@@ -240,8 +243,7 @@ AllocationForm.propTypes = {
   classes: PropTypes.object,
   message: PropTypes.string,
   errorMessage: PropTypes.string,
-  status: PropTypes.string,
-  history: PropTypes.object
+  status: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(AllocationForm));

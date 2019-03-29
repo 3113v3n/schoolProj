@@ -18,6 +18,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import Search from "@material-ui/icons/Search";
 import PropTypes from "prop-types";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Done from "@material-ui/icons/Done";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -125,13 +128,54 @@ class superTableComponent extends React.Component {
       filtered: newList
     });
   };
-  course = (val, val2) => {
-    if (val === true && val2 === false) {
-      return "Degree";
-    } else if (val === false && val2 === true) {
-      return "Diploma";
-    } else if (val === true && val2 === true) {
-      return "Degree && Diploma";
+  course = val => {
+    if (val === true) {
+      const { classes } = this.props;
+      return (
+        <Tooltip
+          id="tooltip-top"
+          title="Diploma"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            style={{ color: "green" }}
+          >
+            <Done
+              className={classes.tableActionButtonIcon + " " + classes.done}
+            />
+          </IconButton>
+        </Tooltip>
+      );
+    } else {
+      return <div style={{ color: "red" }}>N/A</div>;
+    }
+  };
+  diplomaCourse = val => {
+    if (val === true) {
+      const { classes } = this.props;
+      return (
+        <Tooltip
+          id="tooltip-top"
+          title="Diploma"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            style={{ color: "green" }}
+          >
+            <Done
+              className={classes.tableActionButtonIcon + " " + classes.done}
+            />
+          </IconButton>
+        </Tooltip>
+      );
+    } else {
+      return <div style={{ color: "red" }}>N/A</div>;
     }
   };
   render() {
@@ -168,7 +212,8 @@ class superTableComponent extends React.Component {
                   <tr>
                     <th>first Name</th>
                     <th>last Name</th>
-                    <th>Course</th>
+                    <th>Degree</th>
+                    <th>Diploma</th>
                     <th>Allocation Count</th>
                     <th>Action</th>
                   </tr>
@@ -181,7 +226,8 @@ class superTableComponent extends React.Component {
                       key={item.supervisor_id}
                       f_name={item.first_name}
                       l_name={item.last_name}
-                      course={this.course(item.degree, item.diploma)}
+                      course={this.course(item.degree)}
+                      diploma={this.diplomaCourse(item.diploma)}
                       onDelete={onDelete}
                       emp_no={item.supervisor_id}
                       count={item.allocations_count}

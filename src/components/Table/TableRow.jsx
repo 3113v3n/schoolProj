@@ -29,12 +29,16 @@ class TableRow extends React.Component {
       }
     });
   };
+  refreshPage = () => {
+    window.location.reload();
+  };
   setCompleted = id => {
     const data = {};
     const { markAsCompleted } = this.props;
     data.allocation_id = id;
     data.archive_id = uuid();
     markAsCompleted(data);
+    this.refreshPage();
   };
   render() {
     const {
@@ -78,6 +82,7 @@ class TableRow extends React.Component {
               <IconButton
                 aria-label="Edit"
                 className={classes.tableActionButton}
+                style={{ color: "green" }}
               >
                 <CheckCircle
                   className={classes.tableActionButtonIcon + " " + classes.edit}

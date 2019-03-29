@@ -2,8 +2,10 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Done from "@material-ui/icons/Done";
 // core components
-
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
@@ -19,6 +21,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -116,9 +119,8 @@ class ProjectsComponent extends React.Component {
       currentList = this.props.data;
 
       newList = currentList.filter(item => {
-        const lc = `${item.projectCode.toLowerCase()} 
-        ${item.trimesters} 
-         ${item.degree} ${item.diploma}`;
+        const lc = `${item.project_code.toLowerCase()} 
+        ${item.trimesters}`;
         const filter = e.target.value.toLowerCase();
         return lc.includes(filter); //returns components present in the table
       });
@@ -131,16 +133,52 @@ class ProjectsComponent extends React.Component {
   };
   degreeItem = val => {
     if (val === true) {
-      return "Degree";
+      const { classes } = this.props;
+      return (
+        <Tooltip
+          id="tooltip-top"
+          title="Degree"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            style={{ color: "green" }}
+          >
+            <Done
+              className={classes.tableActionButtonIcon + " " + classes.done}
+            />
+          </IconButton>
+        </Tooltip>
+      );
     } else {
-      return "N/A";
+      return <div style={{ color: "red" }}>N/A</div>;
     }
   };
   diplomaItem = val => {
     if (val === true) {
-      return "Diploma";
+      const { classes } = this.props;
+      return (
+        <Tooltip
+          id="tooltip-top"
+          title="Diploma"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            style={{ color: "green" }}
+          >
+            <Done
+              className={classes.tableActionButtonIcon + " " + classes.done}
+            />
+          </IconButton>
+        </Tooltip>
+      );
     } else {
-      return "N/A";
+      return <div style={{ color: "red" }}>N/A</div>;
     }
   };
   render() {

@@ -35,18 +35,27 @@ class SupervisorTableRow extends React.Component {
   };
   deleteItem = id => {
     const supervisor_id = parseInt(id);
-    console.log(supervisor_id);
     this.props.onDelete(supervisor_id);
     this.refreshPage();
   };
   render() {
-    const { f_name, l_name, course, classes, key, count, emp_no } = this.props;
+    const {
+      f_name,
+      l_name,
+      course,
+      classes,
+      key,
+      count,
+      emp_no,
+      diploma
+    } = this.props;
     return (
       <tbody>
         <tr className={classes.center} key={key}>
           <td>{f_name}</td>
           <td>{l_name}</td>
           <td>{course}</td>
+          <td>{diploma}</td>
           <td>{count}</td>
           <td className={classes.left}>
             <Tooltip
@@ -74,6 +83,7 @@ class SupervisorTableRow extends React.Component {
               <IconButton
                 aria-label="Close"
                 className={classes.tableActionButton}
+                style={{ color: "red" }}
               >
                 <Delete
                   className={
@@ -95,13 +105,14 @@ class SupervisorTableRow extends React.Component {
 }
 SupervisorTableRow.propTypes = {
   key: PropTypes.string.isRequired,
-  course: PropTypes.string,
+  course: PropTypes.func,
   f_name: PropTypes.string,
   l_name: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   emp_no: PropTypes.number,
+  diploma: PropTypes.func,
   count: PropTypes.number
 };
 export default withRouter(withStyles(styles)(SupervisorTableRow));
