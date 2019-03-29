@@ -82,7 +82,7 @@ class Profile extends React.Component {
       password.length === 0 ||
       confirmPass.length === 0
     ) {
-      alert("ALL FIELDS ARE REQUIRED");
+      this.showNotification("tc");
     } else if (password !== confirmPass) {
       this.showNotification("tc");
     } else {
@@ -91,7 +91,7 @@ class Profile extends React.Component {
         this.resetValues();
         this.showNotification("tr");
       } else {
-        this.showNotification("tl");
+        this.showNotification("tr");
       }
     }
   };
@@ -99,7 +99,8 @@ class Profile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes, message, errorMessage } = this.props;
+    const { classes, errorMessage, status, error } = this.props;
+    const { oldPass, password, confirmPass } = this.state;
 
     return (
       <div>
@@ -168,19 +169,14 @@ class Profile extends React.Component {
                   Update Profile
                 </Button>
                 <Snackbar
-                  place="tl"
-                  color="danger"
-                  icon={AddAlert}
-                  message={errorMessage}
-                  open={this.state.tl}
-                  closeNotification={() => this.setState({ tl: false })}
-                  close
-                />
-                <Snackbar
                   place="tr"
-                  color="success"
+                  color={status !== "failed" && !error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={
+                    status !== "failed" && !error
+                      ? "PASSWORD SUCCESSFULLY CHANGED"
+                      : errorMessage
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -190,7 +186,13 @@ class Profile extends React.Component {
                 place="tc"
                 color="danger"
                 icon={AddAlert}
-                message="PASSWORDS DONT MATCH"
+                message={
+                  oldPass.length === 0 ||
+                  password.length === 0 ||
+                  confirmPass.length === 0
+                    ? "ALL FIELDS ARE REQUIRED"
+                    : "PASSWORDS DONT MATCH"
+                }
                 open={this.state.tc}
                 closeNotification={() => this.setState({ tc: false })}
                 close
@@ -207,7 +209,8 @@ Profile.propTypes = {
   classes: PropTypes.object,
   error: PropTypes.bool,
   message: PropTypes.string,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  status: PropTypes.string
 };
 
 export default withStyles(styles)(Profile);

@@ -1,7 +1,7 @@
 {
-  "name": "material-dashboard-react",
+  "name": "school-project-management-system",
   "version": "1.6.0",
-  "description": "Material Dashboard React. Coded by Creative Tim",
+  "description": "School Projects Management System, coded by Sidney",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
@@ -49,12 +49,12 @@
     "url": "git+https://github.com/creativetimofficial/material-dashboard-react.git"
   },
   "keywords": [],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
-  "license": "MIT",
+  "author": "Sidney & Paul",
+  "license": "N/A",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
+    "url": "https://github.com/3113v3n/schoolProj"
   },
-  "homepage": "https://creativetimofficial.github.io/material-dashboard-react/#/dashboard",
+  "homepage": "N/A",
   "optionalDependencies": {
     "@types/googlemaps": "3.30.16",
     "@types/markerclustererplus": "2.1.33",

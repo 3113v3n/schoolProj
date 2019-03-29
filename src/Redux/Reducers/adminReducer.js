@@ -25,6 +25,11 @@ function adminReducer(state = initialState, action) {
         ...state,
         message: action.data
       };
+    case actionTypes.PROJECT_MESSAGE:
+      return {
+        ...state,
+        message: "PROJECT SUCCESSFULLY ADDED"
+      };
     case actionTypes.SET_DATA:
       return updateProgress(state, {
         data: action.data,
@@ -98,9 +103,8 @@ function adminReducer(state = initialState, action) {
     case actionTypes.CHANGE_ADMIN_PASSWORD:
       return updateProgress(state, {
         ...state,
-        profile: action.data,
         status: state.status,
-        message: state.message
+        message: action.data
       });
     case actionTypes.ADD_SUPERVISOR:
       return {

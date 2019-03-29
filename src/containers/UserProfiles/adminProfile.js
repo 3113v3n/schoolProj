@@ -24,7 +24,8 @@ const mapStateToProps = state => {
     user: state.user.user,
     error: state.error.error,
     errorMessage: state.error.errorMessage,
-    message: state.admin.message
+    message: state.supervisor.message,
+    status: state.supervisor.status
   };
 };
 const mapDispatchToProps = dispatch => {

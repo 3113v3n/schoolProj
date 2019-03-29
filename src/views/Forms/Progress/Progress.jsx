@@ -129,6 +129,9 @@ class Progress extends React.Component {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
   };
+  refreshPage = () => {
+    window.location.reload();
+  };
   submitForm = () => {
     const data = {};
     const { documents, comments, marks, allocation_id } = this.state;
@@ -138,17 +141,16 @@ class Progress extends React.Component {
     data.comments = comments;
     data.marks = marks;
     if (documents.length === 0 || comments.length === 0 || marks.length === 0) {
-      this.showNotification("tl");
+      alert("ALL FIELDS ARE REQUIRE");
     } else {
       this.props.onSubmit(data);
-
-      const { history, error } = this.props;
+      const { error } = this.props;
       if (!error) {
         this.resetValues();
+        this.refreshPage();
         this.showNotification("tr");
-        history.push("/admin/studentTable");
       } else {
-        this.showNotification("tl");
+        this.showNotification("tr");
       }
     }
   };
@@ -190,32 +192,21 @@ class Progress extends React.Component {
     this.download(csvData);
   };
   render() {
-    const { classes, data, error, message, errorMessage } = this.props;
+    const { classes, data, errorMessage, error } = this.props;
     return (
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="success">
-                <h4 className={classes.cardTitleWhite}>
-                  Add Student Progress
-                </h4>
+                <h4 className={classes.cardTitleWhite}>Add Student Progress</h4>
               </CardHeader>
               <CardBody>
                 <Snackbar
-                  place="tl"
-                  color={"danger"}
-                  icon={AddAlert}
-                  message={error ? errorMessage : "ALL FIELDS ARE REQUIRED !!!"}
-                  open={this.state.tr}
-                  closeNotification={() => this.setState({ tr: false })}
-                  close
-                />
-                <Snackbar
                   place="tr"
-                  color={"danger"}
+                  color={!error ? "success": "danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={!error? "PROGRESS UPDATED SUCCESSFUL " : errorMessage}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -284,7 +275,7 @@ class Progress extends React.Component {
 
                 <Button color="danger" round onClick={this.cancelProgress}>
                   <Clear />
-                  Cancel
+                  Cancel and GoBack
                 </Button>
               </CardFooter>
             </Card>

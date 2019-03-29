@@ -60,10 +60,10 @@ class ProgressTableRow extends React.Component {
               <IconButton
                 aria-label="Edit"
                 className={classes.tableActionButton}
+                onClick={this.goToEdit}
               >
                 <Edit
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={this.goToEdit}
                 />
               </IconButton>
             </Tooltip>

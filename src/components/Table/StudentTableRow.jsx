@@ -56,10 +56,10 @@ class StudentTableRow extends React.Component {
               <IconButton
                 aria-label="Edit"
                 className={classes.tableActionButton}
+                onClick={this.goToEdit}
               >
                 <Edit
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={this.goToEdit}
                 />
               </IconButton>
             </Tooltip>
@@ -73,14 +73,14 @@ class StudentTableRow extends React.Component {
                 aria-label="Edit"
                 className={classes.tableActionButton}
                 style={{ color: "red" }}
+                onClick={() =>
+                  window.confirm(
+                    "Are you sure you wish to delete Student row?"
+                  ) && this.deleteRow(admNo)
+                }
               >
                 <Delete
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={() =>
-                    window.confirm(
-                      "Are you sure you wish to delete Student row?"
-                    ) && this.deleteRow(admNo)
-                  }
                 />
               </IconButton>
             </Tooltip>

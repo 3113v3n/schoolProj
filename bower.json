@@ -1,10 +1,10 @@
 {
-  "name": "material-dashboard-react",
-  "homepage": "https://github.com/creativetimofficial/material-dashboard-react",
+  "name": "School Project Management System",
+  "homepage": "https://github.com/3113v3n/schoolProj",
   "authors": [
-    "creative-tim"
+    "Sidney & Paul"
   ],
-  "description": "A Badass Material-UI Kit based on Material Design",
+  "description": "A Badass web app based on Material Design & Flask",
   "main": "public/index.html",
   "keywords": [
     "material",

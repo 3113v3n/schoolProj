@@ -84,15 +84,14 @@ class SupervisorTableRow extends React.Component {
                 aria-label="Close"
                 className={classes.tableActionButton}
                 style={{ color: "red" }}
+                onClick={() =>
+                  window.confirm("Are you sure you wish to delete this row?") &&
+                  this.deleteItem(emp_no)
+                }
               >
                 <Delete
                   className={
                     classes.tableActionButtonIcon + " " + classes.close
-                  }
-                  onClick={() =>
-                    window.confirm(
-                      "Are you sure you wish to delete this row?"
-                    ) && this.deleteItem(emp_no)
                   }
                 />
               </IconButton>

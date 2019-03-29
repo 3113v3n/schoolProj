@@ -349,7 +349,7 @@ export const editProjects = data => {
     updateRequest("projects", data)
       .then(responseJson => {
         const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.PROJECT_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_STATUS, status));
         dispatch(setMyData(actionTypes.EDIT_PROJECT_TABLE, data));
       })
@@ -395,8 +395,9 @@ export const editAdminProfile = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, data));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(
+          setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson.message)
+        );
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.ADMIN_PASS_ERROR, error.message));
@@ -409,9 +410,13 @@ export const editSupervisorProfile = data => {
     updateRequest("supervisor", data)
       .then(responseJson => {
         const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.CHANGE_SUPERVISOR_PASSWORD, data));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, status));
+        dispatch(
+          setMyData(
+            actionTypes.CHANGE_SUPERVISOR_PASSWORD,
+            responseJson.message
+          )
+        );
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.SUPERVISOR_PASS_ERROR, error.message));

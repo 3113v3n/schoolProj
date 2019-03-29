@@ -184,7 +184,9 @@ class UserProfile extends React.Component {
                   place="tr"
                   color={error && status === "failed" ? "danger" : "success"}
                   icon={AddAlert}
-                  message={error ? errorMessage : message}
+                  message={
+                    error && status === "failed" ? errorMessage : message
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
