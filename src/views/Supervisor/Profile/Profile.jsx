@@ -86,7 +86,7 @@ class Profile extends React.Component {
     } else if (password !== confirmPass) {
       this.showNotification("tc");
     } else {
-      this.props.updateProfile(data);
+      this.props.profileUpdate(data);
       if (error === false) {
         this.resetValues();
         this.showNotification("tr");
@@ -203,7 +203,7 @@ class Profile extends React.Component {
   }
 }
 Profile.propTypes = {
-  updateProfile: PropTypes.func.isRequired,
+  profileUpdate: PropTypes.func,
   classes: PropTypes.object,
   error: PropTypes.bool,
   message: PropTypes.string,

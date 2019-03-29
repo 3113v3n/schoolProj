@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 supervisorProfile.propTypes = {
-  onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func,
   user: PropTypes.object,
   error: PropTypes.bool,
   errorMessage: PropTypes.string

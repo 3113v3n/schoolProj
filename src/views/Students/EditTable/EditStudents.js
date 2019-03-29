@@ -258,9 +258,9 @@ class EditStudents extends React.Component {
   }
 }
 EditStudents.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   history: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
   location: PropTypes.object,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
