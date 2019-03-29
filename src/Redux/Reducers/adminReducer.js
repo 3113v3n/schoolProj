@@ -21,7 +21,7 @@ const initialState = {
 function adminReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SUCCESS_MESSAGE:
-      return{
+      return {
         ...state,
         message: action.data
       };
@@ -104,7 +104,8 @@ function adminReducer(state = initialState, action) {
       return updateProgress(state, {
         ...state,
         status: state.status,
-        message: action.data
+        message: action.data,
+        error: false
       });
     case actionTypes.ADD_SUPERVISOR:
       return {

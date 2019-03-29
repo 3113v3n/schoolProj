@@ -4,7 +4,8 @@ import {
   loginRequest,
   postRequest,
   updateRequest,
-  deleteRequest
+  deleteRequest,
+  refreshTokenRequest
 } from "../../services/requests";
 import jwtDecode from "jwt-decode";
 
@@ -208,6 +209,21 @@ export const supervisorStudents = () => {
         dispatch(setMyData(actionTypes.SET_MY_DATA, responseJson));
       })
       .catch(() => {
+        dispatch(fetchFailed());
+      });
+  };
+};
+export const refreshToken = () => {
+  return dispatch => {
+    refreshTokenRequest("")
+      .then(responseJson => {
+        localStorage.removeItem("access_Token");
+        localStorage.setItem("access_Token", responseJson.access_token)
+        dispatch(
+          setMyData(actionTypes.REFRESH_TOKEN, responseJson.access_token)
+        );
+      })
+      .catch(e => {
         dispatch(fetchFailed());
       });
   };

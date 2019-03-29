@@ -119,25 +119,7 @@ async function refreshTokenRequest(path) {
     console.error(`Error is : ${e}`);
   }
 }
-export const loadFromStorage = () => {
-  try {
-    const serializedState = localStorage.getItem("access_Token");
-    if (serializedState === null) {
-      return undefined;
-    }
-    return JSON.parse(serializedState);
-  } catch (e) {
-    return undefined;
-  }
-};
-export const saveToStorage = state => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("access_Token", serializedState);
-  } catch (e) {
-    console.log(e);
-  }
-};
+
 export { deleteRequest };
 export { updateRequest };
 export { refreshTokenRequest };
