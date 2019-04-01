@@ -1,7 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import { withRouter} from "react-router";
+import { withRouter } from "react-router";
 import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
@@ -100,26 +100,23 @@ class AllocationForm extends React.Component {
   };
   newStudent = () => {
     const { students, lecturers } = this.state;
-    const { error, status } = this.props;
+    const { error } = this.props;
     const value = students;
     const res = value.split(" ");
     const adm = res[0];
     const data = {};
     data.allocation_id = uuid();
-    data.student_adm = adm;
+    data.student_adm = parseInt(adm);
     data.supervisor_id = lecturers;
     if (adm.length === 0 || lecturers.length === 0) {
       this.showNotification("tl");
     } else {
       this.props.addAllocation(data);
       if (error === false) {
-        if (status !== "failed") {
-          this.showNotification("tr");
-          this.resetValues();
-          this.refreshPage();
-        }
+        this.showNotification("tr");
+        this.refreshPage();
       } else {
-        this.showNotification("tl"); // in case of error
+        this.showNotification("tr"); // in case of error
       }
     }
   };
@@ -209,20 +206,16 @@ class AllocationForm extends React.Component {
                   place="tl"
                   color="danger"
                   icon={AddAlert}
-                  message={
-                    error === true ? errorMessage : "PLEASE SELECT AN OPTION"
-                  }
+                  message={"PLEASE SELECT AN OPTION"}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
                   place="tr"
-                  color={status !== "failed" ? "success" : "danger"}
+                  color={status === "success" && !error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={
-                    status !== "failed" ? message : "CAN'T MAKE ALLOCATION"
-                  }
+                  message={error === true ? errorMessage : message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

@@ -89,7 +89,7 @@ export default function errorReducers(state = initialState, action) {
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: "CAN'T CHANGE PASSWORD"
       };
     case actionTypes.SUPERVISOR_PASS_ERROR:
       return {

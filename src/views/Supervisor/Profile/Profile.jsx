@@ -99,7 +99,7 @@ class Profile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes, errorMessage, status, error } = this.props;
+    const { classes, profile, error, status } = this.props;
     const { oldPass, password, confirmPass } = this.state;
 
     return (
@@ -172,11 +172,7 @@ class Profile extends React.Component {
                   place="tr"
                   color={status !== "failed" && !error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={
-                    status !== "failed" && !error
-                      ? "PASSWORD SUCCESSFULLY CHANGED"
-                      : errorMessage
-                  }
+                  message={profile.message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -209,8 +205,9 @@ Profile.propTypes = {
   classes: PropTypes.object,
   error: PropTypes.bool,
   message: PropTypes.string,
-  errorMessage: PropTypes.string,
-  status: PropTypes.string
+  profile: PropTypes.object,
+  status: PropTypes.string,
+  errorMessage: PropTypes.string
 };
 
 export default withStyles(styles)(Profile);

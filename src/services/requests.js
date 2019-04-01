@@ -6,7 +6,6 @@ const requests = paths.production; //localhost;
 const token = localStorage.getItem("access_Token");
 const refreshToken = localStorage.getItem("refresh_Token");
 
-
 async function loginRequest(path, param) {
   try {
     let requestParams = {
@@ -95,10 +94,32 @@ async function postRequest(path, param) {
     console.error(`Error is : ${e}`);
   }
 }
+async function uploadFiles(path, param) {
+  try {
+    let requestParams = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: param
+    };
+    let response = await fetch(`${requests}${path}`, requestParams);
+    return await response.json();
+  } catch (e) {
+    console.error(`Error is : ${e}`);
+  }
+}
+
 async function isTokenExpired() {
   try {
     const decoded = jwtDecode(token);
-    return decoded.exp < Date.now() / 1000;
+    let date = new Date(0);
+    console.log(date.setUTCSeconds(decoded.exp));
+    date.valueOf();
+    console.log(Date.now());
+    console.log(Date.now() - date.valueOf());
+    console.log(date.valueOf() < Date.now());
+    return date.valueOf() < Date.now(); //expiry date should be greater for token to be valid
   } catch (err) {
     return false;
   }
@@ -110,7 +131,7 @@ async function refreshTokenRequest(path) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${refreshToken}`
+        Authorization: `Bearer ${token}`
       }
     };
     let response = await fetch(`${requests}${path}`, requestParams);
@@ -126,4 +147,5 @@ export { refreshTokenRequest };
 export { loginRequest };
 export { postRequest };
 export { isTokenExpired };
+export { uploadFiles };
 export { fetchRequest };

@@ -97,7 +97,7 @@ class UserProfile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes, errorMessage, error, status } = this.props;
+    const { classes, profile } = this.props;
     const { oldPass, password, confirmPass } = this.state;
     return (
       <div>
@@ -182,13 +182,9 @@ class UserProfile extends React.Component {
                 />
                 <Snackbar
                   place="tr"
-                  color={error && status === "failed" ? "danger" : "success"}
+                  color={profile.status !== "failed" ? "success" : "danger"}
                   icon={AddAlert}
-                  message={
-                    error && status === "failed"
-                      ? errorMessage
-                      : "PASSWORD CHANGED SUCCESSFULLY"
-                  }
+                  message={profile.message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -206,8 +202,7 @@ UserProfile.propTypes = {
   classes: PropTypes.object,
   error: PropTypes.bool,
   message: PropTypes.string,
-  errorMessage: PropTypes.string,
-  status: PropTypes.string
+ profile: PropTypes.object
 };
 
 export default withStyles(styles)(UserProfile);

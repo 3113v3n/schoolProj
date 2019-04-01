@@ -9,7 +9,6 @@ const initialState = {
   projects: [],
   students: [],
   archives: [],
-  upload: [],
   supervisors: [],
   profile: {},
   supervisor: {},
@@ -44,8 +43,7 @@ function adminReducer(state = initialState, action) {
       };
     case actionTypes.UPLOAD_SUCCESS:
       return updateProgress(state, {
-        upload: [action.data, ...state.upload],
-        message: state.message
+        message: action.data
       });
     case actionTypes.SET_STUDENTS_TABLE:
       return updateProgress(state, {
@@ -54,7 +52,12 @@ function adminReducer(state = initialState, action) {
         error: false
       });
     case actionTypes.SET_STATUS:
-      return{
+      return {
+        ...state,
+        status: action.data
+      };
+    case actionTypes.STATUS_ERROR:
+      return {
         ...state,
         status: action.data
       };
@@ -102,10 +105,9 @@ function adminReducer(state = initialState, action) {
       });
     case actionTypes.CHANGE_ADMIN_PASSWORD:
       return updateProgress(state, {
-        ...state,
-        status: state.status,
-        message: action.data,
-        error: false
+        profile: action.data,
+        error: false,
+        status: state.status
       });
     case actionTypes.ADD_SUPERVISOR:
       return {

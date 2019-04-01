@@ -2,16 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-//import { isTokenExpired, refreshTokenRequest } from "../services/requests";
-
+import { isTokenExpired } from "../services/requests";
+import * as actionCreators from "../Redux/Actions";
 export default function requireAuth(ComposedComponent) {
   class Authentication extends React.Component {
-    //  componentDidMount() {
-    //   if (isTokenExpired()) {
-    //    refreshTokenRequest();
-    //   }
-
-    // }
+    UNSAFE_componentWillMount() {
+      isTokenExpired().then(res => {
+        if (res === true) {
+          alert("Expired");
+        } else {
+          console.log("Token is Still Active");
+        }
+      });
+    }
 
     // UNSAFE_componentWillMount() {
     //   if (!this.props.authenticated) {
@@ -39,10 +42,19 @@ export default function requireAuth(ComposedComponent) {
       admin: state.user.user
     };
   };
+  const mapDispatchToProps = dispatch => {
+    return {
+      refreshToken: () => dispatch(actionCreators.refreshToken())
+    };
+  };
   Authentication.propTypes = {
     authenticated: PropTypes.bool.isRequired,
     validToken: PropTypes.string,
-    history: PropTypes.object
+    history: PropTypes.object,
+    refreshToken: PropTypes.func
   };
-  return connect(mapStateToProps)(withRouter(Authentication));
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withRouter(Authentication));
 }

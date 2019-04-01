@@ -1,3 +1,115 @@
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="students.csv"
+
+< /home/h4wk3y3/Downloads/students.csv
+--boundary--
+
+<> 2019-04-01T014714.200.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+Content-Type: multipart/form-data
+
+"file"=< /home/h4wk3y3/Downloads/students.csv
+
+<> 2019-04-01T012559.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+Content-Type: multipart/form-data
+
+"file":< /home/h4wk3y3/Downloads/students.csv
+
+<> 2019-04-01T012544.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+Content-Type: multipart/form-data
+
+< /home/h4wk3y3/Downloads/students.csv
+
+<> 2019-04-01T012453.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+Content-Type: multipart/form-data
+
+--null
+adm,f_name,l_name,project_code
+1305222,steve,aoki,BAC2350
+1305223,michael,jordan,BAC4500
+1305221,Teresa,Mukiri,KCA100
+1305224,jerry,smith,BAC2350
+
+--null--
+
+<> 2019-04-01T012437.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+Content-Type: multipart-form-data
+
+--null
+adm,f_name,l_name,project_code
+1305222,steve,aoki,BAC2350
+1305223,michael,jordan,BAC4500
+1305221,Teresa,Mukiri,KCA100
+1305224,jerry,smith,BAC2350
+
+--null--
+
+<> 2019-04-01T012423.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+
+data:text/csv;base64,YWRtLGZfbmFtZSxsX25hbWUscHJvamVjdF9jb2RlCjEzMDUyMjIsc3RldmUsYW9raSxCQUMyMzUwCjEzMDUyMjMsbWljaGFlbCxqb3JkYW4sQkFDNDUwMAoxMzA1MjIxLFRlcmVzYSxNdWtpcmksS0NBMTAwCjEzMDUyMjQsamVycnksc21pdGgsQkFDMjM1MAo="
+
+<> 2019-04-01T124456.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+
+< /home/h4wk3y3/Downloads/students.csv
+
+<> 2019-04-01T124414.400.json
+
+###
+
+POST http://localhost:5000/students/register/csv
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-01T122624.400.json
+
+###
+
 GET http://localhost:5000/progress/d31f4dea-5ab5-48ef-9e3c-b1d2f5b8cf90
 Accept: */*
 Cache-Control: no-cache

@@ -66,10 +66,10 @@ class TableRow extends React.Component {
               <IconButton
                 aria-label="Edit"
                 className={classes.tableActionButton}
+                onClick={this.goToEdit}
               >
                 <Edit
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={this.goToEdit}
                 />
               </IconButton>
             </Tooltip>
@@ -83,13 +83,13 @@ class TableRow extends React.Component {
                 aria-label="Edit"
                 className={classes.tableActionButton}
                 style={{ color: "green" }}
+                onClick={() => {
+                  window.confirm("Mark this Project as Complete?") &&
+                    this.setCompleted(allocation_id);
+                }}
               >
                 <CheckCircle
                   className={classes.tableActionButtonIcon + " " + classes.edit}
-                  onClick={() => {
-                    window.confirm("Mark this Project as Complete?") &&
-                      this.setCompleted(allocation_id);
-                  }}
                 />
               </IconButton>
             </Tooltip>

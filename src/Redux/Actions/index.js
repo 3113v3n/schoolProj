@@ -5,7 +5,8 @@ import {
   postRequest,
   updateRequest,
   deleteRequest,
-  refreshTokenRequest
+  refreshTokenRequest,
+  uploadFiles
 } from "../../services/requests";
 import jwtDecode from "jwt-decode";
 
@@ -218,7 +219,13 @@ export const refreshToken = () => {
     refreshTokenRequest("")
       .then(responseJson => {
         localStorage.removeItem("access_Token");
-        localStorage.setItem("access_Token", responseJson.access_token)
+        localStorage.setItem("access_Token", responseJson.access_token);
+        dispatch(
+          setMyData(
+            actionTypes.SET_CURRENT_USER,
+            jwtDecode(responseJson.access_token)
+          )
+        );
         dispatch(
           setMyData(actionTypes.REFRESH_TOKEN, responseJson.access_token)
         );
@@ -246,11 +253,11 @@ export const fetchProgress = data => {
 export const uploadFile = data => {
   //TODO: issue
   return dispatch => {
-    postRequest("students/register/csv", data)
+    uploadFiles("students/register/csv", data)
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.UPLOAD_SUCCESS));
+        dispatch(setMyData(actionTypes.UPLOAD_SUCCESS, responseJson.message));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.UPLOAD_FAILURE, e.message));
@@ -301,8 +308,8 @@ export const addAllocation = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.NEW_ALLOCATION, data));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.NEW_ALLOCATION, data));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR, error.message));
@@ -409,14 +416,11 @@ export const editAdminProfile = data => {
   return dispatch => {
     updateRequest("supervisor", data)
       .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(
-          setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson.message)
-        );
+        dispatch(setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.ADMIN_PASS_ERROR, error.message));
+        dispatch(setMyData(actionTypes.PROFILE_STATUS, error.status));
       });
   };
 };
@@ -425,14 +429,10 @@ export const editSupervisorProfile = data => {
   return dispatch => {
     updateRequest("supervisor", data)
       .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, status));
         dispatch(
-          setMyData(
-            actionTypes.CHANGE_SUPERVISOR_PASSWORD,
-            responseJson.message
-          )
+          setMyData(actionTypes.CHANGE_SUPERVISOR_PASSWORD, responseJson)
         );
+        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.SUPERVISOR_PASS_ERROR, error.message));

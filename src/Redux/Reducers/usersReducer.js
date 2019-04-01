@@ -1,5 +1,4 @@
 import * as actionTypes from "../Actions/action-types";
-//import isEmpty from "lodash/isEmpty";
 const initialState = {
   user: {},
   isAuthenticated: false,

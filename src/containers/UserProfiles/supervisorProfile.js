@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Profile from "../../views/Supervisor/Profile/Profile";
 class supervisorProfile extends React.Component {
   render() {
-    const { error, errorMessage, onUpdate, user } = this.props;
+    const { error, errorMessage, onUpdate, user, profile } = this.props;
     return (
       <div>
         <Profile
@@ -13,6 +13,7 @@ class supervisorProfile extends React.Component {
           user={user}
           error={error}
           errorMessage={errorMessage}
+          profile={profile}
         />
       </div>
     );
@@ -22,6 +23,7 @@ const mapStateToProps = state => {
   return {
     user: state.user.user, //emp_no
     error: state.error.error,
+    profile: state.supervisor.supervisorDetails,
     errorMessage: state.error.errorMessage
   };
 };
@@ -36,7 +38,8 @@ supervisorProfile.propTypes = {
   onUpdate: PropTypes.func,
   user: PropTypes.object,
   error: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  profile: PropTypes.object
 };
 export default connect(
   mapStateToProps,

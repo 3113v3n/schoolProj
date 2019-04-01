@@ -103,6 +103,7 @@ class AllocationComponent extends React.Component {
       filtered: this.props.data
     });
   }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       filtered: nextProps.data

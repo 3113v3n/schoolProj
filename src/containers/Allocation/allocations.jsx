@@ -6,12 +6,13 @@ import AllocationComponent from "../../views/Allocation/AllocationComponent";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
 class allocations extends React.Component {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onRequest();
   }
+
   render() {
     const { classes } = this.props;
-    const { isLoading, data, message } = this.props;
+    const { isLoading, message, data } = this.props;
     if (!isLoading) {
       return <div> Loading...</div>;
     } else {

@@ -1,7 +1,6 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -18,8 +17,8 @@ import Snackbar from "../../../components/Snackbar/Snackbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Clear from "@material-ui/icons/Clear";
-import {withRouter} from "react-router";
-
+import { withRouter } from "react-router";
+import UploadCsvFile from "./UploadCsvFile";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -44,7 +43,6 @@ class Students extends React.Component {
     super(props);
     this.state = {
       firstName: "",
-      selectedFile: null,
       lastName: "",
       project: "",
       admNo: "",
@@ -60,21 +58,10 @@ class Students extends React.Component {
       window.clearTimeout(id);
     }
   }
-  validateFile = () => {
-    let validator = /.+(\.csv)$/; ///; //check if input is .CSV only
-    let files = this.state.selectedFile;
-    return validator.test(files);
-  };
   validateInput = () => {
     var reg = /^\d+$/;
     var Input = this.state.admNo;
     return reg.test(Input);
-  };
-  handleselectedFile = event => {
-    this.setState({
-      selectedFile: event.target.files[0]
-    });
-    console.log("files", this.state);
   };
   showNotification(place) {
     var x = [];
@@ -130,22 +117,6 @@ class Students extends React.Component {
       }
     }
   };
-  fileUpload = () => {
-    const { selectedFile } = this.state;
-    const data = {};
-    data.file = selectedFile;
-    if (selectedFile === null) {
-      alert(" No file Selected");
-    } else if (!this.validateFile()) {
-      alert("INVALID FILE TYPE MUST BE OF CSV");
-      this.setState({ selectedFile: null });
-    } else {
-      this.props.uploadNewFile(data);
-      if (this.props.error) {
-        this.showNotification("tl");
-      }
-    }
-  };
   cancelAdd = () => {
     const { history } = this.props;
     history.push("/admin/adminStudents");
@@ -156,11 +127,13 @@ class Students extends React.Component {
       projects,
       error,
       errorMessage,
-      status
+      status,
+      message,
+      uploadNewFile
     } = this.props;
     return (
       <div>
-        <GridContainer>
+        <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="success">
@@ -283,30 +256,15 @@ class Students extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card>
-              <CardBody>
-                <CardHeader color="info">
-                  <h4 className={classes.cardTitleWhite}>
-                    UPLOAD FILE INSTEAD
-                  </h4>
-                  <p className={classes.cardCategoryWhite}>
-                    SELECT FILE (.csv){" "}
-                  </p>
-                </CardHeader>
-                <input
-                  style={{ padding: 30 }}
-                  type="file"
-                  name="Choose File Instead"
-                  id="selectedFile"
-                  accept="*.csv"
-                  onChange={this.handleselectedFile}
-                />
-                <Button color="info" round onClick={this.fileUpload}>
-                  Upload File
-                </Button>
-              </CardBody>
-            </Card>
+          <GridContainer />
+          <GridItem xs={12} sm={12} md={8}>
+            <UploadCsvFile
+              status={status}
+              error={error}
+              message={message}
+              errorMessage={errorMessage}
+              upload={uploadNewFile}
+            />
           </GridItem>
         </GridContainer>
       </div>

@@ -36,10 +36,11 @@ function supervisorReducer(state = initialState, action) {
         status: state.status
       };
     case actionTypes.CHANGE_SUPERVISOR_PASSWORD:
-      return {
-        ...state,
-        message: action.data
-      };
+      return updateProgress(state, {
+        supervisorDetails: action.data,
+        error: false,
+        status: state.status
+      });
     case actionTypes.FETCH_PROGRESS:
       return updateProgress(state, {
         Progress: action.data,
