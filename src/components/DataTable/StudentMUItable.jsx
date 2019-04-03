@@ -34,10 +34,16 @@ const columns = [
     }
   },
   {
-    name: "Edit"
+    name: "Edit",
+    options: {
+      filter: false
+    }
   },
   {
-    name: "Delete"
+    name: "Delete",
+    options: {
+      filter: false
+    }
   }
 ];
 

@@ -46,7 +46,10 @@ const columns = [
     }
   },
   {
-    name: "actions"
+    name: "actions",
+    options: {
+      filter: false
+    }
   }
 ];
 
@@ -116,7 +119,7 @@ class AllocationMUItable extends React.Component {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Allocations Table</h4>
-              <p className={classes.cardCategoryWhite}>students </p>
+              <p className={classes.cardCategoryWhite}>allocations </p>
             </CardHeader>
             <CardBody>
               <MUIDataTable

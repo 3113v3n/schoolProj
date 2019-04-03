@@ -20,8 +20,7 @@ import AddAlert from "@material-ui/icons/AddAlert";
 import Clear from "@material-ui/icons/Clear";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import CardFooter from "../../../components/Card/CardFooter";
-import ProgressTable from "./ProgressTable";
-import moment from "moment";
+import ProgressMUItable from "../../../components/DataTable/ProgressMUItable";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -154,45 +153,9 @@ class Progress extends React.Component {
       }
     }
   };
-  objectToCsv = data => {
-    const csvRow = [];
-    //get the headers
-    const headers = Object.keys(data[0]);
-    csvRow.push(headers.join(","));
-    //loop over Rows
-    for (const row of data) {
-      const val = headers.map(header => {
-        const newVal = ("" + row[header]).replace(/"/g, '\\"'); //turn values to string
-        return `"${newVal}"`;
-      });
-      csvRow.push(val.join(","));
-    }
-    return csvRow.join("\n");
-  };
-  download = data => {
-    const blob = new Blob([data], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.setAttribute("hidden", "");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "progress.csv");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-  downloadTable = () => {
-    const { data } = this.props;
-    const Tabledata = data.map(item => ({
-      date: moment(item.date).format("Do MMMM YYYY"),
-      documents: item.document,
-      comments: item.comments,
-      marks: item.marks
-    }));
-    const csvData = this.objectToCsv(Tabledata);
-    this.download(csvData);
-  };
+
   render() {
-    const { classes, data, errorMessage, error } = this.props;
+    const { classes, data, errorMessage, error ,message} = this.props;
     return (
       <div>
         <GridContainer>
@@ -204,9 +167,9 @@ class Progress extends React.Component {
               <CardBody>
                 <Snackbar
                   place="tr"
-                  color={!error ? "success": "danger"}
+                  color={!error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={!error? "PROGRESS UPDATED SUCCESSFUL " : errorMessage}
+                  message={!error ? message : errorMessage}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
@@ -281,7 +244,7 @@ class Progress extends React.Component {
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
-            <ProgressTable downloadTable={this.downloadTable} data={data} />
+            <ProgressMUItable data={data} />
           </GridItem>
         </GridContainer>
       </div>

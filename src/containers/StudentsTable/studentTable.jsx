@@ -1,5 +1,5 @@
 import React from "react";
-import SupervisorComponent from "../../views/Students/Components/SupervisorComponent.jsx";
+import AllocatedStudentsMUItable from "../../components/DataTable/AllocatedStudentsMUItable"
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -15,7 +15,7 @@ class StudentTable extends React.Component {
     } else {
       return (
         <div>
-          <SupervisorComponent
+          <AllocatedStudentsMUItable
             data={data}
             markAsCompleted={markAsCompleted}
             status={status}

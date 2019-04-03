@@ -40,7 +40,10 @@ const columns = [
     }
   },
   {
-    name: "actions"
+    name: "actions",
+    options: {
+      filter: false
+    }
   }
 ];
 

@@ -108,16 +108,11 @@ class Archives extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Students Table</h4>
-              <p className={classes.cardCategoryWhite}>students </p>
+              <h4 className={classes.cardTitleWhite}>Archives Table</h4>
+              <p className={classes.cardCategoryWhite}>Archives </p>
             </CardHeader>
             <CardBody>
-              <MUIDataTable
-                title={"Archives Table"}
-                data={data}
-                columns={columns}
-                options={options}
-              />
+              <MUIDataTable data={data} columns={columns} options={options} />
             </CardBody>
           </Card>
         </GridItem>

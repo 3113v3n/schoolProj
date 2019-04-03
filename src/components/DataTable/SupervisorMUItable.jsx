@@ -29,10 +29,16 @@ const columns = [
     }
   },
   {
-    name: "Degree"
+    name: "Degree",
+    options: {
+      filter: false
+    }
   },
   {
-    name: "Diploma"
+    name: "Diploma",
+    options: {
+      filter: false
+    }
   },
   {
     name: "Allocation Count",
@@ -41,10 +47,16 @@ const columns = [
     }
   },
   {
-    name: "Edit"
+    name: "Edit",
+    options: {
+      filter: false
+    }
   },
   {
-    name: "Delete"
+    name: "Delete",
+    options: {
+      filter: false
+    }
   }
 ];
 
@@ -197,8 +209,8 @@ class SupervisorMUItable extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Students Table</h4>
-              <p className={classes.cardCategoryWhite}>students </p>
+              <h4 className={classes.cardTitleWhite}>Supervisor Table</h4>
+              <p className={classes.cardCategoryWhite}>supervisors </p>
             </CardHeader>
             <CardBody>
               <MUIDataTable
