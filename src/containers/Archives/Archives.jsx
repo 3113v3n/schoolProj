@@ -1,5 +1,4 @@
 import React from "react";
-import ArchiveComponent from "../../views/Archives/ArchiveComponent.jsx";
 import ArchiveMUItable from "../../components/DataTable/ArchiveMUItable";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -17,9 +16,6 @@ class Archives extends React.Component {
       return (
         <div>
           <ArchiveMUItable archives={archives} status={status} />
-          {
-            //<ArchiveComponent archives={archives} status={status} />
-          }
         </div>
       );
     }

@@ -1,7 +1,7 @@
 import React from "react";
 // @material-ui/core components
 // core components
-import SuperTableComponent from "../../views/Supervisor/Table/superTableComponents.jsx";
+import SupervisorMUItable from "../../components/DataTable/SupervisorMUItable";
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -18,11 +18,7 @@ class supervisorTable extends React.Component {
     } else {
       return (
         <div>
-          <SuperTableComponent
-            data={data}
-            onDelete={onDelete}
-            status={status}
-          />
+          <SupervisorMUItable data={data} onDelete={onDelete} status={status} />
         </div>
       );
     }

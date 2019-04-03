@@ -1,8 +1,6 @@
 import React from "react";
 // @material-ui/core components
-// core components
-import AdminComponent from "../../views/Students/Components/AdminComponent.jsx";
-
+import StudentMUItable from "../../components/DataTable/StudentMUItable.jsx";
 import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -18,7 +16,7 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          <AdminComponent data={data} onDelete={this.props.onDelete} />
+          <StudentMUItable data={data} onDelete={this.props.onDelete} />
         </div>
       );
     }

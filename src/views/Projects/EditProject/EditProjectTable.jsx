@@ -52,15 +52,14 @@ class EditProject extends React.Component {
       tr: false
     };
   }
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
+
   resetValues = () => {
     let inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
     this.setState({
       projCode: "",
       newProjectCode: "",
+      trimesters:0,
       degreeSelected: false,
       diplomaSelected: false
     });
@@ -183,6 +182,9 @@ class EditProject extends React.Component {
                         fullWidth: true,
                         value: this.state.trimesters,
                         onChange: this.handleInput
+                      }}
+                      inputProps={{
+                        value: this.props.location.state.trimesters
                       }}
                     />
                   </GridItem>

@@ -13,38 +13,34 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import { NavLink } from "react-router-dom";
 import Button from "components/CustomButtons/Button.jsx";
-import Delete from "@material-ui/icons/Delete";
 import Done from "@material-ui/icons/Done";
 const columns = [
   {
-    name: "First Name",
+    name: "project Code",
     options: {
       filter: true
     }
   },
   {
-    name: "Last Name",
+    name: "Trimesters",
     options: {
       filter: true
     }
   },
   {
-    name: "Degree"
-  },
-  {
-    name: "Diploma"
-  },
-  {
-    name: "Allocation Count",
+    name: "Degree",
     options: {
       filter: true
     }
   },
   {
-    name: "Edit"
+    name: "Diploma",
+    options: {
+      filter: true
+    }
   },
   {
-    name: "Delete"
+    name: "actions"
   }
 ];
 
@@ -56,31 +52,18 @@ const options = {
   rowsPerPage: 8
 };
 
-class SupervisorMUItable extends React.Component {
-  goToEdit = (f_name, l_name, supervisorId) => {
+class ProjectMUItable extends React.Component {
+  goToEdit = (code, number) => {
     const { history } = this.props;
     history.push({
-      pathname: "/admin/editSupervisorTable",
+      pathname: "/admin/editProjects",
       state: {
-        firstName: f_name,
-        lastName: l_name,
-        emp_no: supervisorId
+        code: code,
+        trimesters: number
       }
     });
   };
-  refreshPage = () => {
-    window.location.reload();
-  };
-  deleteRow = id => {
-    let supervisor_id = parseInt(id);
-    this.props.onDelete(supervisor_id);
-    if (this.props.status !== "success" && this.props.status === "") {
-      alert("FRESH TOKEN REQUIRED FOR DELETE , PLEASE LOGIN AGAIN");
-    } else {
-      this.refreshPage();
-    }
-  };
-  actions = (code, name, id) => {
+  actions = (code, number) => {
     const { classes } = this.props;
     return (
       <Tooltip
@@ -92,7 +75,7 @@ class SupervisorMUItable extends React.Component {
         <IconButton
           aria-label="Edit"
           className={classes.tableActionButton}
-          onClick={() => this.goToEdit(code, name, id)}
+          onClick={() => this.goToEdit(code, number)}
         >
           <Edit
             className={classes.tableActionButtonIcon + " " + classes.edit}
@@ -101,38 +84,13 @@ class SupervisorMUItable extends React.Component {
       </Tooltip>
     );
   };
-  delete = id => {
-    const { classes } = this.props;
-    return (
-      <Tooltip
-        id="tooltip-top"
-        title="DELETE STUDENT"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
-        <IconButton
-          aria-label="DELETE"
-          style={{ color: "red" }}
-          className={classes.tableActionButton}
-          onClick={() =>
-            window.confirm("Are you sure you wish to delete Student row?") &&
-            this.deleteRow(id)
-          }
-        >
-          <Delete
-            className={classes.tableActionButtonIcon + " " + classes.edit}
-          />
-        </IconButton>
-      </Tooltip>
-    );
-  };
-  course = val => {
+  degreeItem = val => {
     if (val === true) {
       const { classes } = this.props;
       return (
         <Tooltip
           id="tooltip-top"
-          title="Diploma"
+          title="Degree"
           placement="top"
           classes={{ tooltip: classes.tooltip }}
         >
@@ -151,7 +109,7 @@ class SupervisorMUItable extends React.Component {
       return <div style={{ color: "red" }}>N/A</div>;
     }
   };
-  diplomaCourse = val => {
+  diplomaItem = val => {
     if (val === true) {
       const { classes } = this.props;
       return (
@@ -178,39 +136,33 @@ class SupervisorMUItable extends React.Component {
   };
   render() {
     const { data, classes } = this.props;
-    const emptySet = [["", "", "No DATA Available", ""]];
-    const students =
-      data !== null && data !== undefined && data.status !== "failed"
-        ? data.map(item => [
-            item.first_name,
-            item.last_name,
-            this.course(item.degree),
-            this.diplomaCourse(item.diploma),
-            item.allocations_count,
-            this.actions(item.first_name, item.last_name, item.supervisor_id),
-            this.delete(item.student_adm)
-          ])
-        : emptySet;
 
+    const projects = data.map(item => [
+      item.project_code,
+      item.trimesters,
+      this.degreeItem(item.degree),
+      this.diplomaItem(item.diploma),
+      this.actions(item.project_code, item.trimesters)
+    ]);
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Students Table</h4>
-              <p className={classes.cardCategoryWhite}>students </p>
+              <h4 className={classes.cardTitleWhite}>Projects Table</h4>
+              <p className={classes.cardCategoryWhite}>projects </p>
             </CardHeader>
             <CardBody>
               <MUIDataTable
-                data={students}
+                data={projects}
                 columns={columns}
                 options={options}
               />
             </CardBody>
           </Card>
-          <NavLink to="/admin/addAllocation">
+          <NavLink to="/admin/AddProjects">
             <Button color="info" round>
-              New Allocation
+              Add Project
             </Button>
           </NavLink>
         </GridItem>
@@ -257,11 +209,9 @@ const styles = {
     }
   }
 };
-SupervisorMUItable.propTypes = {
+ProjectMUItable.propTypes = {
   data: PropTypes.array,
   classes: PropTypes.object,
-  history: PropTypes.object,
-  onDelete: PropTypes.func,
-  status: PropTypes.string
+  history: PropTypes.object
 };
-export default withRouter(withStyles(styles)(SupervisorMUItable));
+export default withRouter(withStyles(styles)(ProjectMUItable));

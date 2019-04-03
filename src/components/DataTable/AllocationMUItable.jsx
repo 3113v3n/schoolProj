@@ -93,15 +93,23 @@ class AllocationMUItable extends React.Component {
   };
   render() {
     const { data, classes } = this.props;
+    const emptySet = [["", "", "No DATA Available", ""]];
+    const allocation =
+      data !== null && data !== undefined && data.status !== "failed"
+        ? data.map(item => [
+            item.student_name,
+            item.supervisor_name,
+            item.project_code,
+            moment(item.date_registered).format("Do MMMM YYYY"),
+            item.due_date,
+            this.actions(
+              item.project_code,
+              item.student_name,
+              item.allocation_id
+            )
+          ])
+        : emptySet;
 
-    const allocation = data.map(item => [
-      item.student_name,
-      item.supervisor_name,
-      item.project_code,
-      moment(item.date_registered).format("Do MMMM YYYY"),
-      item.due_date,
-      this.actions(item.project_code, item.student_name, item.allocation_id)
-    ]);
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
