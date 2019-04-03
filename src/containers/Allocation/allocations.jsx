@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 // @material-ui/icons
 
 import AllocationComponent from "../../views/Allocation/AllocationComponent";
+import AllocationMUItable from "../../components/DataTable/AllocationMUItable";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
 class allocations extends React.Component {
@@ -18,11 +19,13 @@ class allocations extends React.Component {
     } else {
       return (
         <div>
-          <AllocationComponent
-            classes={classes}
-            data={data}
-            message={message}
-          />
+          <AllocationMUItable classes={classes} data={data} message={message} />
+
+          {/*  <AllocationComponent*/}
+          {/*  classes={classes}*/}
+          {/*  data={data}*/}
+          {/*  message={message}*/}
+          {/*/>*/}
         </div>
       );
     }
