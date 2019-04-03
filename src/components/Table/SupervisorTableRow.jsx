@@ -5,7 +5,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router";
 import React from "react";
 import PropTypes from "prop-types";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 import Delete from "@material-ui/icons/Delete";
+import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
 const styles = {
   center: {
     textAlign: "center"
@@ -19,6 +21,12 @@ const styles = {
   }
 };
 class SupervisorTableRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tl: false
+    };
+  }
   goToEdit = () => {
     const { history, f_name, l_name, emp_no } = this.props;
     history.push({
@@ -36,7 +44,11 @@ class SupervisorTableRow extends React.Component {
   deleteItem = id => {
     const supervisor_id = parseInt(id);
     this.props.onDelete(supervisor_id);
-    this.refreshPage();
+    if (this.props.status !== "success" && this.props.status === "") {
+      alert("FRESH TOKEN REQUIRED FOR DELETE , PLEASE LOGIN AGAIN");
+    } else {
+      this.refreshPage();
+    }
   };
   render() {
     const {
@@ -112,6 +124,8 @@ SupervisorTableRow.propTypes = {
   history: PropTypes.object.isRequired,
   emp_no: PropTypes.number,
   diploma: PropTypes.func,
-  count: PropTypes.number
+  count: PropTypes.number,
+  status: PropTypes.string,
+  message: PropTypes.string
 };
 export default withRouter(withStyles(styles)(SupervisorTableRow));

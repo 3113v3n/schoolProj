@@ -112,7 +112,7 @@ class AllocationForm extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.addAllocation(data);
-      if (error === false) {
+      if (!error) {
         this.showNotification("tr");
         this.refreshPage();
       } else {
@@ -213,7 +213,7 @@ class AllocationForm extends React.Component {
                 />
                 <Snackbar
                   place="tr"
-                  color={status === "success" && !error ? "success" : "danger"}
+                  color={status !== "failed" && !error ? "success" : "danger"}
                   icon={AddAlert}
                   message={error === true ? errorMessage : message}
                   open={this.state.tr}

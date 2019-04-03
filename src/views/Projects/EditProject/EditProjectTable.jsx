@@ -95,7 +95,7 @@ class EditProject extends React.Component {
       degreeSelected,
       diplomaSelected
     } = this.state;
-    const { history, error } = this.props;
+    const { error } = this.props;
     const data = {};
     data.new_project_code = newProjectCode;
     data.degree = degreeSelected;
@@ -113,8 +113,8 @@ class EditProject extends React.Component {
       this.props.onSubmit(data);
 
       if (error === false) {
+        this.showNotification("tr");
         this.resetValues();
-        history.push("/admin/projectsTable");
       } else {
         this.showNotification("tr");
       }
@@ -214,24 +214,22 @@ class EditProject extends React.Component {
                 </Button>
                 <Button color="danger" round onClick={this.cancelEdit}>
                   <Clear />
-                  Cancel
+                  Cancel / Go Back
                 </Button>
                 <Snackbar
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={
-                    error === true ? errorMessage : "ALL FIELDS ARE REQUIRED"
-                  }
+                  message={"ALL FIELDS ARE REQUIRED"}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
                   place={"tr"}
-                  color={"success"}
+                  color={!error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={message}
+                  message={!error ? message : errorMessage}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

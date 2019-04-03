@@ -12,13 +12,17 @@ class supervisorTable extends React.Component {
   }
 
   render() {
-    const { isLoading, data, onDelete } = this.props;
+    const { isLoading, data, onDelete, status } = this.props;
     if (!isLoading) {
       return <div> Loading...</div>;
     } else {
       return (
         <div>
-          <SuperTableComponent data={data} onDelete={onDelete} />
+          <SuperTableComponent
+            data={data}
+            onDelete={onDelete}
+            status={status}
+          />
         </div>
       );
     }
@@ -28,13 +32,17 @@ supervisorTable.propTypes = {
   onLoaded: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  data: PropTypes.array
+  data: PropTypes.array,
+  status: PropTypes.string,
+  message: PropTypes.string
 };
 const mapStateToProps = state => {
   return {
     data: state.admin.supervisors,
     isLoading: state.admin.isLoading,
-    user: state.user.user
+    user: state.user.user,
+    status: state.admin.status,
+    message: state.admin.message
   };
 };
 const mapDispatchToProps = dispatch => {

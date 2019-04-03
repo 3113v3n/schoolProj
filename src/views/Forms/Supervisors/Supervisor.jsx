@@ -92,6 +92,9 @@ class Supervisors extends React.Component {
       diplomaSelected: false
     });
   };
+  refreshPage = () => {
+    window.location.reload();
+  };
 
   addSupervisor = () => {
     const {
@@ -126,15 +129,12 @@ class Supervisors extends React.Component {
         alert("NOT A VALID ID SUBMITTED");
       } else {
         this.props.onSubmit(data);
-        if (this.props.error === false) {
-          if (this.props.status !== "failed") {
-            const { history } = this.props;
-            this.showNotification("tr");
-            this.resetValues();
-            history.push("/admin/SuperTable");
-          }
+        if (!this.props.error) {
+          this.resetValues();
+          this.showNotification("tr");
+          //this.refreshPage();
         } else {
-          this.showNotification("tl");
+          this.showNotification("tr");
         }
       }
     }
@@ -268,22 +268,16 @@ class Supervisors extends React.Component {
                   place="tl"
                   color="danger"
                   icon={AddAlert}
-                  message={
-                    error === true ? errorMessage : "All fields required."
-                  }
+                  message={"All fields required."}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
                 />
                 <Snackbar
-                  place={status === "success" ? "tr" : "tl"}
-                  color={status === "success" ? "success" : "danger"}
+                  place={"tr"}
+                  color={status !== "failed" && !error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={
-                    status === "success"
-                      ? message
-                      : "Supervisor couldn't be added"
-                  }
+                  message={!error ? message : errorMessage}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

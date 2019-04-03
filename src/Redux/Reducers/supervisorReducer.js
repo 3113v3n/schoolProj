@@ -4,7 +4,6 @@ import { updateProgress } from "../utilityFunctions";
 const initialState = {
   myData: null,
   Progress: null,
-  supervisorDetails: {},
   progress: {},
   isLoading: false,
   completed: false,
@@ -36,11 +35,11 @@ function supervisorReducer(state = initialState, action) {
         status: state.status
       };
     case actionTypes.CHANGE_SUPERVISOR_PASSWORD:
-      return updateProgress(state, {
-        supervisorDetails: action.data,
-        error: false,
-        status: state.status
-      });
+      return {
+        ...state,
+        status: state.status,
+        message: action.data
+      };
     case actionTypes.FETCH_PROGRESS:
       return updateProgress(state, {
         Progress: action.data,

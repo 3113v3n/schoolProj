@@ -60,7 +60,7 @@ function userReducer(state = initialState, action) {
       };
     case actionTypes.LOGOUT:
       return {
-        isAuthenticated: state.isAuthenticated,
+        isAuthenticated: false,
         redirect: !state.redirect
       };
     default:

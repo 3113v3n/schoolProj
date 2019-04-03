@@ -99,7 +99,7 @@ class Profile extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   };
   render() {
-    const { classes, profile, error, status } = this.props;
+    const { classes, message, error, status } = this.props;
     const { oldPass, password, confirmPass } = this.state;
 
     return (
@@ -172,7 +172,7 @@ class Profile extends React.Component {
                   place="tr"
                   color={status !== "failed" && !error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={profile.message}
+                  message={message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

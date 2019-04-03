@@ -46,7 +46,9 @@ class EditStudents extends React.Component {
       firstName: "",
       lastName: "",
       admNo: this.props.location.state.admNo,
-      projCode: ""
+      projCode: "",
+      oldAdm: this.props.location.state.admNo,
+      navigate: false
     };
   }
   componentDidMount() {
@@ -89,15 +91,16 @@ class EditStudents extends React.Component {
       firstName: "",
       lastName: "",
       admNo: "",
-      projCode: ""
+      projCode: "",
+      oldAdm: ""
     });
   };
   handleInput = event => {
     this.setState({ [event.target.id]: event.target.value });
   };
   updateStudent = () => {
-    const { firstName, lastName, admNo, projCode } = this.state;
-    const { history, error } = this.props;
+    const { firstName, lastName, admNo, projCode, oldAdm } = this.state; //TODO: ADD OLD ADM
+    const { error } = this.props;
     const data = {};
     data.first_name = firstName;
     data.last_name = lastName;
@@ -106,15 +109,14 @@ class EditStudents extends React.Component {
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
-      admNo.legth === 0 ||
+      admNo.length === 0 ||
       projCode.length === 0
     ) {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
-      if (error === false) {
-        this.resetValues();
-        history.push("/admin/adminStudents");
+      if (!error) {
+       // this.resetValues();
         this.showNotification("tr");
       } else {
         this.showNotification("tl");
@@ -123,13 +125,16 @@ class EditStudents extends React.Component {
   };
   render() {
     const { classes, error, message, errorMessage, projects } = this.props;
+
     return (
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="success">
-                <h4 className={classes.cardTitleWhite}>Edit Students </h4>
+                <h4 className={classes.cardTitleWhite}>
+                  Edit Students Details{" "}
+                </h4>
                 <p className={classes.cardCategoryWhite}>
                   Enter Student Details{" "}
                 </p>
@@ -213,17 +218,12 @@ class EditStudents extends React.Component {
                           {item.project_code}
                         </MenuItem>
                       ))}
-
                     </Select>
                     <Snackbar
                       place={"tl"}
                       color={"danger"}
                       icon={AddAlert}
-                      message={
-                        error === true
-                          ? errorMessage
-                          : "All fields Are Required"
-                      }
+                      message={error ? errorMessage : "All fields Are Required"}
                       open={this.state.tl}
                       closeNotification={() => this.setState({ tl: false })}
                       close
@@ -247,7 +247,7 @@ class EditStudents extends React.Component {
                 </Button>
                 <Button color="danger" round onClick={this.cancelEdit}>
                   <Clear />
-                  Cancel
+                  Cancel / GoBack
                 </Button>
               </CardFooter>
             </Card>

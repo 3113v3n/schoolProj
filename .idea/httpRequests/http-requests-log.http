@@ -1,3 +1,137 @@
+POST http://192.168.0.32:5000/progress
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTQ4NzIsIm5iZiI6MTU1NDIxNDg3MiwianRpIjoiNTE3YzQzNDItZDNiMi00ZGRhLTgwYzktZWI0ZDMwZTZmZTlkIiwiZXhwIjoxNTU0MjE1MTcyLCJpZGVudGl0eSI6MTE5NDksImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.Gck6i07tB43aAVsk_XkfP5EHvMOdX31-7KNK57rXO9o
+
+{
+  "allocation_id":"aea762c5-5dd2-4ea2-90f4-0835cc30a357",
+  "progress_id": "0e3a3298-10aa-4b5c-a752-065c21476653",
+  "comments": "improve on your report then resubmit",
+  "document": "Methodology",
+  "marks": 12
+}
+
+<> 2019-04-02T052412.200.json
+
+###
+
+POST http://192.168.0.32:5000/progress
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTMzNDEsIm5iZiI6MTU1NDIxMzM0MSwianRpIjoiYzgwNTQ5MDQtNzFmZC00ZDk1LTg0NTUtOWQzZDgyMTJlZmMzIiwiZXhwIjoxNTU0MjEzNjQxLCJpZGVudGl0eSI6MTE5NDksImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.sH2huBmV5UIZoPOV3FwMKIkjdph_HBWuHxrr9aha80Y
+
+{
+  "allocation_id":"aea762c5-5dd2-4ea2-90f4-0835cc30a357",
+  "progress_id": "0e3a3298-10aa-4b5c-a752-065c21476653",
+  "comments": "improve on your report then resubmit",
+  "document": "Methodology",
+  "marks": 12
+}
+
+<> 2019-04-02T052333.401.json
+
+###
+
+GET http://192.168.0.32:5000/supervisor/dashboard
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTMzNDEsIm5iZiI6MTU1NDIxMzM0MSwianRpIjoiYzgwNTQ5MDQtNzFmZC00ZDk1LTg0NTUtOWQzZDgyMTJlZmMzIiwiZXhwIjoxNTU0MjEzNjQxLCJpZGVudGl0eSI6MTE5NDksImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.sH2huBmV5UIZoPOV3FwMKIkjdph_HBWuHxrr9aha80Y
+<> 2019-04-02T045714.500.html:
+
+<> 2019-04-02T045753.200.json
+
+###
+
+GET http://192.168.0.32:5000/supervisor/dashboard
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045714.500.html
+
+###
+
+GET http://192.168.0.32:5000/supervisor/dashboard
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045651.500.html
+
+###
+
+GET http://192.168.0.32:5000/admin/studentTable
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045532.404.html
+
+###
+
+GET http://192.168.0.32:5000/admin/studentTable
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045342.404.html
+
+###
+
+GET http://192.168.0.32:5000/admin/studentTable
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045303.404.html
+
+###
+
+GET http://localhost:3000/admin/studentTable
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045106.200.html
+
+###
+
+GET http://localhost:3000/admin/studentTable
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyMTI5MTIsIm5iZiI6MTU1NDIxMjkxMiwianRpIjoiNmUzMTc2ZTgtYjZhOS00MjRmLWI5MGItMDM4YjU0Zjg0NjM5IiwiZXhwIjoxNTU0MjEzMjEyLCJpZGVudGl0eSI6MTIzNDUsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.GVJdDUE_dBGjVWv
+
+<> 2019-04-02T045046.200.html
+
+###
+
+POST http://localhost:5000/auth/refresh
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQxOTk5MTQsIm5iZiI6MTU1NDE5OTkxNCwianRpIjoiNTI5YmYyMTQtODczZS00YzIyLWEzMGMtODI5Njg2NTFmZTQ5IiwiZXhwIjoxNTU2NzkxOTE0LCJpZGVudGl0eSI6MTIzNDUsInR5cGUiOiJyZWZyZXNoIn0.S3IeFCAmyuZog9KZXi5qR05x9K308pMgAMMIDzMh5p8
+
+<> 2019-04-02T011554.200.json
+
+###
+
+POST http://localhost:5000/auth/refresh
+Accept: */*
+Content-Type: application/json
+ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQxOTU3MzEsIm5iZiI6MTU1NDE5NTczMSwianRpIjoiMGVjNDkyYmYtY2E3Ny00MGZkLTk2ODUtZTlhOTBhYTllNjNlIiwiZXhwIjoxNTU2Nzg3NzMxLCJpZGVudGl0eSI6MTIzNDUsInR5cGUiOiJyZWZyZXNoIn0.UTplCV2iXDxfnhRU1mGIwL9SkcSXTqqWFxG8EtBbcGo
+
+<> 2019-04-02T011423.500.html
+
+###
+
+POST http://localhost:5000/auth/refresh
+Accept: */*
+Cache-Control: no-cache
+ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQxOTU3MzEsIm5iZiI6MTU1NDE5NTczMSwianRpIjoiMGVjNDkyYmYtY2E3Ny00MGZkLTk2ODUtZTlhOTBhYTllNjNlIiwiZXhwIjoxNTU2Nzg3NzMxLCJpZGVudGl0eSI6MTIzNDUsInR5cGUiOiJyZWZyZXNoIn0.UTplCV2iXDxfnhRU1mGIwL9SkcSXTqqWFxG8EtBbcGo
+
+<> 2019-04-02T123922.500.html
+
+###
+
 POST http://localhost:5000/students/register/csv
 Accept: */*
 Cache-Control: no-cache

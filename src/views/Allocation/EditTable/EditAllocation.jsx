@@ -99,7 +99,7 @@ class EditAllocation extends React.Component {
   };
   editAllocation = () => {
     const { allocation_id, supervisor, projCode } = this.state;
-    const { history, error, status } = this.props;
+    const { error } = this.props;
     const data = {};
     data.allocation_id = allocation_id;
     data.supervisor_id = supervisor;
@@ -107,12 +107,9 @@ class EditAllocation extends React.Component {
       this.showNotification("tl");
     } else {
       this.props.onSubmit(data);
-      if (error === false) {
+      if (!error) {
         this.showNotification("tr");
-        if (status !== "failed") {
-          this.resetValues();
-          history.push("/admin/allocation");
-        }
+        // this.resetValues();
       } else {
         this.showNotification("tl");
       }
@@ -236,15 +233,13 @@ class EditAllocation extends React.Component {
                 </Button>
                 <Button color="danger" round onClick={this.cancelEdit}>
                   <Clear />
-                  Cancel
+                  Cancel / GoBack
                 </Button>
                 <Snackbar
                   place={"tl"}
                   color={"danger"}
                   icon={AddAlert}
-                  message={
-                    error !== true ? "All fields Required" : errorMessage
-                  }
+                  message={!error ? "All fields Required" : errorMessage}
                   open={this.state.tl}
                   closeNotification={() => this.setState({ tl: false })}
                   close
@@ -253,9 +248,7 @@ class EditAllocation extends React.Component {
                   place={"tr"}
                   color={status !== "failed" ? "success" : "danger"}
                   icon={AddAlert}
-                  message={
-                    status !== "failed" ? "Successful reallocation" : message
-                  }
+                  message={message}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close

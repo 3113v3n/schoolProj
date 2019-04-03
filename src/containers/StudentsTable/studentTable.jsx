@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class StudentTable extends React.Component {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.fetchData();
   }
   render() {

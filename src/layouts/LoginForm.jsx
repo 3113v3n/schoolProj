@@ -90,7 +90,7 @@ class LoginForm extends React.Component {
         this.showNotification("tl");
       } else {
         this.props.handleSubmit(data);
-        if (this.props.error ) {
+        if (this.props.error) {
           this.showNotification("tc");
         } else {
           this.showNotification("tc");

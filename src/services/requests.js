@@ -1,7 +1,7 @@
 import paths from "../constants/paths.js";
 import jwtDecode from "jwt-decode";
 //import decode from "jwt-decode";
-const requests = paths.production; //localhost;
+const requests = paths.localhost; //production;
 
 const token = localStorage.getItem("access_Token");
 const refreshToken = localStorage.getItem("refresh_Token");
@@ -65,7 +65,7 @@ async function fetchRequest(path) {
     let requestParams = {
       method: "GET",
       headers: {
-        Accept: "*/*",
+        Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       }
@@ -114,11 +114,8 @@ async function isTokenExpired() {
   try {
     const decoded = jwtDecode(token);
     let date = new Date(0);
-    console.log(date.setUTCSeconds(decoded.exp));
+    date.setUTCSeconds(decoded.exp);
     date.valueOf();
-    console.log(Date.now());
-    console.log(Date.now() - date.valueOf());
-    console.log(date.valueOf() < Date.now());
     return date.valueOf() < Date.now(); //expiry date should be greater for token to be valid
   } catch (err) {
     return false;
@@ -131,7 +128,7 @@ async function refreshTokenRequest(path) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${refreshToken}`
       }
     };
     let response = await fetch(`${requests}${path}`, requestParams);

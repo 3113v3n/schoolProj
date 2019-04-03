@@ -53,22 +53,27 @@ export const LogMeIn = data => {
   return dispatch => {
     loginRequest("auth/login", data)
       .then(responseJson => {
-        localStorage.setItem("access_Token", responseJson.access_token);
-        localStorage.setItem("refresh_Token", responseJson.refresh_token);
-        localStorage.setItem("role", responseJson.role);
-        dispatch(setMyData(actionTypes.SET_ROLE, responseJson.role));
-        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
+        if (responseJson.status !== "failed") {
+          localStorage.setItem("access_Token", responseJson.access_token);
+          localStorage.setItem("refresh_Token", responseJson.refresh_token);
+          localStorage.setItem("role", responseJson.role);
+          localStorage.setItem("isAuthenticated", "True");
+          dispatch(setMyData(actionTypes.SET_ROLE, responseJson.role));
+          dispatch(setMyData(actionTypes.STATUS, responseJson.status));
 
-        dispatch(
-          setMyData(
-            actionTypes.SET_CURRENT_USER,
-            jwtDecode(responseJson.access_token)
-          )
-        );
-        dispatch(storeToken(responseJson.access_token));
-        dispatch(
-          setMyData(actionTypes.REFRESH_TOKEN, responseJson.refresh_token)
-        );
+          dispatch(
+            setMyData(
+              actionTypes.SET_CURRENT_USER,
+              jwtDecode(responseJson.access_token)
+            )
+          );
+          dispatch(storeToken(responseJson.access_token));
+          dispatch(
+            setMyData(actionTypes.REFRESH_TOKEN, responseJson.refresh_token)
+          );
+        } else {
+          dispatch(userRegistrationFailed(responseJson.message));
+        }
       })
       .catch(error => {
         dispatch(userRegistrationFailed(error.message));
@@ -216,9 +221,8 @@ export const supervisorStudents = () => {
 };
 export const refreshToken = () => {
   return dispatch => {
-    refreshTokenRequest("")
+    refreshTokenRequest("auth/refresh")
       .then(responseJson => {
-        localStorage.removeItem("access_Token");
         localStorage.setItem("access_Token", responseJson.access_token);
         dispatch(
           setMyData(
@@ -226,9 +230,7 @@ export const refreshToken = () => {
             jwtDecode(responseJson.access_token)
           )
         );
-        dispatch(
-          setMyData(actionTypes.REFRESH_TOKEN, responseJson.access_token)
-        );
+        dispatch(storeToken(responseJson.access_token));
       })
       .catch(e => {
         dispatch(fetchFailed());
@@ -321,7 +323,7 @@ export const addSupervisor = data => {
   return dispatch => {
     postRequest("supervisor/register", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, data));
+        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, responseJson));
         dispatch(setMyData(actionTypes.SET_STATUS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
@@ -416,7 +418,10 @@ export const editAdminProfile = data => {
   return dispatch => {
     updateRequest("supervisor", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson));
+        dispatch(setMyData(actionTypes.SET_STATUS, responseJson.status));
+        dispatch(
+          setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson.message)
+        );
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.ADMIN_PASS_ERROR, error.message));
@@ -429,10 +434,13 @@ export const editSupervisorProfile = data => {
   return dispatch => {
     updateRequest("supervisor", data)
       .then(responseJson => {
-        dispatch(
-          setMyData(actionTypes.CHANGE_SUPERVISOR_PASSWORD, responseJson)
-        );
         dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
+        dispatch(
+          setMyData(
+            actionTypes.CHANGE_SUPERVISOR_PASSWORD,
+            responseJson.message
+          )
+        );
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.SUPERVISOR_PASS_ERROR, error.message));
@@ -477,8 +485,8 @@ export const deleteSupervisors = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.DELETE_SUPERVISOR));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.DELETE_SUPERVISOR));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.DELETE_ERROR, error.message));

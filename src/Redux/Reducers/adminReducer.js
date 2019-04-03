@@ -10,7 +10,6 @@ const initialState = {
   students: [],
   archives: [],
   supervisors: [],
-  profile: {},
   supervisor: {},
   allocation: {},
   status: "",
@@ -27,7 +26,7 @@ function adminReducer(state = initialState, action) {
     case actionTypes.PROJECT_MESSAGE:
       return {
         ...state,
-        message: "PROJECT SUCCESSFULLY ADDED"
+        message: "PROJECT SUCCESSFULLY UPDATED"
       };
     case actionTypes.SET_DATA:
       return updateProgress(state, {
@@ -104,11 +103,11 @@ function adminReducer(state = initialState, action) {
         message: state.message
       });
     case actionTypes.CHANGE_ADMIN_PASSWORD:
-      return updateProgress(state, {
-        profile: action.data,
-        error: false,
+      return {
+        ...state,
+        message: action.data,
         status: state.status
-      });
+      };
     case actionTypes.ADD_SUPERVISOR:
       return {
         supervisors: [action.data, ...state.supervisors],

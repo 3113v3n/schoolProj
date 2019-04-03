@@ -9,27 +9,15 @@ export default function requireAuth(ComposedComponent) {
     UNSAFE_componentWillMount() {
       isTokenExpired().then(res => {
         if (res === true) {
-          alert("Expired");
+          this.props.refreshToken();
         } else {
           console.log("Token is Still Active");
         }
       });
     }
-
-    // UNSAFE_componentWillMount() {
-    //   if (!this.props.authenticated) {
-    //     this.props.history.push("/login");
-    //   }
-    // }
-    //
-    // UNSAFE_componentWillUpdate(nextProps) {
-    //   if (!nextProps.authenticated) {
-    //     this.props.history.push("/login");
-    //   }
-    // }
     render() {
-      const Token = localStorage.getItem("access_Token");
-      if (Token !== null) {
+      const { authenticated, Token } = this.props;
+      if (Token !== null && authenticated === "True") {
         return <ComposedComponent {...this.props} />;
       } else {
         this.props.history.push("/login");
@@ -44,14 +32,16 @@ export default function requireAuth(ComposedComponent) {
   };
   const mapDispatchToProps = dispatch => {
     return {
-      refreshToken: () => dispatch(actionCreators.refreshToken())
+      refreshToken: () => dispatch(actionCreators.refreshToken()),
+      authenticated: localStorage.getItem("isAuthenticated"),
+      Token: localStorage.getItem("access_Token")
     };
   };
   Authentication.propTypes = {
-    authenticated: PropTypes.bool.isRequired,
-    validToken: PropTypes.string,
+    authenticated: PropTypes.func,
     history: PropTypes.object,
-    refreshToken: PropTypes.func
+    refreshToken: PropTypes.func,
+    Token: PropTypes.func
   };
   return connect(
     mapStateToProps,

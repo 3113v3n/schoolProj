@@ -7,7 +7,7 @@ import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 class AdminStudents extends React.Component {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.Loaded();
   }
 
@@ -18,10 +18,7 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          <AdminComponent
-            data={data}
-            onDelete={this.props.onDelete}
-          />
+          <AdminComponent data={data} onDelete={this.props.onDelete} />
         </div>
       );
     }

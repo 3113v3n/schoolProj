@@ -162,8 +162,8 @@ class EditProgressComponent extends React.Component {
     } else {
       this.props.onEditProgress(data);
 
-      const { history, status } = this.props;
-      if (status === "success") {
+      const { history, error } = this.props;
+      if (!error) {
         this.resetValues();
         history.push("/admin/studentTable");
       }

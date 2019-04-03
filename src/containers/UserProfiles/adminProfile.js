@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import UserProfile from "../../views/UserProfile/UserProfile.jsx";;
 class adminProfile extends React.Component {
   render() {
-    const { updateProfile, user, error, errorMessage, message, profile } = this.props;
+    const { updateProfile, user, error, errorMessage, message, status } = this.props;
     return (
       <div>
         <UserProfile
@@ -14,7 +14,7 @@ class adminProfile extends React.Component {
           error={error}
           errorMessage={errorMessage}
           message={message}
-          profile={profile}
+          status={status}
         />
       </div>
     );
@@ -26,7 +26,7 @@ const mapStateToProps = state => {
     error: state.error.error,
     errorMessage: state.error.errorMessage,
     message: state.admin.message,
-    profile: state.admin.profile
+    status: state.admin.status
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -42,7 +42,7 @@ adminProfile.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   message: PropTypes.string,
-  profile: PropTypes.object
+  status: PropTypes.string
 };
 export default connect(
   mapStateToProps,
