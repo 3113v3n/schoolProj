@@ -26,7 +26,7 @@ import EditStudentTable from "./containers/EditTable/EditStudentTable";
 import EditAllocations from "./containers/EditTable/EditAllocations";
 import EditSupervisorsTable from "./containers/EditTable/EditSupervisorsTable";
 import EditProjectTable from "./containers/EditTable/EditProjectTable";
-import  EditProgress from "./containers/EditTable/EditProgress";
+import EditProgress from "./containers/EditTable/EditProgress";
 const dashboardRoutes = [
   {
     path: "/dashboard",

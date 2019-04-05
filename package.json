@@ -29,7 +29,10 @@
     "react-router-dom": "4.3.1",
     "react-scripts": "^2.1.8",
     "react-swipeable-views": "0.13.1",
+    "redux-observable": "^1.1.0",
     "redux-persist": "^5.10.0",
+    "redux-refresh-token": "^0.1.0",
+    "rxjs": "^6.4.0",
     "semantic-ui-react": "^0.85.0",
     "shortid": "^2.2.14",
     "validator": "^10.11.0"

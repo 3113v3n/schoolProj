@@ -5,6 +5,7 @@ import * as actionCreators from "../../Redux/Actions";
 import PropTypes from "prop-types";
 class Login extends React.Component {
   render() {
+    const getRole = localStorage.getItem("role");
     return (
       <div className="New-User">
         <LoginForm
@@ -12,6 +13,7 @@ class Login extends React.Component {
           error={this.props.error}
           isAuthenticated={this.props.isAuthenticated}
           errorMessage={this.props.errorMessage}
+          role={getRole}
         />
       </div>
     );
@@ -29,7 +31,7 @@ const mapStateToProps = state => {
     redirect: state.user.redirect,
     error: state.error.error,
     isAuthenticated: state.user.isAuthenticated,
-    errorMessage: state.error.errorMessage
+    errorMessage: state.error.errorMessage,
   };
 };
 Login.propTypes = {
@@ -37,6 +39,7 @@ Login.propTypes = {
   error: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   errorMessage: PropTypes.string
+
 };
 export default connect(
   mapStateToProps,

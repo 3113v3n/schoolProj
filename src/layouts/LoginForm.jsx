@@ -100,9 +100,13 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    if (this.props.isAuthenticated === true) {
-      const { history } = this.props;
-      history.push("/admin/dashboard");
+    const { isAuthenticated, role, history } = this.props;
+    if (isAuthenticated === true) {
+      if (role === "Admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/admin/studentTable");
+      }
     }
     const { classes, errorMessage, error } = this.props;
     const { staff_id, password } = this.state;
@@ -191,7 +195,8 @@ LoginForm.propTypes = {
   error: PropTypes.bool,
   history: PropTypes.object,
   isAuthenticated: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  role: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(LoginForm));

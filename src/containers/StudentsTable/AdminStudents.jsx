@@ -5,7 +5,7 @@ import * as actionCreators from "../../Redux/Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 class AdminStudents extends React.Component {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.props.Loaded();
   }
 

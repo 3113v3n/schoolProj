@@ -6,7 +6,8 @@ const initialState = {
   users: [],
   redirect: false,
   status: "",
-  isLoading: false
+  isLoading: false,
+  token: null
 };
 
 function userReducer(state = initialState, action) {
@@ -39,9 +40,15 @@ function userReducer(state = initialState, action) {
     case actionTypes.SET_CURRENT_USER:
       return {
         ...state,
+        status: action.data.status,
         isAuthenticated: true,
         user: action.data,
-        role: state.role
+        role: action.data.role
+      };
+    case actionTypes.REFRESH_SUCCESS:
+      return {
+        ...state,
+        token: action.data.access_token
       };
     case actionTypes.NOT_AUTHENTICATED:
       return {

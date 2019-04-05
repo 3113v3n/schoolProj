@@ -28,6 +28,11 @@ function supervisorReducer(state = initialState, action) {
       return {
         status: action.data
       };
+    case actionTypes.ADD_PROGRESS:
+      return{
+        status: action.data,
+        message: state.message
+      };
     case actionTypes.EDIT_PROGRESS:
       return {
         ...state,

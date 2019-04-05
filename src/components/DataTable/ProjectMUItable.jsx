@@ -140,13 +140,16 @@ class ProjectMUItable extends React.Component {
   render() {
     const { data, classes } = this.props;
 
-    const projects = data.map(item => [
-      item.project_code,
-      item.trimesters,
-      this.degreeItem(item.degree),
-      this.diplomaItem(item.diploma),
-      this.actions(item.project_code, item.trimesters)
-    ]);
+    const projects =
+      data !== null && data !== undefined && data.status !== "failed"
+        ? data.map(item => [
+            item.project_code,
+            item.trimesters,
+            this.degreeItem(item.degree),
+            this.diplomaItem(item.diploma),
+            this.actions(item.project_code, item.trimesters)
+          ])
+        : ["", "", "No Projects", "",""];
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>

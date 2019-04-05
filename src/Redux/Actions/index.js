@@ -6,12 +6,27 @@ import {
   updateRequest,
   deleteRequest,
   refreshTokenRequest,
-  uploadFiles
+  uploadFiles,
 } from "../../services/requests";
 import jwtDecode from "jwt-decode";
 
 //Work for all submission type is a parameter
-
+export const tokenRefreshing = () => {
+  return {
+    type: actionTypes.REFRESH_ATTEMPT
+  };
+};
+export const refreshFailed = () => {
+  return {
+    type: actionTypes.REFRESH_FAILED
+  };
+};
+export const refreshSuccess = data => {
+  return {
+    type: actionTypes.REFRESH_SUCCESS,
+    data
+  };
+};
 export const setMyData = (type, data) => {
   return {
     type: type,
@@ -58,19 +73,7 @@ export const LogMeIn = data => {
           localStorage.setItem("refresh_Token", responseJson.refresh_token);
           localStorage.setItem("role", responseJson.role);
           localStorage.setItem("isAuthenticated", "True");
-          dispatch(setMyData(actionTypes.SET_ROLE, responseJson.role));
-          dispatch(setMyData(actionTypes.STATUS, responseJson.status));
-
-          dispatch(
-            setMyData(
-              actionTypes.SET_CURRENT_USER,
-              jwtDecode(responseJson.access_token)
-            )
-          );
-          dispatch(storeToken(responseJson.access_token));
-          dispatch(
-            setMyData(actionTypes.REFRESH_TOKEN, responseJson.refresh_token)
-          );
+          dispatch(setMyData(actionTypes.SET_CURRENT_USER, responseJson));
         } else {
           dispatch(userRegistrationFailed(responseJson.message));
         }
@@ -224,12 +227,7 @@ export const refreshToken = () => {
     refreshTokenRequest("auth/refresh")
       .then(responseJson => {
         localStorage.setItem("access_Token", responseJson.access_token);
-        dispatch(
-          setMyData(
-            actionTypes.SET_CURRENT_USER,
-            jwtDecode(responseJson.access_token)
-          )
-        );
+        dispatch(tokenRefreshing(responseJson));
         dispatch(storeToken(responseJson.access_token));
       })
       .catch(e => {
@@ -282,7 +280,7 @@ export const addProgress = data => {
   return dispatch => {
     postRequest("progress", data)
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_PROGRESS, data));
+        dispatch(setMyData(actionTypes.ADD_PROGRESS, responseJson.status));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(e => {
@@ -361,7 +359,7 @@ export const editAllocations = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.EDIT_ALLOCATION_TABLE, data));
+        dispatch(editTable(actionTypes.EDIT_ALLOCATION_TABLE, data));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.ALLOCATION_ERROR, e.message));
@@ -376,7 +374,7 @@ export const editProjects = data => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.PROJECT_MESSAGE, responseJson.message));
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.EDIT_PROJECT_TABLE, data));
+        dispatch(editTable(actionTypes.EDIT_PROJECT_TABLE, data));
       })
       .catch(e => {
         dispatch(setMyData(actionTypes.PROJECT_EDIT_ERROR, e.message));
@@ -389,7 +387,7 @@ export const editStudents = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.EDIT_STUDENT_TABLE, data));
+        dispatch(editTable(actionTypes.EDIT_STUDENT_TABLE, data));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
       .catch(e => {
@@ -404,7 +402,7 @@ export const editSupervisors = data => {
       .then(responseJson => {
         const status = responseJson.status;
         dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.EDIT_SUPERVISOR_TABLE, data));
+        dispatch(editTable(actionTypes.EDIT_SUPERVISOR_TABLE, data));
         dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
       })
 

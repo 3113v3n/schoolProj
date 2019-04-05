@@ -58,7 +58,6 @@ const options = {
 class ProgressMUItable extends React.Component {
   goToEdit = (allocation_id, date, documents, comments, marks, progress_id) => {
     const { history } = this.props;
-   console.log(allocation_id,date,documents,comments,marks,progress_id);
     history.push({
       pathname: "/admin/editProgress",
       state: {

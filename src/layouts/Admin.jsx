@@ -89,48 +89,48 @@ class Dashboard extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-const role = localStorage.getItem("role");
+    const role = localStorage.getItem("role");
     const { classes,...rest } = this.props;
-      return (
-        <div className={classes.wrapper}>
+    return (
+      <div className={classes.wrapper}>
 
-          <Sidebar
-            role = {role==="Admin"? "Admin" : "Supervisor"}
+        <Sidebar
+          role = {role==="Admin"? "Admin" : "Supervisor"}
+          routes={routes}
+          logoText={role==="Admin"? "Admin":"Supervisor"}
+          logo={logo}
+          image={this.state.image}
+          handleDrawerToggle={this.handleDrawerToggle}
+          open={this.state.mobileOpen}
+          color={this.state.color}
+          {...rest}
+        />
+        <div className={classes.mainPanel} ref="mainPanel">
+          <Navbar
             routes={routes}
-            logoText={role==="Admin"? "Admin":"Supervisor"}
-            logo={logo}
-            image={this.state.image}
             handleDrawerToggle={this.handleDrawerToggle}
-            open={this.state.mobileOpen}
-            color={this.state.color}
             {...rest}
           />
-          <div className={classes.mainPanel} ref="mainPanel">
-            <Navbar
-              routes={routes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              {...rest}
-            />
-            {/* On the /maps route we want the map to be on full screen - this is not possible if the content and container classes are present because they have some paddings which would make the map smaller */}
-            {this.getRoute() ? (
-              <div className={classes.content}>
-                <div className={classes.container}>{switchRoutes}</div>
-              </div>
-            ) : (
-              <div className={classes.map}>{switchRoutes}</div>
-            )}
-            <FixedPlugin
-              handleImageClick={this.handleImageClick}
-              handleColorClick={this.handleColorClick}
-              bgColor={this.state["color"]}
-              bgImage={this.state["image"]}
-              handleFixedClick={this.handleFixedClick}
-              fixedClasses={this.state.fixedClasses}
-            />
-          </div>
+          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and container classes are present because they have some paddings which would make the map smaller */}
+          {this.getRoute() ? (
+            <div className={classes.content}>
+              <div className={classes.container}>{switchRoutes}</div>
+            </div>
+          ) : (
+            <div className={classes.map}>{switchRoutes}</div>
+          )}
+          <FixedPlugin
+            handleImageClick={this.handleImageClick}
+            handleColorClick={this.handleColorClick}
+            bgColor={this.state["color"]}
+            bgImage={this.state["image"]}
+            handleFixedClick={this.handleFixedClick}
+            fixedClasses={this.state.fixedClasses}
+          />
         </div>
-      );
-    }
+      </div>
+    );
+  }
 }
 
 Dashboard.propTypes = {

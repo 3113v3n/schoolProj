@@ -155,11 +155,11 @@ class Progress extends React.Component {
   };
 
   render() {
-    const { classes, data, errorMessage, error ,message} = this.props;
+    const { classes, data, errorMessage, error, message } = this.props;
     return (
       <div>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={6}>
+        <GridContainer justify={"center"}>
+          <GridItem xs={12} sm={12} md={5}>
             <Card>
               <CardHeader color="success">
                 <h4 className={classes.cardTitleWhite}>Add Student Progress</h4>
@@ -243,7 +243,7 @@ class Progress extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={12} md={6}>
+          <GridItem xs={12} sm={12} md={7}>
             <ProgressMUItable data={data} />
           </GridItem>
         </GridContainer>

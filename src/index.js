@@ -7,12 +7,9 @@ import Admin from "layouts/Admin.jsx";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 import Login from "containers/Login/Login";
 import { Provider } from "react-redux";
-
 import requireAuth from "./HOC/requireAuth";
 import ConfigureStore from "./ConfigureStore.js";
-
 const store = ConfigureStore();
-
 const hist = createBrowserHistory();
 
 ReactDOM.render(

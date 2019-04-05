@@ -95,14 +95,19 @@ const options = {
 class Archives extends React.Component {
   render() {
     const { archives, classes } = this.props;
-    const data = archives.map(item => [
-      item.student_adm,
-      item.student_name,
-      item.supervisor_name,
-      item.project_code,
-      moment(item.date_registered).format("Do MMMM YYYY"),
-      item.due_date
-    ]);
+    const data =
+      archives !== null &&
+      archives !== undefined &&
+      archives.status !== "failed"
+        ? archives.map(item => [
+            item.student_adm,
+            item.student_name,
+            item.supervisor_name,
+            item.project_code,
+            moment(item.date_registered).format("Do MMMM YYYY"),
+            item.due_date
+          ])
+        : ["", "", "NO ARCHIVES", ""];
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>

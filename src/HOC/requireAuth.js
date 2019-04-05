@@ -6,12 +6,10 @@ import { isTokenExpired } from "../services/requests";
 import * as actionCreators from "../Redux/Actions";
 export default function requireAuth(ComposedComponent) {
   class Authentication extends React.Component {
-    UNSAFE_componentWillMount() {
+    componentDidMount() {
       isTokenExpired().then(res => {
         if (res === true) {
           this.props.refreshToken();
-        } else {
-          console.log("Token is Still Active");
         }
       });
     }

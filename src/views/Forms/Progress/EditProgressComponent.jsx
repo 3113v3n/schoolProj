@@ -111,13 +111,13 @@ class EditProgressComponent extends React.Component {
   }
 
   componentWillUnmount() {
-    var id = window.setTimeout(null, 0);
+    let id = window.setTimeout(null, 0);
     while (id--) {
       window.clearTimeout(id);
     }
   }
   showNotification(place) {
-    var x = [];
+    let x = [];
     x[place] = true;
     this.setState(x);
     this.alertTimeout = setTimeout(

@@ -62,6 +62,7 @@ async function deleteRequest(path, param) {
 
 async function fetchRequest(path) {
   try {
+    refreshTokenRequest("auth/refresh");
     let requestParams = {
       method: "GET",
       headers: {
@@ -122,19 +123,21 @@ async function isTokenExpired() {
   }
 }
 async function refreshTokenRequest(path) {
-  try {
-    let requestParams = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${refreshToken}`
-      }
-    };
-    let response = await fetch(`${requests}${path}`, requestParams);
-    return await response.json();
-  } catch (e) {
-    console.error(`Error is : ${e}`);
+  if (isTokenExpired()) {
+    try {
+      let requestParams = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${refreshToken}`
+        }
+      };
+      let response = await fetch(`${requests}${path}`, requestParams);
+      return await response.json();
+    } catch (e) {
+      console.error(`Error is : ${e}`);
+    }
   }
 }
 
