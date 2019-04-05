@@ -44,13 +44,15 @@ const columns = [
   {
     name: "Add Progress",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   },
   {
     name: "Mark Complete",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   }
 ];

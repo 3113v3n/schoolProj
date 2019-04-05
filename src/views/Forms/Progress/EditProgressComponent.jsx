@@ -103,7 +103,7 @@ class EditProgressComponent extends React.Component {
     this.state = {
       progress_id: progress_id,
       allocation_id: allocation_id,
-      editDocuments: documents,
+      documents: documents,
       editComments: comments,
       editMarks: marks,
       tr: false
@@ -142,7 +142,7 @@ class EditProgressComponent extends React.Component {
   submitForm = () => {
     const data = {};
     const {
-      editDocuments,
+      documents,
       editComments,
       editMarks,
       allocation_id,
@@ -150,12 +150,12 @@ class EditProgressComponent extends React.Component {
     } = this.state;
     data.progress_id = progress_id;
     data.allocation_id = allocation_id;
-    data.document = editDocuments;
+    data.document = documents;
     data.comments = editComments;
     data.marks = editMarks;
     if (
       editComments.length === 0 ||
-      editDocuments.length === 0 ||
+      documents.length === 0 ||
       editMarks.length === 0
     ) {
       this.showNotification("tr");
@@ -195,17 +195,17 @@ class EditProgressComponent extends React.Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText="Edit Documents"
-                      id="editDocuments"
+                      id="documents"
                       name="input"
-                      inputProps={{
-                        multiline: true,
-                        rows: 3,
-                        value: this.state.editDocuments
-                      }}
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
-                        value: this.state.editDocuments
+                        value: this.state.documents
+                      }}
+                      inputProps={{
+                        multiline: true,
+                        rows: 3,
+                        value: this.state.documents
                       }}
                     />
                   </GridItem>
@@ -216,14 +216,14 @@ class EditProgressComponent extends React.Component {
                       labelText="Edit Comments"
                       id="editComments"
                       name="input"
-                      inputProps={{
-                        multiline: true,
-                        rows: 5,
-                        value: this.state.editComments
-                      }}
                       formControlProps={{
                         fullWidth: true,
                         onChange: this.handleInput,
+                        value: this.state.editComments
+                      }}
+                      inputProps={{
+                        multiline: true,
+                        rows: 5,
                         value: this.state.editComments
                       }}
                     />

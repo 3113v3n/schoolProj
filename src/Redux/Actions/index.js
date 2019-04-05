@@ -8,17 +8,19 @@ import {
   refreshTokenRequest,
   uploadFiles,
 } from "../../services/requests";
-import jwtDecode from "jwt-decode";
+//import jwtDecode from "jwt-decode";
 
 //Work for all submission type is a parameter
-export const tokenRefreshing = () => {
+export const tokenRefreshing = data => {
   return {
-    type: actionTypes.REFRESH_ATTEMPT
+    type: actionTypes.REFRESH_ATTEMPT,
+    data
   };
 };
-export const refreshFailed = () => {
+export const refreshFailed = data => {
   return {
-    type: actionTypes.REFRESH_FAILED
+    type: actionTypes.REFRESH_FAILED,
+    data
   };
 };
 export const refreshSuccess = data => {
@@ -31,6 +33,12 @@ export const setMyData = (type, data) => {
   return {
     type: type,
     data: data
+  };
+};
+export const tokenRefreshed = res => {
+  return dispatch => {
+    localStorage.setItem("access_Token", res.access_token);
+    dispatch(refreshSuccess(res));
   };
 };
 export const logMeout = () => {
@@ -226,7 +234,7 @@ export const refreshToken = () => {
   return dispatch => {
     refreshTokenRequest("auth/refresh")
       .then(responseJson => {
-        localStorage.setItem("access_Token", responseJson.access_token);
+        //localStorage.setItem("access_Token", responseJson.access_token);
         dispatch(tokenRefreshing(responseJson));
         dispatch(storeToken(responseJson.access_token));
       })

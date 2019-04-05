@@ -16,7 +16,11 @@ class AdminStudents extends React.Component {
     } else {
       return (
         <div>
-          <StudentMUItable data={data} onDelete={this.props.onDelete} />
+          <StudentMUItable
+            data={data}
+            onDelete={this.props.onDelete}
+            status={this.props.status}
+          />
         </div>
       );
     }
@@ -26,11 +30,13 @@ AdminStudents.propTypes = {
   isLoading: PropTypes.bool,
   data: PropTypes.array,
   Loaded: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  status: PropTypes.string
 };
 const mapStateToProps = state => {
   return {
     data: state.admin.students,
+    status: state.admin.status,
     isLoading: state.admin.isLoading
   };
 };

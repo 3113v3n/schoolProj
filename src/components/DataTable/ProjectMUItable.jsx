@@ -30,19 +30,22 @@ const columns = [
   {
     name: "Degree",
     options: {
-      filter: true
+      filter: true,
+      download: false
     }
   },
   {
     name: "Diploma",
     options: {
-      filter: true
+      filter: true,
+      download: false
     }
   },
   {
     name: "actions",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   }
 ];

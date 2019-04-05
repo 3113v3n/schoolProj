@@ -6,7 +6,7 @@ import {
   switchMap
 } from "rxjs/operators/index";
 import { ofType } from "redux-observable";
-import { refreshSuccess, refreshFailed} from "../Actions";
+import {  refreshFailed, tokenRefreshed } from "../Actions";
 import { from } from "rxjs";
 const refreshToken = localStorage.getItem("refresh_Token");
 
@@ -28,6 +28,6 @@ export const refreshAttempt = action$ =>
         })
       )
     ),
-    map(refreshSuccess),
+    map(tokenRefreshed),
     catchError(refreshFailed)
   );

@@ -36,13 +36,15 @@ const columns = [
   {
     name: "Edit",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   },
   {
     name: "Delete",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   }
 ];
@@ -73,7 +75,12 @@ class StudentMUItable extends React.Component {
   deleteRow = id => {
     let student_adm = parseInt(id);
     this.props.onDelete(student_adm);
-    this.refreshPage();
+    if (this.props.status !== "success" && this.props.status === "") {
+      alert("FRESH TOKEN REQUIRED FOR DELETE , PLEASE LOGIN AGAIN");
+      this.refreshPage();
+    } else {
+      this.refreshPage();
+    }
   };
   actions = (code, name, id) => {
     const { classes } = this.props;
@@ -204,6 +211,7 @@ StudentMUItable.propTypes = {
   data: PropTypes.array,
   classes: PropTypes.object,
   history: PropTypes.object,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  status: PropTypes.string
 };
 export default withRouter(withStyles(styles)(StudentMUItable));

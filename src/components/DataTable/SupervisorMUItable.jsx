@@ -31,13 +31,15 @@ const columns = [
   {
     name: "Degree",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   },
   {
     name: "Diploma",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   },
   {
@@ -49,13 +51,15 @@ const columns = [
   {
     name: "Edit",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   },
   {
     name: "Delete",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   }
 ];
@@ -88,6 +92,7 @@ class SupervisorMUItable extends React.Component {
     this.props.onDelete(supervisor_id);
     if (this.props.status !== "success" && this.props.status === "") {
       alert("FRESH TOKEN REQUIRED FOR DELETE , PLEASE LOGIN AGAIN");
+      this.refreshPage();
     } else {
       this.refreshPage();
     }

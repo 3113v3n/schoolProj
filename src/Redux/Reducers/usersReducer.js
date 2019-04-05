@@ -48,7 +48,8 @@ function userReducer(state = initialState, action) {
     case actionTypes.REFRESH_SUCCESS:
       return {
         ...state,
-        token: action.data.access_token
+        token: action.data.access_token,
+        isAuthenticated: true,
       };
     case actionTypes.NOT_AUTHENTICATED:
       return {

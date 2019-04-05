@@ -48,7 +48,8 @@ const columns = [
   {
     name: "actions",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   }
 ];

@@ -42,13 +42,14 @@ const columns = [
   {
     name: "Edit",
     options: {
-      filter: false
+      filter: false,
+      download: false
     }
   }
 ];
 
 const options = {
-  //filter: true,
+  filter: true,
   filterType: "dropdown",
   selectableRows: false,
   responsive: "stacked",

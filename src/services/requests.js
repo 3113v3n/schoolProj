@@ -24,6 +24,7 @@ async function loginRequest(path, param) {
 }
 
 async function updateRequest(path, param) {
+  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "PUT",
@@ -42,6 +43,7 @@ async function updateRequest(path, param) {
 }
 
 async function deleteRequest(path, param) {
+  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "DELETE",
@@ -79,6 +81,7 @@ async function fetchRequest(path) {
   }
 }
 async function postRequest(path, param) {
+  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "POST",
@@ -96,6 +99,7 @@ async function postRequest(path, param) {
   }
 }
 async function uploadFiles(path, param) {
+  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "POST",

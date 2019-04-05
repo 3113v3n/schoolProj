@@ -155,7 +155,7 @@ class Progress extends React.Component {
   };
 
   render() {
-    const { classes, data, errorMessage, error, message } = this.props;
+    const { classes, data, errorMessage, error } = this.props;
     return (
       <div>
         <GridContainer justify={"center"}>
@@ -169,7 +169,9 @@ class Progress extends React.Component {
                   place="tr"
                   color={!error ? "success" : "danger"}
                   icon={AddAlert}
-                  message={!error ? message : errorMessage}
+                  message={
+                    !error ? "PROGRESS WAS ADDED SUCCESSFULLY" : errorMessage
+                  }
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
