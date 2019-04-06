@@ -31,7 +31,7 @@ const mapStateToProps = state => {
     redirect: state.user.redirect,
     error: state.error.error,
     isAuthenticated: state.user.isAuthenticated,
-    errorMessage: state.error.errorMessage,
+    errorMessage: state.error.errorMessage
   };
 };
 Login.propTypes = {
@@ -39,7 +39,6 @@ Login.propTypes = {
   error: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   errorMessage: PropTypes.string
-
 };
 export default connect(
   mapStateToProps,

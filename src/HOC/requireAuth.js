@@ -15,7 +15,8 @@ export default function requireAuth(ComposedComponent) {
     }
     render() {
       const { authenticated, Token } = this.props;
-      if (Token !== null && authenticated === "True") {
+      let isAuthenticated = JSON.parse(authenticated);
+      if (Token !== null && Token !== undefined && isAuthenticated) {
         return <ComposedComponent {...this.props} />;
       } else {
         this.props.history.push("/login");
@@ -24,22 +25,21 @@ export default function requireAuth(ComposedComponent) {
   }
   const mapStateToProps = state => {
     return {
-      authenticated: state.user.isAuthenticated,
       admin: state.user.user
     };
   };
   const mapDispatchToProps = dispatch => {
     return {
       refreshToken: () => dispatch(actionCreators.refreshToken()),
-      authenticated: localStorage.getItem("isAuthenticated"),
-      Token: localStorage.getItem("access_Token")
+      Token: localStorage.getItem("access_Token"),
+      authenticated: localStorage.getItem("isAuthenticated")
     };
   };
   Authentication.propTypes = {
-    authenticated: PropTypes.func,
     history: PropTypes.object,
     refreshToken: PropTypes.func,
-    Token: PropTypes.func
+    Token: PropTypes.func,
+    authenticated: PropTypes.func
   };
   return connect(
     mapStateToProps,

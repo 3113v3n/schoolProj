@@ -6,7 +6,7 @@ import {
   updateRequest,
   deleteRequest,
   refreshTokenRequest,
-  uploadFiles,
+  uploadFiles
 } from "../../services/requests";
 //import jwtDecode from "jwt-decode";
 
@@ -35,6 +35,7 @@ export const setMyData = (type, data) => {
     data: data
   };
 };
+
 export const tokenRefreshed = res => {
   return dispatch => {
     localStorage.setItem("access_Token", res.access_token);
@@ -80,7 +81,7 @@ export const LogMeIn = data => {
           localStorage.setItem("access_Token", responseJson.access_token);
           localStorage.setItem("refresh_Token", responseJson.refresh_token);
           localStorage.setItem("role", responseJson.role);
-          localStorage.setItem("isAuthenticated", "True");
+          localStorage.setItem("isAuthenticated", JSON.stringify(true));
           dispatch(setMyData(actionTypes.SET_CURRENT_USER, responseJson));
         } else {
           dispatch(userRegistrationFailed(responseJson.message));
@@ -91,6 +92,8 @@ export const LogMeIn = data => {
       });
   };
 };
+
+
 
 //////---------FETCH---------- REQUESTS--***////
 export const fetchData = () => {

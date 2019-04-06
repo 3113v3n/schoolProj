@@ -6,8 +6,11 @@ import {
   switchMap
 } from "rxjs/operators/index";
 import { ofType } from "redux-observable";
-import {  refreshFailed, tokenRefreshed } from "../Actions";
+import { refreshFailed, tokenRefreshed } from "../Actions";
 import { from } from "rxjs";
+
+const API = "http://localhost:5000/";
+
 const refreshToken = localStorage.getItem("refresh_Token");
 
 export const refreshAttempt = action$ =>
@@ -15,7 +18,7 @@ export const refreshAttempt = action$ =>
     ofType(actionTypes.REFRESH_ATTEMPT),
     switchMap(() =>
       from(
-        fetch("http://localhost:5000/auth/refresh", {
+        fetch(`${API}auth/refresh`, {
           method: "POST",
           headers: {
             Accept: "application/json",

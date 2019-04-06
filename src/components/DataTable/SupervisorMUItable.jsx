@@ -225,9 +225,9 @@ class SupervisorMUItable extends React.Component {
               />
             </CardBody>
           </Card>
-          <NavLink to="/admin/addAllocation">
+          <NavLink to="/admin/supervisor">
             <Button color="info" round>
-              New Allocation
+              Add Supervisor
             </Button>
           </NavLink>
         </GridItem>

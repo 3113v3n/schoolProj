@@ -49,7 +49,7 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         token: action.data.access_token,
-        isAuthenticated: true,
+        isAuthenticated: true
       };
     case actionTypes.NOT_AUTHENTICATED:
       return {

@@ -67,6 +67,7 @@ async function fetchRequest(path) {
     refreshTokenRequest("auth/refresh");
     let requestParams = {
       method: "GET",
+      mode: "cors",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

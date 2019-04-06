@@ -158,9 +158,9 @@ class StudentMUItable extends React.Component {
               />
             </CardBody>
           </Card>
-          <NavLink to="/admin/addAllocation">
+          <NavLink to="/admin/students">
             <Button color="info" round>
-              New Allocation
+              Add Student
             </Button>
           </NavLink>
         </GridItem>
