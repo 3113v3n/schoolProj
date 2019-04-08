@@ -9,13 +9,13 @@ class ProjectsTable extends React.Component {
     this.props.onRequest();
   }
   render() {
-    const { isLoading, data } = this.props;
+    const { isLoading, data, error } = this.props;
     if (!isLoading) {
       return <div> Loading...</div>;
     } else {
       return (
         <div>
-          <ProjectMUItable data={data} />
+          <ProjectMUItable data={data} error={error} />
         </div>
       );
     }

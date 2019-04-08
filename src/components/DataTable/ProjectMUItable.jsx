@@ -141,10 +141,10 @@ class ProjectMUItable extends React.Component {
     }
   };
   render() {
-    const { data, classes } = this.props;
+    const { data, classes, error } = this.props;
 
     const projects =
-      data !== null && data !== undefined && data.status !== "failed"
+      !error && data !== null && data !== undefined && data.status !== "failed"
         ? data.map(item => [
             item.project_code,
             item.trimesters,
@@ -152,7 +152,7 @@ class ProjectMUItable extends React.Component {
             this.diplomaItem(item.diploma),
             this.actions(item.project_code, item.trimesters)
           ])
-        : ["", "", "No Projects", "",""];
+        : ["", "", "No Projects", "", ""];
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={12}>
@@ -221,6 +221,7 @@ const styles = {
 ProjectMUItable.propTypes = {
   data: PropTypes.array,
   classes: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  error: PropTypes.bool
 };
 export default withRouter(withStyles(styles)(ProjectMUItable));

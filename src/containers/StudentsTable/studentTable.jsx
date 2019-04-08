@@ -5,14 +5,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class StudentTable extends React.Component {
-  // UNSAFE_componentWillMount() {
-  //   this.props.fetchData();
-  // }
   componentDidMount() {
     this.props.fetchData();
   }
   render() {
-    const { isLoading, data, markAsCompleted, status } = this.props;
+    const { isLoading, data, markAsCompleted, status, error } = this.props;
     if (!isLoading) {
       return <div> Loading...</div>;
     } else {
@@ -22,6 +19,7 @@ class StudentTable extends React.Component {
             data={data}
             markAsCompleted={markAsCompleted}
             status={status}
+            error={error}
           />
         </div>
       );

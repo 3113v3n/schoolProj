@@ -104,14 +104,13 @@ class AllocationForm extends React.Component {
     const value = students;
     const res = value.split(" ");
     const adm = res[0];
-    const data = {};
-    data.allocation_id = uuid();
-    data.student_adm = parseInt(adm);
-    data.supervisor_id = lecturers;
+    let allocation = uuid();
+    let _adm = parseInt(adm);
+
     if (adm.length === 0 || lecturers.length === 0) {
       this.showNotification("tl");
     } else {
-      this.props.addAllocation(data);
+      this.props.addAllocation(allocation, _adm, lecturers);
       if (!error) {
         this.showNotification("tr");
         this.refreshPage();

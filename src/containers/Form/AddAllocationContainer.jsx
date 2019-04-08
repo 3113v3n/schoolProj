@@ -56,8 +56,8 @@ const mapDispatchToProps = dispatch => {
     fetchAllocations: () => {
       dispatch(actionCreators.allocationRequirements());
     },
-    addAllocation: data => {
-      dispatch(actionCreators.addAllocation(data));
+    addAllocation: (x, y, z) => {
+      dispatch(actionCreators.addAllocation(x, y, z));
     }
   };
 };

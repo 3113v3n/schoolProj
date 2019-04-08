@@ -134,10 +134,10 @@ class AllocatedStudentsMUItable extends React.Component {
     );
   };
   render() {
-    const { data, classes } = this.props;
+    const { data, classes,error } = this.props;
     const emptySet = [["", "", "No DATA Available", ""]];
     const students =
-      data !== null && data !== undefined && data.status !== "failed"
+      !error && data !== null && data !== undefined && data.status !== "failed"
         ? data.map(item => [
             item.student_name,
             item.project_code,
@@ -212,6 +212,7 @@ AllocatedStudentsMUItable.propTypes = {
   data: PropTypes.array,
   classes: PropTypes.object,
   history: PropTypes.object,
-  markAsCompleted: PropTypes.func
+  markAsCompleted: PropTypes.func,
+  error: PropTypes.bool
 };
 export default withRouter(withStyles(styles)(AllocatedStudentsMUItable));

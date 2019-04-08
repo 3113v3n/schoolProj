@@ -1,13 +1,25 @@
 import * as actionTypes from "./action-types";
 import {
-  fetchRequest,
-  loginRequest,
   postRequest,
   updateRequest,
   deleteRequest,
   uploadFiles
 } from "../../services/requests";
-import { login, logout, dashboardCount, getAllocations } from "./newActions";
+import {
+  login,
+  logout,
+  dashboardCount,
+  getAllocations,
+  getArchives,
+  getProgress,
+  getStudents,
+  getAllocatedStudents,
+  getProjects,
+  getSupervisors,
+  allocationRequirement,
+  addNewAllocation,
+  addNewStudent
+} from "./newActions";
 import { setAccessToken } from "redux-refresh-token";
 //import jwtDecode from "jwt-decode";
 
@@ -65,64 +77,6 @@ export const LoggedIn = (id, pass) => {
 };
 
 //////---------FETCH---------- REQUESTS--***////
-export const fetchData = () => {
-  return dispatch => {
-    dispatch(getAllocations())
-      .then(res => {
-        console.log("allocations ==>", res.payload);
-        dispatch(setMyData(actionTypes.SET_DATA, res.payload));
-      })
-      .catch(err => {
-        dispatch(fetchFailed(err.message));
-      });
-    // fetchRequest("allocations")
-    //   .then(responseJson => {
-    //     dispatch(setMyData(actionTypes.SET_DATA, responseJson));
-    //   })
-    //   .catch(error => {
-    //     dispatch(fetchFailed(error.message));
-    //   });
-  };
-};
-export const fetchArchives = () => {
-  return dispatch => {
-    fetchRequest("archives")
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.FETCH_ARCHIVES, responseJson));
-      })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
-      });
-  };
-};
-export const fetchProjects = () => {
-  return dispatch => {
-    fetchRequest("projects")
-      .then(responseJson => {
-        const data = responseJson.projects;
-        dispatch(setMyData(actionTypes.FETCH_PROJECTS, data));
-      })
-      .catch(e => {
-        dispatch(fetchFailed(e.message));
-      });
-  };
-};
-export const fetchSupervisors = () => {
-  return dispatch => {
-    fetchRequest("supervisor")
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, responseJson));
-      })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
-      });
-  };
-};
-
 export const fetchDashboardCount = () => {
   return dispatch => {
     dispatch(dashboardCount())
@@ -133,67 +87,79 @@ export const fetchDashboardCount = () => {
   };
 };
 
+export const fetchData = () => {
+  return dispatch => {
+    dispatch(getAllocations())
+      .then(res => {
+        dispatch(setMyData(actionTypes.SET_DATA, res.payload));
+      })
+      .catch(err => dispatch(fetchFailed(err.message)));
+  };
+};
+export const fetchArchives = () => {
+  return dispatch => {
+    dispatch(getArchives())
+      .then(res => {
+        dispatch(setMyData(actionTypes.FETCH_ARCHIVES, res.payload));
+      })
+      .catch(error => dispatch(fetchFailed(error.message)));
+  };
+};
+export const fetchProjects = () => {
+  return dispatch => {
+    dispatch(getProjects())
+      .then(res => {
+        dispatch(setMyData(actionTypes.FETCH_PROJECTS, res.payload.projects));
+      })
+      .catch(error => dispatch(fetchFailed(error.message)));
+  };
+};
+export const fetchSupervisors = () => {
+  return dispatch => {
+    dispatch(getSupervisors())
+      .then(res => {
+        dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, res.payload));
+      })
+      .catch(error => fetchFailed(error.message));
+  };
+};
+
 export const adminStudents = () => {
   return dispatch => {
-    fetchRequest("students")
-      .then(responseJson => {
-        //Students
-        dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, responseJson));
+    dispatch(getStudents())
+      .then(res => {
+        dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, res.payload));
       })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
-      });
+      .catch(err => dispatch(fetchFailed(err.message)));
   };
 };
 
 export const allocationRequirements = () => {
   return dispatch => {
-    fetchRequest("allocations/new")
-      .then(responseJson => {
-        //Students
-        dispatch(
-          setMyData(
-            actionTypes.FETCH_ALLOCATION_STUDENTS,
-            responseJson.students
-          )
-        );
-        dispatch(
-          setMyData(
-            actionTypes.FETCH_ALLOCATION_LECTURERS,
-            responseJson.supervisors
-          )
-        );
+    dispatch(allocationRequirement())
+      .then(res => {
+        dispatch(setMyData(actionTypes.ALLOCATIONS, res.payload));
       })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
-      });
+      .catch(error => dispatch(fetchFailed(error.message)));
   };
 };
 
 export const supervisorStudents = () => {
   return dispatch => {
-    fetchRequest("supervisor/dashboard")
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.SET_MY_DATA, responseJson));
+    dispatch(getAllocatedStudents())
+      .then(res => {
+        dispatch(setMyData(actionTypes.SET_MY_DATA, res.payload));
       })
-      .catch(() => {
-        dispatch(fetchFailed());
-      });
+      .catch(error => dispatch(fetchFailed(error.message)));
   };
 };
 export const fetchProgress = data => {
   return dispatch => {
-    fetchRequest(`progress/${data}`)
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.FETCH_PROGRESS, responseJson));
+    dispatch(getProgress(data))
+      .then(res => {
+        dispatch(setMyData(actionTypes.FETCH_PROGRESS, res.payload));
       })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
-      });
+      .catch(error => dispatch(fetchFailed(error.message)));
   };
 };
 
@@ -250,14 +216,11 @@ export const markComplete = data => {
   };
 };
 
-export const addAllocation = data => {
+export const addAllocation = (all, adm, id) => {
   return dispatch => {
-    postRequest("allocations", data)
-      .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.NEW_ALLOCATION, data));
+    dispatch(addNewAllocation(all, adm, id))
+      .then(res => {
+        dispatch(setMyData(actionTypes.NEW_ALLOCATION, res));
       })
       .catch(error => {
         dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR, error.message));
@@ -281,17 +244,10 @@ export const addSupervisor = data => {
 
 export const addStudents = data => {
   return dispatch => {
-    loginRequest("students/register", data)
-      .then(
-        dispatch(responseJson => {
-          const status = responseJson.status;
-          dispatch(setMyData(actionTypes.SET_STATUS, status));
-          dispatch(
-            setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message)
-          );
-          setMyData(actionTypes.ADD_STUDENTS, data);
-        })
-      )
+    dispatch(addNewStudent(data))
+      .then(res => {
+        dispatch(setMyData(actionTypes.ADD_STUDENTS, res.payload)); // TODO :message and status
+      })
       .catch(error => {
         dispatch(setMyData(actionTypes.STUDENT_ERROR, error.message));
       });

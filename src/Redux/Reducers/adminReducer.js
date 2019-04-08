@@ -73,15 +73,11 @@ function adminReducer(state = initialState, action) {
         projects: action.data,
         isLoading: true
       });
-    case actionTypes.FETCH_ALLOCATION_STUDENTS:
+    case actionTypes.ALLOCATIONS:
       return {
         ...state,
-        students: action.data
-      };
-    case actionTypes.FETCH_ALLOCATION_LECTURERS:
-      return {
-        ...state,
-        supervisors: action.data
+        students: action.data.students,
+        supervisors: action.data.supervisors
       };
     case actionTypes.ADD_PROJECT:
       return {
