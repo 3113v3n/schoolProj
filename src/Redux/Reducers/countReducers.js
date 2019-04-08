@@ -8,28 +8,15 @@ const initialState = {
 };
 
 export default function countReducers(state = initialState, action) {
-  switch (action.type) {
-    case actionTypes.STUDENT_COUNT:
-      return {
-        ...state,
-        allocatedCount: action.data //action.data
-      };
-    case actionTypes.SUPERVISOR_COUNT:
-      return {
-        ...state,
-        supervisorCount: action.data
-      };
-    case actionTypes.DEGREE_STUDENTS:
-      return {
-        ...state,
-        degreeCount: action.data
-      };
-    case actionTypes.DIPLOMA_STUDENTS:
-      return {
-        ...state,
-        diplomaCount: action.data
-      };
-    default:
-      return state;
+  if (action.type === actionTypes.DASHBOARD_COUNT) {
+    return {
+      ...state,
+      allocatedCount: action.data.unallocated_students_count,
+      supervisorCount: action.data.supervisors_count,
+      degreeCount: action.data.degree_students_count,
+      diplomaCount: action.data.diploma_students_count
+    };
+  } else {
+    return state;
   }
 }

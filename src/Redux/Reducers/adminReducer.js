@@ -32,7 +32,9 @@ function adminReducer(state = initialState, action) {
       return updateProgress(state, {
         data: action.data,
         isLoading: true,
-        error: false
+        error: false,
+        status: "success",
+        message: "no data present"
       });
     case actionTypes.FETCH_ARCHIVES:
       return {

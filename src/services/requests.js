@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 //import decode from "jwt-decode";
 const requests = paths.localhost; //production;
 
-const token = localStorage.getItem("access_Token");
+const token = localStorage.getItem("access_token");
 const refreshToken = localStorage.getItem("refresh_Token");
 
 async function loginRequest(path, param) {
@@ -24,7 +24,6 @@ async function loginRequest(path, param) {
 }
 
 async function updateRequest(path, param) {
-  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "PUT",
@@ -43,7 +42,6 @@ async function updateRequest(path, param) {
 }
 
 async function deleteRequest(path, param) {
-  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "DELETE",
@@ -64,10 +62,8 @@ async function deleteRequest(path, param) {
 
 async function fetchRequest(path) {
   try {
-    refreshTokenRequest("auth/refresh");
     let requestParams = {
       method: "GET",
-      mode: "cors",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -82,7 +78,6 @@ async function fetchRequest(path) {
   }
 }
 async function postRequest(path, param) {
-  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "POST",
@@ -100,7 +95,6 @@ async function postRequest(path, param) {
   }
 }
 async function uploadFiles(path, param) {
-  refreshTokenRequest("auth/refresh");
   try {
     let requestParams = {
       method: "POST",
@@ -128,21 +122,19 @@ async function isTokenExpired() {
   }
 }
 async function refreshTokenRequest(path) {
-  if (isTokenExpired()) {
-    try {
-      let requestParams = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${refreshToken}`
-        }
-      };
-      let response = await fetch(`${requests}${path}`, requestParams);
-      return await response.json();
-    } catch (e) {
-      console.error(`Error is : ${e}`);
-    }
+  try {
+    let requestParams = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${refreshToken}`
+      }
+    };
+    let response = await fetch(`${requests}${path}`, requestParams);
+    return await response.json();
+  } catch (e) {
+    console.error(`Error is : ${e}`);
   }
 }
 

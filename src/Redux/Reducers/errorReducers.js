@@ -13,12 +13,12 @@ export default function errorReducers(state = initialState, action) {
         error: true,
         errorMessage: "INVALID LOGIN CREDENTIALS PROVIDED"
       };
-    case actionTypes.REFRESH_FAILED:
+    case actionTypes.TOKEN_REFRESH_FAILURE:
       return {
         ...state,
         error: true,
         errorMessage: action.data.message
-      }
+      };
     case actionTypes.PROJECT_EDIT_ERROR:
       return{
         ...state,

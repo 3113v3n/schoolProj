@@ -1,7 +1,6 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -83,13 +82,11 @@ class LoginForm extends React.Component {
     if (password.length === 0 || staff_id.length === 0) {
       this.showNotification("tl");
     } else if (password.length !== 0 && staff_id.length !== 0) {
-      const data = {};
-      data.supervisor_id = staff_id; //uuid();
-      data.password = password;
+      let id = parseInt(staff_id); //uuid();
       if (!this.validateInput()) {
         this.showNotification("tl");
       } else {
-        this.props.handleSubmit(data);
+        this.props.handleSubmit(id, password);
         if (this.props.error) {
           this.showNotification("tc");
         } else {

@@ -21,9 +21,7 @@ class Login extends React.Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: data => {
-      dispatch(actionCreators.LogMeIn(data));
-    }
+    onSubmit: (id, pass) => dispatch(actionCreators.LoggedIn(id, pass))
   };
 };
 const mapStateToProps = state => {
@@ -35,10 +33,11 @@ const mapStateToProps = state => {
   };
 };
 Login.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  dispatch: PropTypes.func,
   error: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  onSubmit: PropTypes.func
 };
 export default connect(
   mapStateToProps,

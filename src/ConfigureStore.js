@@ -1,14 +1,16 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import { createLogger } from "redux-logger";
 import adminReducer from "./Redux/Reducers/adminReducer";
 import supervisorReducer from "./Redux/Reducers/supervisorReducer";
 import usersReducers from "./Redux/Reducers/usersReducer";
 import editTableReducers from "./Redux/Reducers/editTableReducers";
 import errorReducers from "./Redux/Reducers/errorReducers";
 import countReducers from "./Redux/Reducers/countReducers";
-import { createEpicMiddleware } from "redux-observable";
-import { rootEpics } from "./Redux/Epics/rootEpics";
+import middleware from "./Redux/middleware";
+import accessTokenReducer from "./Redux/Reducers/tokenReducer";
+import { reducer as refreshReducer } from "redux-refresh-token";
 import thunk from "redux-thunk";
-const epicMiddleware = createEpicMiddleware();
+
 const ConfigureStore = () => {
   const reducers = combineReducers({
     admin: adminReducer,
@@ -16,16 +18,17 @@ const ConfigureStore = () => {
     user: usersReducers,
     editTable: editTableReducers,
     error: errorReducers,
-    count: countReducers
+    count: countReducers,
+    token: accessTokenReducer,
+    tokenRefresh: refreshReducer
   });
   const composedEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const store = createStore(
     reducers,
-    composedEnhancers(applyMiddleware(thunk, epicMiddleware))
+    composedEnhancers(applyMiddleware(thunk, middleware, createLogger()))
   );
-  epicMiddleware.run(rootEpics);
   return store;
 };
 export default ConfigureStore;

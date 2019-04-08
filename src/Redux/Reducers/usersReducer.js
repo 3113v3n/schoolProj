@@ -1,6 +1,5 @@
 import * as actionTypes from "../Actions/action-types";
 const initialState = {
-  user: {},
   isAuthenticated: false,
   role: "",
   users: [],
@@ -12,11 +11,6 @@ const initialState = {
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.NEW_USER:
-      return {
-        users: [action.data, ...state.users],
-        role: state.role
-      };
     case actionTypes.SET_ROLE:
       return {
         role: action.data //response from db
@@ -42,14 +36,7 @@ function userReducer(state = initialState, action) {
         ...state,
         status: action.data.status,
         isAuthenticated: true,
-        user: action.data,
         role: action.data.role
-      };
-    case actionTypes.REFRESH_SUCCESS:
-      return {
-        ...state,
-        token: action.data.access_token,
-        isAuthenticated: true
       };
     case actionTypes.NOT_AUTHENTICATED:
       return {
@@ -65,11 +52,6 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         refreshToken: action.data
-      };
-    case actionTypes.LOGOUT:
-      return {
-        isAuthenticated: false,
-        redirect: !state.redirect
       };
     default:
       return state;

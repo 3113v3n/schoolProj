@@ -2,21 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { isTokenExpired } from "../services/requests";
-import * as actionCreators from "../Redux/Actions";
 export default function requireAuth(ComposedComponent) {
   class Authentication extends React.Component {
-    componentDidMount() {
-      isTokenExpired().then(res => {
-        if (res === true) {
-          this.props.refreshToken();
-        }
-      });
-    }
     render() {
-      const { authenticated, Token } = this.props;
+      const { authenticated, logged_in } = this.props;
       let isAuthenticated = JSON.parse(authenticated);
-      if (Token !== null && Token !== undefined && isAuthenticated) {
+      if (logged_in && isAuthenticated === true) {
         return <ComposedComponent {...this.props} />;
       } else {
         this.props.history.push("/login");
@@ -25,20 +16,19 @@ export default function requireAuth(ComposedComponent) {
   }
   const mapStateToProps = state => {
     return {
-      admin: state.user.user
+      admin: state.user.user,
+      logged_in: typeof state.token.access_token === "string"
     };
   };
   const mapDispatchToProps = dispatch => {
     return {
-      refreshToken: () => dispatch(actionCreators.refreshToken()),
-      Token: localStorage.getItem("access_Token"),
+      Token: localStorage.getItem("access_token"),
       authenticated: localStorage.getItem("isAuthenticated")
     };
   };
   Authentication.propTypes = {
     history: PropTypes.object,
-    refreshToken: PropTypes.func,
-    Token: PropTypes.func,
+    logged_in: PropTypes.bool,
     authenticated: PropTypes.func
   };
   return connect(

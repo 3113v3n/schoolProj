@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 import AllocationMUItable from "../../components/DataTable/AllocationMUItable";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Redux/Actions";
+import { getAllocations } from "../../Redux/Actions/newActions";
 class allocations extends React.Component {
   componentDidMount() {
-    this.props.onRequest();
+    //this.props.onRequest();
+    this.props.dispatch(getAllocations()).then(res => {
+      console.log("allocations", res);
+    });
   }
-
-
   render() {
     const { classes } = this.props;
     const { isLoading, message, data } = this.props;
@@ -40,12 +42,12 @@ const mapStateToProps = state => {
     message: state.admin.message
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    onRequest: () => dispatch(actionCreators.fetchData())
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onRequest: () => dispatch(actionCreators.fetchData())
+//   };
+// };
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  //mapDispatchToProps
 )(allocations);

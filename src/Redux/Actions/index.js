@@ -5,30 +5,14 @@ import {
   postRequest,
   updateRequest,
   deleteRequest,
-  refreshTokenRequest,
   uploadFiles
 } from "../../services/requests";
+import { login, logout, dashboardCount, getAllocations } from "./newActions";
+import { setAccessToken } from "redux-refresh-token";
 //import jwtDecode from "jwt-decode";
 
 //Work for all submission type is a parameter
-export const tokenRefreshing = data => {
-  return {
-    type: actionTypes.REFRESH_ATTEMPT,
-    data
-  };
-};
-export const refreshFailed = data => {
-  return {
-    type: actionTypes.REFRESH_FAILED,
-    data
-  };
-};
-export const refreshSuccess = data => {
-  return {
-    type: actionTypes.REFRESH_SUCCESS,
-    data
-  };
-};
+
 export const setMyData = (type, data) => {
   return {
     type: type,
@@ -36,15 +20,11 @@ export const setMyData = (type, data) => {
   };
 };
 
-export const tokenRefreshed = res => {
-  return dispatch => {
-    localStorage.setItem("access_Token", res.access_token);
-    dispatch(refreshSuccess(res));
-  };
-};
 export const logMeout = () => {
   return dispatch => {
+    dispatch(logout());
     localStorage.clear();
+    dispatch(setMyData(actionTypes.LOGOUT));
     dispatch(setMyData(actionTypes.NOT_AUTHENTICATED));
   };
 };
@@ -54,12 +34,7 @@ export const editTable = (type, data) => {
     data: data
   };
 };
-export const storeToken = data => {
-  return {
-    type: actionTypes.STORE_TOKEN,
-    token: data
-  };
-};
+
 export const fetchFailed = data => {
   return {
     type: actionTypes.FETCHING_FAILED,
@@ -72,41 +47,41 @@ export const userRegistrationFailed = data => {
     data: data
   };
 };
-
-export const LogMeIn = data => {
+export const LoggedIn = (id, pass) => {
   return dispatch => {
-    loginRequest("auth/login", data)
-      .then(responseJson => {
-        if (responseJson.status !== "failed") {
-          localStorage.setItem("access_Token", responseJson.access_token);
-          localStorage.setItem("refresh_Token", responseJson.refresh_token);
-          localStorage.setItem("role", responseJson.role);
+    dispatch(login(id, pass))
+      .then(res => {
+        if (res.payload.status === "success") {
+          dispatch(setAccessToken(res.payload));
+          localStorage.setItem("role", res.payload.role);
           localStorage.setItem("isAuthenticated", JSON.stringify(true));
-          dispatch(setMyData(actionTypes.SET_CURRENT_USER, responseJson));
+          dispatch(setMyData(actionTypes.SET_CURRENT_USER, res.payload));
         } else {
-          dispatch(userRegistrationFailed(responseJson.message));
+          dispatch(userRegistrationFailed(res.payload));
         }
       })
-      .catch(error => {
-        dispatch(userRegistrationFailed(error.message));
-      });
+      .catch(error => dispatch(userRegistrationFailed(error.message)));
   };
 };
-
-
 
 //////---------FETCH---------- REQUESTS--***////
 export const fetchData = () => {
   return dispatch => {
-    fetchRequest("allocations")
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.STATUS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.SET_DATA, responseJson));
+    dispatch(getAllocations())
+      .then(res => {
+        console.log("allocations ==>", res.payload);
+        dispatch(setMyData(actionTypes.SET_DATA, res.payload));
       })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
+      .catch(err => {
+        dispatch(fetchFailed(err.message));
       });
+    // fetchRequest("allocations")
+    //   .then(responseJson => {
+    //     dispatch(setMyData(actionTypes.SET_DATA, responseJson));
+    //   })
+    //   .catch(error => {
+    //     dispatch(fetchFailed(error.message));
+    //   });
   };
 };
 export const fetchArchives = () => {
@@ -150,36 +125,11 @@ export const fetchSupervisors = () => {
 
 export const fetchDashboardCount = () => {
   return dispatch => {
-    fetchRequest("dashboard/count")
-      .then(responseJson => {
-        dispatch(
-          setMyData(
-            actionTypes.STUDENT_COUNT,
-            responseJson.unallocated_students_count
-          )
-        );
-        dispatch(
-          setMyData(
-            actionTypes.SUPERVISOR_COUNT,
-            responseJson.supervisors_count
-          )
-        );
-        dispatch(
-          setMyData(
-            actionTypes.DEGREE_STUDENTS,
-            responseJson.degree_students_count
-          )
-        );
-        dispatch(
-          setMyData(
-            actionTypes.DIPLOMA_STUDENTS,
-            responseJson.diploma_students_count
-          )
-        );
+    dispatch(dashboardCount())
+      .then(res => {
+        dispatch(setMyData(actionTypes.DASHBOARD_COUNT, res.payload));
       })
-      .catch(error => {
-        dispatch(fetchFailed(error.message));
-      });
+      .catch(error => dispatch(fetchFailed(error.payload)));
   };
 };
 
@@ -229,19 +179,6 @@ export const supervisorStudents = () => {
         dispatch(setMyData(actionTypes.SET_MY_DATA, responseJson));
       })
       .catch(() => {
-        dispatch(fetchFailed());
-      });
-  };
-};
-export const refreshToken = () => {
-  return dispatch => {
-    refreshTokenRequest("auth/refresh")
-      .then(responseJson => {
-        //localStorage.setItem("access_Token", responseJson.access_token);
-        dispatch(tokenRefreshing(responseJson));
-        dispatch(storeToken(responseJson.access_token));
-      })
-      .catch(e => {
         dispatch(fetchFailed());
       });
   };
