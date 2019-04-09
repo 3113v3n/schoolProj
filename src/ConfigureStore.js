@@ -16,7 +16,7 @@ const ConfigureStore = () => {
     admin: adminReducer,
     supervisor: supervisorReducer,
     user: usersReducers,
-    editTable: editTableReducers,
+    edit: editTableReducers,
     error: errorReducers,
     count: countReducers,
     token: accessTokenReducer,
@@ -25,10 +25,9 @@ const ConfigureStore = () => {
   const composedEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-  const store = createStore(
+  return createStore(
     reducers,
     composedEnhancers(applyMiddleware(thunk, middleware, createLogger()))
   );
-  return store;
 };
 export default ConfigureStore;

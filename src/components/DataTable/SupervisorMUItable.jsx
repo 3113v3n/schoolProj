@@ -92,7 +92,7 @@ class SupervisorMUItable extends React.Component {
     this.props.onDelete(supervisor_id);
     if (this.props.status !== "success" && this.props.status === "") {
       alert("FRESH TOKEN REQUIRED FOR DELETE , PLEASE LOGIN AGAIN");
-      this.refreshPage();
+     this.refreshPage();
     } else {
       this.refreshPage();
     }
@@ -205,7 +205,7 @@ class SupervisorMUItable extends React.Component {
             this.diplomaCourse(item.diploma),
             item.allocations_count,
             this.actions(item.first_name, item.last_name, item.supervisor_id),
-            this.delete(item.student_adm)
+            this.delete(item.supervisor_id)
           ])
         : emptySet;
 

@@ -29,9 +29,9 @@ EditAllocations.propTypes = {
 const mapStateToProps = state => {
   return {
     error: state.error.error,
-    status: state.admin.status,
+    status: state.edit.status,
     errorMessage: state.error.errorMessage,
-    message: state.admin.message
+    message: state.edit.message
   };
 };
 const mapDispatchToProps = dispatch => {

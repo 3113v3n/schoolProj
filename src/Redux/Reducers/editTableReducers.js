@@ -1,35 +1,33 @@
 import * as actionTypes from "../Actions/action-types";
-
-function editTableReducer(state = [], action = {}) {
+const initialState = { status: "", message: "" };
+function editTableReducer(state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.EDIT_ALLOCATION_TABLE:
-      return [
+      return {
         ...state,
-        {
-          data: action.data
-        }
-      ];
+        status: action.data.status,
+        message: action.data.message
+      };
+
     case actionTypes.EDIT_SUPERVISOR_TABLE:
-      return [
+      return {
         ...state,
-        {
-          data: action.data
-        }
-      ];
+        status: action.data.status,
+        message: action.data.message
+      };
+
     case actionTypes.EDIT_STUDENT_TABLE:
-      return [
+      return {
         ...state,
-        {
-          data: action.data
-        }
-      ];
+        status: action.data.status,
+        message: action.data.message
+      };
     case actionTypes.EDIT_PROJECT_TABLE:
-      return[
+      return {
         ...state,
-        {
-          data: action.data
-        }
-      ];
+        status: action.data.status,
+        message: action.data.message
+      };
     default:
       return state;
   }

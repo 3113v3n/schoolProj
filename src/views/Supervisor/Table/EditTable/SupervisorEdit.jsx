@@ -73,6 +73,7 @@ class EditAllocation extends React.Component {
     for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
     this.setState({
       firstName: "",
+      number: "",
       lastName: "",
       degreeSelected: false,
       diplomaSelected: false
@@ -112,7 +113,7 @@ class EditAllocation extends React.Component {
       if (error === false) {
         this.resetValues();
         this.showNotification("tr");
-        history.push("/admin/superTable");
+      //  history.push("/admin/superTable");
       } else {
         this.showNotification("tl");
       }

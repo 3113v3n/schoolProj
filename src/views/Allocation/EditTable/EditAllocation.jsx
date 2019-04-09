@@ -109,7 +109,7 @@ class EditAllocation extends React.Component {
       this.props.onSubmit(data);
       if (!error) {
         this.showNotification("tr");
-        // this.resetValues();
+        this.resetValues();
       } else {
         this.showNotification("tl");
       }

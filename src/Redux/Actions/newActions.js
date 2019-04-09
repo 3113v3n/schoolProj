@@ -131,48 +131,142 @@ export const addNewStudent = param => ({
   }
 });
 
-export const addNewSupervisor = (allocationId, adm, supervisorId) => ({
+export const addNewSupervisor = param => ({
   [CALL_API]: {
-    endpoint: "allocations",
+    endpoint: "supervisor/register",
     method: "POST",
-    body: {
-      allocation_id: allocationId,
-      student_adm: adm,
-      supervisor_id: supervisorId
-    },
+    body: param,
     types: [actions.ADD_REQUEST, actions.ADD_SUCCESS, actions.ADD_FAILURE]
   }
 });
 
-export const addNewProject = (allocationId, adm, supervisorId) => ({
+export const addNewProject = param => ({
   [CALL_API]: {
-    endpoint: "allocations",
+    endpoint: "projects",
     method: "POST",
-    body: {
-      allocation_id: allocationId,
-      student_adm: adm,
-      supervisor_id: supervisorId
-    },
+    body: param,
     types: [actions.ADD_REQUEST, actions.ADD_SUCCESS, actions.ADD_FAILURE]
   }
 });
 
-export const addNewProgress = (allocationId, adm, supervisorId) => ({
+export const addNewProgress = param => ({
   [CALL_API]: {
-    endpoint: "allocations",
+    endpoint: "progress",
     method: "POST",
-    body: {
-      allocation_id: allocationId,
-      student_adm: adm,
-      supervisor_id: supervisorId
-    },
+    body: param,
     types: [actions.ADD_REQUEST, actions.ADD_SUCCESS, actions.ADD_FAILURE]
+  }
+});
+
+export const completeProject = param => ({
+  [CALL_API]: {
+    endpoint: "archives",
+    method: "POST",
+    body: param,
+    types: [
+      actions.COMPLETE_REQUEST,
+      actions.COMPLETE_SUCCESS,
+      actions.COMPLETE_FAILURE
+    ]
+  }
+});
+
+export const uploadStudentsFile = param => ({
+  [CALL_API]: {
+    endpoint: "students/register/csv",
+    method: "POST",
+    body: param,
+    types: [
+      actions.UPLOAD_FILE_REQUEST,
+      actions.UPLOAD_FILE_SUCCESS,
+      actions.UPLOAD_FILE_FAILURE
+    ]
   }
 });
 
 ////--------------PUT--REQUESTS---------////
+export const editAllocationTable = param => ({
+  [CALL_API]: {
+    endpoint: "allocations",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
+export const editStudentTable = param => ({
+  [CALL_API]: {
+    endpoint: "students",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
+export const editSupervisorTable = param => ({
+  [CALL_API]: {
+    endpoint: "supervisor/register",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
+export const editProjectsTable = param => ({
+  [CALL_API]: {
+    endpoint: "projects",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
+export const editProgressTable = param => ({
+  [CALL_API]: {
+    endpoint: "progress",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
+export const editAdminPassword = param => ({
+  [CALL_API]: {
+    endpoint: "supervisor",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
+export const editSupervisorPassword = param => ({
+  [CALL_API]: {
+    endpoint: "supervisor",
+    method: "PUT",
+    body: param,
+    types: [actions.EDIT_REQUEST, actions.EDIT_SUCCESS, actions.EDIT_FAILURE]
+  }
+});
 
 ////-------------DELETE--REQUESTS ------////
+export const deleteStudent = adm => ({
+  [CALL_API]: {
+    endpoint: `students/${adm}`,
+    method: "DELETE",
+    types: [
+      actions.DELETE_REQUEST,
+      actions.DELETE_SUCCESS,
+      actions.DELETE_FAILURE
+    ]
+  }
+});
+export const deleteSupervisor = id => ({
+  [CALL_API]: {
+    endpoint: `supervisor/${id}`,
+    method: "DELETE",
+    types: [
+      actions.DELETE_REQUEST,
+      actions.DELETE_SUCCESS,
+      actions.DELETE_FAILURE
+    ]
+  }
+});
+
+////------------------***********----------////
 export const login = (id, password) => ({
   [CALL_API]: {
     endpoint: "auth/login",

@@ -18,23 +18,18 @@ const initialState = {
 
 function adminReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.SUCCESS_MESSAGE:
-      return {
-        ...state,
-        message: action.data
-      };
     case actionTypes.PROJECT_MESSAGE:
       return {
         ...state,
-        message: "PROJECT SUCCESSFULLY UPDATED"
+        message: action.data.message
       };
     case actionTypes.SET_DATA:
       return updateProgress(state, {
         data: action.data,
         isLoading: true,
         error: false,
-        status: "success",
-        message: "no data present"
+        status: action.data.status,
+        message: action.data.message
       });
     case actionTypes.FETCH_ARCHIVES:
       return {
@@ -44,7 +39,7 @@ function adminReducer(state = initialState, action) {
       };
     case actionTypes.UPLOAD_SUCCESS:
       return updateProgress(state, {
-        message: action.data
+        message: action.data.message
       });
     case actionTypes.SET_STUDENTS_TABLE:
       return updateProgress(state, {
@@ -52,16 +47,6 @@ function adminReducer(state = initialState, action) {
         isLoading: true,
         error: false
       });
-    case actionTypes.SET_STATUS:
-      return {
-        ...state,
-        status: action.data
-      };
-    case actionTypes.STATUS_ERROR:
-      return {
-        ...state,
-        status: action.data
-      };
     case actionTypes.SET_SUPERVISOR_TABLE:
       return updateProgress(state, {
         supervisors: action.data,
@@ -83,59 +68,50 @@ function adminReducer(state = initialState, action) {
       return {
         projects: [action.data, ...state.projects],
         error: state.error,
-        status: state.status,
-        message: state.message
+        status: action.data.status,
+        message: action.data.message
       };
     case actionTypes.NEW_ALLOCATION:
       return {
         ...state,
         allocation: action.data,
-        status: state.status,
-        message: state.message
+        status: action.data.status,
+        message: action.data.message
       };
 
     case actionTypes.ADD_STUDENTS:
       return updateProgress(state, {
         students: [action.data, ...state.students],
-        status: state.status,
-        message: state.message
+        status: action.data.status,
+        message: action.data.message
       });
     case actionTypes.CHANGE_ADMIN_PASSWORD:
       return {
         ...state,
-        message: action.data,
-        status: state.status
+        status: action.data.status,
+        message: action.data.message
       };
     case actionTypes.ADD_SUPERVISOR:
       return {
         supervisors: [action.data, ...state.supervisors],
-        status: state.status,
-        message: state.message
+        status: action.data.status,
+        message: action.data.message
       };
-    case actionTypes.DELETE_ALLOCATION:
-      return [
-        ...state.data.slice(0, action.data),
-        ...state.data.slice(action.data + 1)
-      ];
     case actionTypes.DELETE_STUDENT:
-      return [
-        ...state.students.slice(0, action.data),
-        ...state.students.slice(action.data + 1)
-      ];
+      return {
+        ...state,
+        status: action.data.status,
+        message: action.data.message
+      };
     case actionTypes.DELETE_SUPERVISOR:
-      return [
-        ...state.supervisors.slice(0, action.data),
-        ...state.supervisors.slice(action.data + 1)
-      ];
+      return {
+        ...state,
+        status: action.data.status,
+        message: action.data.message
+      };
     default:
       return state;
   }
 }
 
 export default adminReducer;
-/*
-* {
-   ...state,
-  student: state.students.filter(student => student.data !== action.data)
-  };
-  */

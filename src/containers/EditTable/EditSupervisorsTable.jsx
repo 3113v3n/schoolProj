@@ -11,6 +11,7 @@ class EditSupervisorsTable extends React.Component {
           onSubmit={this.props.onEditProgress}
           error={this.props.error}
           status={this.props.status}
+          message={this.props.message}
         />
       </div>
     );
@@ -19,7 +20,8 @@ class EditSupervisorsTable extends React.Component {
 EditSupervisorsTable.propTypes = {
   onEditProgress: PropTypes.func,
   error: PropTypes.bool,
-  status: PropTypes.string
+  status: PropTypes.string,
+  message: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch => {
@@ -32,7 +34,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     error: state.error.error,
-    status: state.admin.status
+    status: state.edit.status,
+    message: state.edit.message
   };
 };
 

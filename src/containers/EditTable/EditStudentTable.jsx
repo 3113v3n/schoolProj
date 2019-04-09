@@ -17,6 +17,7 @@ class EditStudentTable extends React.Component {
           errorMessage={this.props.errorMessage}
           message={this.props.message}
           projects={this.props.projects}
+          status={this.props.status}
         />
       </div>
     );
@@ -28,7 +29,8 @@ EditStudentTable.propTypes = {
   errorMessage: PropTypes.string,
   message: PropTypes.string,
   projects: PropTypes.array,
-  fetchProjects: PropTypes.func.isRequired
+  fetchProjects: PropTypes.func.isRequired,
+  status: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch => {
@@ -46,7 +48,8 @@ const mapStateToProps = state => {
     error: state.error.error,
     errorMessage: state.error.errorMessage,
     projects: state.admin.projects,
-    message: state.admin.message
+    message: state.edit.message,
+    status: state.edit.status
   };
 };
 

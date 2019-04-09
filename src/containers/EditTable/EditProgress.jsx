@@ -21,8 +21,8 @@ class EditProgress extends React.Component {
 const mapStateToProps = state => {
   return {
     error: state.error.error,
-    status: state.supervisor.status,
-    message: state.supervisor.message
+    status: state.edit.status,
+    message: state.edit.message
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -116,7 +116,7 @@ class EditStudents extends React.Component {
     } else {
       this.props.onSubmit(data);
       if (!error) {
-       // this.resetValues();
+        this.resetValues();
         this.showNotification("tr");
       } else {
         this.showNotification("tl");

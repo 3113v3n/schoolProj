@@ -1,10 +1,5 @@
 import * as actionTypes from "./action-types";
-import {
-  postRequest,
-  updateRequest,
-  deleteRequest,
-  uploadFiles
-} from "../../services/requests";
+import { deleteRequest } from "../../services/requests";
 import {
   login,
   logout,
@@ -18,7 +13,21 @@ import {
   getSupervisors,
   allocationRequirement,
   addNewAllocation,
-  addNewStudent
+  addNewStudent,
+  addNewSupervisor,
+  addNewProject,
+  addNewProgress,
+  completeProject,
+  uploadStudentsFile,
+  editAllocationTable,
+  editProjectsTable,
+  editStudentTable,
+  editSupervisorTable,
+  editAdminPassword,
+  editSupervisorPassword,
+  editProgressTable,
+  deleteStudent,
+  deleteSupervisor
 } from "./newActions";
 import { setAccessToken } from "redux-refresh-token";
 //import jwtDecode from "jwt-decode";
@@ -72,7 +81,7 @@ export const LoggedIn = (id, pass) => {
           dispatch(userRegistrationFailed(res.payload));
         }
       })
-      .catch(error => dispatch(userRegistrationFailed(error.message)));
+      .catch(error => dispatch(userRegistrationFailed(error.payload)));
   };
 };
 
@@ -93,7 +102,7 @@ export const fetchData = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.SET_DATA, res.payload));
       })
-      .catch(err => dispatch(fetchFailed(err.message)));
+      .catch(err => dispatch(fetchFailed(err.payload)));
   };
 };
 export const fetchArchives = () => {
@@ -102,7 +111,7 @@ export const fetchArchives = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.FETCH_ARCHIVES, res.payload));
       })
-      .catch(error => dispatch(fetchFailed(error.message)));
+      .catch(error => dispatch(fetchFailed(error.payload)));
   };
 };
 export const fetchProjects = () => {
@@ -111,7 +120,7 @@ export const fetchProjects = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.FETCH_PROJECTS, res.payload.projects));
       })
-      .catch(error => dispatch(fetchFailed(error.message)));
+      .catch(error => dispatch(fetchFailed(error.payload)));
   };
 };
 export const fetchSupervisors = () => {
@@ -120,7 +129,7 @@ export const fetchSupervisors = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.SET_SUPERVISOR_TABLE, res.payload));
       })
-      .catch(error => fetchFailed(error.message));
+      .catch(error => fetchFailed(error.payload));
   };
 };
 
@@ -130,7 +139,7 @@ export const adminStudents = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.SET_STUDENTS_TABLE, res.payload));
       })
-      .catch(err => dispatch(fetchFailed(err.message)));
+      .catch(err => dispatch(fetchFailed(err.payload)));
   };
 };
 
@@ -140,7 +149,7 @@ export const allocationRequirements = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.ALLOCATIONS, res.payload));
       })
-      .catch(error => dispatch(fetchFailed(error.message)));
+      .catch(error => dispatch(fetchFailed(error.payload)));
   };
 };
 
@@ -150,7 +159,7 @@ export const supervisorStudents = () => {
       .then(res => {
         dispatch(setMyData(actionTypes.SET_MY_DATA, res.payload));
       })
-      .catch(error => dispatch(fetchFailed(error.message)));
+      .catch(error => dispatch(fetchFailed(error.payload)));
   };
 };
 export const fetchProgress = data => {
@@ -159,59 +168,55 @@ export const fetchProgress = data => {
       .then(res => {
         dispatch(setMyData(actionTypes.FETCH_PROGRESS, res.payload));
       })
-      .catch(error => dispatch(fetchFailed(error.message)));
+      .catch(error => dispatch(fetchFailed(error.payload)));
   };
 };
 
 ///////------------POST---REQUESTS---------***///
 export const uploadFile = data => {
-  //TODO: issue
   return dispatch => {
-    uploadFiles("students/register/csv", data)
+    dispatch(uploadStudentsFile(data))
       .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.UPLOAD_SUCCESS, responseJson.message));
+        dispatch(setMyData(actionTypes.UPLOAD_SUCCESS, responseJson.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.UPLOAD_FAILURE, e.message));
+        dispatch(setMyData(actionTypes.UPLOAD_FAILURE, e.payload));
       });
   };
 };
 export const addProject = data => {
   return dispatch => {
-    postRequest("projects", data)
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_PROJECT, data));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+    dispatch(addNewProject(data))
+      .then(res => {
+        dispatch(setMyData(actionTypes.ADD_PROJECT, res.payload));
       })
-      .catch(() => {
-        dispatch(setMyData(actionTypes.PROJECT_ERROR));
+      .catch(err => {
+        dispatch(setMyData(actionTypes.PROJECT_ERROR, err.payload));
       });
   };
 };
 export const addProgress = data => {
   return dispatch => {
-    postRequest("progress", data)
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_PROGRESS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+    dispatch(addNewProgress(data))
+      .then(response => {
+        dispatch(setMyData(actionTypes.ADD_PROGRESS, response.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.PROJECT_ERROR, e.message));
+        dispatch(setMyData(actionTypes.PROJECT_ERROR, e.payload));
       });
   };
 };
 
 export const markComplete = data => {
   return dispatch => {
-    postRequest("archives", data)
+    dispatch(completeProject(data))
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.MARK_AS_COMPLETED));
-        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
+        dispatch(
+          setMyData(actionTypes.MARK_AS_COMPLETED, responseJson.payload)
+        );
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.COMPLETE_ERROR, e.message));
+        dispatch(setMyData(actionTypes.COMPLETE_ERROR, e.payload));
       });
   };
 };
@@ -223,21 +228,19 @@ export const addAllocation = (all, adm, id) => {
         dispatch(setMyData(actionTypes.NEW_ALLOCATION, res));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR, error.message));
+        dispatch(setMyData(actionTypes.NEW_ALLOCATION_ERROR, error.payload));
       });
   };
 };
 
 export const addSupervisor = data => {
   return dispatch => {
-    postRequest("supervisor/register", data)
-      .then(responseJson => {
-        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, responseJson));
-        dispatch(setMyData(actionTypes.SET_STATUS, responseJson.status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+    dispatch(addNewSupervisor(data))
+      .then(res => {
+        dispatch(setMyData(actionTypes.ADD_SUPERVISOR, res.payload));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_ERROR, error.error));
+        dispatch(setMyData(actionTypes.SUPERVISOR_ERROR, error.payload));
       });
   };
 };
@@ -246,10 +249,10 @@ export const addStudents = data => {
   return dispatch => {
     dispatch(addNewStudent(data))
       .then(res => {
-        dispatch(setMyData(actionTypes.ADD_STUDENTS, res.payload)); // TODO :message and status
+        dispatch(setMyData(actionTypes.ADD_STUDENTS, res.payload));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.STUDENT_ERROR, error.message));
+        dispatch(setMyData(actionTypes.STUDENT_ERROR, error.payload));
       });
   };
 };
@@ -258,109 +261,91 @@ export const addStudents = data => {
 
 export const editAllocations = data => {
   return dispatch => {
-    updateRequest("allocations", data)
-      .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(editTable(actionTypes.EDIT_ALLOCATION_TABLE, data));
+    dispatch(editAllocationTable(data))
+      .then(res => {
+        dispatch(editTable(actionTypes.EDIT_ALLOCATION_TABLE, res.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.ALLOCATION_ERROR, e.message));
+        dispatch(setMyData(actionTypes.ALLOCATION_ERROR, e.payload));
       });
   };
 };
 
 export const editProjects = data => {
   return dispatch => {
-    updateRequest("projects", data)
-      .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.PROJECT_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(editTable(actionTypes.EDIT_PROJECT_TABLE, data));
+    dispatch(editProjectsTable(data))
+      .then(response => {
+        dispatch(editTable(actionTypes.EDIT_PROJECT_TABLE, response.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.PROJECT_EDIT_ERROR, e.message));
+        dispatch(setMyData(actionTypes.PROJECT_EDIT_ERROR, e.payload));
       });
   };
 };
 export const editStudents = data => {
   return dispatch => {
-    updateRequest("students", data)
-      .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(editTable(actionTypes.EDIT_STUDENT_TABLE, data));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+    dispatch(editStudentTable(data))
+      .then(response => {
+        dispatch(editTable(actionTypes.EDIT_STUDENT_TABLE, response.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.STUDENT_TABLE_ERROR, e.message));
+        dispatch(setMyData(actionTypes.STUDENT_TABLE_ERROR, e.payload));
       });
   };
 };
 
 export const editSupervisors = data => {
   return dispatch => {
-    updateRequest("supervisor/register", data)
-      .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(editTable(actionTypes.EDIT_SUPERVISOR_TABLE, data));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+    dispatch(editSupervisorTable(data))
+      .then(res => {
+        dispatch(editTable(actionTypes.EDIT_SUPERVISOR_TABLE, res.payload));
       })
 
       .catch(e => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_TABLE_ERROR, e.message));
+        dispatch(setMyData(actionTypes.SUPERVISOR_TABLE_ERROR, e.payload));
       });
   };
 };
 
 export const editAdminProfile = data => {
   return dispatch => {
-    updateRequest("supervisor", data)
+    dispatch(editAdminPassword(data))
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.SET_STATUS, responseJson.status));
         dispatch(
-          setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson.message)
+          setMyData(actionTypes.CHANGE_ADMIN_PASSWORD, responseJson.payload)
         );
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.ADMIN_PASS_ERROR, error.message));
-        dispatch(setMyData(actionTypes.PROFILE_STATUS, error.status));
+        dispatch(setMyData(actionTypes.ADMIN_PASS_ERROR, error.payload));
       });
   };
 };
 
 export const editSupervisorProfile = data => {
   return dispatch => {
-    updateRequest("supervisor", data)
+    dispatch(editSupervisorPassword(data))
       .then(responseJson => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_STATUS, responseJson.status));
         dispatch(
           setMyData(
             actionTypes.CHANGE_SUPERVISOR_PASSWORD,
-            responseJson.message
+            responseJson.payload
           )
         );
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.SUPERVISOR_PASS_ERROR, error.message));
+        dispatch(setMyData(actionTypes.SUPERVISOR_PASS_ERROR, error.payload));
       });
   };
 };
 
 export const editProgress = data => {
   return dispatch => {
-    updateRequest("progress", data)
-      .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.EDIT_PROGRESS, data));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+    dispatch(editProgressTable(data))
+      .then(response => {
+        dispatch(setMyData(actionTypes.EDIT_PROGRESS, response.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.PROGRESS_ERROR, e.message));
+        dispatch(setMyData(actionTypes.PROGRESS_ERROR, e.payload));
       });
   };
 };
@@ -368,30 +353,26 @@ export const editProgress = data => {
 
 export const deleteStudents = data => {
   return dispatch => {
-    deleteRequest(`students/${data}`)
+    dispatch(deleteStudent(data))
       .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.DELETE_STUDENT));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
+        dispatch(setMyData(actionTypes.DELETE_STUDENT, responseJson.payload));
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.DELETE_ERROR, error.message));
+        dispatch(setMyData(actionTypes.DELETE_ERROR, error.payload));
       });
   };
 };
 
 export const deleteSupervisors = data => {
   return dispatch => {
-    deleteRequest(`supervisor/${data}`)
+    dispatch(deleteSupervisor(data))
       .then(responseJson => {
-        const status = responseJson.status;
-        dispatch(setMyData(actionTypes.SET_STATUS, status));
-        dispatch(setMyData(actionTypes.SUCCESS_MESSAGE, responseJson.message));
-        dispatch(setMyData(actionTypes.DELETE_SUPERVISOR));
+        dispatch(
+          setMyData(actionTypes.DELETE_SUPERVISOR, responseJson.payload)
+        );
       })
       .catch(error => {
-        dispatch(setMyData(actionTypes.DELETE_ERROR, error.message));
+        dispatch(setMyData(actionTypes.DELETE_ERROR, error.payload));
       });
   };
 };

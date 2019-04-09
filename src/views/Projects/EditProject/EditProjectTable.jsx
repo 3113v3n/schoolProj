@@ -44,7 +44,7 @@ class EditProject extends React.Component {
 
     this.state = {
       projCode: this.props.location.state.code,
-      newProjectCode: "",
+      newProjectCode: this.props.location.state.code,
       trimesters: 0,
       degreeSelected: false,
       diplomaSelected: false,
@@ -111,7 +111,7 @@ class EditProject extends React.Component {
     } else {
       this.props.onSubmit(data);
 
-      if (error === false) {
+      if (!error) {
         this.showNotification("tr");
         this.resetValues();
       } else {
@@ -184,7 +184,7 @@ class EditProject extends React.Component {
                         onChange: this.handleInput
                       }}
                       inputProps={{
-                        value: this.props.location.state.trimesters
+                        value: this.state.trimesters
                       }}
                     />
                   </GridItem>
