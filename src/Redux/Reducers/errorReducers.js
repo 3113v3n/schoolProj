@@ -11,7 +11,7 @@ export default function errorReducers(state = initialState, action) {
       return {
         ...state,
         error: true,
-        errorMessage: "INVALID LOGIN CREDENTIALS PROVIDED"
+        errorMessage: action.data.message
       };
     case actionTypes.TOKEN_REFRESH_FAILURE:
       return {
@@ -23,25 +23,25 @@ export default function errorReducers(state = initialState, action) {
       return{
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.UPLOAD_FAILURE:
       return{
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.NEW_ALLOCATION_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.DELETE_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.FETCHING_FAILED:
       return {
@@ -53,55 +53,55 @@ export default function errorReducers(state = initialState, action) {
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.PROGRESS_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.PROJECT_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: "Cant add project"
+        errorMessage: action.data.message
       };
     case actionTypes.STUDENT_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.SUPERVISOR_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.SUPERVISOR_TABLE_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.STUDENT_TABLE_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     case actionTypes.ADMIN_PASS_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: "CAN'T CHANGE PASSWORD"
+        errorMessage: action.data.message
       };
     case actionTypes.SUPERVISOR_PASS_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: action.data
+        errorMessage: action.data.message
       };
     default:
       return state;

@@ -56,7 +56,7 @@ const mapStateToProps = state => {
   return {
     error: state.error.error,
     status: state.supervisor.status,
-    data: state.supervisor.Progress, //TODO: issue here and sort out onrefresh student table
+    data: state.supervisor.Progress,
     message: state.supervisor.message,
     errorMessage: state.error.errorMessage
   };

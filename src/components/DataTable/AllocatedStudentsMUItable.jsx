@@ -14,6 +14,9 @@ import CardBody from "components/Card/CardBody.jsx";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import moment from "moment";
 import uuid from "uuid";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
+import AddAlert from "@material-ui/core/SvgIcon/SvgIcon";
+
 const columns = [
   {
     name: "Student Name",
@@ -66,6 +69,27 @@ const options = {
 };
 
 class AllocatedStudentsMUItable extends React.Component {
+  state = {
+    tr: false
+  };
+  componentWillUnmount() {
+    let id = window.setTimeout(null, 0);
+    while (id--) {
+      window.clearTimeout(id);
+    }
+  }
+  showNotification(place) {
+    let x = [];
+    x[place] = true;
+    this.setState(x);
+    this.alertTimeout = setTimeout(
+      function() {
+        x[place] = false;
+        this.setState(x);
+      }.bind(this),
+      6000
+    );
+  }
   goToAddProgress = allocation_id => {
     const { history } = this.props;
     history.push({
@@ -80,11 +104,14 @@ class AllocatedStudentsMUItable extends React.Component {
   };
   setCompleted = id => {
     const data = {};
-    const { markAsCompleted } = this.props;
+    const { markAsCompleted, completed } = this.props;
     data.allocation_id = id;
     data.archive_id = uuid();
     markAsCompleted(data);
-    this.refreshPage();
+    if (completed) {
+      this.showNotification("tr");
+      this.refreshPage();
+    }
   };
 
   actions = id => {
@@ -134,10 +161,10 @@ class AllocatedStudentsMUItable extends React.Component {
     );
   };
   render() {
-    const { data, classes,error } = this.props;
+    const { data, classes, error, status, message, errorMessage } = this.props;
     const emptySet = [["", "", "No DATA Available", ""]];
     const students =
-      !error && data !== null && data !== undefined && data.status !== "failed"
+      !error && data !== null && data !== undefined && status !== "failed"
         ? data.map(item => [
             item.student_name,
             item.project_code,
@@ -163,6 +190,15 @@ class AllocatedStudentsMUItable extends React.Component {
                 options={options}
               />
             </CardBody>
+            <Snackbar
+              place={"tr"}
+              color={status !== "failed" && !error ? "success" : "danger"}
+              icon={AddAlert}
+              message={!error ? message : errorMessage}
+              open={this.state.tr}
+              closeNotification={() => this.setState({ tr: false })}
+              close
+            />
           </Card>
         </GridItem>
       </GridContainer>
@@ -213,6 +249,10 @@ AllocatedStudentsMUItable.propTypes = {
   classes: PropTypes.object,
   history: PropTypes.object,
   markAsCompleted: PropTypes.func,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  status: PropTypes.string,
+  errorMessage: PropTypes.string,
+  message: PropTypes.string,
+  completed: PropTypes.bool
 };
 export default withRouter(withStyles(styles)(AllocatedStudentsMUItable));

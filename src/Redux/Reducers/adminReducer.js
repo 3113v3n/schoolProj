@@ -18,11 +18,6 @@ const initialState = {
 
 function adminReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.PROJECT_MESSAGE:
-      return {
-        ...state,
-        message: action.data.message
-      };
     case actionTypes.SET_DATA:
       return updateProgress(state, {
         data: action.data,

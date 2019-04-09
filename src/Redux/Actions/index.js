@@ -1,5 +1,4 @@
 import * as actionTypes from "./action-types";
-import { deleteRequest } from "../../services/requests";
 import {
   login,
   logout,
@@ -157,7 +156,9 @@ export const supervisorStudents = () => {
   return dispatch => {
     dispatch(getAllocatedStudents())
       .then(res => {
-        dispatch(setMyData(actionTypes.SET_MY_DATA, res.payload));
+        if(res.payload.status !== 404){
+          dispatch(setMyData(actionTypes.SET_MY_DATA, res.payload));
+        }
       })
       .catch(error => dispatch(fetchFailed(error.payload)));
   };
@@ -202,7 +203,7 @@ export const addProgress = data => {
         dispatch(setMyData(actionTypes.ADD_PROGRESS, response.payload));
       })
       .catch(e => {
-        dispatch(setMyData(actionTypes.PROJECT_ERROR, e.payload));
+        dispatch(setMyData(actionTypes.PROGRESS_ERROR, e.payload));
       });
   };
 };

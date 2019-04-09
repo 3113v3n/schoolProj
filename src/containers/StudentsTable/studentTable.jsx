@@ -9,7 +9,16 @@ class StudentTable extends React.Component {
     this.props.fetchData();
   }
   render() {
-    const { isLoading, data, markAsCompleted, status, error } = this.props;
+    const {
+      isLoading,
+      data,
+      markAsCompleted,
+      status,
+      error,
+      message,
+      errorMessage,
+      completed
+    } = this.props;
     if (!isLoading) {
       return <div> Loading...</div>;
     } else {
@@ -20,6 +29,9 @@ class StudentTable extends React.Component {
             markAsCompleted={markAsCompleted}
             status={status}
             error={error}
+            message={message}
+            errorMessage={errorMessage}
+            completed={completed}
           />
         </div>
       );
@@ -32,7 +44,10 @@ const mapStateToProps = state => {
     data: state.supervisor.myData,
     isLoading: state.supervisor.isLoading,
     error: state.error.error,
-    status: state.supervisor.status
+    status: state.supervisor.status,
+    message: state.supervisor.message,
+    errorMessage: state.error.errorMessage,
+    completed: state.supervisor.completed
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -54,5 +69,8 @@ StudentTable.propTypes = {
   data: PropTypes.array,
   fetchData: PropTypes.func.isRequired,
   markAsCompleted: PropTypes.func.isRequired,
-  status: PropTypes.string
+  status: PropTypes.string,
+  message: PropTypes.string,
+  errorMessage: PropTypes.string,
+  completed: PropTypes.bool
 };

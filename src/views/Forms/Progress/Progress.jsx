@@ -138,7 +138,7 @@ class Progress extends React.Component {
     data.allocation_id = allocation_id;
     data.document = documents;
     data.comments = comments;
-    data.marks = marks;
+    data.marks = parseInt(marks);
     if (documents.length === 0 || comments.length === 0 || marks.length === 0) {
       alert("ALL FIELDS ARE REQUIRE");
     } else {
@@ -146,8 +146,8 @@ class Progress extends React.Component {
       const { error } = this.props;
       if (!error) {
         this.resetValues();
-        this.refreshPage();
         this.showNotification("tr");
+        this.refreshPage();
       } else {
         this.showNotification("tr");
       }
@@ -155,7 +155,7 @@ class Progress extends React.Component {
   };
 
   render() {
-    const { classes, data, errorMessage, error } = this.props;
+    const { classes, data, errorMessage, error, message, status } = this.props;
     return (
       <div>
         <GridContainer justify={"center"}>
@@ -167,11 +167,9 @@ class Progress extends React.Component {
               <CardBody>
                 <Snackbar
                   place="tr"
-                  color={!error ? "success" : "danger"}
+                  color={!error && status === "success" ? "success" : "danger"}
                   icon={AddAlert}
-                  message={
-                    !error ? "PROGRESS WAS ADDED SUCCESSFULLY" : errorMessage
-                  }
+                  message={!error ? message : errorMessage}
                   open={this.state.tr}
                   closeNotification={() => this.setState({ tr: false })}
                   close
